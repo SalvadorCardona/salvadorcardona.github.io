@@ -100,10 +100,12 @@ export const posts: Array<Post> = [
             <code>.nojekyll</code>
           </strong>{' '}
           — sans lui, GitHub Pages fait passer le site par Jekyll, qui ignore
-          silencieusement tout dossier commençant par un underscore. Or Start
-          publie ses assets client dans <code>_build/</code>. Résultat : du HTML
-          nu, aucun style, aucun JS, et rien dans les logs. Un fichier vide règle
-          l’affaire.
+          silencieusement tout fichier ou dossier commençant par un underscore.
+          Or Start en produit : <code>_shell.html</code> en mode SPA, et le
+          dossier d’assets client selon la configuration. Quand ça arrive, on
+          récupère du HTML nu — aucun style, aucun JS — et rien dans les logs
+          pour l’expliquer. Un fichier vide à la racine règle l’affaire, et coûte
+          zéro.
         </p>
         <p>
           <strong>
