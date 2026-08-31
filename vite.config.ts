@@ -54,7 +54,7 @@ const config = defineConfig({
       ],
       sitemap: {
         enabled: true,
-        host: 'https://salvadorcardona.github.io',
+        host: 'https://cardona.digital',
       },
     }),
     viteReact(),

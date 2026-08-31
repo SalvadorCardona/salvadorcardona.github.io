@@ -16,6 +16,8 @@ Portfolio statique : TanStack Start prérendu au build, publié sur GitHub Pages
   d'accueil par une coquille vide. Le repli 404 passe par la route `/404` et
   `scripts/postbuild.mjs`.
 - **Ne pas supprimer `public/.nojekyll`.**
+- **Ne pas supprimer `public/CNAME`** ni le désynchroniser de `SITE_URL`
+  (`src/lib/seo.ts`) : il porte le domaine personnalisé `cardona.digital`.
 
 ## Vérification avant de conclure
 

@@ -5,7 +5,7 @@
  * aux cartes Open Graph, qui exigent des adresses absolues.
  */
 
-export const SITE_URL = 'https://salvadorcardona.github.io'
+export const SITE_URL = 'https://cardona.digital'
 export const SITE_NAME = 'Salvador Cardona'
 
 type SeoInput = {

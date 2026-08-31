@@ -1,7 +1,7 @@
 # salvadorcardona.github.io
 
 Portfolio et blog de Salvador Cardona.
-En ligne : <https://salvadorcardona.github.io>
+En ligne : <https://cardona.digital>
 
 TanStack Start, entièrement prérendu au build et publié sur GitHub Pages. Pas de
 serveur, pas de base de données, pas de CMS : tout le contenu est écrit en dur
@@ -50,11 +50,14 @@ son URL en suivant les liens de l'index — aucune liste de routes à maintenir.
 rendue une fois au build et écrite en HTML complet, puis reprise par le routeur
 client une fois le bundle chargé.
 
-Trois points sont propres à GitHub Pages :
+Quatre points sont propres à GitHub Pages :
 
 - **`base: '/'`** — le dépôt s'appelle `salvadorcardona.github.io`, il est donc
   servi à la racine du domaine. Un dépôt de projet imposerait `/<repo>/` et la
   gestion du `basepath` dans le routeur, encore fragile côté Start.
+- **`public/CNAME`** — déclare le domaine personnalisé `cardona.digital`. Il
+  part avec le build et garde le domaine inscrit dans le dépôt plutôt que
+  seulement dans les réglages GitHub.
 - **`public/.nojekyll`** — sans ce fichier, Pages fait passer le site par
   Jekyll, qui ignore silencieusement tout chemin commençant par un underscore.
 - **`404.html`** — Pages n'a pas de règle de réécriture. La route `/404` est
@@ -71,6 +74,22 @@ s'arrête plutôt que de publier un site amputé.
 `.github/workflows/deploy.yml` construit et publie à chaque push sur `main`.
 Source des Pages à régler une fois : **Settings → Pages → Source : GitHub
 Actions**.
+
+### Domaine
+
+Le site est servi sur `cardona.digital`, dont le DNS est géré chez Hostinger.
+Trois réglages, faits une seule fois :
+
+1. **Settings → Pages → Custom domain : `cardona.digital`**, puis **Enforce
+   HTTPS** une fois le certificat émis (quelques minutes après la propagation).
+2. **DNS Hostinger — apex** : quatre enregistrements `A` sur `@` vers
+   `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
+   (les serveurs Pages), et un `CNAME` `www` vers `salvadorcardona.github.io`.
+3. **Ne pas toucher aux autres enregistrements** : `trader.cardona.digital`
+   (Trader IA) a son propre enregistrement et reste inchangé.
+
+C'est le réglage **Settings → Pages** qui fait foi ; `public/CNAME` doit rester
+aligné dessus, comme `SITE_URL` dans `src/lib/seo.ts`.
 
 ## Pile
 

@@ -2,7 +2,7 @@ import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 
 import { formatDate, getPost, sortedPosts } from '../../content/posts'
 import { links } from '../../content/profile'
-import { seo } from '../../lib/seo'
+import { SITE_URL, seo } from '../../lib/seo'
 
 /**
  * Les routes paramétrées ne sont pas découvertes automatiquement par le
@@ -50,7 +50,7 @@ function PostPage() {
 
   const shareUrl = `https://x.com/intent/post?text=${encodeURIComponent(
     post.title,
-  )}&url=${encodeURIComponent(`https://salvadorcardona.github.io/blog/${post.slug}`)}`
+  )}&url=${encodeURIComponent(`${SITE_URL}/blog/${post.slug}`)}`
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">

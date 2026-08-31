@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://salvadorcardona.github.io/sitemap.xml
+Sitemap: https://cardona.digital/sitemap.xml
