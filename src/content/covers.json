@@ -1,0 +1,17 @@
+{
+  "un-portfolio-tanstack-start-sur-github-pages": {
+    "alt": "Illustration abstraite : un flux de pages en cascade se fige en une grille de tuiles statiques.",
+    "prompt": "A stream of cascading document pages freezing into a neat static grid of flat tiles, a server shape dissolving into simple squares on the right",
+    "file": "un-portfolio-tanstack-start-sur-github-pages.jpg"
+  },
+  "json-ld-le-contrat-que-le-front-attendait": {
+    "alt": "Illustration abstraite : des noeuds reliés par des lignes, l'un d'eux se dépliant en fiche structurée.",
+    "prompt": "A network of small labelled nodes connected by clean thin lines, one node unfolding into a structured card of stacked rows",
+    "file": "json-ld-le-contrat-que-le-front-attendait.jpg"
+  },
+  "faire-jouer-ses-tickets-par-un-agent": {
+    "alt": "Illustration abstraite : une fiche entre dans une boucle fermée et en ressort en branche fusionnée.",
+    "prompt": "A single card entering a closed circular loop of arrows and leaving it as a branching line that merges back into a straight track",
+    "file": "faire-jouer-ses-tickets-par-un-agent.jpg"
+  }
+}

@@ -22,8 +22,9 @@ npm run dev        # http://localhost:3000
 | ------------------- | ---------------------------------------------------------- |
 | `npm run dev`       | Serveur de développement                                    |
 | `npm run build`     | Build statique dans `dist/client` (prérendu + sitemap + 404) |
-| `npm run serve`     | Sert `dist/client` comme le fera GitHub Pages                |
-| `npm run typecheck` | Vérification TypeScript                                     |
+| `npm run serve`     | Sert `dist/client` comme le fera GitHub Pages               |
+| `npm run typecheck` | Vérification TypeScript                                    |
+| `npm run post:image`| Génère avec OpenRouter les illustrations d'articles manquantes |
 
 Pour valider un build avant de pousser : `npm run build && npm run serve`.
 
@@ -36,6 +37,8 @@ Tout se passe dans `src/content/`.
   servent de gabarit.
 - **`posts.tsx`** — les articles du blog. Un article = une entrée du tableau
   `posts`. Le corps est du JSX, pas du Markdown.
+- **`covers.json`** — l'illustration de chaque article : une entrée par `slug`,
+  avec son texte alternatif et le prompt qui a servi à la générer.
 
 ### Ajouter un article
 
@@ -44,9 +47,48 @@ Tout se passe dans `src/content/`.
    `readingTime`.
 3. Écrire le `body` en JSX. Les styles de lecture viennent de
    `@tailwindcss/typography` : `<h2>`, `<p>`, `<ul>`, `<pre>` suffisent.
+4. Ajouter son illustration (voir ci-dessous).
 
-Rien d'autre à faire. L'article apparaît sur `/blog`, et le prérendu découvre
-son URL en suivant les liens de l'index — aucune liste de routes à maintenir.
+L'article apparaît sur `/blog`, et le prérendu découvre son URL en suivant les
+liens de l'index — aucune liste de routes à maintenir.
+
+### Son illustration
+
+Chaque article a une image, générée une fois par OpenRouter et versionnée dans
+`public/blog/`. Le site reste statique : aucun appel n'est fait au build ni au
+runtime, le script se lance à la main.
+
+1. Ajouter une entrée dans `src/content/covers.json`, avec la même clé que le
+   `slug` de l'article :
+
+   ```json
+   "mon-article": {
+     "alt": "Ce que montre l'image, pour les lecteurs d'écran.",
+     "prompt": "A stream of cascading document pages freezing into a grid"
+   }
+   ```
+
+   Le prompt décrit seulement le *sujet* : le style commun à toutes les
+   couvertures — aplats géométriques, ardoise et bleu ciel, sans texte — est
+   ajouté par le script. Il s'écrit en anglais, mieux suivi par les modèles
+   d'image.
+
+2. Générer :
+
+   ```bash
+   export OPENROUTER_API_KEY=sk-or-...   # https://openrouter.ai/keys
+   npm run post:image                    # toutes les images manquantes
+   npm run post:image -- mon-article     # un seul article
+   npm run post:image -- mon-article --force   # refaire une image existante
+   ```
+
+Le script écrit `public/blog/<slug>.<ext>` et note le nom du fichier dans
+`covers.json` : c'est ce champ `file` qui fait apparaître l'image sur `/blog`,
+en tête de l'article et dans les cartes de partage. Tant qu'il est absent,
+l'article s'affiche simplement sans illustration.
+
+Le modèle par défaut est `black-forest-labs/flux.2-flex` (~0,05 $ l'image), à
+changer avec `OPENROUTER_IMAGE_MODEL`.
 
 ## Fonctionnement du build
 

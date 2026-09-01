@@ -15,6 +15,8 @@ type SeoInput = {
   path: string
   type?: 'website' | 'article'
   publishedTime?: string
+  /** Chemin absolu de l'image de partage, ex. `/blog/mon-article.jpg`. */
+  image?: string
 }
 
 export function seo({
@@ -23,6 +25,7 @@ export function seo({
   path,
   type = 'website',
   publishedTime,
+  image,
 }: SeoInput) {
   const url = `${SITE_URL}${path}`
   const fullTitle = path === '/' ? title : `${title} — ${SITE_NAME}`
@@ -41,6 +44,12 @@ export function seo({
     { name: 'twitter:title', content: fullTitle },
     { name: 'twitter:description', content: description },
   ]
+
+  if (image) {
+    // Open Graph et Twitter exigent des URL absolues, y compris pour l'image.
+    meta.push({ property: 'og:image', content: `${SITE_URL}${image}` })
+    meta.push({ name: 'twitter:image', content: `${SITE_URL}${image}` })
+  }
 
   if (publishedTime) {
     meta.push({ property: 'article:published_time', content: publishedTime })

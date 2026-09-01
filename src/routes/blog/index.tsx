@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 
-import { allTags, formatDate, sortedPosts } from '../../content/posts'
+import type { Post } from '../../content/posts'
+import { allTags, formatDate, getCover, sortedPosts } from '../../content/posts'
 import { seo } from '../../lib/seo'
 
 export const Route = createFileRoute('/blog/')({
@@ -44,6 +45,8 @@ function BlogIndex() {
             className="border-b border-slate-200 pb-10 last:border-0 dark:border-slate-800"
           >
             <article>
+              <Cover post={post} />
+
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-500">
                 <time dateTime={post.date}>{formatDate(post.date)}</time>
                 <span aria-hidden="true">·</span>
@@ -89,5 +92,23 @@ function BlogIndex() {
         ))}
       </ol>
     </div>
+  )
+}
+
+/** La vignette d'un article, absente tant que son image n'a pas été générée. */
+function Cover({ post }: { post: Post }) {
+  const cover = getCover(post.slug)
+
+  if (!cover) return null
+
+  return (
+    <img
+      src={cover.src}
+      alt={cover.alt}
+      width={cover.width}
+      height={cover.height}
+      loading="lazy"
+      className="mb-5 aspect-video w-full rounded-xl border border-slate-200 object-cover dark:border-slate-800"
+    />
   )
 }
