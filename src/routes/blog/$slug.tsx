@@ -1,6 +1,6 @@
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 
-import { formatDate, getPost, sortedPosts } from '../../content/posts'
+import { formatDate, getCover, getPost, sortedPosts } from '../../content/posts'
 import { links } from '../../content/profile'
 import { SITE_URL, seo } from '../../lib/seo'
 
@@ -20,6 +20,7 @@ export const Route = createFileRoute('/blog/$slug')({
       excerpt: post.excerpt,
       tags: post.tags,
       readingTime: post.readingTime,
+      cover: getCover(post.slug)?.src,
     }
   },
   head: ({ loaderData }) =>
@@ -30,6 +31,7 @@ export const Route = createFileRoute('/blog/$slug')({
           path: `/blog/${loaderData.slug}`,
           type: 'article',
           publishedTime: loaderData.date,
+          image: loaderData.cover,
         })
       : {},
   component: PostPage,
@@ -40,6 +42,8 @@ function PostPage() {
   const post = getPost(slug)
 
   if (!post) return null
+
+  const cover = getCover(slug)
 
   const index = sortedPosts.findIndex((item) => item.slug === slug)
   const newer = index > 0 ? sortedPosts[index - 1] : undefined
@@ -86,6 +90,16 @@ function PostPage() {
             ))}
           </div>
         </header>
+
+        {cover && (
+          <img
+            src={cover.src}
+            alt={cover.alt}
+            width={cover.width}
+            height={cover.height}
+            className="mt-8 aspect-video w-full rounded-xl border border-slate-200 object-cover dark:border-slate-800"
+          />
+        )}
 
         <div className="prose prose-slate dark:prose-invert mt-10 max-w-none">
           {post.body}
