@@ -7,6 +7,10 @@ TanStack Start, entièrement prérendu au build et publié sur GitHub Pages. Pas
 serveur, pas de base de données, pas de CMS : tout le contenu est écrit en dur
 dans le dépôt.
 
+Avant toute modification, lire [`AGENTS.md`](AGENTS.md) : les règles du projet —
+site statique sans exception, contenu en dur, réglages GitHub Pages à ne pas
+casser — et les commandes à lancer pour vérifier son travail.
+
 ## Démarrer
 
 ```bash
