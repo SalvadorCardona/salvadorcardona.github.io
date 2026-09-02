@@ -4,8 +4,9 @@ Portfolio et blog de Salvador Cardona.
 En ligne : <https://cardona.digital>
 
 TanStack Start, entièrement prérendu au build et publié sur GitHub Pages. Pas de
-serveur, pas de base de données, pas de CMS : tout le contenu est écrit en dur
-dans le dépôt.
+serveur, pas de base de données interrogée en ligne : les articles sont rédigés
+dans Notion, puis figés dans le dépôt par un script lancé à la main. Le site
+publié ne dépend de rien d'autre que de ses fichiers.
 
 Avant toute modification, lire [`AGENTS.md`](AGENTS.md) : les règles du projet —
 site statique sans exception, contenu en dur, réglages GitHub Pages à ne pas
@@ -24,44 +25,86 @@ npm run dev        # http://localhost:3000
 | `npm run build`     | Build statique dans `dist/client` (prérendu + sitemap + 404) |
 | `npm run serve`     | Sert `dist/client` comme le fera GitHub Pages               |
 | `npm run typecheck` | Vérification TypeScript                                    |
+| `npm run posts:sync`| Régénère les articles depuis la database Notion              |
 | `npm run post:image`| Génère avec OpenRouter les illustrations d'articles manquantes |
 
 Pour valider un build avant de pousser : `npm run build && npm run serve`.
 
 ## Modifier le contenu
 
-Tout se passe dans `src/content/`.
+Les articles s'écrivent dans Notion (voir ci-dessous). Le reste vit dans
+`src/content/`.
 
 - **`profile.ts`** — identité, liens, technologies, expériences, diplômes,
   projets. Les entrées contenant `À COMPLÉTER` ne s'affichent pas : elles
   servent de gabarit.
-- **`posts/`** — les articles du blog, un fichier par article. Le corps est du
-  JSX, pas du Markdown. À côté d'eux, `index.ts` liste les articles publiés et
-  `post.ts` porte le type `Post` et les utilitaires communs.
+- **`posts/`** — les articles du blog, un fichier par article. **Ces fichiers
+  sont générés** : ils portent un en-tête qui le rappelle, et `npm run
+  posts:sync` les écrase. Seul `post.ts` (le type `Post`, `getCover`,
+  `formatDate`) s'écrit à la main.
 - **`covers.json`** — l'illustration de chaque article : une entrée par `slug`,
-  avec son texte alternatif et le prompt qui a servi à la générer.
+  avec son texte alternatif et, si l'image a été générée, le prompt qui a servi.
 
-### Ajouter un article
+### Écrire un article
 
-1. Copier un fichier existant de `posts/` sous le nom du nouveau slug, par
-   exemple `posts/mon-article.tsx`.
-2. Changer `slug` (il doit valoir le nom du fichier), `title`, `date` (format
-   `AAAA-MM-JJ`), `excerpt`, `tags` et `readingTime`.
-3. Écrire le `body` en JSX. Les styles de lecture viennent de
-   `@tailwindcss/typography` : `<h2>`, `<p>`, `<ul>`, `<pre>` suffisent.
-4. Ajouter l'import et l'entrée correspondante dans `posts/index.ts`. L'ordre
-   du tableau est libre : l'affichage trie par date.
-5. Ajouter son illustration (voir ci-dessous).
+Les articles vivent dans la database Notion
+[Blog Salvador Cardona](https://salvadorcardona.notion.site/Blog-Salvador-Cardona-3cf451680af4803f83fdd0cf0d824fa6),
+qui fait foi. Le dépôt n'en est que le reflet, et le site reste entièrement
+statique : rien n'appelle Notion au build ni au runtime.
+
+1. Créer une page dans la database et remplir ses propriétés :
+
+   | Propriété     | Rôle                                                        |
+   | ------------- | ----------------------------------------------------------- |
+   | `Title`       | Le titre affiché                                            |
+   | `slug`        | L'URL `/blog/<slug>` et le nom du fichier. Ne plus le changer une fois publié |
+   | `Date`        | Date de publication, pour le tri et la balise `<time>`      |
+   | `excerpt`     | Le résumé sur `/blog` et dans les métadonnées SEO           |
+   | `tags`        | Les étiquettes affichées et filtrables                      |
+   | `readingTime` | Durée de lecture indicative, en minutes                     |
+   | `status`      | `Publié` pour partir sur le site, `Brouillon` sinon         |
+   | `coverAlt`    | Ce que montre la couverture, pour les lecteurs d'écran      |
+
+2. Écrire le corps dans la page. Sont pris en charge : paragraphes, titres,
+   listes à puces et numérotées, citations, blocs de code, traits de
+   séparation et images légendées, avec gras, italique, barré, code inline et
+   liens. Un bloc non pris en charge est signalé et ignoré par la
+   synchronisation, pas silencieusement perdu.
+3. Poser une couverture sur la page Notion (menu « Add cover »), en 1024 × 576.
+4. Synchroniser :
+
+   ```bash
+   export NOTION_TOKEN=ntn_...   # https://www.notion.com/my-integrations
+   npm run posts:sync
+   ```
 
 L'article apparaît sur `/blog`, et le prérendu découvre son URL en suivant les
-liens de cette page — aucune route à déclarer, seulement l'entrée dans
-`posts/index.ts`.
+liens de cette page — aucune route à déclarer.
+
+Le jeton vient d'une intégration Notion partagée avec la database (sur la page
+de la database : menu `···` → « Connections » → l'intégration). Il n'est
+utilisé que par ce script, jamais par le site.
+
+Ce que la synchronisation fait, en plus d'écrire les articles :
+
+- elle rapatrie les images dans `public/blog/` — les URL de fichiers Notion
+  sont signées et expirent au bout de quelques heures, les garder casserait le
+  site le lendemain ;
+- elle lit les dimensions réelles de chaque image et les inscrit dans le
+  `<img>`, pour que la page ne saute pas au chargement ;
+- elle pose une plaque sombre derrière les images à canal alpha, sans quoi une
+  capture claire sur fond transparent devient illisible ;
+- elle supprime du dépôt les articles qui ne sont plus en `Publié`.
 
 ### Son illustration
 
-Chaque article a une image, générée une fois par OpenRouter et versionnée dans
-`public/blog/`. Le site reste statique : aucun appel n'est fait au build ni au
-runtime, le script se lance à la main.
+Le plus simple est de poser une couverture sur la page Notion : `posts:sync` la
+rapatrie dans `public/blog/` et remplit `covers.json` tout seul.
+
+Reste la voie alternative, pour fabriquer une illustration quand on n'en a pas :
+la générer avec OpenRouter à partir d'un prompt. Elle est versionnée dans
+`public/blog/` de la même façon, et le site reste statique — aucun appel au
+build ni au runtime, le script se lance à la main.
 
 1. Ajouter une entrée dans `src/content/covers.json`, avec la même clé que le
    `slug` de l'article :
