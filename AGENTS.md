@@ -8,9 +8,13 @@ Portfolio statique : TanStack Start prérendu au build, publié sur GitHub Pages
   pas d'appel réseau au runtime. Tout doit survivre à un `npm run build` suivi
   d'un simple serveur de fichiers.
 - **Contenu en dur.** Le contenu vit dans `src/content/` (`profile.ts` pour le
-  CV, `posts.tsx` pour les articles, `covers.json` pour leurs illustrations).
+  CV, `posts/` pour les articles, `covers.json` pour leurs illustrations).
   Ne pas introduire de CMS ni de chargement de fichiers Markdown.
-- **Un article = une illustration.** Tout article ajouté à `posts.tsx` reçoit
+- **Un article = un fichier.** Chaque article est un `src/content/posts/<slug>.tsx`
+  qui exporte son `post`, listé dans `src/content/posts/index.ts`. Le type et
+  les utilitaires partagés sont dans `posts/post.ts` : un article importe son
+  type de là, jamais de l'index, sinon le cycle est là.
+- **Un article = une illustration.** Tout article ajouté à `posts/` reçoit
   son entrée dans `covers.json` (`alt` + `prompt`), puis son image via
   `npm run post:image -- <slug>` : elle est générée par OpenRouter, écrite dans
   `public/blog/` et versionnée. La génération se fait à la main, jamais au
@@ -31,6 +35,8 @@ npm run typecheck
 npm run build      # échoue si une page attendue manque
 ```
 
-Le build doit annoncer 7 pages prérendues et écrire `dist/client/404.html`. Il
-échoue aussi si une illustration déclarée dans `covers.json` n'a pas suivi.
+Le build doit annoncer les quatre pages fixes (`/`, `/blog`, `/contact`, `/404`)
+plus un article par `src/content/posts/<slug>.tsx`, et écrire
+`dist/client/404.html`. Il échoue si une page attendue manque, ou si une
+illustration déclarée dans `covers.json` n'a pas suivi.
 Pour inspecter le rendu réel : `npm run serve`.

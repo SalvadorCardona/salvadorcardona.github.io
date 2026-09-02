@@ -35,22 +35,27 @@ Tout se passe dans `src/content/`.
 - **`profile.ts`** — identité, liens, technologies, expériences, diplômes,
   projets. Les entrées contenant `À COMPLÉTER` ne s'affichent pas : elles
   servent de gabarit.
-- **`posts.tsx`** — les articles du blog. Un article = une entrée du tableau
-  `posts`. Le corps est du JSX, pas du Markdown.
+- **`posts/`** — les articles du blog, un fichier par article. Le corps est du
+  JSX, pas du Markdown. À côté d'eux, `index.ts` liste les articles publiés et
+  `post.ts` porte le type `Post` et les utilitaires communs.
 - **`covers.json`** — l'illustration de chaque article : une entrée par `slug`,
   avec son texte alternatif et le prompt qui a servi à la générer.
 
 ### Ajouter un article
 
-1. Copier une entrée existante dans `posts.tsx`.
-2. Changer `slug`, `title`, `date` (format `AAAA-MM-JJ`), `excerpt`, `tags` et
-   `readingTime`.
+1. Copier un fichier existant de `posts/` sous le nom du nouveau slug, par
+   exemple `posts/mon-article.tsx`.
+2. Changer `slug` (il doit valoir le nom du fichier), `title`, `date` (format
+   `AAAA-MM-JJ`), `excerpt`, `tags` et `readingTime`.
 3. Écrire le `body` en JSX. Les styles de lecture viennent de
    `@tailwindcss/typography` : `<h2>`, `<p>`, `<ul>`, `<pre>` suffisent.
-4. Ajouter son illustration (voir ci-dessous).
+4. Ajouter l'import et l'entrée correspondante dans `posts/index.ts`. L'ordre
+   du tableau est libre : l'affichage trie par date.
+5. Ajouter son illustration (voir ci-dessous).
 
 L'article apparaît sur `/blog`, et le prérendu découvre son URL en suivant les
-liens de l'index — aucune liste de routes à maintenir.
+liens de cette page — aucune route à déclarer, seulement l'entrée dans
+`posts/index.ts`.
 
 ### Son illustration
 
