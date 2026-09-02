@@ -7,14 +7,24 @@ Portfolio statique : TanStack Start prérendu au build, publié sur GitHub Pages
 - **Site statique, sans exception.** Pas de server function, pas de route API,
   pas d'appel réseau au runtime. Tout doit survivre à un `npm run build` suivi
   d'un simple serveur de fichiers.
-- **Contenu en dur.** Le contenu vit dans `src/content/` (`profile.ts` pour le
-  CV, `posts.tsx` pour les articles, `covers.json` pour leurs illustrations).
-  Ne pas introduire de CMS ni de chargement de fichiers Markdown.
-- **Un article = une illustration.** Tout article ajouté à `posts.tsx` reçoit
-  son entrée dans `covers.json` (`alt` + `prompt`), puis son image via
-  `npm run post:image -- <slug>` : elle est générée par OpenRouter, écrite dans
-  `public/blog/` et versionnée. La génération se fait à la main, jamais au
-  build — voir « Son illustration » dans le README.
+- **Les articles viennent de Notion.** La database « Blog Salvador Cardona »
+  est la source de vérité. `npm run posts:sync` la lit et régénère
+  `src/content/posts/` ; l'appel réseau a lieu là, à la main, jamais au build
+  ni au runtime. Le contenu reste versionné dans Git.
+- **Ne pas éditer `src/content/posts/<slug>.tsx` ni `index.ts`** : ils portent
+  un en-tête « généré », et la synchronisation suivante écrase toute
+  modification. Pour corriger un article, corriger la page Notion. Seul
+  `posts/post.ts` (le type `Post`, `getCover`, `formatDate`) est écrit à la
+  main — un article importe son type de là, jamais de l'index, sinon le cycle
+  est là.
+- **Le reste du contenu est en dur** dans `src/content/` : `profile.ts` pour le
+  CV, `covers.json` pour les illustrations. Pas d'autre CMS, pas de chargement
+  de fichiers Markdown.
+- **Un article = une illustration.** Deux sources possibles : la couverture de
+  la page Notion, rapatriée par `posts:sync` ; ou, à défaut, une image générée
+  par `npm run post:image -- <slug>` depuis le `prompt` de `covers.json`. Dans
+  les deux cas l'image atterrit dans `public/blog/` et est versionnée — voir
+  « Son illustration » dans le README.
 - **`base` reste `/`.** Le dépôt est un *user site* (`<pseudo>.github.io`),
   servi à la racine. Ne pas ajouter de `basepath`.
 - **Ne pas activer `spa.enabled`** dans `vite.config.ts` : cela remplace la page
@@ -27,10 +37,13 @@ Portfolio statique : TanStack Start prérendu au build, publié sur GitHub Pages
 ## Vérification avant de conclure
 
 ```bash
+npm run posts:sync   # si le contenu Notion a changé ; demande NOTION_TOKEN
 npm run typecheck
-npm run build      # échoue si une page attendue manque
+npm run build        # échoue si une page attendue manque
 ```
 
-Le build doit annoncer 7 pages prérendues et écrire `dist/client/404.html`. Il
-échoue aussi si une illustration déclarée dans `covers.json` n'a pas suivi.
+Le build doit annoncer les quatre pages fixes (`/`, `/blog`, `/contact`, `/404`)
+plus un article par `src/content/posts/<slug>.tsx`, et écrire
+`dist/client/404.html`. Il échoue si une page attendue manque, ou si une
+illustration déclarée dans `covers.json` n'a pas suivi.
 Pour inspecter le rendu réel : `npm run serve`.

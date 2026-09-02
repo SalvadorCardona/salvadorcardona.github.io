@@ -10,6 +10,7 @@
     "generate-routes": "tsr generate",
     "build": "vite build && node scripts/postbuild.mjs",
     "post:image": "node scripts/generate-post-image.mjs",
+    "posts:sync": "node scripts/sync-posts.mjs",
     "preview": "vite preview",
     "serve": "npx --yes serve dist/client",
     "typecheck": "tsc --noEmit"
