@@ -211,14 +211,12 @@ function Home() {
           ))}
         </ul>
         <p className="mt-4 text-sm">
-          <a
-            href={links.github}
-            target="_blank"
-            rel="noreferrer"
+          <Link
+            to="/projets"
             className="text-sky-600 hover:underline dark:text-sky-400"
           >
-            Tous les dépôts sur GitHub →
-          </a>
+            Tous les projets, avec leurs dépôts et leurs sites →
+          </Link>
         </p>
       </Section>
 
