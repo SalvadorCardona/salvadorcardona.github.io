@@ -464,5 +464,10 @@ async function main() {
 // Lance la synchronisation seulement en execution directe : importe depuis un
 // test, ce module n'expose que ses fonctions de rendu.
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  await main()
+  // Une trace de pile n'apprend rien sur un jeton expiré ou un réseau coupé :
+  // le message suffit, et le code de sortie porte l'échec.
+  await main().catch((error) => {
+    console.error(`\nSynchronisation interrompue : ${error.message}`)
+    process.exit(1)
+  })
 }

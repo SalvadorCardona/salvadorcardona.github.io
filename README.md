@@ -85,6 +85,42 @@ Le jeton vient d'une intégration Notion partagée avec la database (sur la page
 de la database : menu `···` → « Connections » → l'intégration). Il n'est
 utilisé que par ce script, jamais par le site.
 
+#### `mePublishBlog`, les étapes 4 à 6 en une commande
+
+`scripts/publish-blog.sh` définit une fonction shell qui enchaîne le tout. À
+ajouter une fois à son `~/.bashrc` :
+
+```bash
+source ~/salvadorcardona.github.io/scripts/publish-blog.sh
+```
+
+Le jeton ne va pas dans le `.bashrc` — un dotfile finit souvent versionné — mais
+dans un fichier lu par la fonction :
+
+```bash
+mkdir -p ~/.config/cardona-blog
+echo 'export NOTION_TOKEN=ntn_...' > ~/.config/cardona-blog/env
+chmod 600 ~/.config/cardona-blog/env
+```
+
+Ensuite, depuis n'importe quel répertoire :
+
+```bash
+mePublishBlog                         # message de commit par défaut
+mePublishBlog "Publie « Mon titre »"  # message choisi
+mePublishBlog --yes                   # sans demander confirmation
+```
+
+Elle repart de `main` à jour, synchronise, montre ce qui a changé, lance
+`typecheck` et `build`, demande confirmation, puis commite et pousse — ce qui
+déclenche le déploiement.
+
+Elle s'arrête sans rien publier si le dépôt a des modifications en cours (le
+`git add -A` final les emporterait), si le jeton manque, ou si la vérification
+échoue. Si Notion n'a rien de neuf, elle le dit et ne commite pas. Le dépôt est
+attendu dans `~/salvadorcardona.github.io` ; ailleurs, poser
+`export BLOG_REPO=/chemin/vers/le/depot`.
+
 Ce que la synchronisation fait, en plus d'écrire les articles :
 
 - elle rapatrie les images dans `public/blog/` — les URL de fichiers Notion
