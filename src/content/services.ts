@@ -61,7 +61,7 @@ export const services: Array<Service> = [
     name: 'Développement web',
     title: 'Développement web sur mesure : applications Symfony, React et TypeScript',
     description:
-      'Développeur web freelance à Lyon : conception d’applications web sur mesure, API REST Symfony / API Platform, interfaces React et TypeScript. Treize ans d’expérience.',
+      'Développeur web freelance à Lyon : applications sur mesure, API REST Symfony / API Platform, interfaces React et TypeScript. Treize ans d’expérience.',
     excerpt:
       'Des applications web de bout en bout : API Symfony structurées, interfaces React typées, et l’outillage qui va avec.',
     icon: 'code',
@@ -181,7 +181,7 @@ export const services: Array<Service> = [
     name: 'Audit de sécurité et d’application',
     title: 'Audit de sécurité et d’application web : code, API, dépendances, infrastructure',
     description:
-      'Audit de sécurité et de qualité de votre application web : failles OWASP, authentification, API, dépendances, configuration Docker et cloud. Rapport priorisé et plan de correction.',
+      'Audit de sécurité et de qualité de votre application web : failles OWASP, authentification, API, dépendances, configuration Docker et cloud. Rapport priorisé.',
     excerpt:
       'Un regard extérieur sur votre application : failles, dette technique, dépendances, configuration. Un rapport priorisé, pas un PDF de 200 pages.',
     icon: 'shield',
@@ -296,7 +296,7 @@ export const services: Array<Service> = [
     name: 'Mise en place de l’IA',
     title: 'Mise en place de l’IA dans vos outils : agents LLM, automatisations et assistants',
     description:
-      'Intégration de l’IA dans votre application ou vos processus : agents LLM branchés sur vos API, automatisations n8n, analyse de documents, chatbot, modèles hébergés chez vous. Du concret, pas une démo.',
+      'Intégration de l’IA dans votre application : agents LLM branchés sur vos API, automatisations n8n, analyse de documents, chatbot. Du concret, pas une démo.',
     excerpt:
       'Des agents et des automatisations branchés sur vos API et vos données : ce qui fait gagner du temps à l’équipe, en production.',
     icon: 'sparkles',

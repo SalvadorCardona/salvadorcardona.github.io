@@ -51,11 +51,12 @@ export function seo({
     { name: 'twitter:description', content: description },
   ]
 
-  if (image) {
-    // Open Graph et Twitter exigent des URL absolues, y compris pour l'image.
-    meta.push({ property: 'og:image', content: `${SITE_URL}${image}` })
-    meta.push({ name: 'twitter:image', content: `${SITE_URL}${image}` })
-  }
+  // Open Graph et Twitter exigent des URL absolues, y compris pour l'image.
+  // À défaut d'illustration propre à la page (les articles ont leur
+  // couverture), la carte sociale par défaut évite un partage sans image.
+  const shareImage = image ?? '/social-card.png'
+  meta.push({ property: 'og:image', content: `${SITE_URL}${shareImage}` })
+  meta.push({ name: 'twitter:image', content: `${SITE_URL}${shareImage}` })
 
   if (publishedTime) {
     meta.push({ property: 'article:published_time', content: publishedTime })

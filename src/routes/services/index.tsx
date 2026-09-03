@@ -18,7 +18,7 @@ export const Route = createFileRoute('/services/')({
     seo({
       title: 'Services : développement web, audit de sécurité et intégration IA',
       description:
-        'Développeur web freelance à Lyon. Trois prestations : développement d’applications sur mesure (Symfony, React), audit de sécurité et d’application, mise en place de l’IA dans vos outils.',
+        'Développeur web freelance à Lyon. Trois prestations : développement sur mesure (Symfony, React), audit de sécurité, mise en place de l’IA.',
       path: '/services',
       jsonLd: [
         personJsonLd(),
