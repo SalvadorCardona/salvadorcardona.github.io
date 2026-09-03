@@ -263,13 +263,14 @@ function Hero() {
             {profile.role} · Lyon
           </p>
           <h1 className="mt-5 text-4xl font-bold tracking-tight text-balance text-slate-900 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.08] dark:text-slate-100">
-            Des applications web solides, auditées, et prêtes pour l’IA.
+            Des applications qu’on peut reprendre trois ans plus tard sans
+            appréhension.
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-slate-600 dark:text-slate-400">
             {profile.name}, {profile.yearsOfExperience} ans à concevoir des
             API Symfony et des interfaces React pour des marketplaces, une
             plateforme de streaming et un studio de jeu. Aujourd’hui lead
-            developer chez Animalink, et disponible pour votre projet.
+            developer chez Animalink.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">

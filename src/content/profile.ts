@@ -22,11 +22,15 @@ export const profile = {
     'des interfaces React qui tiennent dans le temps, et l’outillage qui va autour. ' +
     'Depuis deux ans, j’y ajoute l’IA appliquée : des agents et des automatisations branchés ' +
     'sur de vraies API, pas des démos.',
-  /** Ce que je vends, en une phrase. Sert de description SEO à l'accueil. */
+  /**
+   * Ce que je vends, en une phrase. Sert de description SEO à l'accueil —
+   * tenue sous 160 caractères, la limite avant troncature dans les résultats
+   * Google.
+   */
   pitch:
-    'Développeur web full-stack indépendant à Lyon : développement d’applications sur mesure ' +
-    '(Symfony, React, TypeScript), audits de sécurité et d’application, mise en place de l’IA ' +
-    'dans vos outils. Treize ans d’expérience.',
+    'Développeur web indépendant à Lyon : applications sur mesure ' +
+    '(Symfony, React, TypeScript), audit de sécurité, intégration IA. ' +
+    'Treize ans d’expérience.',
   location: 'Lyon, France',
   /** Zone d'intervention, telle qu'affichée. */
   area: 'Lyon · à distance',
