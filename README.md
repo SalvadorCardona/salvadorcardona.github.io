@@ -38,6 +38,12 @@ Les articles s'écrivent dans Notion (voir ci-dessous). Le reste vit dans
 - **`profile.ts`** — identité, liens, technologies, expériences, diplômes,
   projets. Les entrées contenant `À COMPLÉTER` ne s'affichent pas : elles
   servent de gabarit.
+- **`services.ts`** — les prestations (`/services/<slug>`) et les interventions
+  ponctuelles. Chaque prestation porte son titre, sa description SEO, son
+  contenu section par section et sa FAQ ; le gabarit
+  `src/components/ServicePage.tsx` en fait la page et les données structurées.
+  Pour en ajouter une : une entrée ici, une route d'une ligne dans
+  `src/routes/services/`, et son chemin dans `scripts/postbuild.mjs`.
 - **`posts/`** — les articles du blog, un fichier par article. **Ces fichiers
   sont générés** : ils portent un en-tête qui le rappelle, et `npm run
   posts:sync` les écrase. Seul `post.ts` (le type `Post`, `getCover`,

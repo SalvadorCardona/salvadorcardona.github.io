@@ -18,6 +18,10 @@ body {
 
 html {
   font-family: var(--font-sans);
+  /* Les halos du hero débordent à droite et à gauche : on les rogne au lieu
+     de laisser la page défiler horizontalement. `clip` ne crée pas de
+     conteneur de défilement, l'en-tête collant continue de fonctionner. */
+  overflow-x: clip;
 }
 
 body {

@@ -14,6 +14,10 @@ import { Route as R404RouteImport } from './routes/404'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
+import { Route as ServicesIndexRouteImport } from './routes/services/index'
+import { Route as ServicesAuditSecuriteApplicationRouteImport } from './routes/services/audit-securite-application'
+import { Route as ServicesDeveloppementWebRouteImport } from './routes/services/developpement-web'
+import { Route as ServicesIntegrationIaRouteImport } from './routes/services/integration-ia'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -40,20 +44,50 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesIndexRoute = ServicesIndexRouteImport.update({
+  id: '/services/',
+  path: '/services/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesAuditSecuriteApplicationRoute =
+  ServicesAuditSecuriteApplicationRouteImport.update({
+    id: '/services/audit-securite-application',
+    path: '/services/audit-securite-application',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ServicesDeveloppementWebRoute =
+  ServicesDeveloppementWebRouteImport.update({
+    id: '/services/developpement-web',
+    path: '/services/developpement-web',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ServicesIntegrationIaRoute = ServicesIntegrationIaRouteImport.update({
+  id: '/services/integration-ia',
+  path: '/services/integration-ia',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/contact': typeof ContactRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
+  '/services/developpement-web': typeof ServicesDeveloppementWebRoute
+  '/services/integration-ia': typeof ServicesIntegrationIaRoute
   '/blog/': typeof BlogIndexRoute
+  '/services/': typeof ServicesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/contact': typeof ContactRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
+  '/services/developpement-web': typeof ServicesDeveloppementWebRoute
+  '/services/integration-ia': typeof ServicesIntegrationIaRoute
   '/blog': typeof BlogIndexRoute
+  '/services': typeof ServicesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -61,14 +95,46 @@ export interface FileRoutesById {
   '/404': typeof R404Route
   '/contact': typeof ContactRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
+  '/services/developpement-web': typeof ServicesDeveloppementWebRoute
+  '/services/integration-ia': typeof ServicesIntegrationIaRoute
   '/blog/': typeof BlogIndexRoute
+  '/services/': typeof ServicesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/404' | '/contact' | '/blog/$slug' | '/blog/'
+  fullPaths:
+    | '/'
+    | '/404'
+    | '/contact'
+    | '/blog/$slug'
+    | '/services/audit-securite-application'
+    | '/services/developpement-web'
+    | '/services/integration-ia'
+    | '/blog/'
+    | '/services/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/404' | '/contact' | '/blog/$slug' | '/blog'
-  id: '__root__' | '/' | '/404' | '/contact' | '/blog/$slug' | '/blog/'
+  to:
+    | '/'
+    | '/404'
+    | '/contact'
+    | '/blog/$slug'
+    | '/services/audit-securite-application'
+    | '/services/developpement-web'
+    | '/services/integration-ia'
+    | '/blog'
+    | '/services'
+  id:
+    | '__root__'
+    | '/'
+    | '/404'
+    | '/contact'
+    | '/blog/$slug'
+    | '/services/audit-securite-application'
+    | '/services/developpement-web'
+    | '/services/integration-ia'
+    | '/blog/'
+    | '/services/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -76,7 +142,11 @@ export interface RootRouteChildren {
   R404Route: typeof R404Route
   ContactRoute: typeof ContactRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  ServicesAuditSecuriteApplicationRoute: typeof ServicesAuditSecuriteApplicationRoute
+  ServicesDeveloppementWebRoute: typeof ServicesDeveloppementWebRoute
+  ServicesIntegrationIaRoute: typeof ServicesIntegrationIaRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  ServicesIndexRoute: typeof ServicesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -116,6 +186,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/': {
+      id: '/services/'
+      path: '/services'
+      fullPath: '/services/'
+      preLoaderRoute: typeof ServicesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/audit-securite-application': {
+      id: '/services/audit-securite-application'
+      path: '/services/audit-securite-application'
+      fullPath: '/services/audit-securite-application'
+      preLoaderRoute: typeof ServicesAuditSecuriteApplicationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/developpement-web': {
+      id: '/services/developpement-web'
+      path: '/services/developpement-web'
+      fullPath: '/services/developpement-web'
+      preLoaderRoute: typeof ServicesDeveloppementWebRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/integration-ia': {
+      id: '/services/integration-ia'
+      path: '/services/integration-ia'
+      fullPath: '/services/integration-ia'
+      preLoaderRoute: typeof ServicesIntegrationIaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -124,7 +222,11 @@ const rootRouteChildren: RootRouteChildren = {
   R404Route: R404Route,
   ContactRoute: ContactRoute,
   BlogSlugRoute: BlogSlugRoute,
+  ServicesAuditSecuriteApplicationRoute: ServicesAuditSecuriteApplicationRoute,
+  ServicesDeveloppementWebRoute: ServicesDeveloppementWebRoute,
+  ServicesIntegrationIaRoute: ServicesIntegrationIaRoute,
   BlogIndexRoute: BlogIndexRoute,
+  ServicesIndexRoute: ServicesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

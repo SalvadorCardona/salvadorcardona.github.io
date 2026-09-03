@@ -1,6 +1,7 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 
 import { links, profile } from '../content/profile'
+import { servicePath, services } from '../content/services'
 import { seo } from '../lib/seo'
 
 export const Route = createFileRoute('/contact')({
@@ -8,7 +9,7 @@ export const Route = createFileRoute('/contact')({
     seo({
       title: 'Contact',
       description:
-        'Écrire à Salvador Cardona : e-mail, LinkedIn, GitHub, X, Instagram.',
+        'Contacter Salvador Cardona, développeur web freelance à Lyon, pour un projet de développement, un audit ou une intégration IA : e-mail, LinkedIn, GitHub.',
       path: '/contact',
     }),
   component: Contact,
@@ -67,9 +68,24 @@ function Contact() {
         {profile.availability}
       </p>
       <p className="mt-4 leading-relaxed text-slate-600 dark:text-slate-400">
-        Une question technique, une proposition de mission, une envie de
+        Une proposition de mission, une question technique, une envie de
         collaborer sur un projet ouvert : l’e-mail reste le canal le plus fiable.
+        Décrivez le contexte en quelques lignes, je réponds avec des questions
+        ou un créneau pour en parler.
       </p>
+
+      <ul className="mt-6 flex flex-wrap gap-2 text-sm">
+        {services.map((service) => (
+          <li key={service.slug}>
+            <Link
+              to={servicePath(service.slug)}
+              className="rounded-full border border-slate-200 px-3 py-1 text-slate-600 transition-colors hover:border-sky-300 hover:text-sky-600 dark:border-slate-800 dark:text-slate-400 dark:hover:border-sky-700 dark:hover:text-sky-400"
+            >
+              {service.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
 
       <ul className="mt-10 space-y-3">
         {channels.map((channel) => (
