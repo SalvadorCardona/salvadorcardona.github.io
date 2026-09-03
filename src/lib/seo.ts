@@ -8,6 +8,9 @@
 export const SITE_URL = 'https://cardona.digital'
 export const SITE_NAME = 'Salvador Cardona'
 
+/** Identifiant stable de l'auteur dans les données structurées. */
+export const PERSON_ID = `${SITE_URL}/#person`
+
 type SeoInput = {
   title: string
   description: string
@@ -17,6 +20,8 @@ type SeoInput = {
   publishedTime?: string
   /** Chemin absolu de l'image de partage, ex. `/blog/mon-article.jpg`. */
   image?: string
+  /** Données structurées schema.org, un objet par bloc `<script>`. */
+  jsonLd?: Array<Record<string, unknown>>
 }
 
 export function seo({
@@ -26,6 +31,7 @@ export function seo({
   type = 'website',
   publishedTime,
   image,
+  jsonLd = [],
 }: SeoInput) {
   const url = `${SITE_URL}${path}`
   const fullTitle = path === '/' ? title : `${title} — ${SITE_NAME}`
@@ -58,5 +64,57 @@ export function seo({
   return {
     meta,
     links: [{ rel: 'canonical', href: url }],
+    scripts: jsonLd.map((data) => ({
+      type: 'application/ld+json',
+      // `<` échappé : un `</script>` dans une chaîne fermerait le bloc.
+      children: JSON.stringify(data).replace(/</g, '\\u003c'),
+    })),
+  }
+}
+
+/** L'auteur du site, tel que référencé par toutes les pages. */
+export function personJsonLd() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': PERSON_ID,
+    name: SITE_NAME,
+    url: SITE_URL,
+    jobTitle: 'Développeur web full-stack indépendant',
+    worksFor: { '@type': 'Organization', name: 'Animalink' },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Lyon',
+      addressCountry: 'FR',
+    },
+    knowsAbout: [
+      'Symfony',
+      'API Platform',
+      'React',
+      'TypeScript',
+      'JSON-LD',
+      'Sécurité applicative',
+      'Agents LLM',
+      'n8n',
+    ],
+    sameAs: [
+      'https://github.com/SalvadorCardona',
+      'https://www.linkedin.com/in/salvador-cardona-70911113a/',
+      'https://x.com/salvadevme',
+    ],
+  }
+}
+
+/** Fil d'Ariane, pour les pages sous `/services`. */
+export function breadcrumbJsonLd(items: Array<{ name: string; path: string }>) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: `${SITE_URL}${item.path}`,
+    })),
   }
 }

@@ -34,6 +34,10 @@ const REQUIRED_PAGES = [
   'index.html',
   'blog/index.html',
   'contact/index.html',
+  'services/index.html',
+  'services/developpement-web/index.html',
+  'services/audit-securite-application/index.html',
+  'services/integration-ia/index.html',
   '404/index.html',
   'sitemap.xml',
 ]

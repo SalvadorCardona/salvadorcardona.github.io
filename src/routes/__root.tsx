@@ -8,6 +8,7 @@ import {
 import appCss from '../styles.css?url'
 import { SiteHeader } from '../components/SiteHeader'
 import { SiteFooter } from '../components/SiteFooter'
+import { profile } from '../content/profile'
 import { SITE_NAME, seo } from '../lib/seo'
 
 export const Route = createRootRoute({
@@ -17,9 +18,8 @@ export const Route = createRootRoute({
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'theme-color', content: '#020617' },
       ...seo({
-        title: `${SITE_NAME} — Développeur web full-stack`,
-        description:
-          'Portfolio de Salvador Cardona, développeur web full-stack : parcours, technologies, projets et blog.',
+        title: `${SITE_NAME} — Développeur web full-stack indépendant à Lyon`,
+        description: profile.pitch,
         path: '/',
       }).meta,
     ],

@@ -37,8 +37,10 @@ const config = defineConfig({
         retryCount: 1,
         // Le crawler trouve /blog par le lien et /blog/ par la route : sans
         // ce filtre, la même page est rendue deux fois et apparaît en double
-        // dans le sitemap.
-        filter: ({ path }) => path === '/' || !path.endsWith('/'),
+        // dans le sitemap. Même chose pour les liens vers une ancre
+        // (/services#interventions) : c'est la même page que /services.
+        filter: ({ path }) =>
+          !path.includes('#') && (path === '/' || !path.endsWith('/')),
       },
       pages: [
         // Route non liée depuis le site : le crawler ne peut pas la trouver,
@@ -48,6 +50,12 @@ const config = defineConfig({
         // éviter le contenu dupliqué.
         {
           path: '/blog/',
+          sitemap: { exclude: true },
+          prerender: { enabled: false },
+        },
+        // Même chose pour /services, qui a aussi une route d'index.
+        {
+          path: '/services/',
           sitemap: { exclude: true },
           prerender: { enabled: false },
         },

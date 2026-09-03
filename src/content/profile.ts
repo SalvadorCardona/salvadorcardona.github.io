@@ -5,21 +5,34 @@
  * Aucun CMS, aucune base de données — on édite ce fichier, on commit, le site
  * se redéploie.
  *
- * Les entrées marquées « À COMPLÉTER » sont des gabarits vides : elles ne
- * s'affichent pas tant qu'elles ne sont pas remplies (voir `isFilled`).
+ * Les expériences reprennent le profil LinkedIn (relevé de septembre 2026),
+ * du plus récent au plus ancien. Les entrées marquées « À COMPLÉTER » sont des
+ * gabarits vides : elles ne s'affichent pas tant qu'elles ne sont pas remplies
+ * (voir `isFilled`).
  */
 
 export const profile = {
   name: 'Salvador Cardona',
-  role: 'Développeur web full-stack',
-  tagline: '13 ans à construire des applications web. Aujourd’hui sur Animalink.',
+  role: 'Développeur web full-stack indépendant',
+  /** Accroche courte, sous le nom. */
+  tagline:
+    'Treize ans d’applications web. Lead developer chez Animalink, à Lyon.',
   intro:
-    'Je conçois et développe des applications web de bout en bout : des API structurées, ' +
+    'Je conçois et développe des applications web de bout en bout : des API Symfony structurées, ' +
     'des interfaces React qui tiennent dans le temps, et l’outillage qui va autour. ' +
-    'J’aime les architectures explicites, les contrats de données clairs, et les outils ' +
-    'qu’on ouvre trois ans plus tard sans avoir peur.',
-  location: 'France',
-  availability: 'Ouvert aux échanges autour de projets web et IA.',
+    'Depuis deux ans, j’y ajoute l’IA appliquée : des agents et des automatisations branchés ' +
+    'sur de vraies API, pas des démos.',
+  /** Ce que je vends, en une phrase. Sert de description SEO à l'accueil. */
+  pitch:
+    'Développeur web full-stack indépendant à Lyon : développement d’applications sur mesure ' +
+    '(Symfony, React, TypeScript), audits de sécurité et d’application, mise en place de l’IA ' +
+    'dans vos outils. Treize ans d’expérience.',
+  location: 'Lyon, France',
+  /** Zone d'intervention, telle qu'affichée. */
+  area: 'Lyon · à distance',
+  yearsOfExperience: 13,
+  availability:
+    'Ouvert à de nouvelles missions : développement web, audit, intégration IA — à Lyon ou à distance.',
 } as const
 
 export const links = {
@@ -37,51 +50,58 @@ export type SkillGroup = {
 
 export const skills: Array<SkillGroup> = [
   {
+    title: 'Back-end',
+    items: [
+      'PHP 8',
+      'Symfony 7',
+      'API Platform',
+      'JSON-LD / Hydra',
+      'PostgreSQL',
+      'Elasticsearch',
+      'Mercure',
+      'Node.js',
+      'Python',
+    ],
+  },
+  {
     title: 'Front-end',
     items: [
       'TypeScript',
       'React 19',
       'TanStack Router / Start',
       'TanStack Query',
+      'Vue',
       'Angular',
       'Tailwind CSS',
-      'Vite',
+      'shadcn/ui',
       'Three.js',
     ],
   },
   {
-    title: 'Back-end',
+    title: 'IA appliquée',
     items: [
-      'PHP',
-      'Symfony',
-      'API Platform',
-      'JSON-LD / Hydra',
-      'Node.js',
-      'Python',
-      'REST',
-      'Mercure',
-    ],
-  },
-  {
-    title: 'Données & IA',
-    items: [
-      'Ollama',
-      'OpenRouter',
       'Agents LLM',
       'Claude Code',
-      'Prompt engineering',
+      'MCP',
+      'n8n',
+      'Ollama',
+      'OpenRouter',
+      'Mistral',
       'Whisper',
+      'Prompt engineering',
     ],
   },
   {
-    title: 'Outillage & infra',
+    title: 'Architecture & infra',
     items: [
+      'Clean Architecture',
+      'CQRS / DDD',
       'Docker',
-      'Git / GitHub Actions',
+      'Terraform',
+      'AWS',
+      'GitHub Actions',
       'Linux',
-      'Vitest',
-      'Makefile',
-      'CI/CD',
+      'Vitest / PHPUnit',
     ],
   },
 ]
@@ -90,6 +110,7 @@ export type Experience = {
   company: string
   role: string
   period: string
+  /** Contexte métier en une ligne, puis ce qui a été fait. */
   description: string
   stack: Array<string>
 }
@@ -97,19 +118,105 @@ export type Experience = {
 export const experiences: Array<Experience> = [
   {
     company: 'Animalink',
-    role: 'Développeur web full-stack',
-    period: 'Aujourd’hui',
+    role: 'Lead developer',
+    period: 'Janvier 2024 — aujourd’hui',
     description:
-      'Conception et développement de la plateforme : API JSON-LD, interfaces React, ' +
-      'et l’outillage interne qui accélère l’équipe au quotidien.',
-    stack: ['TypeScript', 'React', 'Symfony', 'API Platform', 'Docker'],
+      'Application web et mobile pour le soin animalier. Nouvelle plateforme construite de bout en bout : ' +
+      'API REST sous API Platform en Clean Architecture et CQRS, recherche Elasticsearch, SPA React typée depuis ' +
+      'le schéma de l’API, infrastructure AWS provisionnée en Terraform. Côté IA : agents n8n branchés sur ' +
+      'l’API, analyse documentaire avec Mistral, chatbot produit.',
+    stack: [
+      'Symfony 7',
+      'API Platform',
+      'React',
+      'TypeScript',
+      'Elasticsearch',
+      'AWS',
+      'Terraform',
+      'n8n',
+    ],
   },
   {
-    company: 'À COMPLÉTER',
-    role: 'À COMPLÉTER',
-    period: 'À COMPLÉTER',
-    description: 'À COMPLÉTER',
-    stack: [],
+    company: 'Enkate',
+    role: 'Développeur back-end',
+    period: 'Février — juin 2023',
+    description:
+      'Studio de jeu vidéo lyonnais. API REST sous API Platform et Symfony 6 (Clean Architecture, CQRS, DDD), ' +
+      'ajout d’une API web sur le serveur .NET existant, TMA C# côté Unity, découpage en micro-services et ' +
+      'dockerisation complète.',
+    stack: ['Symfony 6', 'API Platform', 'C# / .NET', 'Unity', 'Docker'],
+  },
+  {
+    company: 'Greenweez',
+    role: 'Développeur full-stack',
+    period: 'Août 2022 — janvier 2023',
+    description:
+      'Marketplace du bio. API REST sous API Platform, migration du socle e-commerce vers Sylius, ' +
+      'front SSR sous Next.js pour un catalogue lisible par les moteurs de recherche.',
+    stack: ['Symfony 6', 'Sylius', 'Next.js', 'React', 'Docker'],
+  },
+  {
+    company: 'BeeTrip',
+    role: 'Développeur full-stack',
+    period: 'Février — juillet 2022',
+    description:
+      'Marketplace des outils du BTP. Intégration du SDK Wizaplace pour la brique marketplace, API sous ' +
+      'API Platform, SPA Vue.js, conseil sur les choix techniques.',
+    stack: ['Symfony 6', 'API Platform', 'Vue.js', 'TypeScript', 'Wizaplace'],
+  },
+  {
+    company: 'QANTIS.co',
+    role: 'Développeur full-stack',
+    period: 'Septembre 2021 — janvier 2022',
+    description:
+      'Marketplace B2B du BTP. SPA Vue 3 et TypeScript, API REST sous API Platform, tests unitaires et ' +
+      'fonctionnels sur les deux stacks.',
+    stack: ['Vue 3', 'TypeScript', 'Symfony 6', 'API Platform'],
+  },
+  {
+    company: 'Bedrock Streaming',
+    role: 'Développeur back-end Symfony',
+    period: 'Février — août 2021',
+    description:
+      'Éditeur des plateformes de streaming de TF1 et M6. Évolutions de l’API Symfony 5 en DDD, ' +
+      'tests unitaires et fonctionnels, travaux sur plusieurs services AWS.',
+    stack: ['Symfony 5', 'PHP', 'DDD', 'AWS'],
+  },
+  {
+    company: 'Jacquet Metal Service',
+    role: 'Développeur full-stack',
+    period: 'Août 2019 — février 2021',
+    description:
+      'Marketplace B2B de la métallurgie. Socle Sylius et API Platform, SPA Angular, migration de la base ' +
+      'de données d’Oracle vers PostgreSQL.',
+    stack: ['Symfony', 'Sylius', 'API Platform', 'Angular', 'PostgreSQL'],
+  },
+  {
+    company: 'Wizaplace',
+    role: 'Développeur full-stack',
+    period: 'Décembre 2017 — août 2019',
+    description:
+      'Éditeur de solution marketplace. Développement du SDK PHP utilisé par les intégrateurs, ' +
+      'marketplaces clientes sous Symfony 4, fronts Vue 2, Vuex et Nuxt.',
+    stack: ['Symfony 4', 'PHP', 'Vue 2', 'Nuxt'],
+  },
+  {
+    company: 'EDD',
+    role: 'Développeur full-stack et formateur',
+    period: 'Octobre 2018 — janvier 2019',
+    description:
+      'Indexation de médias (vidéo, presse, radio) dans une base documentaire, en parallèle de Wizaplace. ' +
+      'Front Vue 2, back Symfony 4, et formation de l’équipe pour qu’elle reprenne la main.',
+    stack: ['Symfony 4', 'Vue 2', 'PostgreSQL'],
+  },
+  {
+    company: 'Agence Kali',
+    role: 'Développeur full-stack',
+    period: 'Septembre — décembre 2017',
+    description:
+      'Agence web lyonnaise. Application interne d’auto-formation (API Slim, front Angular), ' +
+      'maintenance de sites WordPress et Drupal.',
+    stack: ['PHP', 'Slim', 'Angular', 'WordPress', 'Drupal'],
   },
 ]
 

@@ -18,8 +18,14 @@ Portfolio statique : TanStack Start prérendu au build, publié sur GitHub Pages
   main — un article importe son type de là, jamais de l'index, sinon le cycle
   est là.
 - **Le reste du contenu est en dur** dans `src/content/` : `profile.ts` pour le
-  CV, `covers.json` pour les illustrations. Pas d'autre CMS, pas de chargement
-  de fichiers Markdown.
+  CV, `services.ts` pour les prestations, `covers.json` pour les illustrations.
+  Pas d'autre CMS, pas de chargement de fichiers Markdown.
+- **Une page service = une entrée dans `services.ts` + une route d'une ligne**
+  dans `src/routes/services/<slug>.tsx`, qui rend le gabarit commun
+  `components/ServicePage.tsx`. Ajouter le chemin à `REQUIRED_PAGES` dans
+  `scripts/postbuild.mjs`. Le contenu et la FAQ sont repris tels quels dans le
+  JSON-LD (`Service`, `FAQPage`, `BreadcrumbList`) : ne pas dupliquer, éditer
+  la donnée.
 - **Un article = une illustration.** Deux sources possibles : la couverture de
   la page Notion, rapatriée par `posts:sync` ; ou, à défaut, une image générée
   par `npm run post:image -- <slug>` depuis le `prompt` de `covers.json`. Dans
@@ -42,8 +48,8 @@ npm run typecheck
 npm run build        # échoue si une page attendue manque
 ```
 
-Le build doit annoncer les quatre pages fixes (`/`, `/blog`, `/contact`, `/404`)
-plus un article par `src/content/posts/<slug>.tsx`, et écrire
-`dist/client/404.html`. Il échoue si une page attendue manque, ou si une
+Le build doit annoncer les pages fixes (`/`, `/services` et ses trois pages
+service, `/blog`, `/contact`, `/404`) plus un article par
+`src/content/posts/<slug>.tsx`, et écrire `dist/client/404.html`. Il échoue si une page attendue manque, ou si une
 illustration déclarée dans `covers.json` n'a pas suivi.
 Pour inspecter le rendu réel : `npm run serve`.
