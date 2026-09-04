@@ -252,7 +252,7 @@ export const projects: Array<Project> = [
     name: 'ticket-runner',
     description:
       'Vos tickets Notion, joués par Claude Code : une session par ticket, une pull request à l’arrivée.',
-    url: 'https://github.com/SalvadorCardona/ticket-runner',
+    url: 'https://cardona.digital/ticket-runner/',
     tags: ['Python', 'Agents LLM', 'Notion API'],
     featured: true,
   },
