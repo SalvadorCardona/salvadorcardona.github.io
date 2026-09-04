@@ -18,5 +18,9 @@
     "alt": "Illustration abstraite : une fiche entre dans une boucle fermée et en ressort en branche fusionnée.",
     "prompt": "A single card entering a closed circular loop of arrows and leaving it as a branching line that merges back into a straight track",
     "file": "faire-jouer-ses-tickets-par-un-agent.jpg"
+  },
+  "decouper-un-domaine-metier-en-ressources-api-platform": {
+    "alt": "Illustration abstraite : un bloc unique se scinde en plusieurs cartes distinctes, reliées par de fines lignes.",
+    "prompt": "A single large block splitting into several distinct stacked cards drifting apart, thin connecting lines running between them, one card mirrored as a lighter duplicate on the right"
   }
 }
