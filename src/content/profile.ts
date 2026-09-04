@@ -276,7 +276,7 @@ export const projects: Array<Project> = [
     name: 'whisper-desk',
     description:
       'Dictée vocale hors-ligne pour Linux, WSL et macOS : un raccourci clavier, un overlay, et le texte est dans le presse-papiers.',
-    url: 'https://github.com/SalvadorCardona/whisper-desk',
+    url: 'https://cardona.digital/whisper-desk/',
     tags: ['Python', 'Whisper', 'Linux', 'macOS'],
     featured: true,
   },
