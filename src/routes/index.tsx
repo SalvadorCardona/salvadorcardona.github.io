@@ -16,7 +16,7 @@ import { SITE_NAME, SITE_URL, personJsonLd, seo } from '../lib/seo'
 export const Route = createFileRoute('/')({
   head: () =>
     seo({
-      title: `${SITE_NAME} — Développeur web full-stack indépendant à Lyon`,
+      title: `${SITE_NAME} — ${profile.role} · Symfony / API Platform · React & TypeScript · IA appliquée`,
       description: profile.pitch,
       path: '/',
       jsonLd: [
@@ -38,8 +38,8 @@ export const Route = createFileRoute('/')({
 const facts = [
   { label: 'Expérience', value: `${profile.yearsOfExperience} ans, dix missions` },
   { label: 'Aujourd’hui', value: 'Lead developer chez Animalink' },
-  { label: 'Stack', value: 'Symfony · API Platform · React · TypeScript' },
-  { label: 'IA appliquée', value: 'Agents LLM · n8n · MCP · Ollama' },
+  { label: 'Stack', value: 'Symfony / API Platform · React & TypeScript' },
+  { label: 'IA appliquée', value: 'Agents · LLM · outillage · MCP · n8n' },
   { label: 'Zone', value: profile.area },
 ]
 
@@ -54,6 +54,26 @@ function Home() {
   return (
     <div className="mx-auto max-w-5xl px-6">
       <Hero />
+
+      <Section title="À propos" id="a-propos">
+        <div className="max-w-2xl space-y-4 text-slate-600 dark:text-slate-400">
+          {profile.about.map((paragraph) => (
+            <p key={paragraph} className="leading-relaxed text-pretty">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+        <p className="mt-6 text-sm">
+          <a
+            href={links.linkedin}
+            target="_blank"
+            rel="noreferrer me"
+            className="text-sky-600 hover:underline dark:text-sky-400"
+          >
+            Le profil complet sur LinkedIn →
+          </a>
+        </p>
+      </Section>
 
       <Section
         title="Services"
@@ -97,7 +117,7 @@ function Home() {
         <Section
           title="Expériences"
           id="experiences"
-          intro="Des marketplaces, une plateforme de streaming, un studio de jeu, une application de soin animalier. Le détail sur LinkedIn."
+          intro="Des marketplaces, une plateforme de streaming, un studio de jeu, une application de soin animalier — et, en parallèle, de l’outillage open source pour agents IA. Le détail sur LinkedIn."
         >
           <ol className="space-y-8">
             {visibleExperiences.map((item) => (
@@ -266,11 +286,15 @@ function Hero() {
             Des applications qu’on peut reprendre trois ans plus tard sans
             appréhension.
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-pretty text-slate-600 dark:text-slate-400">
+          <p className="mt-5 text-base font-medium text-pretty text-slate-800 dark:text-slate-200">
+            {profile.headline}
+          </p>
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-pretty text-slate-600 dark:text-slate-400">
             {profile.name}, {profile.yearsOfExperience} ans à concevoir des
             API Symfony et des interfaces React pour des marketplaces, une
             plateforme de streaming et un studio de jeu. Aujourd’hui lead
-            developer chez Animalink.
+            developer chez Animalink, et des agents LLM qui livrent du code sur
+            mon temps propre.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">

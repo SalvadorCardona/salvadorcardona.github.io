@@ -5,32 +5,45 @@
  * Aucun CMS, aucune base de données — on édite ce fichier, on commit, le site
  * se redéploie.
  *
- * Les expériences reprennent le profil LinkedIn (relevé de septembre 2026),
- * du plus récent au plus ancien. Les entrées marquées « À COMPLÉTER » sont des
- * gabarits vides : elles ne s'affichent pas tant qu'elles ne sont pas remplies
- * (voir `isFilled`).
+ * Le contenu est aligné sur le profil LinkedIn refondu le 7 septembre 2026 :
+ * même titre, même stack, mêmes expériences — reformulés pour le web, jamais
+ * copiés mot pour mot. Les expériences vont du plus récent au plus ancien.
+ * Les entrées marquées « À COMPLÉTER » sont des gabarits vides : elles ne
+ * s'affichent pas tant qu'elles ne sont pas remplies (voir `isFilled`).
  */
 
 export const profile = {
   name: 'Salvador Cardona',
   role: 'Développeur web full-stack indépendant',
-  /** Accroche courte, sous le nom. */
-  tagline:
-    'Treize ans d’applications web. Lead developer chez Animalink, à Lyon.',
-  intro:
-    'Je conçois et développe des applications web de bout en bout : des API Symfony structurées, ' +
-    'des interfaces React qui tiennent dans le temps, et l’outillage qui va autour. ' +
-    'Depuis deux ans, j’y ajoute l’IA appliquée : des agents et des automatisations branchés ' +
-    'sur de vraies API, pas des démos.',
+  /**
+   * Le titre LinkedIn, sans le rôle qui le précède. Affiché sous le titre du
+   * hero et repris dans le `<title>` de l'accueil.
+   */
+  headline:
+    'Symfony / API Platform · React & TypeScript · IA appliquée : agents, LLM, outillage',
+  /**
+   * Présentation, un paragraphe par entrée. Reprend les faits de la section
+   * « Infos » LinkedIn : la stack, ce qui a changé côté IA, et où ça tourne.
+   */
+  about: [
+    'Développeur web depuis 2013, indépendant à Lyon. Symfony et API Platform côté serveur, ' +
+      'React et TypeScript côté navigateur, JSON-LD entre les deux : le contrat d’API décrit ' +
+      'assez la donnée pour que le front en génère ses types, ses formulaires et ses vues.',
+    'Ces derniers mois, c’est sur l’IA appliquée que j’ai le plus progressé, avec des outils ' +
+      'publics que j’utilise tous les jours : ticket-runner transforme un ticket Notion en session ' +
+      'd’agent puis en pull request, gnome-claude-usage affiche la consommation Claude Code dans ' +
+      'GNOME Shell, whisper-desk dicte hors-ligne sous Linux, WSL et macOS. Chez Animalink, ce ' +
+      'sont des agents n8n branchés sur l’API Symfony, de l’analyse documentaire avec Mistral et ' +
+      'un chatbot produit.',
+  ],
   /**
    * Ce que je vends, en une phrase. Sert de description SEO à l'accueil —
    * tenue sous 160 caractères, la limite avant troncature dans les résultats
    * Google.
    */
   pitch:
-    'Développeur web indépendant à Lyon : applications sur mesure ' +
-    '(Symfony, React, TypeScript), audit de sécurité, intégration IA. ' +
-    'Treize ans d’expérience.',
+    'Développeur web full-stack indépendant à Lyon : Symfony / API Platform, ' +
+    'React & TypeScript, IA appliquée (agents, LLM, outillage). Treize ans d’expérience.',
   location: 'Lyon, France',
   /** Zone d'intervention, telle qu'affichée. */
   area: 'Lyon · à distance',
@@ -52,61 +65,58 @@ export type SkillGroup = {
   items: Array<string>
 }
 
+/**
+ * Le bloc « STACK » de la section Infos LinkedIn, dans le même ordre, plus les
+ * compétences IA déclarées là-bas (MCP, LLM) et les entrées corrigées
+ * (Next.js, Sylius). Modifier ici et sur LinkedIn ensemble.
+ */
 export const skills: Array<SkillGroup> = [
   {
-    title: 'Back-end',
+    title: 'Back',
     items: [
-      'PHP 8',
+      'PHP 8.4',
       'Symfony 7',
       'API Platform',
       'JSON-LD / Hydra',
-      'PostgreSQL',
-      'Elasticsearch',
-      'Mercure',
-      'Node.js',
       'Python',
+      'Node.js',
+      'Mercure',
+      'Elasticsearch',
+      'PostgreSQL',
+      'Sylius',
     ],
   },
   {
-    title: 'Front-end',
+    title: 'Front',
     items: [
       'TypeScript',
       'React 19',
-      'TanStack Router / Start',
-      'TanStack Query',
+      'TanStack Router / Start & Query',
       'Vue',
       'Angular',
-      'Tailwind CSS',
+      'Tailwind',
       'shadcn/ui',
       'Three.js',
+      'Next.js',
     ],
   },
   {
-    title: 'IA appliquée',
+    title: 'IA',
     items: [
-      'Agents LLM',
       'Claude Code',
-      'MCP',
-      'n8n',
       'Ollama',
       'OpenRouter',
       'Mistral',
+      'n8n',
       'Whisper',
       'Prompt engineering',
+      'MCP',
+      'LLM',
     ],
   },
   {
-    title: 'Architecture & infra',
-    items: [
-      'Clean Architecture',
-      'CQRS / DDD',
-      'Docker',
-      'Terraform',
-      'AWS',
-      'GitHub Actions',
-      'Linux',
-      'Vitest / PHPUnit',
-    ],
+    title: 'Infra',
+    items: ['Docker', 'Terraform', 'AWS', 'GitHub Actions', 'Linux'],
   },
 ]
 
@@ -138,6 +148,34 @@ export const experiences: Array<Experience> = [
       'AWS',
       'Terraform',
       'n8n',
+    ],
+  },
+  {
+    company: 'SalvadorCardona (GitHub)',
+    role: 'Open source — outillage et agents IA',
+    period: 'Janvier 2024 — aujourd’hui',
+    description:
+      'Sur mon temps propre, des outils qui font travailler des agents LLM sur des tâches réelles, et ' +
+      'l’écosystème front qui va avec. ticket-runner : un ticket Notion devient une session Claude Code ' +
+      'dans une worktree git jetable, avec une pull request à l’arrivée. gnome-claude-usage : extension ' +
+      'GNOME Shell publiée sur extensions.gnome.org, qui lit la consommation Claude Code depuis la CLI ' +
+      'officielle. whisper-desk : dictée vocale hors-ligne, sur GPU ou CPU, pour Linux, WSL et macOS. ' +
+      'trader-ia : arène de paper trading S&P 500 entre agents traders. Et neuf paquets pour consommer ' +
+      'une API JSON-LD / Hydra sans réécrire le même CRUD : react-resource-view, react-data-form, ' +
+      'jsonld-api-client, jsonld-repository, jsonld-item, resource-registry, react-jwt-session, ' +
+      'react-mini-i18n, ssr-safe-storage.',
+    stack: [
+      'Python',
+      'TypeScript',
+      'React',
+      'Claude Code',
+      'MCP',
+      'Ollama',
+      'OpenRouter',
+      'faster-whisper',
+      'n8n',
+      'Notion API',
+      'GitHub Actions',
     ],
   },
   {
@@ -286,6 +324,7 @@ export const projects: Array<Project> = [
       'Indicateur GNOME Shell pour la consommation Claude Code : un camembert dans la barre, les limites et heures de reset au clic.',
     url: 'https://github.com/SalvadorCardona/gnome-claude-usage',
     tags: ['GNOME Shell', 'JavaScript', 'Python'],
+    featured: true,
   },
   {
     name: 'react-data-form',
@@ -293,6 +332,7 @@ export const projects: Array<Project> = [
       'Formulaires React pilotés par la donnée : construction déclarative, contrôleurs de champs, groupes et étapes — pensés pour API Platform.',
     url: 'https://github.com/SalvadorCardona/react-data-form',
     tags: ['React', 'TypeScript', 'Formulaires'],
+    featured: true,
   },
   {
     name: 'jsonld-api-client',

@@ -96,7 +96,11 @@ export function personJsonLd() {
       'JSON-LD',
       'Sécurité applicative',
       'Agents LLM',
+      'Claude Code',
+      'MCP',
+      'Ollama',
       'n8n',
+      'Python',
     ],
     sameAs: [
       'https://github.com/SalvadorCardona',
