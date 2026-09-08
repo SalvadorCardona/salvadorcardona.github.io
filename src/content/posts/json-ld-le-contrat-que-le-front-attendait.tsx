@@ -1,3 +1,8 @@
+/**
+ * Généré par `npm run posts:sync` depuis la database Notion « Blog Salvador Cardona ».
+ * Ne pas éditer à la main : la prochaine synchronisation écrase ce fichier.
+ */
+
 import type { Post } from './post'
 
 export const post: Post = {
@@ -23,8 +28,9 @@ export const post: Post = {
         sont autorisées. Le front doit tout redire en dur — donc tout redire à
         chaque écran.
       </p>
-
-      <h2>Ce que change une ressource qui se présente</h2>
+      <h2>
+        Ce que change une ressource qui se présente
+      </h2>
       <p>
         JSON-LD ajoute le contexte manquant. Chaque ressource porte son
         identifiant global et son type :
@@ -39,19 +45,20 @@ export const post: Post = {
 }`}</code>
       </pre>
       <p>
-        Trois lignes, et tout devient possible. <code>@id</code> est une URL :
-        c’est à la fois la clé de cache et l’adresse de rechargement. Une
-        relation n’est plus un entier opaque, c’est un lien qu’on peut suivre.
-        Et <code>@type</code> permet au front de demander « comment j’affiche
-        ça ? » sans savoir à l’avance ce que « ça » est.
+        Trois lignes, et tout devient possible. <code>{`@id`}</code> est une
+        URL : c’est à la fois la clé de cache et l’adresse de rechargement.
+        Une relation n’est plus un entier opaque, c’est un lien qu’on peut
+        suivre. Et <code>{`@type`}</code> permet au front de demander «
+        comment j’affiche ça ? » sans savoir à l’avance ce que « ça » est.
       </p>
       <p>
         Hydra, la couche au-dessus, ajoute les opérations disponibles et la
         pagination. L’API ne renvoie plus seulement des données : elle renvoie
         ce qu’on a le droit d’en faire.
       </p>
-
-      <h2>Un registre plutôt que des conditions</h2>
+      <h2>
+        Un registre plutôt que des conditions
+      </h2>
       <p>
         À partir de là, la brique centrale du front devient un registre : on
         associe des métadonnées d’affichage à un type d’IRI, et les composants
@@ -65,8 +72,9 @@ export const post: Post = {
         partir de ça. On n’écrit plus des formulaires, on écrit les quelques
         contrôleurs de champs qui manquent.
       </p>
-
-      <h2>Où la magie s’arrête</h2>
+      <h2>
+        Où la magie s’arrête
+      </h2>
       <p>
         Une couche générique est excellente pour les 80 % d’écrans qui se
         ressemblent — et devient une prison pour les 20 % restants. Le tableau
@@ -76,9 +84,9 @@ export const post: Post = {
       </p>
       <p>
         La règle qui a le mieux tenu chez moi : la couche générique doit
-        toujours pouvoir être court-circuitée. Le jour où il faut la contourner
-        par une option de configuration, c’est qu’il fallait écrire l’écran à
-        la main.
+        toujours pouvoir être court-circuitée. Le jour où il faut la
+        contourner par une option de configuration, c’est qu’il fallait écrire
+        l’écran à la main.
       </p>
     </>
   ),

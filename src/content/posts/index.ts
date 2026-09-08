@@ -1,30 +1,21 @@
 /**
- * Le sommaire du blog : un article = un fichier de ce dossier, listé ici.
- *
- * Le corps d'un article est du JSX : pas de parseur Markdown, pas de fichiers
- * à charger, pas d'appel réseau. Tout part dans le bundle et est prérendu au
- * build.
- *
- * Pour ajouter un article : créer `<slug>.tsx` à côté de ses voisins, exporter
- * son `post`, puis l'ajouter au tableau ci-dessous. L'ordre n'a pas
- * d'importance, `sortedPosts` trie par date. Le prérendu découvre l'URL tout
- * seul (voir `vite.config.ts`).
- *
- * Son illustration vit dans `../covers.json` : une entrée par slug, puis
- * `npm run post:image -- <slug>` pour la faire générer par OpenRouter.
+ * Généré par `npm run posts:sync` depuis la database Notion « Blog Salvador Cardona ».
+ * Ne pas éditer à la main : la prochaine synchronisation écrase ce fichier.
  */
 
 import type { Post } from './post'
 
-import { post as faireJouerSesTicketsParUnAgent } from './faire-jouer-ses-tickets-par-un-agent'
-import { post as jsonLdLeContratQueLeFrontAttendait } from './json-ld-le-contrat-que-le-front-attendait'
+import { post as decouperUnDomaineMetierEnRessourcesApiPlatform } from './decouper-un-domaine-metier-en-ressources-api-platform'
 import { post as suivreSaConsommationClaudeCodeSousLinux } from './suivre-sa-consommation-claude-code-sous-linux'
 import { post as unPortfolioTanstackStartSurGithubPages } from './un-portfolio-tanstack-start-sur-github-pages'
+import { post as jsonLdLeContratQueLeFrontAttendait } from './json-ld-le-contrat-que-le-front-attendait'
+import { post as faireJouerSesTicketsParUnAgent } from './faire-jouer-ses-tickets-par-un-agent'
 
 export type { Post, PostCover } from './post'
 export { formatDate, getCover } from './post'
 
 export const posts: Array<Post> = [
+  decouperUnDomaineMetierEnRessourcesApiPlatform,
   suivreSaConsommationClaudeCodeSousLinux,
   unPortfolioTanstackStartSurGithubPages,
   jsonLdLeContratQueLeFrontAttendait,

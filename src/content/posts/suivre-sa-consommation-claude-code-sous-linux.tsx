@@ -1,3 +1,8 @@
+/**
+ * Généré par `npm run posts:sync` depuis la database Notion « Blog Salvador Cardona ».
+ * Ne pas éditer à la main : la prochaine synchronisation écrase ce fichier.
+ */
+
 import type { Post } from './post'
 
 export const post: Post = {
@@ -13,20 +18,20 @@ export const post: Post = {
       <p>
         Un abonnement Claude Code, ce n’est pas un compteur mais trois, qui
         courent en même temps : une fenêtre glissante de cinq heures, une
-        limite hebdomadaire tous modèles confondus, et une limite
-        hebdomadaire propre au modèle le plus cher. Chacune a son
-        pourcentage, chacune a son heure de remise à zéro, et aucune des
-        trois n’est visible nulle part quand on travaille.
+        limite hebdomadaire tous modèles confondus, et une limite hebdomadaire
+        propre au modèle le plus cher. Chacune a son pourcentage, chacune a
+        son heure de remise à zéro, et aucune des trois n’est visible nulle
+        part quand on travaille.
       </p>
       <p>
-        Sur Linux, la seule façon de les lire était de taper{' '}
-        <code>/usage</code> dans une session ouverte. Il faut donc une session
-        ouverte, et il faut interrompre ce qu’on y fait pour poser la
-        question. J’ai fini par écrire l’extension GNOME Shell qui répond à ma
-        place.
+        Sur Linux, la seule façon de les lire était de taper <code>{`/usage`}</code>{' '}
+        dans une session ouverte. Il faut donc une session ouverte, et il faut
+        interrompre ce qu’on y fait pour poser la question. J’ai fini par
+        écrire l’extension GNOME Shell qui répond à ma place.
       </p>
-
-      <h2>Le problème : une limite qu’on découvre en la touchant</h2>
+      <h2>
+        Le problème : une limite qu’on découvre en la touchant
+      </h2>
       <p>
         Le vrai coût n’est pas la limite, c’est la surprise. On lance une
         grosse tâche sans savoir qu’il reste dix minutes de fenêtre, et elle
@@ -41,8 +46,9 @@ export const post: Post = {
         Une jauge qui a tort ne rend pas service : on cesse de la regarder au
         premier écart.
       </p>
-
-      <h2>Un camembert dans la barre</h2>
+      <h2>
+        Un camembert dans la barre
+      </h2>
       <p>
         L’extension pose un anneau dans la barre supérieure, avec le
         pourcentage à côté. C’est tout ce qui reste visible en permanence, et
@@ -52,15 +58,12 @@ export const post: Post = {
       <figure>
         <img
           src="/blog/claude-usage-panel.png"
-          alt="La barre supérieure de GNOME, avec un anneau vert rempli au tiers suivi de la mention 35 %."
+          alt="L’indicateur dans la barre : la fenêtre de cinq heures en cours."
           width={360}
           height={108}
-          /* La capture est transparente : elle vient d'une barre sombre. */
           className="mx-auto rounded-lg bg-slate-900"
         />
-        <figcaption>
-          L’indicateur dans la barre : la fenêtre de cinq heures en cours.
-        </figcaption>
+        <figcaption>L’indicateur dans la barre : la fenêtre de cinq heures en cours.</figcaption>
       </figure>
       <p>
         Au clic, le menu déplie les trois limites — chacune avec son anneau,
@@ -73,23 +76,21 @@ export const post: Post = {
       <figure>
         <img
           src="/blog/claude-usage-menu-fr.png"
-          alt="Le menu de l’extension : trois jauges circulaires — session courante 35 %, semaine tous modèles 25 %, semaine Fable 8 % — puis le détail des requêtes et des sessions sur 24 heures et 7 jours."
+          alt="Le menu ouvert : les trois limites, leur remise à zéro, et ce qui pèse dans la consommation."
           width={420}
           height={590}
-          className="mx-auto"
+          className="mx-auto rounded-lg bg-slate-900"
         />
-        <figcaption>
-          Le menu ouvert : les trois limites, leur remise à zéro, et ce qui
-          pèse dans la consommation.
-        </figcaption>
+        <figcaption>Le menu ouvert : les trois limites, leur remise à zéro, et ce qui pèse dans la consommation.</figcaption>
       </figure>
       <p>
         C’est cette deuxième moitié qui a fini par changer ma façon de
         travailler. Voir « 90 % avec quatre sessions ou plus en parallèle »
         explique en une ligne pourquoi une fenêtre part si vite.
       </p>
-
-      <h2>D’où viennent les chiffres</h2>
+      <h2>
+        D’où viennent les chiffres
+      </h2>
       <p>
         De la même commande, jouée en mode non interactif :
       </p>
@@ -100,21 +101,22 @@ export const post: Post = {
         Ce sont donc les chiffres officiels du compte, pas une reconstitution.
         Et surtout, l’extension ne parle jamais à Anthropic : c’est le CLI qui
         le fait, avec la session dont il dispose déjà. Aucune clé d’API à
-        créer, aucun jeton dépensé pour un relevé, et le fichier{' '}
-        <code>~/.claude/.credentials.json</code> n’est jamais ouvert.
+        créer, aucun jeton dépensé pour un relevé, et le fichier <code>{`~/.claude/.credentials.json`}</code>{' '}
+        n’est jamais ouvert.
       </p>
       <p>
         Contrepartie assumée : sans le CLI installé et connecté, il n’y a rien
         à afficher. Le menu le dit franchement plutôt que de montrer un
         chiffre faux.
       </p>
-
-      <h2>Ne jamais bloquer le shell</h2>
+      <h2>
+        Ne jamais bloquer le shell
+      </h2>
       <p>
         Un relevé prend environ cinq secondes. Dans GNOME Shell, cette durée
         n’est pas une gêne, c’est une faute : les extensions tournent dans le
-        processus du shell, et tout ce qui bloque leur boucle bloque le
-        bureau entier — le curseur, les fenêtres, le clavier.
+        processus du shell, et tout ce qui bloque leur boucle bloque le bureau
+        entier — le curseur, les fenêtres, le clavier.
       </p>
       <p>
         Le sous-processus est donc lancé de façon strictement asynchrone, avec
@@ -136,13 +138,14 @@ const [stdout, stderr] = await proc.communicate_utf8_async(null, cancellable)`}<
         Le reste suit la même logique d’économie : un relevé toutes les cinq
         minutes, plus un à l’ouverture du menu si le dernier date de plus
         d’une minute. Deux détails m’ont coûté du temps — le shell hérite d’un{' '}
-        <code>PATH</code> minimal, il faut donc aller chercher le binaire là
-        où les installeurs le posent ; et <code>claude</code> archive une
-        session par répertoire visité, d’où un dossier de cache dédié comme
-        répertoire de travail plutôt que le dossier personnel.
+        <code>{`PATH`}</code> minimal, il faut donc aller chercher le binaire
+        là où les installeurs le posent ; et <code>{`claude`}</code> archive
+        une session par répertoire visité, d’où un dossier de cache dédié
+        comme répertoire de travail plutôt que le dossier personnel.
       </p>
-
-      <h2>Parser une sortie qui n’est pas une interface</h2>
+      <h2>
+        Parser une sortie qui n’est pas une interface
+      </h2>
       <p>
         Le CLI répond en anglais quelle que soit la locale. L’extension lit
         donc l’anglais, mais n’en garde rien : le parseur ne rend que des clés
@@ -150,15 +153,16 @@ const [stdout, stderr] = await proc.communicate_utf8_async(null, cancellable)`}<
         l’utilisateur.
       </p>
       <p>
-        Cette frontière n’est pas de la coquetterie. La sortie de{' '}
-        <code>/usage</code> n’est pas une interface documentée : elle peut
-        changer sans prévenir. Une ligne que le parseur ne reconnaît pas est
-        affichée telle quelle plutôt que déformée, et la logique de mise en
-        forme n’importe pas GNOME — ce qui permet de l’exercer hors du shell,
-        là où les modules <code>resource:///</code> n’existent pas.
+        Cette frontière n’est pas de la coquetterie. La sortie de <code>{`/usage`}</code>{' '}
+        n’est pas une interface documentée : elle peut changer sans prévenir.
+        Une ligne que le parseur ne reconnaît pas est affichée telle quelle
+        plutôt que déformée, et la logique de mise en forme n’importe pas
+        GNOME — ce qui permet de l’exercer hors du shell, là où les modules{' '}
+        <code>{`resource:///`}</code> n’existent pas.
       </p>
-
-      <h2>L’installer</h2>
+      <h2>
+        L’installer
+      </h2>
       <p>
         Depuis les sources, ce qui marche partout :
       </p>
@@ -172,30 +176,19 @@ gnome-extensions enable claude-usage@salvadorcardona.github.io`}</code>
         Puis se déconnecter et se reconnecter : GNOME Shell ne découvre une
         extension nouvellement posée qu’au démarrage, et sous Wayland il ne
         peut pas être relancé sur place. L’extension est aussi publiée sur{' '}
-        <a
-          href="https://extensions.gnome.org/extension/10785/claude-usage/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          extensions.gnome.org
-        </a>
-        , pour l’installation en un clic.
+        <a href="https://extensions.gnome.org/extension/10785/claude-usage/" target="_blank" rel="noreferrer">extensions.gnome.org</a>,
+        pour l’installation en un clic.
       </p>
-
-      <h2>Ce que ça change</h2>
+      <h2>
+        Ce que ça change
+      </h2>
       <p>
         Rien de spectaculaire, et c’est bien le but : un coup d’œil a remplacé
         une commande. Je sais avant de lancer une grosse tâche si la fenêtre
         tiendra, et je ne découvre plus une limite en la touchant. Le code est
         sur{' '}
-        <a
-          href="https://github.com/SalvadorCardona/gnome-claude-usage"
-          target="_blank"
-          rel="noreferrer"
-        >
-          GitHub
-        </a>
-        , en GPL, et le catalogue de traduction n’attend qu’une copie pour
+        <a href="https://github.com/SalvadorCardona/gnome-claude-usage" target="_blank" rel="noreferrer">GitHub</a>,
+        en GPL, et le catalogue de traduction n’attend qu’une copie pour
         d’autres langues que le français.
       </p>
     </>
