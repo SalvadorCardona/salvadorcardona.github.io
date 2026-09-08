@@ -25,7 +25,8 @@ npm run dev        # http://localhost:3000
 | `npm run build`     | Build statique dans `dist/client` (prérendu + sitemap + 404) |
 | `npm run serve`     | Sert `dist/client` comme le fera GitHub Pages               |
 | `npm run typecheck` | Vérification TypeScript                                    |
-| `npm run posts:sync`| Régénère les articles depuis la database Notion              |
+| `npm run posts:publish` | Publie le blog : Notion, puis déploiement, via GitHub Actions |
+| `npm run posts:sync`| Régénère les articles depuis Notion, en local (aperçu)       |
 | `npm run post:image`| Génère avec OpenRouter les illustrations d'articles manquantes |
 
 Pour valider un build avant de pousser : `npm run build && npm run serve`.
@@ -79,55 +80,53 @@ statique : rien n'appelle Notion au build ni au runtime.
    liens. Un bloc non pris en charge est signalé et ignoré par la
    synchronisation, pas silencieusement perdu.
 3. Poser une couverture sur la page Notion (menu « Add cover »), en 1024 × 576.
-4. Synchroniser :
+4. Publier :
 
    ```bash
-   export NOTION_TOKEN=ntn_...   # https://www.notion.com/my-integrations
-   npm run posts:sync
+   npm run posts:publish
    ```
 
 L'article apparaît sur `/blog`, et le prérendu découvre son URL en suivant les
 liens de cette page — aucune route à déclarer.
 
+#### Ce que fait `posts:publish`
+
+Rien en local : la commande déclenche le workflow
+[`publish-blog.yml`](.github/workflows/publish-blog.yml), qui synchronise depuis
+Notion, vérifie (`typecheck`, `build`), commite sur `main` et lance le
+déploiement. Si Notion n'a rien de neuf, il le dit et ne commite pas ; si la
+vérification échoue, rien n'est publié.
+
+```bash
+npm run posts:publish                          # message de commit par défaut
+npm run posts:publish -- "Publie « Mon titre »"
+npm run posts:publish -- --no-watch            # sans attendre la fin du run
+```
+
+Elle suit le run jusqu'au bout et se termine en erreur s'il échoue. Il faut
+donc [GitHub CLI](https://cli.github.com) authentifié une fois (`gh auth
+login`) — mais pas le jeton Notion, qui ne quitte plus GitHub. Le workflow se
+lance aussi à la main depuis l'onglet **Actions → Publier le blog**.
+
 Le jeton vient d'une intégration Notion partagée avec la database (sur la page
-de la database : menu `···` → « Connections » → l'intégration). Il n'est
-utilisé que par ce script, jamais par le site.
-
-#### `mePublishBlog`, les étapes 4 à 6 en une commande
-
-`scripts/publish-blog.sh` définit une fonction shell qui enchaîne le tout. À
-ajouter une fois à son `~/.bashrc` :
+de la database : menu `···` → « Connections » → l'intégration), et se pose une
+fois dans **Settings → Secrets and variables → Actions**, sous le nom
+`NOTION_TOKEN` :
 
 ```bash
-source ~/salvadorcardona.github.io/scripts/publish-blog.sh
+gh secret set NOTION_TOKEN   # colle le jeton, sans le laisser dans l'historique
 ```
 
-Le jeton ne va pas dans le `.bashrc` — un dotfile finit souvent versionné — mais
-dans un fichier lu par la fonction :
+Il n'est utilisé que par la synchronisation, jamais par le site.
+
+Pour relire un article avant publication, la synchronisation tourne aussi en
+local — elle demande alors le jeton dans l'environnement, et écrit les mêmes
+fichiers :
 
 ```bash
-mkdir -p ~/.config/cardona-blog
-echo 'export NOTION_TOKEN=ntn_...' > ~/.config/cardona-blog/env
-chmod 600 ~/.config/cardona-blog/env
+NOTION_TOKEN=ntn_... npm run posts:sync
+npm run dev
 ```
-
-Ensuite, depuis n'importe quel répertoire :
-
-```bash
-mePublishBlog                         # message de commit par défaut
-mePublishBlog "Publie « Mon titre »"  # message choisi
-mePublishBlog --yes                   # sans demander confirmation
-```
-
-Elle repart de `main` à jour, synchronise, montre ce qui a changé, lance
-`typecheck` et `build`, demande confirmation, puis commite et pousse — ce qui
-déclenche le déploiement.
-
-Elle s'arrête sans rien publier si le dépôt a des modifications en cours (le
-`git add -A` final les emporterait), si le jeton manque, ou si la vérification
-échoue. Si Notion n'a rien de neuf, elle le dit et ne commite pas. Le dépôt est
-attendu dans `~/salvadorcardona.github.io` ; ailleurs, poser
-`export BLOG_REPO=/chemin/vers/le/depot`.
 
 Ce que la synchronisation fait, en plus d'écrire les articles :
 
@@ -212,6 +211,10 @@ s'arrête plutôt que de publier un site amputé.
 `.github/workflows/deploy.yml` construit et publie à chaque push sur `main`.
 Source des Pages à régler une fois : **Settings → Pages → Source : GitHub
 Actions**.
+
+Il se lance aussi à la demande, ce dont `publish-blog.yml` se sert une fois les
+articles commités : un push fait par une Action ne déclenche aucun workflow,
+GitHub coupant court aux boucles.
 
 ### Domaine
 
