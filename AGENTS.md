@@ -11,6 +11,11 @@ Portfolio statique : TanStack Start prérendu au build, publié sur GitHub Pages
   est la source de vérité. `npm run posts:sync` la lit et régénère
   `src/content/posts/` ; l'appel réseau a lieu là, à la main, jamais au build
   ni au runtime. Le contenu reste versionné dans Git.
+- **On publie avec `npm run posts:publish`.** La commande ne fait que
+  déclencher le workflow `publish-blog.yml`, qui synchronise, vérifie, commite
+  sur `main` et lance le déploiement. Le jeton Notion vit dans le secret de
+  dépôt `NOTION_TOKEN`, pas sur le poste ; en local, `posts:sync` reste bon
+  pour relire un article avant de publier.
 - **Ne pas éditer `src/content/posts/<slug>.tsx` ni `index.ts`** : ils portent
   un en-tête « généré », et la synchronisation suivante écrase toute
   modification. Pour corriger un article, corriger la page Notion. Seul
