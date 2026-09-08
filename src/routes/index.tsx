@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 
 import { ServicesGrid } from '../components/ServiceCard'
+import type { Experience } from '../content/profile'
 import {
   education,
   experiences,
@@ -35,8 +36,15 @@ export const Route = createFileRoute('/')({
   component: Home,
 })
 
+/**
+ * Nombre d'expériences dépliées d'emblée. Les suivantes sont derrière un
+ * « Voir plus » : la section tenait sur trois écrans, c'était le premier
+ * obstacle entre l'accueil et le reste de la page.
+ */
+const VISIBLE_EXPERIENCES = 3
+
 const facts = [
-  { label: 'Expérience', value: `${profile.yearsOfExperience} ans, dix missions` },
+  { label: 'Expérience', value: `${profile.yearsOfExperience} ans, neuf missions` },
   { label: 'Aujourd’hui', value: 'Lead developer chez Animalink' },
   { label: 'Stack', value: 'Symfony / API Platform · React & TypeScript' },
   { label: 'IA appliquée', value: 'Agents · LLM · outillage · MCP · n8n' },
@@ -47,6 +55,8 @@ function Home() {
   const visibleExperiences = experiences.filter((item) =>
     isFilled(item.company),
   )
+  const recentExperiences = visibleExperiences.slice(0, VISIBLE_EXPERIENCES)
+  const olderExperiences = visibleExperiences.slice(VISIBLE_EXPERIENCES)
   const visibleEducation = education.filter((item) => isFilled(item.school))
   const featured = projects.filter((project) => project.featured)
   const latestPosts = sortedPosts.slice(0, 2)
@@ -120,28 +130,45 @@ function Home() {
           intro="Des marketplaces, une plateforme de streaming, un studio de jeu, une application de soin animalier — et, en parallèle, de l’outillage open source pour agents IA. Le détail sur LinkedIn."
         >
           <ol className="space-y-8">
-            {visibleExperiences.map((item) => (
-              <li
+            {recentExperiences.map((item) => (
+              <ExperienceItem
                 key={`${item.company}-${item.period}`}
-                className="border-l-2 border-slate-200 pl-5 dark:border-slate-800"
-              >
-                <p className="text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-slate-500">
-                  {item.period}
-                </p>
-                <h3 className="mt-1 font-semibold text-slate-900 dark:text-slate-100">
-                  {item.role} · {item.company}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-                  {item.description}
-                </p>
-                {item.stack.length > 0 && (
-                  <p className="mt-2 text-xs text-slate-500 dark:text-slate-500">
-                    {item.stack.join(' · ')}
-                  </p>
-                )}
-              </li>
+                item={item}
+              />
             ))}
           </ol>
+          {olderExperiences.length > 0 && (
+            // `<details>` plutôt qu'un état React : le repli fonctionne sur la
+            // page prérendue, avant même l'hydratation. Même parti pris que la
+            // FAQ des pages service.
+            <details className="group mt-8">
+              <summary className="inline-flex cursor-pointer list-none items-center gap-2 rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-900">
+                <span className="group-open:hidden">
+                  Voir les {olderExperiences.length} expériences précédentes
+                </span>
+                <span className="hidden group-open:inline">
+                  Masquer les expériences précédentes
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="text-slate-400 transition-transform group-open:rotate-180"
+                >
+                  ↓
+                </span>
+              </summary>
+              <ol
+                start={VISIBLE_EXPERIENCES + 1}
+                className="mt-8 space-y-8 border-t border-slate-200 pt-8 dark:border-slate-800"
+              >
+                {olderExperiences.map((item) => (
+                  <ExperienceItem
+                    key={`${item.company}-${item.period}`}
+                    item={item}
+                  />
+                ))}
+              </ol>
+            </details>
+          )}
           <p className="mt-6 text-sm">
             <a
               href={links.linkedin}
@@ -255,6 +282,28 @@ function Home() {
         </p>
       </Section>
     </div>
+  )
+}
+
+/** Une mission de la section « Expériences », dépliée ou repliée. */
+function ExperienceItem({ item }: { item: Experience }) {
+  return (
+    <li className="border-l-2 border-slate-200 pl-5 dark:border-slate-800">
+      <p className="text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-slate-500">
+        {item.period}
+      </p>
+      <h3 className="mt-1 font-semibold text-slate-900 dark:text-slate-100">
+        {item.role} · {item.company}
+      </h3>
+      <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+        {item.description}
+      </p>
+      {item.stack.length > 0 && (
+        <p className="mt-2 text-xs text-slate-500 dark:text-slate-500">
+          {item.stack.join(' · ')}
+        </p>
+      )}
+    </li>
   )
 }
 
