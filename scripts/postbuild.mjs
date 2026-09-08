@@ -32,6 +32,7 @@ const COVERS_FILE = 'src/content/covers.json'
 
 const REQUIRED_PAGES = [
   'index.html',
+  'projets/index.html',
   'blog/index.html',
   'contact/index.html',
   'services/index.html',

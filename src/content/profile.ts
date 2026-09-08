@@ -277,11 +277,22 @@ export const education: Array<Education> = [
   },
 ]
 
+/**
+ * Un projet : son dépôt, et — quand ils existent — le site en ligne et la
+ * documentation publiée. Les trois liens alimentent la page `/projets`, qui
+ * sert de point d'entrée vers tous les dépôts.
+ */
 export type Project = {
   name: string
   description: string
+  /** Le dépôt GitHub : c'est le lien principal, tout projet en a un. */
   url: string
+  /** Le site en ligne, pour les projets qui tournent quelque part. */
+  site?: string
+  /** La documentation publiée, pour les librairies qui en ont une. */
+  docs?: string
   tags: Array<string>
+  /** Affiché sur l'accueil ; les autres n'apparaissent que sur `/projets`. */
   featured?: boolean
 }
 
@@ -290,47 +301,68 @@ export const projects: Array<Project> = [
     name: 'ticket-runner',
     description:
       'Vos tickets Notion, joués par Claude Code : une session par ticket, une pull request à l’arrivée.',
-    url: 'https://cardona.digital/ticket-runner/',
+    url: 'https://github.com/SalvadorCardona/ticket-runner',
+    docs: 'https://cardona.digital/ticket-runner/',
     tags: ['Python', 'Agents LLM', 'Notion API'],
     featured: true,
   },
   {
-    name: 'trader-ia',
+    name: 'Trader IA',
     description:
-      'Arène de paper trading S&P 500 : plusieurs agents traders IA s’affrontent avec 1 000 € chacun.',
+      'Arène de paper trading (S&P 500, CAC 40, Hang Seng, crypto) où des agents IA aux doctrines opposées s’affrontent avec 1 000 € chacun, face à des stratégies codées servant d’étalon.',
     url: 'https://github.com/SalvadorCardona/trader-ia',
+    site: 'https://trader.cardona.digital',
     tags: ['TypeScript', 'Docker', 'LLM'],
     featured: true,
   },
   {
-    name: 'react-resource-view',
+    name: 'React Resource View',
     description:
-      'Vues CRUD pour API JSON-LD / Hydra : liste, lecture, création, édition et suppression — en table, cartes, colonnes, split, calendrier ou timeline.',
+      'Vues CRUD pour API JSON-LD / Hydra : on déclare une ressource et le package génère liste, détail, création, édition et suppression, câblés à l’API et à l’URL.',
     url: 'https://github.com/SalvadorCardona/react-resource-view',
+    docs: 'https://cardona.digital/react-resource-view/',
     tags: ['React', 'TypeScript', 'JSON-LD'],
     featured: true,
   },
   {
-    name: 'whisper-desk',
+    name: 'Whisper Desk',
     description:
       'Dictée vocale hors-ligne pour Linux, WSL et macOS : un raccourci clavier, un overlay, et le texte est dans le presse-papiers.',
-    url: 'https://cardona.digital/whisper-desk/',
+    url: 'https://github.com/SalvadorCardona/whisper-desk',
+    docs: 'https://cardona.digital/whisper-desk/',
     tags: ['Python', 'Whisper', 'Linux', 'macOS'],
     featured: true,
   },
   {
-    name: 'gnome-claude-usage',
+    name: 'Animalink',
     description:
-      'Indicateur GNOME Shell pour la consommation Claude Code : un camembert dans la barre, les limites et heures de reset au clic.',
+      'Marketplace française de rendez-vous vétérinaires façon Doctolib : réservation, consultation, panier post-consultation et paiement Stripe Connect avec commission.',
+    url: 'https://github.com/SalvadorCardona/animalink',
+    site: 'https://animalink.fr',
+    tags: ['Symfony', 'API Platform', 'React', 'PWA'],
+  },
+  {
+    name: 'Lead Finder',
+    description:
+      'Génération de leads du monde animalier : un scraper autonome parcourt le web, archive les contenus bruts, puis les mappe par IA vers une base d’entreprises qualifiées.',
+    url: 'https://github.com/SalvadorCardona/animalink-lead',
+    site: 'https://leads.animalink.fr',
+    tags: ['Symfony 8', 'FrankenPHP', 'Scraping', 'LLM'],
+  },
+  {
+    name: 'Claude Usage',
+    description:
+      'Extension GNOME Shell affichant la consommation Claude Code en graphique circulaire dans la barre supérieure, avec le détail des limites hebdomadaires au clic. Sans clé d’API.',
     url: 'https://github.com/SalvadorCardona/gnome-claude-usage',
-    tags: ['GNOME Shell', 'JavaScript', 'Python'],
+    tags: ['GNOME Shell', 'GJS', 'Python'],
     featured: true,
   },
   {
-    name: 'react-data-form',
+    name: 'React Data Form',
     description:
-      'Formulaires React pilotés par la donnée : construction déclarative, contrôleurs de champs, groupes et étapes — pensés pour API Platform.',
+      'Formulaires React pilotés par la donnée : on décrit le formulaire comme un objet, la librairie rend les champs, tient l’état, valide et remonte les erreurs de l’API.',
     url: 'https://github.com/SalvadorCardona/react-data-form',
+    docs: 'https://cardona.digital/react-data-form/',
     tags: ['React', 'TypeScript', 'Formulaires'],
     featured: true,
   },

@@ -49,7 +49,7 @@ npm run build        # échoue si une page attendue manque
 ```
 
 Le build doit annoncer les pages fixes (`/`, `/services` et ses trois pages
-service, `/blog`, `/contact`, `/404`) plus un article par
+service, `/projets`, `/blog`, `/contact`, `/404`) plus un article par
 `src/content/posts/<slug>.tsx`, et écrire `dist/client/404.html`. Il échoue si une page attendue manque, ou si une
 illustration déclarée dans `covers.json` n'a pas suivi.
 Pour inspecter le rendu réel : `npm run serve`.
