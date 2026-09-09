@@ -42,6 +42,10 @@ Portfolio statique : TanStack Start prérendu au build, publié sur GitHub Pages
   d'accueil par une coquille vide. Le repli 404 passe par la route `/404` et
   `scripts/postbuild.mjs`.
 - **Ne pas supprimer `public/.nojekyll`.**
+- **`public/banner.png` est l'image de partage par défaut** (`og:image` et
+  `twitter:image`, dans `src/lib/seo.ts`), et la bannière en tête du README. Le
+  visuel vient du dépôt `SalvadorCardona/brand-assets` : le refaire là-bas, puis
+  recopier le fichier ici — le site ne charge aucune image distante.
 - **Ne pas supprimer `public/CNAME`** ni le désynchroniser de `SITE_URL`
   (`src/lib/seo.ts`) : il porte le domaine personnalisé `cardona.digital`.
 
