@@ -30,6 +30,14 @@ export const Route = createRootRoute({
       { rel: 'icon', href: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
       { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
     ],
+    scripts: [
+      {
+        src: 'https://umami.cardona.digital/nx.js',
+        defer: true,
+        'data-website-id': '7c871d6e-78eb-4be4-99c6-634d4336cb8a',
+        'data-domains': 'cardona.digital',
+      },
+    ],
   }),
   shellComponent: RootDocument,
   notFoundComponent: NotFound,
