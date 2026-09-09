@@ -1,3 +1,5 @@
+![salvadorcardona.github.io](https://raw.githubusercontent.com/SalvadorCardona/brand-assets/main/projects/salvadorcardona.github.io/banner.png)
+
 # salvadorcardona.github.io
 
 Portfolio et blog de Salvador Cardona.

@@ -53,8 +53,10 @@ export function seo({
 
   // Open Graph et Twitter exigent des URL absolues, y compris pour l'image.
   // À défaut d'illustration propre à la page (les articles ont leur
-  // couverture), la carte sociale par défaut évite un partage sans image.
-  const shareImage = image ?? '/social-card.png'
+  // couverture), la bannière de marque évite un partage sans image. Elle vient
+  // de SalvadorCardona/brand-assets et est versionnée dans `public/`, le site
+  // ne dépendant d'aucune ressource distante.
+  const shareImage = image ?? '/banner.png'
   meta.push({ property: 'og:image', content: `${SITE_URL}${shareImage}` })
   meta.push({ name: 'twitter:image', content: `${SITE_URL}${shareImage}` })
 
