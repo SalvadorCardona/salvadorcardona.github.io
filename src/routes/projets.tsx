@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import type { Project } from '../content/profile'
-import { links, projects } from '../content/profile'
+import { links, projectBanner, projects } from '../content/profile'
 import { seo } from '../lib/seo'
 
 export const Route = createFileRoute('/projets')({
@@ -9,7 +9,7 @@ export const Route = createFileRoute('/projets')({
     seo({
       title: 'Projets',
       description:
-        'Tous les projets de Salvador Cardona : dépôt GitHub, site en ligne et documentation — Trader IA, Animalink, Lead Finder, React Data Form, React Resource View, ticket-runner, Linux Whisper, Claude Usage.',
+        'Tous les projets de Salvador Cardona : dépôt GitHub, site en ligne et documentation — ticket-runner, React Resource View, Whisper Desk, Lead Finder, Claude Usage, React Data Form, jsonld-api-client, react-mini-i18n.',
       path: '/projets',
     }),
   component: Projects,
@@ -33,25 +33,40 @@ function Projects() {
         son site en ligne et sa documentation.
       </p>
 
-      <ul className="mt-12 space-y-6">
+      <ul className="mt-12 space-y-8">
         {projects.map((project) => (
           <li
             key={project.name}
-            className="rounded-xl border border-slate-200 p-6 dark:border-slate-800"
+            className="overflow-hidden rounded-2xl border border-slate-200 transition-colors hover:border-slate-300 dark:border-slate-800 dark:hover:border-slate-700"
           >
             <article>
-              <h2 className="text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
-                {project.name}
-              </h2>
-              <p className="mt-3 leading-relaxed text-slate-600 dark:text-slate-400">
-                {project.description}
-              </p>
+              {/* La bannière vient du dépôt brand-assets : glyphe, nom du
+                  projet et sa phrase d'accroche, déjà composés. Elle est en
+                  21:9, recadrée en 24:7 — tout est au centre, et la carte
+                  reste compacte. */}
+              <img
+                src={projectBanner(project)}
+                alt={`Bannière du projet ${project.name}`}
+                width={1200}
+                height={525}
+                loading="lazy"
+                className="aspect-[24/7] w-full bg-slate-900 object-cover"
+              />
 
-              <p className="mt-4 text-xs text-slate-500 dark:text-slate-500">
-                {project.tags.join(' · ')}
-              </p>
+              <div className="p-6">
+                <h2 className="text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+                  {project.name}
+                </h2>
+                <p className="mt-3 leading-relaxed text-slate-600 dark:text-slate-400">
+                  {project.description}
+                </p>
 
-              <ProjectLinks project={project} />
+                <p className="mt-4 text-xs text-slate-500 dark:text-slate-500">
+                  {project.tags.join(' · ')}
+                </p>
+
+                <ProjectLinks project={project} />
+              </div>
             </article>
           </li>
         ))}

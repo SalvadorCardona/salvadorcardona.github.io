@@ -8,6 +8,7 @@ import {
   isFilled,
   links,
   profile,
+  projectIcon,
   projects,
   skills,
 } from '../content/profile'
@@ -45,7 +46,6 @@ const VISIBLE_EXPERIENCES = 3
 
 const facts = [
   { label: 'Expérience', value: `${profile.yearsOfExperience} ans, neuf missions` },
-  { label: 'Aujourd’hui', value: 'Lead developer chez Animalink' },
   { label: 'Stack', value: 'Symfony / API Platform · React & TypeScript' },
   { label: 'IA appliquée', value: 'Agents · LLM · outillage · MCP · n8n' },
   { label: 'Zone', value: profile.area },
@@ -222,12 +222,23 @@ function Home() {
                 href={project.url}
                 target="_blank"
                 rel="noreferrer"
-                className="block h-full rounded-xl border border-slate-200 p-5 transition-colors hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:hover:border-slate-700 dark:hover:bg-slate-900"
+                className="flex h-full flex-col rounded-xl border border-slate-200 p-5 transition-colors hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:hover:border-slate-700 dark:hover:bg-slate-900"
               >
-                <h3 className="font-semibold text-slate-900 dark:text-slate-100">
-                  {project.name}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                <div className="flex items-center gap-3">
+                  {/* Le nom suit juste à côté : l'icône est décorative. */}
+                  <img
+                    src={projectIcon(project)}
+                    alt=""
+                    width={128}
+                    height={128}
+                    loading="lazy"
+                    className="h-10 w-10 shrink-0 rounded-lg ring-1 ring-slate-200 dark:ring-white/10"
+                  />
+                  <h3 className="font-semibold text-slate-900 dark:text-slate-100">
+                    {project.name}
+                  </h3>
+                </div>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
                   {project.description}
                 </p>
                 <p className="mt-3 text-xs text-slate-500 dark:text-slate-500">
@@ -330,8 +341,7 @@ function Hero() {
             {profile.role} · Lyon
           </p>
           <h1 className="mt-5 text-4xl font-bold tracking-tight text-balance text-slate-900 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.08] dark:text-slate-100">
-            Des applications qu’on peut reprendre trois ans plus tard sans
-            appréhension.
+            Des applications robustes qui résistent dans le temps.
           </h1>
           <p className="mt-5 text-base font-medium text-pretty text-slate-800 dark:text-slate-200">
             {profile.headline}
