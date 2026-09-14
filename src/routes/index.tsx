@@ -65,6 +65,22 @@ function Home() {
     <div className="mx-auto max-w-5xl px-6">
       <Hero />
 
+      <Section
+        title="Services"
+        id="services"
+        intro="Trois prestations avec leur page dédiée, et des interventions plus courtes sur un sujet précis."
+      >
+        <ServicesGrid />
+        <p className="mt-6 text-sm">
+          <Link
+            to="/services"
+            className="font-medium text-sky-600 hover:underline dark:text-sky-400"
+          >
+            Tous les services et la façon dont je travaille →
+          </Link>
+        </p>
+      </Section>
+
       <Section title="À propos" id="a-propos">
         <div className="max-w-2xl space-y-4 text-slate-600 dark:text-slate-400">
           {profile.about.map((paragraph) => (
@@ -82,22 +98,6 @@ function Home() {
           >
             Le profil complet sur LinkedIn →
           </a>
-        </p>
-      </Section>
-
-      <Section
-        title="Services"
-        id="services"
-        intro="Trois prestations avec leur page dédiée, et des interventions plus courtes sur un sujet précis."
-      >
-        <ServicesGrid />
-        <p className="mt-6 text-sm">
-          <Link
-            to="/services"
-            className="font-medium text-sky-600 hover:underline dark:text-sky-400"
-          >
-            Tous les services et la façon dont je travaille →
-          </Link>
         </p>
       </Section>
 
