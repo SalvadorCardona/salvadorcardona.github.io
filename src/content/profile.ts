@@ -307,6 +307,12 @@ export const education: Array<Education> = [
 export type Project = {
   name: string
   description: string
+  /**
+   * Le dossier de `public/projects/` qui porte l'icône et la bannière du
+   * projet. Il porte le nom du dépôt, comme dans `SalvadorCardona/brand-assets`
+   * d'où les visuels sont recopiés — voir AGENTS.md.
+   */
+  brand: string
   /** Le dépôt GitHub : c'est le lien principal, tout projet en a un. */
   url: string
   /** Le site en ligne, pour les projets qui tournent quelque part. */
@@ -323,24 +329,17 @@ export const projects: Array<Project> = [
     name: 'ticket-runner',
     description:
       'Vos tickets Notion, joués par Claude Code : une session par ticket, une pull request à l’arrivée.',
+    brand: 'ticket-runner',
     url: 'https://github.com/SalvadorCardona/ticket-runner',
     docs: 'https://cardona.digital/ticket-runner/',
     tags: ['Python', 'Agents LLM', 'Notion API'],
     featured: true,
   },
   {
-    name: 'Trader IA',
-    description:
-      'Arène de paper trading (S&P 500, CAC 40, Hang Seng, crypto) où des agents IA aux doctrines opposées s’affrontent avec 1 000 € chacun, face à des stratégies codées servant d’étalon.',
-    url: 'https://github.com/SalvadorCardona/trader-ia',
-    site: 'https://trader.cardona.digital',
-    tags: ['TypeScript', 'Docker', 'LLM'],
-    featured: true,
-  },
-  {
     name: 'React Resource View',
     description:
       'Vues CRUD pour API JSON-LD / Hydra : on déclare une ressource et le package génère liste, détail, création, édition et suppression, câblés à l’API et à l’URL.',
+    brand: 'react-resource-view',
     url: 'https://github.com/SalvadorCardona/react-resource-view',
     docs: 'https://cardona.digital/react-resource-view/',
     tags: ['React', 'TypeScript', 'JSON-LD'],
@@ -350,23 +349,17 @@ export const projects: Array<Project> = [
     name: 'Whisper Desk',
     description:
       'Dictée vocale hors-ligne pour Linux, WSL et macOS : un raccourci clavier, un overlay, et le texte est dans le presse-papiers.',
+    brand: 'whisper-desk',
     url: 'https://github.com/SalvadorCardona/whisper-desk',
     docs: 'https://cardona.digital/whisper-desk/',
     tags: ['Python', 'Whisper', 'Linux', 'macOS'],
     featured: true,
   },
   {
-    name: 'Animalink',
-    description:
-      'Marketplace française de rendez-vous vétérinaires façon Doctolib : réservation, consultation, panier post-consultation et paiement Stripe Connect avec commission.',
-    url: 'https://github.com/SalvadorCardona/animalink',
-    site: 'https://animalink.fr',
-    tags: ['Symfony', 'API Platform', 'React', 'PWA'],
-  },
-  {
     name: 'Lead Finder',
     description:
       'Génération de leads du monde animalier : un scraper autonome parcourt le web, archive les contenus bruts, puis les mappe par IA vers une base d’entreprises qualifiées.',
+    brand: 'animalink-lead',
     url: 'https://github.com/SalvadorCardona/animalink-lead',
     site: 'https://leads.animalink.fr',
     tags: ['Symfony 8', 'FrankenPHP', 'Scraping', 'LLM'],
@@ -375,6 +368,7 @@ export const projects: Array<Project> = [
     name: 'Claude Usage',
     description:
       'Extension GNOME Shell affichant la consommation Claude Code en graphique circulaire dans la barre supérieure, avec le détail des limites hebdomadaires au clic. Sans clé d’API.',
+    brand: 'gnome-claude-usage',
     url: 'https://github.com/SalvadorCardona/gnome-claude-usage',
     tags: ['GNOME Shell', 'GJS', 'Python'],
     featured: true,
@@ -383,6 +377,7 @@ export const projects: Array<Project> = [
     name: 'React Data Form',
     description:
       'Formulaires React pilotés par la donnée : on décrit le formulaire comme un objet, la librairie rend les champs, tient l’état, valide et remonte les erreurs de l’API.',
+    brand: 'react-data-form',
     url: 'https://github.com/SalvadorCardona/react-data-form',
     docs: 'https://cardona.digital/react-data-form/',
     tags: ['React', 'TypeScript', 'Formulaires'],
@@ -392,6 +387,7 @@ export const projects: Array<Project> = [
     name: 'jsonld-api-client',
     description:
       'Client typé pour API JSON-LD / Hydra : openapi-fetch avec en-têtes d’auth et de scope, cache d’IRI, abonnements Mercure.',
+    brand: 'jsonld-api-client',
     url: 'https://github.com/SalvadorCardona/jsonld-api-client',
     tags: ['TypeScript', 'JSON-LD', 'Mercure'],
   },
@@ -399,10 +395,21 @@ export const projects: Array<Project> = [
     name: 'react-mini-i18n',
     description:
       'Traduction React réduite à l’essentiel : un dictionnaire clé → texte, une fonction translate, un composant Trans et un provider.',
+    brand: 'react-mini-i18n',
     url: 'https://github.com/SalvadorCardona/react-mini-i18n',
     tags: ['React', 'i18n'],
   },
 ]
+
+/** L'icône carrée du projet, servie depuis `public/projects/`. */
+export function projectIcon(project: Project): string {
+  return `/projects/${project.brand}/icon.png`
+}
+
+/** La bannière du projet, au format 21:9, servie depuis `public/projects/`. */
+export function projectBanner(project: Project): string {
+  return `/projects/${project.brand}/banner.jpg`
+}
 
 /** Une entrée est affichée seulement si elle ne contient plus de gabarit vide. */
 export function isFilled(value: string): boolean {

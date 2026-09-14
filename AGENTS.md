@@ -46,6 +46,12 @@ Portfolio statique : TanStack Start prérendu au build, publié sur GitHub Pages
   `twitter:image`, dans `src/lib/seo.ts`), et la bannière en tête du README. Le
   visuel vient du dépôt `SalvadorCardona/brand-assets` : le refaire là-bas, puis
   recopier le fichier ici — le site ne charge aucune image distante.
+- **Les visuels des projets viennent du même dépôt `brand-assets`.** Chaque
+  entrée de `projects` (`profile.ts`) porte un champ `brand` : le nom du dossier
+  `projects/<dépôt>/` là-bas, et de `public/projects/<dépôt>/` ici. On y recopie
+  `icon.png` redimensionnée en 128 px et `banner.png` convertie en `banner.jpg`
+  de 1200 px de large ; sans ces deux fichiers, la carte du projet affiche une
+  image cassée.
 - **Ne pas supprimer `public/CNAME`** ni le désynchroniser de `SITE_URL`
   (`src/lib/seo.ts`) : il porte le domaine personnalisé `cardona.digital`.
 
