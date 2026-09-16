@@ -46,7 +46,7 @@ const VISIBLE_EXPERIENCES = 3
 
 const facts = [
   { label: 'Expérience', value: `${profile.yearsOfExperience} ans, neuf missions` },
-  { label: 'Stack', value: 'Symfony / API Platform · React & TypeScript' },
+  { label: 'Stack', value: 'Symfony · React & TypeScript' },
   { label: 'IA appliquée', value: 'Agents · LLM · outillage · MCP · n8n' },
   { label: 'Zone', value: profile.area },
 ]
