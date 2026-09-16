@@ -1,0 +1,354 @@
+[
+  {
+    "company": "Animalink",
+    "role": "Lead Dev PHP / TypeScript / IA",
+    "location": "Lyon",
+    "startDate": "2023-05-01",
+    "endDate": "2026-09-01",
+    "stack": [
+      "Java",
+      "Spring Boot",
+      "Symfony",
+      "PHP",
+      "API Platform",
+      "Elasticsearch",
+      "React",
+      "TypeScript",
+      "TanStack Start",
+      "shadcn/ui",
+      "Docker",
+      "GitHub Actions",
+      "AWS",
+      "Terraform",
+      "n8n",
+      "LLM",
+      "Claude Code"
+    ],
+    "logo": null,
+    "summary": "Animalink est une application web et mobile pour le soin animalier. J'ai construit la nouvelle plateforme de bout en bout, de l'architecture au déploiement.",
+    "sections": [
+      {
+        "title": "BACKEND — Java / Spring & Symfony (Back for Front)",
+        "items": [
+          "Une grosse partie du backend métier développée en Java avec Spring",
+          "Symfony utilisé uniquement comme couche Back for Front (BFF) entre le front et les services métier",
+          "API REST sous API Platform, en Clean Architecture et CQRS",
+          "Moteur de recherche Elasticsearch, stack ELK pour l'observabilité",
+          "Workers asynchrones pour les traitements longs",
+          "Tests unitaires et fonctionnels, analyse statique et linters bloquants en CI"
+        ]
+      },
+      {
+        "title": "FRONTEND — React / TypeScript",
+        "items": [
+          "SPA typée de bout en bout : les interfaces TypeScript sont générées depuis le schéma API Platform, le contrat d'API est la source de vérité",
+          "Routage et chargement de données avec TanStack Start",
+          "Design system sur shadcn/ui"
+        ]
+      },
+      {
+        "title": "INFRASTRUCTURE",
+        "items": [
+          "Environnements de développement reproductibles sous Docker et Docker Compose",
+          "CI GitHub Actions",
+          "Hébergement AWS provisionné en Terraform — l'infra est du code, relue comme le reste"
+        ]
+      },
+      {
+        "title": "IA",
+        "items": [
+          "Agents et automatisations n8n connectés.",
+          "Ocr de document",
+          "Analyse documentaire et embeddings",
+          "Chatbot produit branché sur l'API REST",
+          "Des bots qui consomment l'API au même titre qu'un client humain : l'API est conçue pour être pilotable par un agent, pas seulement par une interface"
+        ]
+      }
+    ]
+  },
+  {
+    "company": "Greenweez",
+    "role": "Dev Back Symfony & Front Next.js",
+    "location": "Lyon",
+    "startDate": "2022-08-01",
+    "endDate": "2023-01-01",
+    "stack": ["Symfony", "PHP", "API Platform", "Sylius", "Next.js", "React", "GCP"],
+    "logo": null,
+    "summary": "Marketplace du bio.",
+    "sections": [
+      {
+        "title": "BACKEND — Symfony 6 / API Platform / Sylius",
+        "items": [
+          "API REST sous API Platform et Symfony 6",
+          "Migration du socle e-commerce vers Sylius",
+          "Clean Architecture, CQRS, DDD",
+          "Tests unitaires et fonctionnels"
+        ]
+      },
+      {
+        "title": "FRONTEND — Next.js / React",
+        "items": [
+          "Front SSR sous Next.js et React — un catalogue produit doit être lisible par les moteurs de recherche"
+        ]
+      },
+      {
+        "title": "INFRASTRUCTURE — Google Cloud Platform (GCP)",
+        "items": ["Découpage en micro-services", "Travaux sur plusieurs services GCP"]
+      }
+    ]
+  },
+  {
+    "company": "BeeTrip",
+    "role": "Dev Back Symfony & Dev Front React",
+    "location": "Lyon",
+    "startDate": "2022-02-01",
+    "endDate": "2022-07-01",
+    "stack": ["Symfony", "PHP", "API Platform", "Next.js", "React", "TypeScript", "Wizaplace"],
+    "logo": null,
+    "summary": "Marketplace autour des outils du voyage.",
+    "sections": [
+      {
+        "title": "BACKEND — Symfony 6 / PHP 8 / API Platform",
+        "items": ["API REST sous API Platform et Symfony 6", "Tests unitaires et fonctionnels PHP"]
+      },
+      {
+        "title": "FRONTEND — Next.js / React / TypeScript",
+        "items": ["SPA Next.js consommant l'API", "Tests unitaires et fonctionnels TypeScript"]
+      },
+      {
+        "title": "CONSEIL & MÉTHODE",
+        "items": ["Conseil sur les choix technologiques, participation aux rituels Scrum de l'équipe"]
+      }
+    ]
+  },
+  {
+    "company": "QANTIS",
+    "role": "Dev Front Vue 3 & Back Symfony 6",
+    "location": "Lyon",
+    "startDate": "2021-09-01",
+    "endDate": "2022-01-01",
+    "stack": ["Vue.js", "TypeScript", "Symfony", "PHP", "API Platform", "Wizaplace"],
+    "logo": null,
+    "summary": "Marketplace autour des outils du BTP.",
+    "sections": [
+      {
+        "title": "BACKEND — Symfony 6 / PHP 8",
+        "items": [
+          "API REST sous API Platform et Symfony 6",
+          "Intégration du SDK Wizaplace pour la brique marketplace",
+          "Tests unitaires et fonctionnels PHP"
+        ]
+      },
+      {
+        "title": "FRONTEND — Vue 3 / TypeScript",
+        "items": ["SPA Vue 3 et TypeScript", "Tests unitaires et fonctionnels TypeScript"]
+      },
+      {
+        "title": "CONSEIL & MÉTHODE",
+        "items": ["Conseil sur les choix technologiques, participation aux rituels Scrum de l'équipe"]
+      }
+    ]
+  },
+  {
+    "company": "Bedrock Streaming",
+    "role": "Dev Back Symfony",
+    "location": "Lyon",
+    "startDate": "2021-02-01",
+    "endDate": "2021-08-01",
+    "stack": ["Symfony", "PHP", "AWS"],
+    "logo": null,
+    "summary": "Bedrock édite la plateforme de streaming de TF1, M6 et d'autres diffuseurs européens — des services grand public, avec ce que ça implique de rigueur sur l'API.",
+    "sections": [
+      {
+        "title": "BACKEND — Symfony 5 / PHP",
+        "items": ["Évolutions de l'API Symfony 5, sous méthode DDD", "Tests unitaires et fonctionnels"]
+      },
+      { "title": "INFRASTRUCTURE", "items": ["Travaux sur plusieurs services AWS"] },
+      {
+        "title": "CONSEIL & MÉTHODE",
+        "items": ["Participation aux rituels Scrum et Agile de l'équipe"]
+      }
+    ]
+  },
+  {
+    "company": "Jacquet Metal Service",
+    "role": "Dev Back Symfony & Dev Front Angular",
+    "location": "Lyon",
+    "startDate": "2019-08-01",
+    "endDate": "2021-02-01",
+    "stack": ["Symfony", "PHP", "API Platform", "Sylius", "Angular", "TypeScript", "Oracle", "PostgreSQL"],
+    "logo": null,
+    "summary": "Marketplace B2B de la métallurgie.",
+    "sections": [
+      {
+        "title": "BACKEND — Symfony / API Platform / Sylius",
+        "items": [
+          "Socle marketplace sous Sylius, API REST sous API Platform",
+          "Migration de la base de données d'Oracle vers PostgreSQL",
+          "Tests unitaires PHP"
+        ]
+      },
+      {
+        "title": "FRONTEND — Angular / TypeScript",
+        "items": ["SPA Angular", "Tests unitaires et fonctionnels TypeScript"]
+      },
+      {
+        "title": "CONSEIL & MÉTHODE",
+        "items": ["Participation aux rituels Scrum et Agile de l'équipe"]
+      }
+    ]
+  },
+  {
+    "company": "EDD",
+    "role": "Dev Back Symfony & Front Vue.js",
+    "location": "Lyon",
+    "startDate": "2018-10-01",
+    "endDate": "2019-01-01",
+    "stack": ["Symfony", "PHP", "Vue.js", "Vuex", "PostgreSQL"],
+    "logo": null,
+    "summary": "EDD convertit et indexe des médias — vidéo, presse, radio — dans une base documentaire.",
+    "sections": [
+      {
+        "title": "BACKEND — Symfony 4",
+        "items": ["Backend sous Symfony 4", "Consommation de la base PostgreSQL existante"]
+      },
+      { "title": "FRONTEND — Vue 2", "items": ["Front sous Vue 2, Vuex et Vue Router"] },
+      {
+        "title": "CONSEIL & MÉTHODE",
+        "items": [
+          "Formation de l'équipe en place à Vue.js et Symfony — l'objectif était qu'ils reprennent la main après moi"
+        ]
+      }
+    ]
+  },
+  {
+    "company": "Wizaplace",
+    "role": "Dev Back Symfony & Dev Front Vue.js",
+    "location": "Lyon",
+    "startDate": "2017-12-01",
+    "endDate": "2019-08-01",
+    "stack": ["Symfony", "PHP", "Vue.js", "Vuex", "Nuxt"],
+    "logo": null,
+    "summary": "Wizaplace édite une solution de marketplace performante et personnalisable, revendue à des intégrateurs.",
+    "sections": [
+      {
+        "title": "BACKEND — Symfony 4 / PHP",
+        "items": [
+          "Développement et amélioration du SDK PHP de l'éditeur",
+          "Marketplaces clientes sous Symfony 4",
+          "Création d'API REST",
+          "Tests unitaires PHP"
+        ]
+      },
+      { "title": "FRONTEND — Vue 2 / Vuex / Nuxt", "items": ["Fronts sous Vue 2, Vuex et Nuxt"] }
+    ]
+  },
+  {
+    "company": "agence kali",
+    "role": "Dev Back & Front Angular",
+    "location": "Lyon",
+    "startDate": "2017-09-01",
+    "endDate": "2017-12-01",
+    "stack": ["PHP", "Symfony", "Angular", "Bootstrap", "WordPress", "Java", "Spring Boot"],
+    "logo": null,
+    "summary": "Agence web lyonnaise.",
+    "sections": [
+      {
+        "title": "BACKEND — PHP & Java / Spring Boot 1.5",
+        "items": [
+          "Application back sous Symfony 3",
+          "Interventions sur plusieurs logiciels métier sous Spring Boot 1.5",
+          "Maintenance de sites WordPress et Drupal (MySQL)"
+        ]
+      },
+      {
+        "title": "FRONTEND — Angular",
+        "items": [
+          "Front Angular de l'application d'auto-formation",
+          "Intégration des interfaces avec Bootstrap"
+        ]
+      }
+    ]
+  },
+  {
+    "company": "GitHub",
+    "role": "Open source — outillage et agents IA",
+    "location": "Lyon",
+    "startDate": "2017-01-01",
+    "endDate": null,
+    "stack": ["Python", "Claude Code", "LLM", "React", "TypeScript", "GJS", "Whisper"],
+    "logo": null,
+    "summary": "Sur mon temps propre, je construis des outils qui font travailler des agents LLM sur des tâches réelles — et l'écosystème front qui va avec. 34 dépôts publics, 14 poussés cette année.",
+    "sections": [
+      {
+        "title": "FRONTEND — React / TypeScript",
+        "items": ["react-resource-view — Gestion des formulaires et des vues côté front."]
+      },
+      {
+        "title": "INFRASTRUCTURE",
+        "items": [
+          "gnome-claude-usage — extension GNOME Shell publiée sur extensions.gnome.org : la consommation Claude Code lue depuis la CLI officielle, donc sans clé API ni token dépensé. GJS, Cairo, catalogues gettext, parsing testable hors du shell."
+        ]
+      },
+      {
+        "title": "IA",
+        "items": [
+          "ticket-runner — un ticket Notion devient une session Claude Code. Le runner le réclame, lui ouvre une worktree git jetable, et rend une pull request si le ticket touche du code, un document publié dans la page sinon. Boucle de validation dans Notion, questions posées à l'humain sur Telegram ou Slack, mise à jour automatique entre deux sessions. Python, bibliothèque standard uniquement.",
+          "linux-whisper — dictée vocale hors-ligne (faster-whisper, GPU ou CPU) pour Linux, WSL et macOS : le texte s'insère au curseur pendant qu'on parle. Un installeur qui reconnaît l'hôte et branche systemd ou launchd."
+        ]
+      }
+    ]
+  },
+  {
+    "company": "TripConnexion",
+    "role": "Back PHP & Java & Front Angular",
+    "location": "Lyon",
+    "startDate": "2015-08-01",
+    "endDate": "2016-09-01",
+    "stack": ["Symfony", "PHP", "AngularJS", "Bootstrap", "WordPress", "Java", "Spring Boot"],
+    "logo": null,
+    "summary": "Start-up lyonnaise de mise en relation entre les voyageurs et les lieux d'exception. Tech lead d'une équipe de 3 personnes.",
+    "sections": [
+      {
+        "title": "BACKEND — Symfony 2.7 (PHP) & Java Spring Boot 1.4",
+        "items": [
+          "Création de l'application web sous Symfony 2.7",
+          "Migration d'une partie de la V1 WordPress vers Symfony, pour conserver la logique métier existante",
+          "Développement du CRM interne en Java sous Spring Boot 1.4",
+          "Mise en place des tests unitaires et fonctionnels"
+        ]
+      },
+      {
+        "title": "FRONTEND — AngularJS 1.4 / Bootstrap",
+        "items": ["Front de l'application sous AngularJS 1.4 et Bootstrap"]
+      }
+    ]
+  },
+  {
+    "company": "DMD France",
+    "role": "Dev Full Stack",
+    "location": "Fréjus",
+    "startDate": "2013-09-01",
+    "endDate": "2014-08-01",
+    "stack": ["PHP", "Java", "Bootstrap", "jQuery"],
+    "logo": null,
+    "summary": "Startup dans le domaine médical.",
+    "sections": [
+      {
+        "title": "BACKEND — PHP & Java",
+        "items": [
+          "Création d'un SaaS pour la réparation des instruments",
+          "Développement d'un logiciel métier interne en Java, basé sur un logiciel open source, avec une partie web pour la prise de commande"
+        ]
+      },
+      {
+        "title": "FRONTEND — Bootstrap / jQuery",
+        "items": [
+          "Interfaces en Bootstrap et jQuery, y compris la partie web de prise de commande",
+          "Mise en place d'un site vitrine",
+          "Mise en place des boutiques en ligne, dont une boutique PrestaShop"
+        ]
+      }
+    ]
+  }
+]

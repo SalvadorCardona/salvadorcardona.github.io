@@ -1,17 +1,19 @@
 /**
- * Source unique de vérité du portfolio.
+ * Source unique de vérité du portfolio, à l'exception des expériences (voir
+ * `content/experiences.ts`, alimenté depuis Notion) et des articles (voir
+ * `content/posts/`).
  *
- * Tout le contenu du site vient d'ici : accueil, contact, pied de page.
- * Aucun CMS, aucune base de données — on édite ce fichier, on commit, le site
- * se redéploie.
+ * Tout le reste du contenu vient d'ici : accueil, contact, pied de page.
+ * Aucun autre CMS, aucune base de données — on édite ce fichier, on commit,
+ * le site se redéploie.
  *
  * Le contenu est aligné sur le profil LinkedIn, relu le 8 septembre 2026 :
- * même titre, même stack, mêmes expériences, mêmes diplômes — reformulés pour
- * le web, jamais copiés mot pour mot. `experiences` reprend la section
- * « Expérience » et `education` la section « Formation », dans le même ordre et
- * avec les mêmes dates : une mission absente de LinkedIn n'a rien à faire ici,
- * et inversement. Les entrées marquées « À COMPLÉTER » sont des gabarits vides :
- * elles ne s'affichent pas tant qu'elles ne sont pas remplies (voir `isFilled`).
+ * même titre, même stack, mêmes diplômes — reformulés pour le web, jamais
+ * copiés mot pour mot. `education` reprend la section « Formation », dans le
+ * même ordre et avec les mêmes dates : une entrée absente de LinkedIn n'a rien
+ * à faire ici, et inversement. Les entrées marquées « À COMPLÉTER » sont des
+ * gabarits vides : elles ne s'affichent pas tant qu'elles ne sont pas remplies
+ * (voir `isFilled`).
  */
 
 export const profile = {
@@ -119,161 +121,6 @@ export const skills: Array<SkillGroup> = [
   {
     title: 'Infra',
     items: ['Docker', 'Terraform', 'AWS', 'GitHub Actions', 'Linux'],
-  },
-]
-
-export type Experience = {
-  company: string
-  role: string
-  period: string
-  /** Contexte métier en une ligne, puis ce qui a été fait. */
-  description: string
-  stack: Array<string>
-}
-
-export const experiences: Array<Experience> = [
-  {
-    company: 'Animalink',
-    role: 'Lead developer',
-    period: 'Janvier 2024 — aujourd’hui',
-    description:
-      'Application web et mobile pour le soin animalier. Nouvelle plateforme construite de bout en bout, ' +
-      'de l’architecture au déploiement : API REST sous API Platform et Symfony 8 en Clean Architecture et ' +
-      'CQRS, recherche Elasticsearch et stack ELK pour l’observabilité, workers asynchrones pour les ' +
-      'traitements longs. Côté navigateur, une SPA React typée depuis le schéma de l’API, routée par ' +
-      'TanStack Start, avec un design system sur shadcn/ui. Environnements Docker, CI GitHub Actions, ' +
-      'hébergement AWS provisionné en Terraform. Côté IA : agents n8n branchés sur l’API, analyse ' +
-      'documentaire et embeddings avec Mistral, chatbot produit — une API pilotable par un agent autant ' +
-      'que par une interface.',
-    stack: [
-      'Symfony 8',
-      'PHP 8.4',
-      'API Platform',
-      'React',
-      'TypeScript',
-      'TanStack Start',
-      'shadcn/ui',
-      'Elasticsearch',
-      'Docker',
-      'AWS',
-      'Terraform',
-      'n8n',
-    ],
-  },
-  {
-    company: 'SalvadorCardona (GitHub)',
-    role: 'Open source — outillage et agents IA',
-    period: 'Janvier 2017 — aujourd’hui',
-    description:
-      'Sur mon temps propre, des outils qui font travailler des agents LLM sur des tâches réelles, et ' +
-      'l’écosystème front qui va avec. ticket-runner : un ticket Notion devient une session Claude Code ' +
-      'dans une worktree git jetable, avec une pull request à l’arrivée, une boucle de validation dans ' +
-      'Notion et les questions posées à l’humain sur Telegram ou Slack. gnome-claude-usage : extension ' +
-      'GNOME Shell publiée sur extensions.gnome.org, qui lit la consommation Claude Code depuis la CLI ' +
-      'officielle, donc sans clé d’API. whisper-desk : dictée vocale hors-ligne, sur GPU ou CPU, pour ' +
-      'Linux, WSL et macOS, avec un installeur qui branche systemd ou launchd selon l’hôte. trader-ia : ' +
-      'arène de paper trading S&P 500 entre agents traders. Et neuf paquets pour consommer une API ' +
-      'JSON-LD / Hydra sans réécrire le même CRUD : react-resource-view, react-data-form, ' +
-      'jsonld-api-client, jsonld-repository, jsonld-item, resource-registry, react-jwt-session, ' +
-      'react-mini-i18n, ssr-safe-storage — documentation et playground publiés.',
-    stack: [
-      'Python',
-      'TypeScript',
-      'React',
-      'Claude Code',
-      'MCP',
-      'Ollama',
-      'OpenRouter',
-      'faster-whisper',
-      'n8n',
-      'Notion API',
-      'GitHub Actions',
-    ],
-  },
-  {
-    company: 'Enkate',
-    role: 'Développeur back-end',
-    period: 'Février — juin 2023',
-    description:
-      'Studio de jeu vidéo lyonnais. API REST sous API Platform et Symfony 6 (Clean Architecture, CQRS, DDD), ' +
-      'ajout d’une API web sur le serveur .NET existant, TMA C# côté Unity, découpage en micro-services et ' +
-      'dockerisation complète.',
-    stack: ['Symfony 6', 'API Platform', 'C# / .NET', 'Unity', 'Docker'],
-  },
-  {
-    company: 'Greenweez',
-    role: 'Développeur full-stack',
-    period: 'Août 2022 — janvier 2023',
-    description:
-      'Marketplace du bio. API REST sous API Platform et Symfony 6 en Clean Architecture, CQRS et DDD, ' +
-      'migration du socle e-commerce vers Sylius, découpage en micro-services, front SSR sous Next.js ' +
-      'pour un catalogue lisible par les moteurs de recherche.',
-    stack: ['Symfony 6', 'Sylius', 'Next.js', 'React', 'Docker'],
-  },
-  {
-    company: 'BeeTrip',
-    role: 'Développeur full-stack',
-    period: 'Février — juillet 2022',
-    description:
-      'Marketplace des outils du voyage. API REST sous API Platform et Symfony 6, SPA Next.js qui la ' +
-      'consomme, tests unitaires et fonctionnels des deux côtés, conseil sur les choix techniques.',
-    stack: ['Symfony 6', 'API Platform', 'PHP 8', 'Next.js', 'React', 'TypeScript'],
-  },
-  {
-    company: 'QANTIS.co',
-    role: 'Développeur full-stack',
-    period: 'Septembre 2021 — janvier 2022',
-    description:
-      'Marketplace des outils du BTP. SPA Vue 3 et TypeScript, API REST sous API Platform et Symfony 6, ' +
-      'intégration du SDK Wizaplace pour la brique marketplace, tests unitaires et fonctionnels sur les ' +
-      'deux stacks.',
-    stack: ['Vue 3', 'TypeScript', 'Symfony 6', 'API Platform', 'PHP 8', 'Wizaplace'],
-  },
-  {
-    company: 'Bedrock Streaming',
-    role: 'Développeur back-end Symfony',
-    period: 'Février — août 2021',
-    description:
-      'Éditeur des plateformes de streaming de TF1, M6 et d’autres diffuseurs européens. Évolutions de ' +
-      'l’API Symfony 5 en DDD, tests unitaires et fonctionnels, travaux sur plusieurs services AWS.',
-    stack: ['Symfony 5', 'PHP', 'DDD', 'AWS'],
-  },
-  {
-    company: 'Jacquet Metal Service',
-    role: 'Développeur full-stack',
-    period: 'Août 2019 — février 2021',
-    description:
-      'Marketplace B2B de la métallurgie. Socle Sylius et API Platform, SPA Angular, migration de la base ' +
-      'de données d’Oracle vers PostgreSQL.',
-    stack: [
-      'Symfony',
-      'Sylius',
-      'API Platform',
-      'Angular',
-      'TypeScript',
-      'Oracle',
-      'PostgreSQL',
-    ],
-  },
-  {
-    company: 'Wizaplace',
-    role: 'Développeur full-stack',
-    period: 'Décembre 2017 — août 2019',
-    description:
-      'Éditeur d’une solution de marketplace revendue à des intégrateurs. Développement du SDK PHP ' +
-      'utilisé par les équipes clientes — du code à documenter et à ne pas casser —, marketplaces ' +
-      'clientes et API REST sous Symfony 4, fronts Vue 2, Vuex et Nuxt.',
-    stack: ['Symfony 4', 'PHP', 'Vue 2', 'Vuex', 'Nuxt'],
-  },
-  {
-    company: 'EDD',
-    role: 'Développeur full-stack et formateur',
-    period: 'Octobre 2018 — janvier 2019',
-    description:
-      'Conversion et indexation de médias — vidéo, presse, radio — dans une base documentaire, en ' +
-      'parallèle de Wizaplace. Front Vue 2, Vuex et Vue Router, back Symfony 4 sur la base PostgreSQL ' +
-      'existante, et formation de l’équipe en place pour qu’elle reprenne la main.',
-    stack: ['Symfony 4', 'Vue 2', 'Vuex', 'PostgreSQL'],
   },
 ]
 

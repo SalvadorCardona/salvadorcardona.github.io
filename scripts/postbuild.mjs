@@ -10,7 +10,8 @@
  *    tout fichier ou dossier commençant par un underscore.
  *
  * 3. Vérification que chaque illustration déclarée dans `covers.json` est bien
- *    partie dans le build, sinon l'article afficherait une image cassée.
+ *    partie dans le build, sinon l'article afficherait une image cassée. Même
+ *    vérification pour les logos déclarés dans `experiences.json`.
  *
  * 4. Garde-fou : on échoue si une page attendue manque, plutôt que de publier
  *    un site amputé.
@@ -29,6 +30,7 @@ import process from 'node:process'
 
 const OUT_DIR = 'dist/client'
 const COVERS_FILE = 'src/content/covers.json'
+const EXPERIENCES_FILE = 'src/content/experiences.json'
 
 const REQUIRED_PAGES = [
   'index.html',
@@ -60,9 +62,22 @@ async function requiredCovers() {
     .map((cover) => `blog/${cover.file}`)
 }
 
+/** Les logos déjà rapatriés par `npm run experiences:sync`, tels que référencés. */
+async function requiredLogos() {
+  const experiences = JSON.parse(await readFile(EXPERIENCES_FILE, 'utf8'))
+  return experiences
+    .filter((experience) => experience.logo)
+    .map((experience) => experience.logo.replace(/^\//, ''))
+}
+
 async function main() {
   const missing = []
-  for (const page of [...REQUIRED_PAGES, ...(await requiredCovers())]) {
+  const required = [
+    ...REQUIRED_PAGES,
+    ...(await requiredCovers()),
+    ...(await requiredLogos()),
+  ]
+  for (const page of required) {
     if (!(await exists(join(OUT_DIR, page)))) missing.push(page)
   }
 

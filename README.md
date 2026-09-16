@@ -30,19 +30,20 @@ npm run dev        # http://localhost:3000
 | `npm run posts:publish` | Publie le blog : Notion, puis déploiement, via GitHub Actions |
 | `npm run posts:sync`| Régénère les articles depuis Notion, en local (aperçu)       |
 | `npm run post:image`| Génère avec OpenRouter les illustrations d'articles manquantes |
+| `npm run experiences:sync` | Régénère les expériences depuis Notion, en local (aperçu) |
 
 Pour valider un build avant de pousser : `npm run build && npm run serve`.
 
 ## Modifier le contenu
 
-Les articles s'écrivent dans Notion (voir ci-dessous). Le reste vit dans
-`src/content/`.
+Les articles et les expériences s'écrivent dans Notion (voir ci-dessous). Le
+reste vit dans `src/content/`.
 
-- **`profile.ts`** — identité, liens, technologies, expériences, diplômes,
-  projets. Les entrées contenant `À COMPLÉTER` ne s'affichent pas : elles
-  servent de gabarit. Un projet porte son dépôt (`url`) et, s'ils existent, son
-  site en ligne (`site`) et sa documentation (`docs`) : la page `/projets` les
-  liste tous, l'accueil ne montre que ceux marqués `featured`.
+- **`profile.ts`** — identité, liens, technologies, diplômes, projets. Les
+  entrées contenant `À COMPLÉTER` ne s'affichent pas : elles servent de
+  gabarit. Un projet porte son dépôt (`url`) et, s'ils existent, son site en
+  ligne (`site`) et sa documentation (`docs`) : la page `/projets` les liste
+  tous, l'accueil ne montre que ceux marqués `featured`.
 - **`services.ts`** — les prestations (`/services/<slug>`) et les interventions
   ponctuelles. Chaque prestation porte son titre, sa description SEO, son
   contenu section par section et sa FAQ ; le gabarit
@@ -55,6 +56,11 @@ Les articles s'écrivent dans Notion (voir ci-dessous). Le reste vit dans
   `formatDate`) s'écrit à la main.
 - **`covers.json`** — l'illustration de chaque article : une entrée par `slug`,
   avec son texte alternatif et, si l'image a été générée, le prompt qui a servi.
+- **`experiences.json`** — les expériences de la section `/#experiences`.
+  **Ce fichier est généré** par `npm run experiences:sync` : pas d'en-tête
+  « ne pas éditer » possible dans du JSON, mais la règle est la même que pour
+  les articles. Le type `Experience`, le tri, la durée calculée et le repli
+  sur les initiales s'écrivent à la main dans `experiences.ts`, qui l'importe.
 
 ### Écrire un article
 
@@ -183,6 +189,66 @@ l'article s'affiche simplement sans illustration.
 Le modèle par défaut est `black-forest-labs/flux.2-flex` (~0,05 $ l'image), à
 changer avec `OPENROUTER_IMAGE_MODEL`.
 
+### Ajouter ou modifier une expérience
+
+Les expériences vivent dans la database Notion **Experience Salvador
+Cardona**, qui fait foi. Le dépôt n'en est que le reflet
+(`src/content/experiences.json`), et le site reste entièrement statique :
+rien n'appelle Notion au build ni au runtime, seule la synchronisation le
+fait, à la main ou depuis le workflow planifié.
+
+1. Créer une page dans la database et remplir ses propriétés :
+
+   | Propriété    | Rôle                                                        |
+   | ------------ | ------------------------------------------------------------ |
+   | `Name`       | Le titre interne de la page (non affiché tel quel)           |
+   | `entreprise` | Le nom de l'entreprise                                       |
+   | `poste`      | L'intitulé du poste                                          |
+   | `start date` | Début de la mission, pour le tri et la durée calculée        |
+   | `end date`   | Fin de la mission — laisser vide pour une mission en cours (« aujourd'hui ») |
+   | `lieu`       | La ville affichée                                             |
+   | `technologie`| Les tags de technologies affichés                            |
+   | `logo`       | Le logo de l'entreprise (fichier). Vide → repli sur les initiales |
+
+2. Écrire le corps de la page : un résumé en paragraphe(s), puis des titres de
+   section — `⌨️ BACKEND`, `🖥️ FRONTEND`, `📶 INFRASTRUCTURE`, `🤖 IA`,
+   `🧭 CONSEIL & MÉTHODE` — chacun suivi de ses puces. L'émoji est optionnel et
+   n'est pas repris à l'affichage ; le reste du titre l'est, ce qui permet de
+   préciser la stack entre parenthèses ou après un tiret. Un bloc non pris en
+   charge (autre que paragraphe, titre ou liste à puces) est signalé et ignoré
+   par la synchronisation, pas silencieusement perdu.
+3. Synchroniser et publier :
+
+   ```bash
+   npm run experiences:sync   # en local, avec NOTION_TOKEN dans l'environnement
+   ```
+
+   En local ça ne fait qu'écrire les fichiers, à commiter et pousser comme
+   n'importe quel changement. Pour publier sans les manipuler à la main,
+   lancer le workflow
+   [`publish-experiences.yml`](.github/workflows/publish-experiences.yml)
+   depuis l'onglet **Actions → Publier les expériences** : il synchronise,
+   vérifie (`typecheck`, `build`), commite sur `main` et lance le déploiement
+   — le même enchaînement que `posts:publish` pour le blog. Il se relance
+   aussi tout seul chaque jour, pour rattraper une modification faite dans
+   Notion sans y repenser.
+
+Le jeton `NOTION_TOKEN` est le même que pour le blog : une intégration Notion
+partagée avec la database (sur la page de la database : menu `···` →
+« Connections » → l'intégration), posée une fois dans **Settings → Secrets
+and variables → Actions**. Il n'est utilisé que par la synchronisation,
+jamais par le site — et jamais commité : si l'appel à Notion échoue, la
+synchronisation s'arrête avant d'écrire quoi que ce soit, plutôt que de
+publier une page à moitié remplie.
+
+Ce que la synchronisation fait, en plus d'écrire `experiences.json` :
+
+- elle rapatrie les logos dans `public/experiences/` — comme les images
+  d'articles, les URL de fichiers Notion sont signées et expirent en environ
+  une heure, les garder telles quelles casserait le site après coup ;
+- elle supprime du dépôt les logos qui ne sont plus référencés par aucune
+  expérience.
+
 ## Fonctionnement du build
 
 `vite.config.ts` active le prérendu du plugin TanStack Start. Chaque route est
@@ -214,9 +280,10 @@ s'arrête plutôt que de publier un site amputé.
 Source des Pages à régler une fois : **Settings → Pages → Source : GitHub
 Actions**.
 
-Il se lance aussi à la demande, ce dont `publish-blog.yml` se sert une fois les
-articles commités : un push fait par une Action ne déclenche aucun workflow,
-GitHub coupant court aux boucles.
+Il se lance aussi à la demande, ce dont `publish-blog.yml` et
+`publish-experiences.yml` se servent une fois leur contenu commité : un push
+fait par une Action ne déclenche aucun workflow, GitHub coupant court aux
+boucles.
 
 ### Domaine
 

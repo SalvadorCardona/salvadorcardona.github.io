@@ -1,10 +1,8 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 
 import { ServicesGrid } from '../components/ServiceCard'
-import type { Experience } from '../content/profile'
 import {
   education,
-  experiences,
   isFilled,
   links,
   profile,
@@ -12,6 +10,13 @@ import {
   projects,
   skills,
 } from '../content/profile'
+import type { Experience } from '../content/experiences'
+import {
+  companyInitials,
+  formatDuration,
+  formatPeriod,
+  sortedExperiences,
+} from '../content/experiences'
 import { formatDate, sortedPosts } from '../content/posts'
 import { SITE_NAME, SITE_URL, personJsonLd, seo } from '../lib/seo'
 
@@ -52,11 +57,8 @@ const facts = [
 ]
 
 function Home() {
-  const visibleExperiences = experiences.filter((item) =>
-    isFilled(item.company),
-  )
-  const recentExperiences = visibleExperiences.slice(0, VISIBLE_EXPERIENCES)
-  const olderExperiences = visibleExperiences.slice(VISIBLE_EXPERIENCES)
+  const recentExperiences = sortedExperiences.slice(0, VISIBLE_EXPERIENCES)
+  const olderExperiences = sortedExperiences.slice(VISIBLE_EXPERIENCES)
   const visibleEducation = education.filter((item) => isFilled(item.school))
   const featured = projects.filter((project) => project.featured)
   const latestPosts = sortedPosts.slice(0, 2)
@@ -123,7 +125,7 @@ function Home() {
         </div>
       </Section>
 
-      {visibleExperiences.length > 0 && (
+      {sortedExperiences.length > 0 && (
         <Section
           title="Expériences"
           id="experiences"
@@ -132,7 +134,7 @@ function Home() {
           <ol className="space-y-8">
             {recentExperiences.map((item) => (
               <ExperienceItem
-                key={`${item.company}-${item.period}`}
+                key={`${item.company}-${item.startDate}`}
                 item={item}
               />
             ))}
@@ -162,7 +164,7 @@ function Home() {
               >
                 {olderExperiences.map((item) => (
                   <ExperienceItem
-                    key={`${item.company}-${item.period}`}
+                    key={`${item.company}-${item.startDate}`}
                     item={item}
                   />
                 ))}
@@ -300,21 +302,76 @@ function Home() {
 function ExperienceItem({ item }: { item: Experience }) {
   return (
     <li className="border-l-2 border-slate-200 pl-5 dark:border-slate-800">
-      <p className="text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-slate-500">
-        {item.period}
-      </p>
-      <h3 className="mt-1 font-semibold text-slate-900 dark:text-slate-100">
-        {item.role} · {item.company}
-      </h3>
-      <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
-        {item.description}
+      <div className="flex items-start gap-4">
+        <ExperienceLogo item={item} />
+        <div>
+          <p className="text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-slate-500">
+            {formatPeriod(item)} · {formatDuration(item)}
+          </p>
+          <h3 className="mt-1 font-semibold text-slate-900 dark:text-slate-100">
+            {item.role} · {item.company}
+          </h3>
+          <p className="text-sm text-slate-500 dark:text-slate-500">{item.location}</p>
+        </div>
+      </div>
+      <p className="mt-3 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+        {item.summary}
       </p>
       {item.stack.length > 0 && (
         <p className="mt-2 text-xs text-slate-500 dark:text-slate-500">
           {item.stack.join(' · ')}
         </p>
       )}
+      {item.sections.length > 0 && (
+        <div className="mt-3 divide-y divide-slate-200 rounded-xl border border-slate-200 dark:divide-slate-800 dark:border-slate-800">
+          {item.sections.map((section) => (
+            <details key={section.title} className="group px-4 py-3">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-sm font-medium text-slate-900 dark:text-slate-100">
+                {section.title}
+                <span
+                  aria-hidden="true"
+                  className="text-slate-400 transition-transform group-open:rotate-45"
+                >
+                  +
+                </span>
+              </summary>
+              <ul className="mt-3 space-y-1.5 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                {section.items.map((point) => (
+                  <li key={point} className="flex gap-2">
+                    <span aria-hidden="true">–</span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ))}
+        </div>
+      )}
     </li>
+  )
+}
+
+/** Le logo de l'entreprise, ou ses initiales tant qu'il n'y en a pas dans Notion. */
+function ExperienceLogo({ item }: { item: Experience }) {
+  if (item.logo) {
+    return (
+      <img
+        src={item.logo}
+        alt=""
+        width={48}
+        height={48}
+        loading="lazy"
+        className="h-10 w-10 shrink-0 rounded-lg object-contain ring-1 ring-slate-200 dark:bg-white dark:ring-white/10"
+      />
+    )
+  }
+  return (
+    <span
+      aria-hidden="true"
+      className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-slate-100 text-xs font-semibold text-slate-500 ring-1 ring-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:ring-white/10"
+    >
+      {companyInitials(item.company)}
+    </span>
   )
 }
 
