@@ -50,6 +50,9 @@ reste vit dans `src/content/`.
   `src/components/ServicePage.tsx` en fait la page et les données structurées.
   Pour en ajouter une : une entrée ici, une route d'une ligne dans
   `src/routes/services/`, et son chemin dans `scripts/postbuild.mjs`.
+- **`agency.ts`** — l'agence Cardona (`/agence`) : les deux abonnements
+  mensuels, ce qu'ils comprennent, les engagements et la FAQ. Les prix y sont
+  écrits une seule fois et alimentent aussi le JSON-LD de la page.
 - **`posts/`** — les articles du blog, un fichier par article. **Ces fichiers
   sont générés** : ils portent un en-tête qui le rappelle, et `npm run
   posts:sync` les écrase. Seul `post.ts` (le type `Post`, `getCover`,

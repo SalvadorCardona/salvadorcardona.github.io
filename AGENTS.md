@@ -35,8 +35,8 @@ Portfolio statique : TanStack Start prérendu au build, publié sur GitHub Pages
   type `Experience`, le tri, la durée calculée, le repli sur les initiales)
   est écrit à la main.
 - **Le reste du contenu est en dur** dans `src/content/` : `profile.ts` pour le
-  CV (hors expériences), `services.ts` pour les prestations, `covers.json` pour
-  les illustrations. Pas d'autre CMS, pas de chargement de fichiers Markdown.
+  CV (hors expériences), `services.ts` pour les prestations, `agency.ts` pour
+  les abonnements de l'agence Cardona, `covers.json` pour les illustrations. Pas d'autre CMS, pas de chargement de fichiers Markdown.
 - **Une page service = une entrée dans `services.ts` + une route d'une ligne**
   dans `src/routes/services/<slug>.tsx`, qui rend le gabarit commun
   `components/ServicePage.tsx`. Ajouter le chemin à `REQUIRED_PAGES` dans
@@ -82,7 +82,7 @@ npm run build        # échoue si une page attendue manque
 ```
 
 Le build doit annoncer les pages fixes (`/`, `/services` et ses trois pages
-service, `/projets`, `/blog`, `/contact`, `/404`) plus un article par
+service, `/agence`, `/projets`, `/blog`, `/contact`, `/404`) plus un article par
 `src/content/posts/<slug>.tsx`, et écrire `dist/client/404.html`. Il échoue si une page attendue manque, ou si une
 illustration déclarée dans `covers.json` ou un logo déclaré dans
 `experiences.json` n'a pas suivi.

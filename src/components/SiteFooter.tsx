@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 
+import { agency } from '../content/agency'
 import { links, profile } from '../content/profile'
 import { servicePath, services } from '../content/services'
 
@@ -44,6 +45,11 @@ export function SiteFooter() {
             <li>
               <Link to="/services" className={linkClass}>
                 Tous les services
+              </Link>
+            </li>
+            <li>
+              <Link to="/agence" className={linkClass}>
+                Agence {agency.name} — forfaits mensuels
               </Link>
             </li>
           </ul>
