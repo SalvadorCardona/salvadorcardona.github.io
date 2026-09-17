@@ -1,6 +1,7 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 
 import { ServicesGrid } from '../components/ServiceCard'
+import { agency } from '../content/agency'
 import {
   education,
   isFilled,
@@ -79,6 +80,14 @@ function Home() {
             className="font-medium text-sky-600 hover:underline dark:text-sky-400"
           >
             Tous les services et la façon dont je travaille →
+          </Link>
+        </p>
+        <p className="mt-2 text-sm">
+          <Link
+            to="/agence"
+            className="font-medium text-sky-600 hover:underline dark:text-sky-400"
+          >
+            {agency.teaser} →
           </Link>
         </p>
       </Section>
