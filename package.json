@@ -9,6 +9,7 @@
     "dev": "vite dev --port 3000",
     "generate-routes": "tsr generate",
     "build": "vite build && node scripts/postbuild.mjs",
+    "experiences:sync": "node scripts/sync-experiences.mjs",
     "post:image": "node scripts/generate-post-image.mjs",
     "posts:publish": "node scripts/publish-blog.mjs",
     "posts:sync": "node scripts/sync-posts.mjs",

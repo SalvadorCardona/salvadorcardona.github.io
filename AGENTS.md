@@ -22,9 +22,21 @@ Portfolio statique : TanStack Start prérendu au build, publié sur GitHub Pages
   `posts/post.ts` (le type `Post`, `getCover`, `formatDate`) est écrit à la
   main — un article importe son type de là, jamais de l'index, sinon le cycle
   est là.
+- **Les expériences viennent aussi de Notion.** La database « Experience
+  Salvador Cardona » est la source de vérité. `npm run experiences:sync` la
+  lit et régénère `src/content/experiences.json` ; l'appel réseau a lieu là, à
+  la main ou depuis `publish-experiences.yml`, jamais au build ni au runtime.
+  Le workflow se relance à la demande et tous les jours (`workflow_dispatch` +
+  `schedule`), le jeton Notion venant du même secret `NOTION_TOKEN`.
+- **Ne pas éditer `src/content/experiences.json` à la main** : la prochaine
+  synchronisation l'écrase (un JSON ne peut pas porter d'en-tête « généré », ce
+  qui est noté en commentaire dans `experiences.ts`, qui l'importe). Pour
+  corriger une expérience, corriger la page Notion. Seul `experiences.ts` (le
+  type `Experience`, le tri, la durée calculée, le repli sur les initiales)
+  est écrit à la main.
 - **Le reste du contenu est en dur** dans `src/content/` : `profile.ts` pour le
-  CV, `services.ts` pour les prestations, `covers.json` pour les illustrations.
-  Pas d'autre CMS, pas de chargement de fichiers Markdown.
+  CV (hors expériences), `services.ts` pour les prestations, `covers.json` pour
+  les illustrations. Pas d'autre CMS, pas de chargement de fichiers Markdown.
 - **Une page service = une entrée dans `services.ts` + une route d'une ligne**
   dans `src/routes/services/<slug>.tsx`, qui rend le gabarit commun
   `components/ServicePage.tsx`. Ajouter le chemin à `REQUIRED_PAGES` dans
@@ -36,6 +48,11 @@ Portfolio statique : TanStack Start prérendu au build, publié sur GitHub Pages
   par `npm run post:image -- <slug>` depuis le `prompt` de `covers.json`. Dans
   les deux cas l'image atterrit dans `public/blog/` et est versionnée — voir
   « Son illustration » dans le README.
+- **Le logo d'une expérience est optionnel.** Rapatrié par `experiences:sync`
+  dans `public/experiences/` quand la propriété `logo` est renseignée dans
+  Notion ; sinon la carte affiche les initiales de l'entreprise
+  (`companyInitials` dans `experiences.ts`). Les URL de fichiers Notion
+  expirent en environ une heure : ne jamais les garder telles quelles.
 - **`base` reste `/`.** Le dépôt est un *user site* (`<pseudo>.github.io`),
   servi à la racine. Ne pas ajouter de `basepath`.
 - **Ne pas activer `spa.enabled`** dans `vite.config.ts` : cela remplace la page
@@ -58,7 +75,8 @@ Portfolio statique : TanStack Start prérendu au build, publié sur GitHub Pages
 ## Vérification avant de conclure
 
 ```bash
-npm run posts:sync   # si le contenu Notion a changé ; demande NOTION_TOKEN
+npm run posts:sync         # si le contenu Notion a changé ; demande NOTION_TOKEN
+npm run experiences:sync   # idem, pour les expériences ; demande NOTION_TOKEN
 npm run typecheck
 npm run build        # échoue si une page attendue manque
 ```
@@ -66,5 +84,6 @@ npm run build        # échoue si une page attendue manque
 Le build doit annoncer les pages fixes (`/`, `/services` et ses trois pages
 service, `/projets`, `/blog`, `/contact`, `/404`) plus un article par
 `src/content/posts/<slug>.tsx`, et écrire `dist/client/404.html`. Il échoue si une page attendue manque, ou si une
-illustration déclarée dans `covers.json` n'a pas suivi.
+illustration déclarée dans `covers.json` ou un logo déclaré dans
+`experiences.json` n'a pas suivi.
 Pour inspecter le rendu réel : `npm run serve`.

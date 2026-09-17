@@ -1,0 +1,95 @@
+name: Publier les expériences
+
+# Synchronise les expériences depuis Notion, les commite sur main, puis
+# déclenche le déploiement. Le jeton Notion vit dans les secrets du dépôt
+# (Settings → Secrets and variables → Actions → `NOTION_TOKEN`), partagé avec
+# publish-blog.yml.
+#
+# Se lance à la demande depuis l'onglet Actions, et tous les jours pour
+# rattraper une modification faite dans Notion sans y penser.
+
+on:
+  workflow_dispatch:
+    inputs:
+      message:
+        description: Message du commit
+        required: false
+        default: Synchronise les expériences depuis Notion
+  schedule:
+    - cron: '0 6 * * *'
+
+# Deux synchronisations en parallèle pousseraient deux commits concurrents sur
+# main : la seconde attend son tour.
+concurrency:
+  group: publish-experiences
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  # Pour déclencher `deploy.yml` à la fin — voir la dernière étape.
+  actions: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Synchronisation depuis Notion
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+        run: npm run experiences:sync
+
+      - name: Ce qui a changé
+        id: changes
+        run: |
+          git status --short
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Rien à publier : le dépôt est déjà à jour avec Notion."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Vérifier avant de commiter : une expérience mal formée s'arrête ici
+      # plutôt que sur main, où elle casserait le déploiement.
+      - name: Vérification des types
+        if: steps.changes.outputs.changed == 'true'
+        run: npm run typecheck
+
+      - name: Build statique (prérendu + sitemap + 404.html)
+        if: steps.changes.outputs.changed == 'true'
+        run: npm run build
+
+      - name: Commit sur main
+        if: steps.changes.outputs.changed == 'true'
+        # Le message passe par l'environnement : interpolé dans le `run`, il
+        # serait relu par le shell, guillemets et backticks compris. Sur le
+        # déclenchement planifié, `inputs.message` est vide : le shell retombe
+        # sur le message par défaut.
+        env:
+          MESSAGE: ${{ inputs.message }}
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m "${MESSAGE:-Synchronise les expériences depuis Notion}"
+          git push origin HEAD:main
+
+      # Un push signé par le GITHUB_TOKEN ne déclenche aucun workflow — GitHub
+      # coupe court aux boucles. `deploy.yml` ne partirait donc jamais tout
+      # seul : on l'appelle explicitement sur main, qui porte le commit ci-dessus.
+      - name: Déploiement
+        if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy.yml --ref main
