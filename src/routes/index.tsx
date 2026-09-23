@@ -384,7 +384,11 @@ function ExperienceLogo({ item }: { item: Experience }) {
 
 /**
  * Le premier écran : une promesse, deux actions, et une fiche de faits à
- * droite. Pas de carrousel — rien ne bouge, tout se lit d'un coup.
+ * droite. Pas de carrousel : tout se lit d'un coup. Le mouvement est
+ * purement décoratif et en CSS (styles.css, `animate-hero-*`) : les blocs
+ * apparaissent en cascade au chargement, les halos dérivent lentement, le
+ * mot clé du titre brille. Tout est derrière `motion-safe:`, donc désactivé
+ * pour qui a demandé moins d'animations.
  */
 function Hero() {
   return (
@@ -395,22 +399,29 @@ function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute -top-24 -right-40 -left-40 -z-10 h-[36rem]"
       >
-        <div className="absolute top-0 right-0 h-[30rem] w-[30rem] rounded-full bg-sky-200/50 blur-3xl dark:bg-sky-900/30" />
-        <div className="absolute top-48 left-0 h-72 w-72 rounded-full bg-slate-200/70 blur-3xl dark:bg-slate-800/40" />
+        {/* Quadrillage fin qui glisse en diagonale, fondu vers le bas. */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-slate-900)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-slate-900)_1px,transparent_1px)] bg-[size:2.5rem_2.5rem] opacity-[0.045] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)] motion-safe:animate-hero-grid dark:bg-[linear-gradient(to_right,var(--color-slate-100)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-slate-100)_1px,transparent_1px)] dark:opacity-[0.06]" />
+        <div className="absolute top-0 right-0 h-[30rem] w-[30rem] rounded-full bg-sky-200/50 blur-3xl motion-safe:animate-hero-drift dark:bg-sky-900/30" />
+        <div className="absolute top-48 left-0 h-72 w-72 rounded-full bg-slate-200/70 blur-3xl motion-safe:animate-hero-drift-slow dark:bg-slate-800/40" />
+        <div className="absolute top-64 right-1/3 h-56 w-56 rounded-full bg-indigo-200/40 blur-3xl motion-safe:animate-hero-drift-slow dark:bg-indigo-900/25" />
       </div>
 
       <div className="grid gap-12 lg:grid-cols-[1.35fr_1fr] lg:items-center">
         <div>
-          <p className="text-sm font-medium tracking-widest text-sky-600 uppercase dark:text-sky-400">
+          <p className="text-sm font-medium tracking-widest text-sky-600 uppercase motion-safe:animate-hero-rise dark:text-sky-400">
             {profile.role} · Lyon
           </p>
-          <h1 className="mt-5 text-4xl font-bold tracking-tight text-balance text-slate-900 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.08] dark:text-slate-100">
-            Des applications web solides, de l’API à l’interface.
+          <h1 className="mt-5 text-4xl font-bold tracking-tight text-balance text-slate-900 motion-safe:animate-hero-rise motion-safe:[animation-delay:100ms] sm:text-5xl lg:text-[3.4rem] lg:leading-[1.08] dark:text-slate-100">
+            Des applications web{' '}
+            <span className="bg-linear-to-r from-sky-600 via-indigo-500 to-sky-600 bg-[length:200%_auto] bg-clip-text text-transparent motion-safe:animate-hero-shine dark:from-sky-400 dark:via-indigo-300 dark:to-sky-400">
+              solides
+            </span>
+            , de l’API à l’interface.
           </h1>
-          <p className="mt-5 text-base font-medium text-pretty text-slate-800 dark:text-slate-200">
+          <p className="mt-5 text-base font-medium text-pretty text-slate-800 motion-safe:animate-hero-rise motion-safe:[animation-delay:200ms] dark:text-slate-200">
             {profile.headline}
           </p>
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-pretty text-slate-600 dark:text-slate-400">
+          <p className="mt-5 max-w-xl text-lg leading-relaxed text-pretty text-slate-600 motion-safe:animate-hero-rise motion-safe:[animation-delay:300ms] dark:text-slate-400">
             {profile.name}, développeur web depuis 2013 : des API Symfony et
             des interfaces React pour des marketplaces, une plateforme de
             streaming et une application de soin animalier. Lead developer
@@ -418,16 +429,16 @@ function Hero() {
             livrent du code sur mon temps libre.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3 motion-safe:animate-hero-rise motion-safe:[animation-delay:400ms]">
             <Link
               to="/contact"
-              className="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-slate-700 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white"
+              className="rounded-lg bg-slate-900 px-5 py-2.5 text-sm font-medium text-white transition-all hover:-translate-y-0.5 hover:bg-slate-700 hover:shadow-lg hover:shadow-slate-900/20 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white dark:hover:shadow-white/10"
             >
               Discuter de votre projet
             </Link>
             <Link
               to="/services"
-              className="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-900"
+              className="rounded-lg border border-slate-300 px-5 py-2.5 text-sm font-medium text-slate-700 transition-all hover:-translate-y-0.5 hover:border-slate-400 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-900"
             >
               Voir les services
             </Link>
@@ -441,7 +452,7 @@ function Hero() {
             </a>
           </div>
 
-          <p className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-500 dark:text-slate-500">
+          <p className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-slate-500 motion-safe:animate-hero-rise motion-safe:[animation-delay:500ms] dark:text-slate-500">
             <span>Développement sur mesure</span>
             <span aria-hidden="true">·</span>
             <span>Audit de sécurité</span>
@@ -452,13 +463,13 @@ function Hero() {
 
         <aside
           aria-label="En bref"
-          className="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-xl shadow-slate-200/50 backdrop-blur dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none"
+          className="rounded-2xl border border-slate-200 bg-white/80 p-6 shadow-xl shadow-slate-200/50 backdrop-blur transition-shadow hover:shadow-2xl hover:shadow-sky-200/40 motion-safe:animate-hero-rise motion-safe:[animation-delay:350ms] dark:border-slate-800 dark:bg-slate-900/70 dark:shadow-none dark:hover:shadow-none"
         >
           <p className="flex items-center gap-2 text-sm font-medium text-slate-900 dark:text-slate-100">
-            <span
-              aria-hidden="true"
-              className="inline-block h-2 w-2 rounded-full bg-emerald-500"
-            />
+            <span aria-hidden="true" className="relative inline-flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 motion-safe:animate-ping" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            </span>
             Ouvert à de nouvelles missions
           </p>
           <dl className="mt-5 divide-y divide-slate-100 text-sm dark:divide-slate-800">

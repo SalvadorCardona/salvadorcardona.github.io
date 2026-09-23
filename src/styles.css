@@ -5,6 +5,50 @@
   --font-sans:
     ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
     Arial, sans-serif;
+
+  /* Animations du hero de l'accueil (`animate-hero-*`). Elles ne sont posées
+     que derrière `motion-safe:` : avec « réduire les animations », rien ne
+     bouge et rien n'est masqué. */
+  --animate-hero-rise: hero-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-hero-drift: hero-drift 22s ease-in-out infinite alternate;
+  --animate-hero-drift-slow: hero-drift 30s ease-in-out -8s infinite alternate-reverse;
+  --animate-hero-shine: hero-shine 6s linear infinite;
+  --animate-hero-grid: hero-grid 40s linear infinite;
+
+  @keyframes hero-rise {
+    from {
+      opacity: 0;
+      transform: translateY(1.25rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes hero-drift {
+    from {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-6%, 8%, 0) scale(1.08);
+    }
+    to {
+      transform: translate3d(5%, -6%, 0) scale(0.96);
+    }
+  }
+
+  @keyframes hero-shine {
+    to {
+      background-position: 200% center;
+    }
+  }
+
+  @keyframes hero-grid {
+    to {
+      background-position: 2.5rem 2.5rem;
+    }
+  }
 }
 
 * {
