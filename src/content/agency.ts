@@ -43,8 +43,8 @@ export const agency = {
   /** Le positionnement, en deux ou trois paragraphes. */
   about: [
     'Cardona, c’est le nom sous lequel je prends en charge la présence web d’une entreprise de bout en bout : le site, le nom de domaine, l’hébergement, les mises à jour, et l’application métier quand le besoin dépasse la vitrine. Pas de commercial, pas de chef de projet qui relaie : vous parlez directement à celui qui construit.',
-    'Le modèle est volontairement simple. Deux abonnements, deux prix affichés, aucune facture de départ : la conception est étalée dans le mensuel plutôt que réglée d’un bloc. Vous savez ce que le web vous coûte chaque mois, et vous pouvez arrêter.',
-    'Les missions plus lourdes — refonte d’une application existante, audit de sécurité, mise en place de l’IA — restent facturées au forfait ou en régie sur les pages service. L’abonnement couvre ce qui vit dans la durée.',
+    'Le modèle est volontairement simple. Deux abonnements, deux prix affichés, aucune facture de départ : la conception est étalée dans le mensuel plutôt que réglée d’un bloc. Vous savez ce que le web vous coûte chaque mois, et vous pouvez arrêter après la première année.',
+    'Les missions plus lourdes — refonte d’une application existante, audit de sécurité, intégration de l’IA — restent facturées au forfait ou en régie sur les pages service. L’abonnement couvre ce qui vit dans la durée.',
   ],
 } as const
 
@@ -85,7 +85,7 @@ export const offers: Array<AgencyOffer> = [
       'Une application web sur mesure : vos données, vos écrans, votre vocabulaire.',
       'Des comptes et des droits : votre équipe, vos clients, chacun ne voit que ce qui le concerne.',
       'Une API pour brancher vos autres outils, et de l’automatisation là où une tâche se répète.',
-      'Les évolutions au fil de l’eau : un nouvel écran, un nouveau champ, un nouvel export.',
+      'Une journée d’évolutions par mois, reportable sur le trimestre : un nouvel écran, un nouveau champ, un nouvel export.',
       'La supervision, les sauvegardes quotidiennes et la restauration en cas d’incident.',
       'Un point tous les mois sur ce qui a été livré et ce qui vient ensuite.',
     ],
@@ -139,12 +139,12 @@ export const faq: Array<AgencyFaq> = [
   {
     question: 'Pourquoi un abonnement plutôt qu’un devis ?',
     answer:
-      'Parce qu’un site n’est pas fini le jour de sa mise en ligne. Le devis classique fait payer cher la création, puis laisse le site vieillir faute de budget pour l’entretenir. L’abonnement étale la création et paie l’entretien : au bout de trois ans, c’est moins cher qu’un site refait deux fois.',
+      'Parce qu’un site n’est pas fini le jour de sa mise en ligne. Le devis classique fait payer cher la création, puis laisse le site vieillir faute de budget pour l’entretenir. L’abonnement étale la création et paie l’entretien : sur trois ans, la Vitrine revient à 1 080 € HT, création, hébergement et mises à jour comprises.',
   },
   {
     question: 'Que se passe-t-il si j’arrête ?',
     answer:
-      'Vous récupérez votre nom de domaine, vos contenus, vos données et le code source. Je vous accompagne pour transférer l’hébergement où vous voulez. Rien n’est retenu en otage.',
+      'Vous récupérez votre nom de domaine, vos contenus, vos données et le code source. Je vous accompagne pour transférer l’hébergement où vous voulez. Rien n’est retenu.',
   },
   {
     question: 'Trente euros par mois, comment est-ce possible ?',
@@ -159,6 +159,6 @@ export const faq: Array<AgencyFaq> = [
   {
     question: 'Et si mon besoin dépasse ces deux forfaits ?',
     answer:
-      'On en parle et je vous fais une proposition classique, au forfait ou en régie : reprise d’une application existante, audit de sécurité, mise en place de l’IA. Les pages service décrivent ces prestations.',
+      'On en parle et je vous fais une proposition classique, au forfait ou en régie : reprise d’une application existante, audit de sécurité, intégration de l’IA. Les pages service décrivent ces prestations.',
   },
 ]

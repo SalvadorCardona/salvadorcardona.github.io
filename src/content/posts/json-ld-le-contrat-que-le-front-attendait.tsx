@@ -12,7 +12,7 @@ export const post: Post = {
   excerpt:
     'Une API qui décrit ses propres ressources permet d’écrire des composants qui ne connaissent aucune ressource en particulier. Retour sur plusieurs années à construire des fronts génériques.',
   tags: ['JSON-LD', 'Hydra', 'React', 'API Platform'],
-  readingTime: 7,
+  readingTime: 2,
   body: (
     <>
       <p>

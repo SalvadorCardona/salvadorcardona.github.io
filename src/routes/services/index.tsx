@@ -3,7 +3,6 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { CallToAction } from '../../components/ServicePage'
 import { ServiceCard } from '../../components/ServiceCard'
 import { ServiceIcon } from '../../components/ServiceIcon'
-import { profile } from '../../content/profile'
 import { interventions, servicePath, services } from '../../content/services'
 import {
   PERSON_ID,
@@ -61,7 +60,7 @@ const method = [
   {
     title: 'Comprendre avant de coder',
     description:
-      'Chaque mission commence par un échange sur le métier, l’existant et ce qui vous empêche de dormir. La stack vient après.',
+      'Chaque mission commence par un échange sur le métier, l’existant et ce qui bloque aujourd’hui. La stack vient après.',
   },
   {
     title: 'Un périmètre écrit',
@@ -91,9 +90,8 @@ function ServicesIndex() {
           Développement web, audit de sécurité et intégration IA
         </h1>
         <p className="mt-6 max-w-2xl text-xl leading-relaxed text-pretty text-slate-600 dark:text-slate-400">
-          Trois prestations, un seul interlocuteur. {profile.yearsOfExperience}{' '}
-          ans à construire des applications web, à {profile.area},
-          au forfait ou en régie.
+          Trois prestations, un seul interlocuteur, à Lyon ou à distance, au
+          forfait ou en régie.
         </p>
       </header>
 

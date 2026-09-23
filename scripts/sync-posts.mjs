@@ -102,7 +102,13 @@ async function blocksOf(id) {
 
 /** Les caractères que JSX interpréterait comme du balisage ou une expression. */
 const JSX_ESCAPES = { '<': '&lt;', '>': '&gt;', '{': '&#123;', '}': '&#125;' }
-const jsxText = (s) => s.replace(/[<>{}]/g, (c) => JSX_ESCAPES[c])
+const jsxText = (s) => typographic(s).replace(/[<>{}]/g, (c) => JSX_ESCAPES[c])
+
+/**
+ * L'apostrophe droite tapée dans Notion devient l'apostrophe typographique du
+ * reste du site : « l'API » s'affiche « l’API ». Le code est laissé tel quel.
+ */
+const typographic = (s) => s.replace(/(?<=\p{L})'(?=\p{L})/gu, '’')
 
 /** Un contenu littéral pour `<code>{`…`}</code>`. */
 const template = (s) => '{`' + s.replace(/\\/g, '\\\\').replace(/[`$]/g, '\\$&') + '`}'
@@ -313,7 +319,8 @@ async function localise(url, name) {
 
 // --- Écriture -------------------------------------------------------------
 
-const plainText = (items = []) => items.map((t) => t.plain_text).join('')
+const plainText = (items = []) =>
+  typographic(items.map((t) => t.plain_text).join(''))
 const text = (prop) => plainText(prop?.rich_text)
 const quote = (s) => `'${s.replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`
 

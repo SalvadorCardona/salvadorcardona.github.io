@@ -12,7 +12,7 @@ export const post: Post = {
   excerpt:
     'Un ticket Notion, une session d’agent, une pull request. Ce que j’ai appris en industrialisant la boucle — et ce qui n’a pas marché.',
   tags: ['Agents LLM', 'Automatisation', 'Claude Code'],
-  readingTime: 5,
+  readingTime: 2,
   body: (
     <>
       <p>

@@ -25,7 +25,7 @@ const channels = [
     label: 'E-mail',
     value: links.email,
     href: `mailto:${links.email}`,
-    hint: 'Le plus direct. Je réponds sous quelques jours.',
+    hint: 'Le plus direct. Je réponds sous deux jours ouvrés.',
     external: false,
   },
   {

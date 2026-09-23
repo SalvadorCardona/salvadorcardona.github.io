@@ -59,17 +59,17 @@ export const services: Array<Service> = [
   {
     slug: 'developpement-web',
     name: 'Développement web',
-    title: 'Développement web sur mesure : applications Symfony, React et TypeScript',
+    title: 'Développement web sur mesure : Symfony, React et TypeScript',
     description:
       'Développeur web freelance à Lyon : applications sur mesure, API REST Symfony / API Platform, interfaces React et TypeScript. Treize ans d’expérience.',
     excerpt:
       'Des applications web de bout en bout : API Symfony structurées, interfaces React typées, et l’outillage qui va avec.',
     icon: 'code',
     lead:
-      'Une application web sur mesure, du contrat d’API à l’interface, construite pour être reprise trois ans plus tard sans appréhension.',
+      'Une application web sur mesure, du contrat d’API à l’interface, que votre équipe pourra reprendre et faire évoluer sans moi.',
     context: [
-      'Treize ans à construire des applications pour des gens qui vendent quelque chose de compliqué : des marketplaces B2B et B2C, une plateforme de streaming grand public, un studio de jeu, une application de soin animalier. À chaque fois le même travail de fond : une API qui décrit clairement la donnée, une interface qui la consomme sans friction, et des tests qui laissent modifier le code sans peur.',
-      'Je travaille en Symfony et API Platform côté serveur, en React et TypeScript côté navigateur, avec JSON-LD entre les deux : le contrat d’API est assez précis pour que le front en génère ses types, ses formulaires et ses vues. Moins de code écrit à la main, moins de divergence entre les deux côtés.',
+      'Treize ans à construire des applications pour des gens qui vendent quelque chose de compliqué : des marketplaces B2B et B2C, une plateforme de streaming grand public, une application de soin animalier. À chaque fois le même travail de fond : une API qui décrit clairement la donnée, une interface qui la consomme simplement, et des tests qui permettent de modifier le code en confiance.',
+      'Symfony et API Platform côté serveur, React et TypeScript côté navigateur, JSON-LD entre les deux. Le front génère ses types, ses formulaires et ses vues depuis le contrat d’API : moins de code écrit à la main, et les deux côtés ne divergent pas.',
       'Je prends aussi bien un projet à zéro qu’une application existante à faire évoluer : reprise de code, montée de version Symfony ou React, refonte d’une API, ajout d’un module.',
     ],
     forWho: [
@@ -82,7 +82,7 @@ export const services: Array<Service> = [
       {
         title: 'Cadrage et architecture',
         description:
-          'On part du métier, pas de la stack : entités, règles, parcours. J’en tire un modèle de données et un découpage clair (Clean Architecture, CQRS quand ça se justifie).',
+          'On part du métier : entités, règles, parcours. J’en tire un modèle de données et un découpage clair (Clean Architecture, CQRS quand ça se justifie).',
       },
       {
         title: 'API REST sous Symfony et API Platform',
@@ -178,19 +178,19 @@ export const services: Array<Service> = [
   },
   {
     slug: 'audit-securite-application',
-    name: 'Audit de sécurité et d’application',
-    title: 'Audit de sécurité et d’application web : code, API, dépendances, infrastructure',
+    name: 'Audit de sécurité et de qualité',
+    title: 'Audit de sécurité et de qualité d’une application web',
     description:
       'Audit de sécurité et de qualité de votre application web : failles OWASP, authentification, API, dépendances, configuration Docker et cloud. Rapport priorisé.',
     excerpt:
-      'Un regard extérieur sur votre application : failles, dette technique, dépendances, configuration. Un rapport priorisé, pas un PDF de 200 pages.',
+      'Un regard extérieur sur votre application : failles, dette technique, dépendances, configuration. Un rapport court, classé par urgence.',
     icon: 'shield',
     lead:
-      'Savoir où en est vraiment votre application avant qu’un incident, un client ou un investisseur ne pose la question.',
+      'Savoir où en est votre application avant qu’un incident, un client ou un investisseur ne pose la question.',
     context: [
       'La plupart des applications web que j’ai reprises en treize ans avaient les mêmes faiblesses : une authentification bricolée, des droits vérifiés côté interface mais pas côté API, des dépendances jamais mises à jour, des secrets dans le dépôt, un Docker de production qui tourne en root. Rien d’exotique, mais rien que l’équipe n’avait le temps de regarder.',
       'L’audit que je propose est celui d’un développeur qui construit et exploite ce type d’application au quotidien : je lis le code, j’exécute l’application, je teste l’API comme le ferait quelqu’un de mal intentionné, et je restitue ce que j’ai trouvé par ordre d’urgence, avec la correction à faire pour chaque point.',
-      'Ce n’est pas un test d’intrusion certifié ni une mise en conformité réglementaire : pour cela, je vous oriente vers un prestataire qualifié. C’est le regard technique complet qui précède, et qui souvent suffit.',
+      'Pour un test d’intrusion certifié ou une mise en conformité réglementaire, je vous oriente vers un prestataire qualifié. Mon audit est le regard technique complet qui précède, et qui souvent suffit.',
     ],
     forWho: [
       'Une application en production qui n’a jamais été relue par quelqu’un d’extérieur à l’équipe.',
@@ -286,24 +286,24 @@ export const services: Array<Service> = [
       {
         question: 'Pouvez-vous auditer une application que vous n’avez pas écrite, dans une autre stack ?',
         answer:
-          'Oui pour PHP (Symfony, Laravel, WordPress), Node.js et les fronts JavaScript. Pour une autre stack, je le dis franchement au cadrage si ce n’est pas raisonnable.',
+          'Oui pour PHP (Symfony, Laravel, WordPress), Node.js et les fronts JavaScript. Pour une autre stack, je le dis au cadrage si ce n’est pas raisonnable.',
       },
     ],
     relatedPosts: ['json-ld-le-contrat-que-le-front-attendait'],
   },
   {
     slug: 'integration-ia',
-    name: 'Mise en place de l’IA',
-    title: 'Mise en place de l’IA dans vos outils : agents LLM, automatisations et assistants',
+    name: 'Intégration IA',
+    title: 'Intégration de l’IA dans vos outils : agents LLM, automatisations, assistants',
     description:
-      'Intégration de l’IA dans votre application : agents LLM branchés sur vos API, automatisations n8n, analyse de documents, chatbot. Du concret, pas une démo.',
+      'Intégration de l’IA dans votre application : agents LLM branchés sur vos API, automatisations n8n, analyse de documents, chatbot. Livré en production.',
     excerpt:
       'Des agents et des automatisations branchés sur vos API et vos données : ce qui fait gagner du temps à l’équipe, en production.',
     icon: 'sparkles',
     lead:
       'Faire entrer un modèle de langage dans un outil existant sans casser ce qui marche pour les humains.',
     context: [
-      'Une API bien conçue est déjà une API pilotable par un agent. C’est la leçon de deux ans à brancher des modèles de langage sur de vraies applications : chez Animalink, des agents n8n qui consomment l’API Symfony au même titre qu’un client humain, de l’analyse documentaire avec Mistral, un chatbot produit. Sur mon temps propre, des outils publics comme ticket-runner, qui transforme un ticket Notion en session d’agent et en pull request.',
+      'Une API bien conçue est déjà une API pilotable par un agent. C’est ce que m’ont appris deux ans à brancher des modèles de langage sur de vraies applications : chez Animalink, des agents n8n qui passent par l’API Symfony avec les mêmes droits qu’un utilisateur, de l’analyse documentaire avec Mistral, un chatbot produit. Sur mon temps libre, des outils publics comme ticket-runner, qui joue un ticket Notion dans une session d’agent et en sort une pull request.',
       'Le travail intéressant n’est pas dans le prompt. Il est dans ce qui l’entoure : quelles données le modèle voit, ce qu’il a le droit de faire, comment on vérifie sa sortie, ce qui se passe quand il se trompe, et combien ça coûte par appel. C’est du travail de développeur, et c’est ce que je fais.',
       'Je choisis le modèle en fonction du besoin et de vos contraintes : API hébergée (Claude, Mistral, OpenRouter) quand la qualité prime, modèle local avec Ollama quand la donnée ne doit pas sortir.',
     ],
@@ -317,7 +317,7 @@ export const services: Array<Service> = [
       {
         title: 'Choix du cas d’usage',
         description:
-          'On part d’une tâche mesurable, pas d’une technologie : combien de temps elle prend, combien de fois par jour, ce qu’une erreur coûte. C’est ce qui décide si ça vaut le coup.',
+          'On part d’une tâche mesurable : combien de temps elle prend, combien de fois par jour, ce qu’une erreur coûte. C’est ce qui décide si ça vaut le coup.',
       },
       {
         title: 'Agents branchés sur vos API',
@@ -406,7 +406,7 @@ export const services: Array<Service> = [
       {
         question: 'Et si le modèle se trompe ?',
         answer:
-          'Il se trompera. Le flux est conçu pour ça : droits limités, validation humaine sur les actions sensibles, trace de chaque action pour pouvoir revenir en arrière, et mesure du taux d’erreur pour décider ce qu’on automatise vraiment.',
+          'Il se trompera. Le flux est conçu pour ça : droits limités, validation humaine sur les actions sensibles, trace de chaque action pour pouvoir revenir en arrière, et mesure du taux d’erreur pour décider ce qu’on automatise.',
       },
     ],
     relatedPosts: [
@@ -452,7 +452,7 @@ export const interventions: Array<Intervention> = [
     excerpt:
       'Choix de stack, relecture d’architecture, accompagnement d’une équipe sur Symfony, React ou les agents LLM.',
     icon: 'compass',
-    service: 'audit-securite-application',
+    service: 'developpement-web',
   },
 ]
 

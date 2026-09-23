@@ -374,8 +374,8 @@ export function CallToAction() {
       </h2>
       <p className="mt-4 max-w-2xl text-pretty text-slate-300 dark:text-slate-600">
         Un premier échange d’une heure, gratuit et sans engagement, pour
-        comprendre votre besoin et vous dire franchement si je suis la bonne
-        personne. {profile.area}.
+        comprendre votre besoin et vous dire si je suis la bonne personne. À
+        Lyon ou à distance.
       </p>
       <div className="mt-8 flex flex-wrap gap-3">
         <Link

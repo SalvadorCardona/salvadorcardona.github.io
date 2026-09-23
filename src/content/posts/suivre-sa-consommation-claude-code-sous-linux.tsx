@@ -12,7 +12,7 @@ export const post: Post = {
   excerpt:
     'Trois limites courent en parallèle, et la seule façon de savoir où j’en suis était de taper /usage au milieu d’une session. J’en ai fait une extension GNOME Shell : un camembert dans la barre, le détail au clic.',
   tags: ['GNOME Shell', 'Claude Code', 'Linux', 'GJS'],
-  readingTime: 6,
+  readingTime: 5,
   body: (
     <>
       <p>

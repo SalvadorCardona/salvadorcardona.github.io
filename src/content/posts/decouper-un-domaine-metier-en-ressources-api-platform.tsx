@@ -12,23 +12,23 @@ export const post: Post = {
   excerpt:
     'Praticien, créneau, rendez-vous, acte, produit : sur une marketplace de rendez-vous vétérinaires, la découpe en ressources décide de tout ce qui vient après. Quatre séparations qui ont tenu, et la règle qui les explique.',
   tags: ['API Platform', 'Hydra', 'JSON-LD'],
-  readingTime: 8,
+  readingTime: 5,
   body: (
     <>
       <p>
         Sur une marketplace de rendez-vous, tout le monde voit les mêmes
         objets : un praticien, un créneau, un rendez-vous, un acte, un
-        produit. La difficulté n'est pas de les nommer, elle est de décider
+        produit. La difficulté n’est pas de les nommer, elle est de décider
         lesquels sont la même chose.
       </p>
       <p>
-        Sur Animalink — réservation chez les professionnels de l'animal, avec
-        panier et paiement après la consultation — je m'en suis rendu compte à
+        Sur Animalink — réservation chez les professionnels de l’animal, avec
+        panier et paiement après la consultation — je m’en suis rendu compte à
         mes dépens. Voici les quatre découpes qui ont tenu, et la règle qui
         les explique toutes.
       </p>
       <h2>
-        Le catalogue n'est pas l'agenda
+        Le catalogue n’est pas l’agenda
       </h2>
       <p>
         La première tentation est de faire du rendez-vous une simple
@@ -37,14 +37,14 @@ export const post: Post = {
         pointer vers la prestation.
       </p>
       <p>
-        Ça marche jusqu'au premier changement de tarif. Le pro passe la
+        Ça marche jusqu’au premier changement de tarif. Le pro passe la
         consultation à 50 €, et tous les rendez-vous déjà pris — y compris
-        ceux d'hier — changent de prix. La facture d'un client se met à
+        ceux d’hier — changent de prix. La facture d’un client se met à
         dépendre de ce que le pro fera la semaine prochaine.
       </p>
       <p>
-        Il y a donc deux ressources, et elles n'ont pas le même rythme. <code>{`CompanyService`}</code>{' '}
-        est le catalogue : durée, tarif, options, horaires d'ouverture, tout
+        Il y a donc deux ressources, et elles n’ont pas le même rythme. <code>{`CompanyService`}</code>{' '}
+        est le catalogue : durée, tarif, options, horaires d’ouverture, tout
         ce que le pro modifie quand il veut. <code>{`CalendarEvent`}</code>{' '}
         est ce qui a été réservé, et il fige à la création ce dont il a
         besoin.
@@ -69,12 +69,12 @@ public ?int \$priceCalculated = null,`}</code>
         La même entité, plusieurs ressources
       </h2>
       <p>
-        Un rendez-vous est lu par trois personnes qui n'ont pas les mêmes
-        droits : le propriétaire de l'animal, le professionnel, et le visiteur
-        anonyme qui tombe sur la page publique d'une clinique.
+        Un rendez-vous est lu par trois personnes qui n’ont pas les mêmes
+        droits : le propriétaire de l’animal, le professionnel, et le visiteur
+        anonyme qui tombe sur la page publique d’une clinique.
       </p>
       <p>
-        Le réflexe est d'écrire une ressource et de trier ensuite, dans un
+        Le réflexe est d’écrire une ressource et de trier ensuite, dans un
         voter ou un normalizer. API Platform permet mieux : plusieurs <code>{`#[ApiResource]`}</code>{' '}
         sur la même classe.
       </p>
@@ -97,16 +97,16 @@ class CalendarEvent`}</code>
       </pre>
       <p>
         La collection publique ne partage rien avec la privée sauf la table :
-        préfixe d'URL, opérations et contexte de sérialisation lui
+        préfixe d’URL, opérations et contexte de sérialisation lui
         appartiennent, et son <code>{`LinksHandler`}</code> force <code>{`featured
         = true`}</code> côté serveur. Le visiteur ne peut pas demander autre
-        chose que ce qui est publié, parce que ce n'est pas un paramètre qu'on
+        chose que ce qui est publié, parce que ce n’est pas un paramètre qu’on
         lui laisse.
       </p>
       <p>
-        Le même mécanisme sépare l'API du propriétaire (<code>{`routePrefix:
+        Le même mécanisme sépare l’API du propriétaire (<code>{`routePrefix:
         '/user'`}</code>) de celle du pro (<code>{`/pro`}</code>). Une
-        ressource n'est pas une table : c'est un point de vue sur une table.
+        ressource n’est pas une table : c’est un point de vue sur une table.
       </p>
       <h2>
         Les verbes qui ne sont pas du CRUD
@@ -121,7 +121,7 @@ class CalendarEvent`}</code>
         elles laissent le client décider de la transition, et la règle métier
         finit éparpillée entre un validateur, un listener et le front. Je les
         déclare donc comme des opérations nommées, avec leur propre DTO
-        d'entrée et leur processor.
+        d’entrée et leur processor.
       </p>
       <pre>
         <code>{`new Post(
@@ -134,26 +134,26 @@ class CalendarEvent`}</code>
 ),`}</code>
       </pre>
       <p>
-        Ce qui entre n'est plus une ressource partielle mais une commande :{' '}
+        Ce qui entre n’est plus une ressource partielle mais une commande :{' '}
         <code>{`CreateStayByUserCommand`}</code> porte exactement les champs
-        du formulaire de séjour, pas les vingt-cinq propriétés d'un
+        du formulaire de séjour, pas les vingt-cinq propriétés d’un
         rendez-vous. Le handler contient la règle et se teste seul. Et comme
-        l'opération est déclarée, elle apparaît dans la documentation Hydra :
-        le front sait qu'elle existe sans qu'on le lui dise.
+        l’opération est déclarée, elle apparaît dans la documentation Hydra :
+        le front sait qu’elle existe sans qu’on le lui dise.
       </p>
       <p>
         La contrepartie est réelle — ces opérations se multiplient, et une
         entité finit avec dix <code>{`POST`}</code> déclarés. La question à se
-        poser avant d'en ajouter une : est-ce que ça fait passer une ressource
-        d'un état à un autre selon une règle qu'un client ne doit pas pouvoir
-        contourner ? Si oui, c'est une opération. Sinon, c'est un <code>{`PATCH`}</code>.
+        poser avant d’en ajouter une : est-ce que ça fait passer une ressource
+        d’un état à un autre selon une règle qu’un client ne doit pas pouvoir
+        contourner ? Si oui, c’est une opération. Sinon, c’est un <code>{`PATCH`}</code>.
       </p>
       <h2>
         Quand une relation devient une ressource
       </h2>
       <p>
         Un animal fréquente plusieurs cliniques. Chacune tient sa propre note
-        sur lui, et n'a rien à savoir de ce que les autres écrivent.
+        sur lui, et n’a rien à savoir de ce que les autres écrivent.
       </p>
       <p>
         Un <code>{`ManyToMany`}</code> ne peut pas porter ça. Dès que la
@@ -164,8 +164,8 @@ class CalendarEvent`}</code>
       </p>
       <p>
         Le cas le plus instructif est le client. Un pro crée des fiches pour
-        des gens qui n'ont pas de compte, et certains s'inscrivent plus tard.
-        Deux identités qui se rejoignent, sans qu'on sache quand.
+        des gens qui n’ont pas de compte, et certains s’inscrivent plus tard.
+        Deux identités qui se rejoignent, sans qu’on sache quand.
       </p>
       <pre>
         <code>{`#[ORM\\Column(length: 180, nullable: true)]
@@ -179,10 +179,10 @@ public ?User \$user = null,`}</code>
       <p>
         <code>{`CompanyCustomer`}</code> garde ses propres champs, et les
         hooks de propriété de PHP 8.4 laissent le compte utilisateur prendre
-        le dessus dès qu'il existe. Le pro continue de voir sa fiche ; le jour
-        où le client s'inscrit, l'email exposé devient celui du compte, sans
+        le dessus dès qu’il existe. Le pro continue de voir sa fiche ; le jour
+        où le client s’inscrit, l’email exposé devient celui du compte, sans
         migration ni écran de fusion. Les deux restent des ressources
-        distinctes — elles n'ont ni le même auteur, ni le même cycle de vie.
+        distinctes — elles n’ont ni le même auteur, ni le même cycle de vie.
       </p>
       <h2>
         La règle qui reste
@@ -195,15 +195,15 @@ public ?User \$user = null,`}</code>
       </p>
       <p>
         Je les sépare quand elles répondent différemment à trois questions :
-        qui l'écrit, qui le lit, et à quel rythme ça change. Le catalogue et
-        l'agenda ne changent pas au même rythme. Le rendez-vous public et le
-        rendez-vous privé n'ont pas les mêmes lecteurs. La fiche client et le
-        compte utilisateur n'ont pas le même auteur.
+        qui l’écrit, qui le lit, et à quel rythme ça change. Le catalogue et
+        l’agenda ne changent pas au même rythme. Le rendez-vous public et le
+        rendez-vous privé n’ont pas les mêmes lecteurs. La fiche client et le
+        compte utilisateur n’ont pas le même auteur.
       </p>
       <p>
         Trois questions, et la moitié des discussions de modélisation tombent.
         Ce qui reste difficile, ce sont les ressources qui répondent pareil
-        aux trois et qu'on garde séparées par habitude. Celles-là, je les
+        aux trois et qu’on garde séparées par habitude. Celles-là, je les
         fusionne.
       </p>
     </>
