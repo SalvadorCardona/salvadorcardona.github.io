@@ -15,7 +15,7 @@ import {
 export const Route = createFileRoute('/agence')({
   head: () =>
     seo({
-      title: `Agence ${agency.name} : site vitrine à 30 € et application à 100 € par mois`,
+      title: `Agence ${agency.name} : site à 30 € et application à 100 € par mois`,
       description:
         'L’agence Cardona : votre présence web au forfait mensuel. Site vitrine à 30 € par mois, application métier sur mesure à 100 € par mois, création et maintenance comprises.',
       path: '/agence',
@@ -216,7 +216,7 @@ function OfferCard({ offer }: { offer: AgencyOffer }) {
         </span>
       </p>
       <p className="mt-1 text-xs text-slate-500 dark:text-slate-500">
-        Hors taxes. {offer.delivery}
+        Hors taxes, engagement d’un an puis mois par mois. {offer.delivery}
       </p>
 
       <h4 className="mt-8 text-xs font-medium tracking-wide text-slate-500 uppercase dark:text-slate-500">

@@ -35,10 +35,10 @@ export const profile = {
       'assez la donnée pour que le front en génère ses types, ses formulaires et ses vues.',
     'Ces derniers mois, c’est sur l’IA appliquée que j’ai le plus progressé, avec des outils ' +
       'publics que j’utilise tous les jours : ticket-runner transforme un ticket Notion en session ' +
-      'd’agent puis en pull request, gnome-claude-usage affiche la consommation Claude Code dans ' +
-      'GNOME Shell, whisper-desk dicte hors-ligne sous Linux, WSL et macOS. Chez Animalink, ce ' +
-      'sont des agents n8n branchés sur l’API Symfony, de l’analyse documentaire avec Mistral et ' +
-      'un chatbot produit.',
+      'd’agent puis en pull request, Claude Usage affiche la consommation Claude Code dans ' +
+      'GNOME Shell, Whisper Desk dicte hors ligne sous Linux, WSL et macOS. Chez Animalink, ' +
+      'j’ai branché des agents n8n sur l’API Symfony, mis en place de l’analyse documentaire ' +
+      'avec Mistral et un chatbot produit.',
   ],
   /**
    * Ce que je vends, en une phrase. Sert de description SEO à l'accueil —
@@ -53,7 +53,7 @@ export const profile = {
   area: 'Lyon · à distance',
   yearsOfExperience: 13,
   availability:
-    'Ouvert à de nouvelles missions : développement web, audit, intégration IA — à Lyon ou à distance.',
+    'Ouvert à de nouvelles missions : développement web, audit, intégration IA, à Lyon ou à distance.',
 } as const
 
 export const links = {
@@ -135,7 +135,7 @@ export const education: Array<Education> = [
   {
     school: 'Université Lumière Lyon 2',
     degree: 'Master en génie informatique',
-    year: 'Septembre 2013 — juin 2015',
+    year: '2013 — 2015',
     detail: 'Niveau Bac +4.',
   },
   {
@@ -195,7 +195,7 @@ export const projects: Array<Project> = [
   {
     name: 'Whisper Desk',
     description:
-      'Dictée vocale hors-ligne pour Linux, WSL et macOS : un raccourci clavier, un overlay, et le texte est dans le presse-papiers.',
+      'Dictée vocale hors ligne pour Linux, WSL et macOS : un raccourci clavier, un overlay, et le texte est dans le presse-papiers.',
     brand: 'whisper-desk',
     url: 'https://github.com/SalvadorCardona/whisper-desk',
     docs: 'https://cardona.digital/whisper-desk/',

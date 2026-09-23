@@ -25,7 +25,7 @@
       "Claude Code"
     ],
     "logo": null,
-    "summary": "Animalink est une application web et mobile pour le soin animalier. J'ai construit la nouvelle plateforme de bout en bout, de l'architecture au déploiement.",
+    "summary": "Animalink est une application web et mobile pour le soin animalier. J’ai construit la nouvelle plateforme, de l’architecture au déploiement.",
     "sections": [
       {
         "title": "BACKEND — Java / Spring & Symfony (Back for Front)",
@@ -33,7 +33,7 @@
           "Une grosse partie du backend métier développée en Java avec Spring",
           "Symfony utilisé uniquement comme couche Back for Front (BFF) entre le front et les services métier",
           "API REST sous API Platform, en Clean Architecture et CQRS",
-          "Moteur de recherche Elasticsearch, stack ELK pour l'observabilité",
+          "Moteur de recherche Elasticsearch, stack ELK pour l’observabilité",
           "Workers asynchrones pour les traitements longs",
           "Tests unitaires et fonctionnels, analyse statique et linters bloquants en CI"
         ]
@@ -41,7 +41,7 @@
       {
         "title": "FRONTEND — React / TypeScript",
         "items": [
-          "SPA typée de bout en bout : les interfaces TypeScript sont générées depuis le schéma API Platform, le contrat d'API est la source de vérité",
+          "SPA entièrement typée : les interfaces TypeScript sont générées depuis le schéma API Platform, le contrat d’API est la source de vérité",
           "Routage et chargement de données avec TanStack Start",
           "Design system sur shadcn/ui"
         ]
@@ -51,17 +51,17 @@
         "items": [
           "Environnements de développement reproductibles sous Docker et Docker Compose",
           "CI GitHub Actions",
-          "Hébergement AWS provisionné en Terraform — l'infra est du code, relue comme le reste"
+          "Hébergement AWS provisionné en Terraform : l’infra est du code, relue comme le reste"
         ]
       },
       {
         "title": "IA",
         "items": [
-          "Agents et automatisations n8n connectés.",
-          "Ocr de document",
+          "Agents et automatisations n8n branchés sur l’API",
+          "OCR de documents",
           "Analyse documentaire et embeddings",
-          "Chatbot produit branché sur l'API REST",
-          "Des bots qui consomment l'API au même titre qu'un client humain : l'API est conçue pour être pilotable par un agent, pas seulement par une interface"
+          "Chatbot produit branché sur l’API REST",
+          "L’API est conçue pour être pilotée par un agent comme par une interface : les bots passent par les mêmes endpoints et les mêmes droits qu’un utilisateur"
         ]
       }
     ]
@@ -72,7 +72,15 @@
     "location": "Lyon",
     "startDate": "2022-08-01",
     "endDate": "2023-01-01",
-    "stack": ["Symfony", "PHP", "API Platform", "Sylius", "Next.js", "React", "GCP"],
+    "stack": [
+      "Symfony",
+      "PHP",
+      "API Platform",
+      "Sylius",
+      "Next.js",
+      "React",
+      "GCP"
+    ],
     "logo": null,
     "summary": "Marketplace du bio.",
     "sections": [
@@ -93,7 +101,10 @@
       },
       {
         "title": "INFRASTRUCTURE — Google Cloud Platform (GCP)",
-        "items": ["Découpage en micro-services", "Travaux sur plusieurs services GCP"]
+        "items": [
+          "Découpage en micro-services",
+          "Travaux sur plusieurs services GCP"
+        ]
       }
     ]
   },
@@ -103,21 +114,37 @@
     "location": "Lyon",
     "startDate": "2022-02-01",
     "endDate": "2022-07-01",
-    "stack": ["Symfony", "PHP", "API Platform", "Next.js", "React", "TypeScript", "Wizaplace"],
+    "stack": [
+      "Symfony",
+      "PHP",
+      "API Platform",
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Wizaplace"
+    ],
     "logo": null,
     "summary": "Marketplace autour des outils du voyage.",
     "sections": [
       {
         "title": "BACKEND — Symfony 6 / PHP 8 / API Platform",
-        "items": ["API REST sous API Platform et Symfony 6", "Tests unitaires et fonctionnels PHP"]
+        "items": [
+          "API REST sous API Platform et Symfony 6",
+          "Tests unitaires et fonctionnels PHP"
+        ]
       },
       {
         "title": "FRONTEND — Next.js / React / TypeScript",
-        "items": ["SPA Next.js consommant l'API", "Tests unitaires et fonctionnels TypeScript"]
+        "items": [
+          "SPA Next.js consommant l’API",
+          "Tests unitaires et fonctionnels TypeScript"
+        ]
       },
       {
         "title": "CONSEIL & MÉTHODE",
-        "items": ["Conseil sur les choix technologiques, participation aux rituels Scrum de l'équipe"]
+        "items": [
+          "Conseil sur les choix technologiques, participation aux rituels Scrum de l’équipe"
+        ]
       }
     ]
   },
@@ -127,7 +154,14 @@
     "location": "Lyon",
     "startDate": "2021-09-01",
     "endDate": "2022-01-01",
-    "stack": ["Vue.js", "TypeScript", "Symfony", "PHP", "API Platform", "Wizaplace"],
+    "stack": [
+      "Vue.js",
+      "TypeScript",
+      "Symfony",
+      "PHP",
+      "API Platform",
+      "Wizaplace"
+    ],
     "logo": null,
     "summary": "Marketplace autour des outils du BTP.",
     "sections": [
@@ -141,11 +175,16 @@
       },
       {
         "title": "FRONTEND — Vue 3 / TypeScript",
-        "items": ["SPA Vue 3 et TypeScript", "Tests unitaires et fonctionnels TypeScript"]
+        "items": [
+          "SPA Vue 3 et TypeScript",
+          "Tests unitaires et fonctionnels TypeScript"
+        ]
       },
       {
         "title": "CONSEIL & MÉTHODE",
-        "items": ["Conseil sur les choix technologiques, participation aux rituels Scrum de l'équipe"]
+        "items": [
+          "Conseil sur les choix technologiques, participation aux rituels Scrum de l’équipe"
+        ]
       }
     ]
   },
@@ -157,16 +196,22 @@
     "endDate": "2021-08-01",
     "stack": ["Symfony", "PHP", "AWS"],
     "logo": null,
-    "summary": "Bedrock édite la plateforme de streaming de TF1, M6 et d'autres diffuseurs européens — des services grand public, avec ce que ça implique de rigueur sur l'API.",
+    "summary": "Bedrock édite la plateforme de streaming de TF1, M6 et d’autres diffuseurs européens — des services grand public, avec ce que ça implique de rigueur sur l’API.",
     "sections": [
       {
         "title": "BACKEND — Symfony 5 / PHP",
-        "items": ["Évolutions de l'API Symfony 5, sous méthode DDD", "Tests unitaires et fonctionnels"]
+        "items": [
+          "Évolutions de l’API Symfony 5, sous méthode DDD",
+          "Tests unitaires et fonctionnels"
+        ]
       },
-      { "title": "INFRASTRUCTURE", "items": ["Travaux sur plusieurs services AWS"] },
+      {
+        "title": "INFRASTRUCTURE",
+        "items": ["Travaux sur plusieurs services AWS"]
+      },
       {
         "title": "CONSEIL & MÉTHODE",
-        "items": ["Participation aux rituels Scrum et Agile de l'équipe"]
+        "items": ["Participation aux rituels Scrum et Agile de l’équipe"]
       }
     ]
   },
@@ -176,7 +221,16 @@
     "location": "Lyon",
     "startDate": "2019-08-01",
     "endDate": "2021-02-01",
-    "stack": ["Symfony", "PHP", "API Platform", "Sylius", "Angular", "TypeScript", "Oracle", "PostgreSQL"],
+    "stack": [
+      "Symfony",
+      "PHP",
+      "API Platform",
+      "Sylius",
+      "Angular",
+      "TypeScript",
+      "Oracle",
+      "PostgreSQL"
+    ],
     "logo": null,
     "summary": "Marketplace B2B de la métallurgie.",
     "sections": [
@@ -184,7 +238,7 @@
         "title": "BACKEND — Symfony / API Platform / Sylius",
         "items": [
           "Socle marketplace sous Sylius, API REST sous API Platform",
-          "Migration de la base de données d'Oracle vers PostgreSQL",
+          "Migration de la base de données d’Oracle vers PostgreSQL",
           "Tests unitaires PHP"
         ]
       },
@@ -194,7 +248,7 @@
       },
       {
         "title": "CONSEIL & MÉTHODE",
-        "items": ["Participation aux rituels Scrum et Agile de l'équipe"]
+        "items": ["Participation aux rituels Scrum et Agile de l’équipe"]
       }
     ]
   },
@@ -210,13 +264,19 @@
     "sections": [
       {
         "title": "BACKEND — Symfony 4",
-        "items": ["Backend sous Symfony 4", "Consommation de la base PostgreSQL existante"]
+        "items": [
+          "Backend sous Symfony 4",
+          "Consommation de la base PostgreSQL existante"
+        ]
       },
-      { "title": "FRONTEND — Vue 2", "items": ["Front sous Vue 2, Vuex et Vue Router"] },
+      {
+        "title": "FRONTEND — Vue 2",
+        "items": ["Front sous Vue 2, Vuex et Vue Router"]
+      },
       {
         "title": "CONSEIL & MÉTHODE",
         "items": [
-          "Formation de l'équipe en place à Vue.js et Symfony — l'objectif était qu'ils reprennent la main après moi"
+          "Formation de l’équipe en place à Vue.js et Symfony — l’objectif était qu’ils reprennent la main après moi"
         ]
       }
     ]
@@ -234,13 +294,16 @@
       {
         "title": "BACKEND — Symfony 4 / PHP",
         "items": [
-          "Développement et amélioration du SDK PHP de l'éditeur",
+          "Développement et amélioration du SDK PHP de l’éditeur",
           "Marketplaces clientes sous Symfony 4",
-          "Création d'API REST",
+          "Création d’API REST",
           "Tests unitaires PHP"
         ]
       },
-      { "title": "FRONTEND — Vue 2 / Vuex / Nuxt", "items": ["Fronts sous Vue 2, Vuex et Nuxt"] }
+      {
+        "title": "FRONTEND — Vue 2 / Vuex / Nuxt",
+        "items": ["Fronts sous Vue 2, Vuex et Nuxt"]
+      }
     ]
   },
   {
@@ -249,7 +312,15 @@
     "location": "Lyon",
     "startDate": "2017-09-01",
     "endDate": "2017-12-01",
-    "stack": ["PHP", "Symfony", "Angular", "Bootstrap", "WordPress", "Java", "Spring Boot"],
+    "stack": [
+      "PHP",
+      "Symfony",
+      "Angular",
+      "Bootstrap",
+      "WordPress",
+      "Java",
+      "Spring Boot"
+    ],
     "logo": null,
     "summary": "Agence web lyonnaise.",
     "sections": [
@@ -264,37 +335,47 @@
       {
         "title": "FRONTEND — Angular",
         "items": [
-          "Front Angular de l'application d'auto-formation",
+          "Front Angular de l’application d’auto-formation",
           "Intégration des interfaces avec Bootstrap"
         ]
       }
     ]
   },
   {
-    "company": "GitHub",
+    "company": "Open source",
     "role": "Open source — outillage et agents IA",
     "location": "Lyon",
     "startDate": "2017-01-01",
     "endDate": null,
-    "stack": ["Python", "Claude Code", "LLM", "React", "TypeScript", "GJS", "Whisper"],
+    "stack": [
+      "Python",
+      "Claude Code",
+      "LLM",
+      "React",
+      "TypeScript",
+      "GJS",
+      "Whisper"
+    ],
     "logo": null,
-    "summary": "Sur mon temps propre, je construis des outils qui font travailler des agents LLM sur des tâches réelles — et l'écosystème front qui va avec. 34 dépôts publics, 14 poussés cette année.",
+    "summary": "Sur mon temps libre, je construis des outils qui font travailler des agents LLM sur des tâches réelles, et les briques front qui vont avec.",
     "sections": [
       {
         "title": "FRONTEND — React / TypeScript",
-        "items": ["react-resource-view — Gestion des formulaires et des vues côté front."]
+        "items": [
+          "React Resource View : vues CRUD générées depuis une API JSON-LD / Hydra, liste, détail, création, édition et suppression câblées à l’API et à l’URL."
+        ]
       },
       {
         "title": "INFRASTRUCTURE",
         "items": [
-          "gnome-claude-usage — extension GNOME Shell publiée sur extensions.gnome.org : la consommation Claude Code lue depuis la CLI officielle, donc sans clé API ni token dépensé. GJS, Cairo, catalogues gettext, parsing testable hors du shell."
+          "Claude Usage : extension GNOME Shell publiée sur extensions.gnome.org, qui lit la consommation Claude Code depuis la CLI officielle, sans clé API ni jeton dépensé. GJS, Cairo, catalogues gettext, parsing testable hors du shell."
         ]
       },
       {
         "title": "IA",
         "items": [
-          "ticket-runner — un ticket Notion devient une session Claude Code. Le runner le réclame, lui ouvre une worktree git jetable, et rend une pull request si le ticket touche du code, un document publié dans la page sinon. Boucle de validation dans Notion, questions posées à l'humain sur Telegram ou Slack, mise à jour automatique entre deux sessions. Python, bibliothèque standard uniquement.",
-          "linux-whisper — dictée vocale hors-ligne (faster-whisper, GPU ou CPU) pour Linux, WSL et macOS : le texte s'insère au curseur pendant qu'on parle. Un installeur qui reconnaît l'hôte et branche systemd ou launchd."
+          "ticket-runner : un ticket Notion devient une session Claude Code. Le runner le réclame, lui ouvre une worktree git jetable, et rend une pull request si le ticket touche du code, un document publié dans la page sinon. Boucle de validation dans Notion, questions posées à l’humain sur Telegram ou Slack, mise à jour automatique entre deux sessions. Python, bibliothèque standard uniquement.",
+          "Whisper Desk : dictée vocale hors ligne (faster-whisper, GPU ou CPU) pour Linux, WSL et macOS. Le texte s’insère au curseur pendant qu’on parle, et l’installeur reconnaît l’hôte pour brancher systemd ou launchd."
         ]
       }
     ]
@@ -305,22 +386,30 @@
     "location": "Lyon",
     "startDate": "2015-08-01",
     "endDate": "2016-09-01",
-    "stack": ["Symfony", "PHP", "AngularJS", "Bootstrap", "WordPress", "Java", "Spring Boot"],
+    "stack": [
+      "Symfony",
+      "PHP",
+      "AngularJS",
+      "Bootstrap",
+      "WordPress",
+      "Java",
+      "Spring Boot"
+    ],
     "logo": null,
-    "summary": "Start-up lyonnaise de mise en relation entre les voyageurs et les lieux d'exception. Tech lead d'une équipe de 3 personnes.",
+    "summary": "Start-up lyonnaise de mise en relation entre les voyageurs et les lieux d’exception. Tech lead d’une équipe de 3 personnes.",
     "sections": [
       {
         "title": "BACKEND — Symfony 2.7 (PHP) & Java Spring Boot 1.4",
         "items": [
-          "Création de l'application web sous Symfony 2.7",
-          "Migration d'une partie de la V1 WordPress vers Symfony, pour conserver la logique métier existante",
+          "Création de l’application web sous Symfony 2.7",
+          "Migration d’une partie de la V1 WordPress vers Symfony, pour conserver la logique métier existante",
           "Développement du CRM interne en Java sous Spring Boot 1.4",
           "Mise en place des tests unitaires et fonctionnels"
         ]
       },
       {
         "title": "FRONTEND — AngularJS 1.4 / Bootstrap",
-        "items": ["Front de l'application sous AngularJS 1.4 et Bootstrap"]
+        "items": ["Front de l’application sous AngularJS 1.4 et Bootstrap"]
       }
     ]
   },
@@ -337,15 +426,15 @@
       {
         "title": "BACKEND — PHP & Java",
         "items": [
-          "Création d'un SaaS pour la réparation des instruments",
-          "Développement d'un logiciel métier interne en Java, basé sur un logiciel open source, avec une partie web pour la prise de commande"
+          "Création d’un SaaS pour la réparation des instruments",
+          "Développement d’un logiciel métier interne en Java, basé sur un logiciel open source, avec une partie web pour la prise de commande"
         ]
       },
       {
         "title": "FRONTEND — Bootstrap / jQuery",
         "items": [
           "Interfaces en Bootstrap et jQuery, y compris la partie web de prise de commande",
-          "Mise en place d'un site vitrine",
+          "Mise en place d’un site vitrine",
           "Mise en place des boutiques en ligne, dont une boutique PrestaShop"
         ]
       }

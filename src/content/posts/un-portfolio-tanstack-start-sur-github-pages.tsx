@@ -12,7 +12,7 @@ export const post: Post = {
   excerpt:
     'TanStack Start est un framework full-stack. GitHub Pages ne sert que des fichiers. Voilà comment les deux se rejoignent, sans serveur et sans compromis sur le référencement.',
   tags: ['TanStack Start', 'GitHub Pages', 'Prérendu'],
-  readingTime: 6,
+  readingTime: 3,
   body: (
     <>
       <p>
@@ -71,11 +71,10 @@ prerender: {
         préfixe.
       </p>
       <p>
-        La solution n’est pas de se battre avec le préfixe. C’est de le
-        supprimer : un dépôt nommé <code>{`pseudo.github.io`}</code> est servi
-        à la racine du domaine. Le <code>{`base`}</code> reste <code>{`/`}</code>,
-        le routeur n’a rien à savoir, et une classe entière de bugs disparaît
-        avant d’exister.
+        Plutôt que de se battre avec le préfixe, on le supprime : un dépôt
+        nommé <code>{`pseudo.github.io`}</code> est servi à la racine du
+        domaine. Le <code>{`base`}</code> reste <code>{`/`}</code>, le routeur
+        n’a rien à savoir, et le problème ne se pose plus.
       </p>
       <h2>
         Les deux fichiers qu’on oublie toujours
@@ -87,14 +86,15 @@ prerender: {
         <code>{`_shell.html`}</code> en mode SPA, et le dossier d’assets
         client selon la configuration. Quand ça arrive, on récupère du HTML nu
         — aucun style, aucun JS — et rien dans les logs pour l’expliquer. Un
-        fichier vide à la racine règle l’affaire, et coûte zéro.
+        fichier vide à la racine règle l’affaire.
       </p>
       <p>
         <strong><code>{`404.html`}</code></strong> — Pages n’a pas de règle de
-        réécriture. Toute URL inconnue tombe sur ce fichier. En y copiant le
-        shell applicatif, le routeur client reprend la main et affiche la
-        bonne page ou une vraie 404 maison, au lieu de la page d’erreur de
-        GitHub.
+        réécriture. Toute URL inconnue tombe sur ce fichier. Ici, la route{' '}
+        <code>{`/404`}</code> est prérendue comme les autres, puis un script
+        d’après-build déplace son HTML en <code>{`404.html`}</code> à la
+        racine : le visiteur voit une vraie page 404 du site, avec son en-tête
+        et sa navigation, au lieu de la page d’erreur de GitHub.
       </p>
       <h2>
         Ce qu’on perd, et pourquoi ça ne fait rien

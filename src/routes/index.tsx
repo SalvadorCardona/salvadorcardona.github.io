@@ -24,7 +24,7 @@ import { SITE_NAME, SITE_URL, personJsonLd, seo } from '../lib/seo'
 export const Route = createFileRoute('/')({
   head: () =>
     seo({
-      title: `${SITE_NAME} — ${profile.role} · Symfony / API Platform · React & TypeScript · IA appliquée`,
+      title: `${SITE_NAME} — ${profile.role} à Lyon`,
       description: profile.pitch,
       path: '/',
       jsonLd: [
@@ -50,8 +50,16 @@ export const Route = createFileRoute('/')({
  */
 const VISIBLE_EXPERIENCES = 3
 
+/** Les missions en entreprise : l'entrée « Open source » n'en est pas une. */
+const missionCount = sortedExperiences.filter(
+  (item) => item.company !== 'Open source',
+).length
+
 const facts = [
-  { label: 'Expérience', value: `${profile.yearsOfExperience} ans, neuf missions` },
+  {
+    label: 'Expérience',
+    value: `${profile.yearsOfExperience} ans, ${missionCount} missions`,
+  },
   { label: 'Stack', value: 'Symfony · React & TypeScript' },
   { label: 'IA appliquée', value: 'Agents · LLM · outillage · MCP · n8n' },
   { label: 'Zone', value: profile.area },
@@ -100,16 +108,6 @@ function Home() {
             </p>
           ))}
         </div>
-        <p className="mt-6 text-sm">
-          <a
-            href={links.linkedin}
-            target="_blank"
-            rel="noreferrer me"
-            className="text-sky-600 hover:underline dark:text-sky-400"
-          >
-            Le profil complet sur LinkedIn →
-          </a>
-        </p>
       </Section>
 
       <Section title="Technologies" id="technologies">
@@ -138,7 +136,7 @@ function Home() {
         <Section
           title="Expériences"
           id="experiences"
-          intro="Des marketplaces, une plateforme de streaming, un studio de jeu, une application de soin animalier — et, en parallèle, de l’outillage open source pour agents IA. Le détail sur LinkedIn."
+          intro="Des marketplaces, une plateforme de streaming, une application de soin animalier, et en parallèle de l’outillage open source pour agents IA."
         >
           <ol className="space-y-8">
             {recentExperiences.map((item) => (
@@ -224,7 +222,7 @@ function Home() {
       <Section
         title="Projets ouverts"
         id="projets"
-        intro="Ce que je construis sur mon temps propre, et que j’utilise tous les jours."
+        intro="Ce que je construis sur mon temps libre, et que j’utilise tous les jours."
       >
         <ul className="grid gap-4 sm:grid-cols-2">
           {featured.map((project) => (
@@ -407,17 +405,17 @@ function Hero() {
             {profile.role} · Lyon
           </p>
           <h1 className="mt-5 text-4xl font-bold tracking-tight text-balance text-slate-900 sm:text-5xl lg:text-[3.4rem] lg:leading-[1.08] dark:text-slate-100">
-            Des applications robustes qui résistent dans le temps.
+            Des applications web solides, de l’API à l’interface.
           </h1>
           <p className="mt-5 text-base font-medium text-pretty text-slate-800 dark:text-slate-200">
             {profile.headline}
           </p>
           <p className="mt-5 max-w-xl text-lg leading-relaxed text-pretty text-slate-600 dark:text-slate-400">
-            {profile.name}, {profile.yearsOfExperience} ans à concevoir des
-            API Symfony et des interfaces React pour des marketplaces, une
-            plateforme de streaming et un studio de jeu. Aujourd’hui lead
-            developer chez Animalink, et des agents LLM qui livrent du code sur
-            mon temps propre.
+            {profile.name}, développeur web depuis 2013 : des API Symfony et
+            des interfaces React pour des marketplaces, une plateforme de
+            streaming et une application de soin animalier. Lead developer
+            chez Animalink jusqu’en septembre 2026, et des agents LLM qui
+            livrent du code sur mon temps libre.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">

@@ -84,7 +84,6 @@ export function personJsonLd() {
     name: SITE_NAME,
     url: SITE_URL,
     jobTitle: 'Développeur web full-stack indépendant',
-    worksFor: { '@type': 'Organization', name: 'Animalink' },
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Lyon',

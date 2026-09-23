@@ -23,7 +23,7 @@ export function SiteFooter() {
             {profile.name}
           </p>
           <p className="mt-2 leading-relaxed">
-            {profile.role}. {profile.location}, et à distance.
+            {profile.role}, à Lyon et à distance.
           </p>
           <a href={`mailto:${links.email}`} className={`mt-3 block ${linkClass}`}>
             {links.email}

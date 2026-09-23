@@ -95,7 +95,13 @@ async function blocksOf(id) {
 
 // --- Propriétés -------------------------------------------------------------
 
-const plainText = (items = []) => items.map((t) => t.plain_text).join('')
+/**
+ * L'apostrophe droite tapée dans Notion devient l'apostrophe typographique du
+ * reste du site : « l'API » s'affiche « l’API », comme dans `profile.ts`.
+ */
+const typographic = (s) => s.replace(/(?<=\p{L})'(?=\p{L})/gu, '’')
+const plainText = (items = []) =>
+  typographic(items.map((t) => t.plain_text).join(''))
 const title = (prop) => plainText(prop?.title).trim()
 const text = (prop) => plainText(prop?.rich_text).trim()
 const isoDate = (prop) => prop?.date?.start ?? null
