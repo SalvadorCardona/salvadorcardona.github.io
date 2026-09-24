@@ -1,6 +1,7 @@
 import { Link } from '@tanstack/react-router'
 
 import { agency } from '../content/agency'
+import { Logo } from './Logo'
 import { links, profile } from '../content/profile'
 import { servicePath, services } from '../content/services'
 
@@ -11,19 +12,22 @@ const social = [
   { href: links.instagram, label: 'Instagram' },
 ]
 
-const linkClass =
-  'transition-colors hover:text-sky-600 dark:hover:text-sky-400'
+const linkClass = 'transition-colors hover:text-brand-600'
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-slate-200 dark:border-slate-800">
-      <div className="mx-auto grid max-w-5xl gap-10 px-6 py-12 text-sm text-slate-500 sm:grid-cols-3 dark:text-slate-400">
+    <footer className="mt-24 border-t border-stone-200 bg-stone-50">
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 text-sm text-stone-500 sm:grid-cols-3">
         <div>
-          <p className="font-semibold text-slate-900 dark:text-slate-100">
-            {profile.name}
-          </p>
-          <p className="mt-2 leading-relaxed">
-            {profile.role}, à Lyon et à distance.
+          <Link to="/" aria-label="Agence Cardona, accueil">
+            <Logo />
+          </Link>
+          <p className="mt-4 leading-relaxed">
+            {agency.tagline}. Fondée par{' '}
+            <Link to="/qui-suis-je" className={`underline ${linkClass}`}>
+              {profile.name}
+            </Link>
+            .
           </p>
           <a href={`mailto:${links.email}`} className={`mt-3 block ${linkClass}`}>
             {links.email}
@@ -31,7 +35,7 @@ export function SiteFooter() {
         </div>
 
         <nav aria-label="Services">
-          <p className="font-semibold text-slate-900 dark:text-slate-100">
+          <p className="font-semibold text-stone-900">
             Services
           </p>
           <ul className="mt-2 space-y-1.5">
@@ -48,15 +52,15 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link to="/agence" className={linkClass}>
-                Agence {agency.name} — forfaits mensuels
+              <Link to="/" hash="forfaits" className={linkClass}>
+                Forfaits mensuels de l’agence
               </Link>
             </li>
           </ul>
         </nav>
 
         <nav aria-label="Ailleurs">
-          <p className="font-semibold text-slate-900 dark:text-slate-100">
+          <p className="font-semibold text-stone-900">
             Ailleurs
           </p>
           <ul className="mt-2 space-y-1.5">
@@ -80,8 +84,8 @@ export function SiteFooter() {
           </ul>
         </nav>
       </div>
-      <div className="mx-auto max-w-5xl px-6 pb-8 text-xs text-slate-500 dark:text-slate-500">
-        © {new Date().getFullYear()} {profile.name}
+      <div className="mx-auto max-w-6xl px-6 pb-8 text-xs text-stone-500">
+        © {new Date().getFullYear()} Agence {agency.name} · {profile.name}
       </div>
     </footer>
   )

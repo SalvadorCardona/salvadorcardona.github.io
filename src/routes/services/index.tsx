@@ -83,13 +83,13 @@ function ServicesIndex() {
   return (
     <div className="mx-auto max-w-5xl px-6">
       <header className="py-16 lg:py-20">
-        <p className="text-sm font-medium tracking-widest text-sky-600 uppercase dark:text-sky-400">
+        <p className="text-sm font-medium tracking-widest text-brand-600 uppercase">
           Services
         </p>
-        <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-balance text-slate-900 sm:text-5xl dark:text-slate-100">
+        <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-balance text-stone-900 sm:text-5xl">
           Développement web, audit de sécurité et intégration IA
         </h1>
-        <p className="mt-6 max-w-2xl text-xl leading-relaxed text-pretty text-slate-600 dark:text-slate-400">
+        <p className="mt-6 max-w-2xl text-xl leading-relaxed text-pretty text-stone-600">
           Trois prestations, un seul interlocuteur, à Lyon ou à distance, au
           forfait ou en régie.
         </p>
@@ -108,32 +108,32 @@ function ServicesIndex() {
 
       <section
         id="interventions"
-        className="mt-20 scroll-mt-24 border-t border-slate-200 py-12 lg:grid lg:grid-cols-[14rem_1fr] lg:gap-10 dark:border-slate-800"
+        className="mt-20 scroll-mt-24 border-t border-stone-200 py-12 lg:grid lg:grid-cols-[14rem_1fr] lg:gap-10"
       >
         <div>
-          <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+          <h2 className="text-lg font-semibold tracking-tight text-stone-900">
             Interventions ponctuelles
           </h2>
-          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+          <p className="mt-2 text-sm text-stone-500">
             Quelques jours, un sujet précis.
           </p>
         </div>
         <ul className="mt-6 space-y-6 lg:mt-0">
           {interventions.map((item) => (
             <li key={item.id} id={item.id} className="flex gap-4 scroll-mt-24">
-              <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-sky-50 text-sky-600 ring-1 ring-sky-100 dark:bg-sky-950/60 dark:text-sky-400 dark:ring-sky-900">
+              <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 ring-1 ring-brand-100">
                 <ServiceIcon name={item.icon} className="h-5 w-5" />
               </span>
               <div>
-                <h3 className="font-semibold text-slate-900 dark:text-slate-100">
+                <h3 className="font-semibold text-stone-900">
                   {item.name}
                 </h3>
-                <p className="mt-1 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+                <p className="mt-1 text-sm leading-relaxed text-stone-600">
                   {item.excerpt}
                 </p>
                 <Link
                   to={servicePath(item.service)}
-                  className="mt-2 inline-block text-sm font-medium text-sky-600 hover:underline dark:text-sky-400"
+                  className="mt-2 inline-block text-sm font-medium text-brand-600 hover:underline"
                 >
                   Voir la prestation associée →
                 </Link>
@@ -143,20 +143,20 @@ function ServicesIndex() {
         </ul>
       </section>
 
-      <section className="border-t border-slate-200 py-12 lg:grid lg:grid-cols-[14rem_1fr] lg:gap-10 dark:border-slate-800">
-        <h2 className="text-lg font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+      <section className="border-t border-stone-200 py-12 lg:grid lg:grid-cols-[14rem_1fr] lg:gap-10">
+        <h2 className="text-lg font-semibold tracking-tight text-stone-900">
           Comment je travaille
         </h2>
         <ol className="mt-6 grid gap-6 sm:grid-cols-2 lg:mt-0">
           {method.map((step, index) => (
             <li key={step.title}>
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-sky-600 text-sm font-semibold text-white dark:bg-sky-500 dark:text-slate-950">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-brand-600 text-sm font-semibold text-white">
                 {index + 1}
               </span>
-              <h3 className="mt-4 font-semibold text-slate-900 dark:text-slate-100">
+              <h3 className="mt-4 font-semibold text-stone-900">
                 {step.title}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+              <p className="mt-2 text-sm leading-relaxed text-stone-600">
                 {step.description}
               </p>
             </li>

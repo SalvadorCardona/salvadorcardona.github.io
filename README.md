@@ -43,15 +43,16 @@ reste vit dans `src/content/`.
   entrées contenant `À COMPLÉTER` ne s'affichent pas : elles servent de
   gabarit. Un projet porte son dépôt (`url`) et, s'ils existent, son site en
   ligne (`site`) et sa documentation (`docs`) : la page `/projets` les liste
-  tous, l'accueil ne montre que ceux marqués `featured`.
+  tous, `/qui-suis-je` ne montre que ceux marqués `featured`.
 - **`services.ts`** — les prestations (`/services/<slug>`) et les interventions
   ponctuelles. Chaque prestation porte son titre, sa description SEO, son
   contenu section par section et sa FAQ ; le gabarit
   `src/components/ServicePage.tsx` en fait la page et les données structurées.
   Pour en ajouter une : une entrée ici, une route d'une ligne dans
   `src/routes/services/`, et son chemin dans `scripts/postbuild.mjs`.
-- **`agency.ts`** — l'agence Cardona (`/agence`) : les deux abonnements
-  mensuels, ce qu'ils comprennent, les engagements et la FAQ. Les prix y sont
+- **`agency.ts`** — l'agence Cardona, qui fait l'accueil (`/`) : la
+  signature, les métiers, les chiffres clés, les deux abonnements mensuels, ce
+  qu'ils comprennent, les engagements et la FAQ. Les prix y sont
   écrits une seule fois et alimentent aussi le JSON-LD de la page.
 - **`posts/`** — les articles du blog, un fichier par article. **Ces fichiers
   sont générés** : ils portent un en-tête qui le rappelle, et `npm run

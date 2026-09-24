@@ -1,36 +1,41 @@
 import { Link } from '@tanstack/react-router'
 
+import { Logo } from './Logo'
+
 const nav = [
-  { to: '/', label: 'Accueil' },
+  { to: '/', label: 'Agence' },
   { to: '/services', label: 'Services' },
-  { to: '/agence', label: 'Agence' },
   { to: '/projets', label: 'Projets' },
   { to: '/blog', label: 'Blog' },
-  { to: '/contact', label: 'Contact' },
+  { to: '/qui-suis-je', label: 'Qui suis-je' },
 ] as const
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-white/80 backdrop-blur dark:border-slate-800 dark:bg-slate-950/80">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-6 py-4">
-        <Link
-          to="/"
-          className="font-semibold tracking-tight text-slate-900 transition-colors hover:text-sky-600 dark:text-slate-100 dark:hover:text-sky-400"
-        >
-          Salvador Cardona
+    <header className="sticky top-0 z-40 border-b border-stone-200/70 bg-white/85 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 py-3">
+        <Link to="/" aria-label="Agence Cardona, accueil" className="py-1">
+          <Logo />
         </Link>
 
-        <nav aria-label="Navigation principale">
-          <ul className="flex items-center gap-0.5 text-sm sm:gap-1">
+        {/* Sous le logo sur téléphone, défilant si besoin ; à côté ailleurs. */}
+        <nav
+          aria-label="Navigation principale"
+          className="order-last -mx-6 w-[calc(100%+3rem)] overflow-x-auto px-6 md:order-none md:mx-0 md:w-auto md:px-0"
+        >
+          <ul className="flex items-center gap-1 text-sm">
             {nav.map((item) => (
               <li key={item.to}>
                 <Link
                   to={item.to}
                   activeOptions={{ exact: item.to === '/' }}
-                  className="rounded-md px-2 py-1.5 text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-900 sm:px-3 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+                  className="block rounded-full px-3 py-1.5 whitespace-nowrap transition-colors"
                   activeProps={{
+                    className: 'bg-brand-50 font-semibold text-brand-700',
+                  }}
+                  inactiveProps={{
                     className:
-                      'rounded-md px-2 py-1.5 sm:px-3 bg-slate-100 text-slate-900 font-medium dark:bg-slate-800 dark:text-slate-100',
+                      'text-stone-600 hover:bg-stone-100 hover:text-stone-900',
                   }}
                 >
                   {item.label}
@@ -39,6 +44,14 @@ export function SiteHeader() {
             ))}
           </ul>
         </nav>
+
+        <Link
+          to="/contact"
+          className="rounded-full bg-brand-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+          activeProps={{ className: 'ring-2 ring-brand-200' }}
+        >
+          Contact
+        </Link>
       </div>
     </header>
   )

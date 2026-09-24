@@ -69,6 +69,12 @@ Portfolio statique : TanStack Start prérendu au build, publié sur GitHub Pages
   `icon.png` redimensionnée en 128 px et `banner.png` convertie en `banner.jpg`
   de 1200 px de large ; sans ces deux fichiers, la carte du projet affiche une
   image cassée.
+- **Un seul thème, clair.** Pas de variante `dark:` : le mode sombre a été
+  retiré. La couleur de marque est `brand-*` (`styles.css`), l'orange
+  d'Animalink en 500 ; les gris sont `stone-*`. Le logo de l'agence existe en
+  trois exemplaires à garder synchrones : `components/Logo.tsx`,
+  `public/favicon.svg` et `public/logo.svg` (mot vectorisé), plus les PNG de
+  favicon qui en sont tirés.
 - **Ne pas supprimer `public/CNAME`** ni le désynchroniser de `SITE_URL`
   (`src/lib/seo.ts`) : il porte le domaine personnalisé `cardona.digital`.
 
@@ -81,8 +87,9 @@ npm run typecheck
 npm run build        # échoue si une page attendue manque
 ```
 
-Le build doit annoncer les pages fixes (`/`, `/services` et ses trois pages
-service, `/agence`, `/projets`, `/blog`, `/contact`, `/404`) plus un article par
+Le build doit annoncer les pages fixes (`/` — l'agence —, `/qui-suis-je`,
+`/services` et ses trois pages service, `/agence` — l'ancienne adresse, qui
+renvoie vers `/` —, `/projets`, `/blog`, `/contact`, `/404`) plus un article par
 `src/content/posts/<slug>.tsx`, et écrire `dist/client/404.html`. Il échoue si une page attendue manque, ou si une
 illustration déclarée dans `covers.json` ou un logo déclaré dans
 `experiences.json` n'a pas suivi.
