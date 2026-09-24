@@ -40,6 +40,8 @@ export const agency = {
   /** Le renvoi vers l'accueil depuis les autres pages : les deux prix, en une ligne. */
   teaser:
     'L’agence Cardona : site vitrine à 30 € par mois, application métier à 100 € par mois',
+  /** Le nombre d'entreprises accompagnées, affiché en preuve sociale sous l'accroche. */
+  clients: 43,
   lead:
     'On conçoit, on écrit, on code et on fait vivre votre présence en ligne. Un abonnement mensuel, zéro facture de départ, et un interlocuteur qui construit lui-même ce qu’il vous propose.',
   /** Le positionnement, en deux ou trois paragraphes. */
