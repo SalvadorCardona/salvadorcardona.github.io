@@ -128,11 +128,7 @@ function Hero() {
 
       <div className="grid items-center gap-16 lg:grid-cols-[1.25fr_1fr]">
         <div>
-          <p className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/70 px-3 py-1 text-sm font-medium text-brand-700 backdrop-blur motion-safe:animate-hero-rise">
-            <span className="h-2 w-2 rounded-full bg-brand-500" />
-            {agency.tagline}
-          </p>
-          <h1 className="mt-6 text-5xl leading-[0.98] font-extrabold tracking-tight text-balance text-stone-900 motion-safe:animate-hero-rise motion-safe:[animation-delay:100ms] sm:text-6xl lg:text-7xl">
+          <h1 className="text-5xl leading-[0.98] font-extrabold tracking-tight text-balance text-stone-900 motion-safe:animate-hero-rise motion-safe:[animation-delay:100ms] sm:text-6xl lg:text-7xl">
             On fait parler{' '}
             <span className="relative inline-block whitespace-nowrap text-brand-500">
               de vous
@@ -163,6 +159,25 @@ function Hero() {
             >
               Voir les forfaits
             </a>
+          </div>
+
+          <div className="mt-10 flex items-center gap-4 motion-safe:animate-hero-rise motion-safe:[animation-delay:350ms]">
+            <div aria-hidden="true" className="flex -space-x-2">
+              {['bg-brand-500', 'bg-amber-400', 'bg-stone-800', 'bg-brand-300'].map(
+                (color) => (
+                  <span
+                    key={color}
+                    className={`h-9 w-9 rounded-full ring-2 ring-white ${color}`}
+                  />
+                ),
+              )}
+            </div>
+            <p className="text-sm leading-snug text-stone-600">
+              <strong className="block font-display text-lg font-extrabold text-stone-900">
+                {agency.clients} entreprises
+              </strong>
+              nous ont déjà fait confiance
+            </p>
           </div>
 
           <p className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-stone-500 motion-safe:animate-hero-rise motion-safe:[animation-delay:400ms]">
