@@ -32,10 +32,10 @@ export type AgencyOffer = {
 export const agency = {
   name: 'Cardona',
   /** La signature, sous le logo et en tête de l'accueil. */
-  tagline: 'Agence web & communication créative à Lyon',
+  tagline: 'Agence digitale à Lyon',
   /** Ce qu'on vend, en une ligne : sert d'accroche et de description SEO. */
   pitch:
-    'Agence web et communication créative à Lyon : sites vitrines, ' +
+    'Agence digitale à Lyon : sites vitrines, ' +
     'applications métier et visibilité en ligne, au forfait mensuel dès 30 €.',
   /** Le renvoi vers l'accueil depuis les autres pages : les deux prix, en une ligne. */
   teaser:
@@ -44,7 +44,7 @@ export const agency = {
     'On conçoit, on écrit, on code et on fait vivre votre présence en ligne. Un abonnement mensuel, zéro facture de départ, et un interlocuteur qui construit lui-même ce qu’il vous propose.',
   /** Le positionnement, en deux ou trois paragraphes. */
   about: [
-    'Cardona est un studio lyonnais à taille humaine. On prend en charge la présence web d’une entreprise de bout en bout : l’image, les textes, le site, le nom de domaine, l’hébergement, les mises à jour, et l’application métier quand le besoin dépasse la vitrine. Pas de commercial, pas de chef de projet qui relaie : vous parlez directement à celui qui construit.',
+    'Cardona est une agence digitale lyonnaise, à taille humaine. On prend en charge la présence web d’une entreprise de bout en bout : l’image, les textes, le site, le nom de domaine, l’hébergement, les mises à jour, et l’application métier quand le besoin dépasse la vitrine. Pas de commercial, pas de chef de projet qui relaie : vous parlez directement à celui qui construit.',
     'Le modèle est volontairement simple. Deux abonnements, deux prix affichés, aucune facture de départ : la conception est étalée dans le mensuel plutôt que réglée d’un bloc. Vous savez ce que le web vous coûte chaque mois, et vous pouvez arrêter après la première année.',
     'Les missions plus lourdes — refonte d’une application existante, audit de sécurité, intégration de l’IA — restent facturées au forfait ou en régie sur les pages service. L’abonnement couvre ce qui vit dans la durée.',
   ],

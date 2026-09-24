@@ -245,7 +245,7 @@ function HeroVisual() {
           </defs>
           <text className="fill-stone-900 font-display text-[10.5px] font-bold tracking-[0.2em] uppercase">
             <textPath href="#badge-circle" textLength="272">
-              Agence créative ✦ Lyon ✦ Web & com ✦
+              Agence digitale ✦ Made in Lyon ✦
             </textPath>
           </text>
         </svg>
