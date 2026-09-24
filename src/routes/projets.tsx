@@ -23,10 +23,10 @@ export const Route = createFileRoute('/projets')({
 function Projects() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+      <h1 className="text-4xl font-bold tracking-tight text-stone-900">
         Projets
       </h1>
-      <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
+      <p className="mt-4 text-lg text-stone-600">
         Ce que je construis en dehors des heures de bureau, et parfois dedans :
         des applications complètes, des librairies React, des outils de bureau.{' '}
         {projects.length} projets, chacun avec son dépôt et, quand ils existent,
@@ -37,7 +37,7 @@ function Projects() {
         {projects.map((project) => (
           <li
             key={project.name}
-            className="overflow-hidden rounded-2xl border border-slate-200 transition-colors hover:border-slate-300 dark:border-slate-800 dark:hover:border-slate-700"
+            className="overflow-hidden rounded-2xl border border-stone-200 transition-colors hover:border-stone-300"
           >
             <article>
               {/* La bannière vient du dépôt brand-assets : glyphe, nom du
@@ -50,18 +50,18 @@ function Projects() {
                 width={1200}
                 height={525}
                 loading="lazy"
-                className="aspect-[24/7] w-full bg-slate-900 object-cover"
+                className="aspect-[24/7] w-full bg-stone-900 object-cover"
               />
 
               <div className="p-6">
-                <h2 className="text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+                <h2 className="text-xl font-semibold tracking-tight text-stone-900">
                   {project.name}
                 </h2>
-                <p className="mt-3 leading-relaxed text-slate-600 dark:text-slate-400">
+                <p className="mt-3 leading-relaxed text-stone-600">
                   {project.description}
                 </p>
 
-                <p className="mt-4 text-xs text-slate-500 dark:text-slate-500">
+                <p className="mt-4 text-xs text-stone-500">
                   {project.tags.join(' · ')}
                 </p>
 
@@ -77,7 +77,7 @@ function Projects() {
           href={links.github}
           target="_blank"
           rel="noreferrer"
-          className="text-sky-600 hover:underline dark:text-sky-400"
+          className="text-brand-600 hover:underline"
         >
           Le reste des dépôts sur GitHub →
         </a>
@@ -103,7 +103,7 @@ function ProjectLinks({ project }: { project: Project }) {
             href={target.href}
             target="_blank"
             rel="noreferrer"
-            className="font-medium text-sky-600 hover:underline dark:text-sky-400"
+            className="font-medium text-brand-600 hover:underline"
           >
             {target.label} →
           </a>

@@ -46,6 +46,9 @@ const config = defineConfig({
         // Route non liée depuis le site : le crawler ne peut pas la trouver,
         // on la déclare explicitement. Elle n'a rien à faire dans le sitemap.
         { path: '/404', sitemap: { exclude: true } },
+        // Ancienne adresse de l'agence, qui renvoie vers l'accueil : plus
+        // aucun lien n'y mène, mais elle a été publiée et partagée.
+        { path: '/agence', sitemap: { exclude: true } },
         // Variante avec slash final de /blog : ni rendue, ni indexée, pour
         // éviter le contenu dupliqué.
         {

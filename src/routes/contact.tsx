@@ -61,13 +61,13 @@ const channels = [
 function Contact() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+      <h1 className="text-4xl font-bold tracking-tight text-stone-900">
         Contact
       </h1>
-      <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
+      <p className="mt-4 text-lg text-stone-600">
         {profile.availability}
       </p>
-      <p className="mt-4 leading-relaxed text-slate-600 dark:text-slate-400">
+      <p className="mt-4 leading-relaxed text-stone-600">
         Une proposition de mission, une question technique, une envie de
         collaborer sur un projet ouvert : l’e-mail reste le canal le plus fiable.
         Décrivez le contexte en quelques lignes, je réponds avec des questions
@@ -79,7 +79,7 @@ function Contact() {
           <li key={service.slug}>
             <Link
               to={servicePath(service.slug)}
-              className="rounded-full border border-slate-200 px-3 py-1 text-slate-600 transition-colors hover:border-sky-300 hover:text-sky-600 dark:border-slate-800 dark:text-slate-400 dark:hover:border-sky-700 dark:hover:text-sky-400"
+              className="rounded-full border border-stone-200 px-3 py-1 text-stone-600 transition-colors hover:border-brand-300 hover:text-brand-600"
             >
               {service.name}
             </Link>
@@ -95,17 +95,17 @@ function Contact() {
               {...(channel.external
                 ? { target: '_blank', rel: 'noreferrer me' }
                 : {})}
-              className="flex flex-col gap-1 rounded-xl border border-slate-200 p-5 transition-colors hover:border-slate-300 hover:bg-slate-50 sm:flex-row sm:items-center sm:justify-between sm:gap-6 dark:border-slate-800 dark:hover:border-slate-700 dark:hover:bg-slate-900"
+              className="flex flex-col gap-1 rounded-xl border border-stone-200 p-5 transition-colors hover:border-stone-300 hover:bg-stone-50 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
             >
               <span>
-                <span className="block font-semibold text-slate-900 dark:text-slate-100">
+                <span className="block font-semibold text-stone-900">
                   {channel.label}
                 </span>
-                <span className="mt-1 block text-sm text-slate-500 dark:text-slate-500">
+                <span className="mt-1 block text-sm text-stone-500">
                   {channel.hint}
                 </span>
               </span>
-              <span className="text-sm text-sky-600 dark:text-sky-400">
+              <span className="text-sm text-brand-600">
                 {channel.value}
               </span>
             </a>
@@ -113,7 +113,7 @@ function Contact() {
         ))}
       </ul>
 
-      <p className="mt-10 text-sm text-slate-500 dark:text-slate-500">
+      <p className="mt-10 text-sm text-stone-500">
         {profile.location} · {profile.role}
       </p>
     </div>

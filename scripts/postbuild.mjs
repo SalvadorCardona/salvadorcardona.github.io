@@ -34,6 +34,7 @@ const EXPERIENCES_FILE = 'src/content/experiences.json'
 
 const REQUIRED_PAGES = [
   'index.html',
+  'qui-suis-je/index.html',
   'agence/index.html',
   'projets/index.html',
   'blog/index.html',

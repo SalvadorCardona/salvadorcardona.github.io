@@ -18,10 +18,10 @@ export const Route = createFileRoute('/blog/')({
 function BlogIndex() {
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+      <h1 className="text-4xl font-bold tracking-tight text-stone-900">
         Blog
       </h1>
-      <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">
+      <p className="mt-4 text-lg text-stone-600">
         Ce que j’apprends en construisant : architecture front, contrats d’API,
         agents et outillage. {sortedPosts.length} article
         {sortedPosts.length > 1 ? 's' : ''}.
@@ -31,7 +31,7 @@ function BlogIndex() {
         {allTags.map((tag) => (
           <li
             key={tag}
-            className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-400"
+            className="rounded-full bg-stone-100 px-3 py-1 text-xs text-stone-600"
           >
             {tag}
           </li>
@@ -42,28 +42,28 @@ function BlogIndex() {
         {sortedPosts.map((post) => (
           <li
             key={post.slug}
-            className="border-b border-slate-200 pb-10 last:border-0 dark:border-slate-800"
+            className="border-b border-stone-200 pb-10 last:border-0"
           >
             <article>
               <Cover post={post} />
 
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-500">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-stone-500">
                 <time dateTime={post.date}>{formatDate(post.date)}</time>
                 <span aria-hidden="true">·</span>
                 <span>{post.readingTime} min de lecture</span>
               </div>
 
-              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-stone-900">
                 <Link
                   to="/blog/$slug"
                   params={{ slug: post.slug }}
-                  className="transition-colors hover:text-sky-600 dark:hover:text-sky-400"
+                  className="transition-colors hover:text-brand-600"
                 >
                   {post.title}
                 </Link>
               </h2>
 
-              <p className="mt-3 leading-relaxed text-slate-600 dark:text-slate-400">
+              <p className="mt-3 leading-relaxed text-stone-600">
                 {post.excerpt}
               </p>
 
@@ -71,7 +71,7 @@ function BlogIndex() {
                 {post.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-400"
+                    className="rounded-full bg-stone-100 px-2.5 py-0.5 text-xs text-stone-600"
                   >
                     {tag}
                   </span>
@@ -82,7 +82,7 @@ function BlogIndex() {
                 <Link
                   to="/blog/$slug"
                   params={{ slug: post.slug }}
-                  className="font-medium text-sky-600 hover:underline dark:text-sky-400"
+                  className="font-medium text-brand-600 hover:underline"
                 >
                   Lire l’article →
                 </Link>
@@ -108,7 +108,7 @@ function Cover({ post }: { post: Post }) {
       width={cover.width}
       height={cover.height}
       loading="lazy"
-      className="mb-5 aspect-video w-full rounded-xl border border-slate-200 object-cover dark:border-slate-800"
+      className="mb-5 aspect-video w-full rounded-xl border border-stone-200 object-cover"
     />
   )
 }

@@ -61,7 +61,7 @@ function PostPage() {
       <p className="text-sm">
         <Link
           to="/blog"
-          className="text-slate-500 transition-colors hover:text-sky-600 dark:text-slate-400 dark:hover:text-sky-400"
+          className="text-stone-500 transition-colors hover:text-brand-600"
         >
           ← Tous les articles
         </Link>
@@ -69,13 +69,13 @@ function PostPage() {
 
       <article className="mt-8">
         <header>
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-500 dark:text-slate-500">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-stone-500">
             <time dateTime={post.date}>{formatDate(post.date)}</time>
             <span aria-hidden="true">·</span>
             <span>{post.readingTime} min de lecture</span>
           </div>
 
-          <h1 className="mt-3 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
+          <h1 className="mt-3 text-4xl font-bold tracking-tight text-stone-900">
             {post.title}
           </h1>
 
@@ -83,7 +83,7 @@ function PostPage() {
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-400"
+                className="rounded-full bg-stone-100 px-2.5 py-0.5 text-xs text-stone-600"
               >
                 {tag}
               </span>
@@ -97,27 +97,27 @@ function PostPage() {
             alt={cover.alt}
             width={cover.width}
             height={cover.height}
-            className="mt-8 aspect-video w-full rounded-xl border border-slate-200 object-cover dark:border-slate-800"
+            className="mt-8 aspect-video w-full rounded-xl border border-stone-200 object-cover"
           />
         )}
 
-        <div className="prose prose-slate dark:prose-invert mt-10 max-w-none">
+        <div className="prose prose-stone mt-10 prose-a:text-brand-700 max-w-none">
           {post.body}
         </div>
       </article>
 
-      <div className="mt-12 flex flex-wrap gap-4 border-t border-slate-200 pt-6 text-sm dark:border-slate-800">
+      <div className="mt-12 flex flex-wrap gap-4 border-t border-stone-200 pt-6 text-sm">
         <a
           href={shareUrl}
           target="_blank"
           rel="noreferrer"
-          className="text-sky-600 hover:underline dark:text-sky-400"
+          className="text-brand-600 hover:underline"
         >
           Partager sur X
         </a>
         <a
           href={`mailto:${links.email}?subject=${encodeURIComponent(post.title)}`}
-          className="text-sky-600 hover:underline dark:text-sky-400"
+          className="text-brand-600 hover:underline"
         >
           Réagir par e-mail
         </a>
@@ -147,10 +147,10 @@ function NeighbourLink({
     <Link
       to="/blog/$slug"
       params={{ slug: post.slug }}
-      className="rounded-xl border border-slate-200 p-4 transition-colors hover:border-slate-300 hover:bg-slate-50 dark:border-slate-800 dark:hover:border-slate-700 dark:hover:bg-slate-900"
+      className="rounded-xl border border-stone-200 p-4 transition-colors hover:border-stone-300 hover:bg-stone-50"
     >
-      <span className="text-xs text-slate-500 dark:text-slate-500">{label}</span>
-      <span className="mt-1 block text-sm font-medium text-slate-900 dark:text-slate-100">
+      <span className="text-xs text-stone-500">{label}</span>
+      <span className="mt-1 block text-sm font-medium text-stone-900">
         {post.title}
       </span>
     </Link>

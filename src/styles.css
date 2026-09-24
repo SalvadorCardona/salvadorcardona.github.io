@@ -1,10 +1,30 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/bricolage-grotesque';
 @plugin '@tailwindcss/typography';
 
 @theme {
   --font-sans:
     ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue',
     Arial, sans-serif;
+  /* Titres et logo. Auto-hébergée (paquet @fontsource) : aucun appel à un
+     serveur de polices au runtime. */
+  --font-display: 'Bricolage Grotesque Variable', var(--font-sans);
+
+  /* La couleur de l'agence : l'orange d'Animalink, `oklch(0.65 0.18 45)`
+     (#e46212), en 500. Le reste de la gamme est dérivé sur la même teinte.
+     Pour un texte courant sur fond blanc, prendre 600 ou plus foncé : 500
+     n'atteint pas le contraste AA en petit corps. */
+  --color-brand-50: oklch(0.98 0.016 60);
+  --color-brand-100: oklch(0.955 0.04 58);
+  --color-brand-200: oklch(0.905 0.08 55);
+  --color-brand-300: oklch(0.84 0.13 52);
+  --color-brand-400: oklch(0.76 0.17 48);
+  --color-brand-500: oklch(0.65 0.18 45);
+  --color-brand-600: oklch(0.56 0.165 43);
+  --color-brand-700: oklch(0.49 0.145 42);
+  --color-brand-800: oklch(0.41 0.12 41);
+  --color-brand-900: oklch(0.35 0.1 40);
+  --color-brand-950: oklch(0.24 0.07 40);
 
   /* Animations du hero de l'accueil (`animate-hero-*`). Elles ne sont posées
      que derrière `motion-safe:` : avec « réduire les animations », rien ne
@@ -14,6 +34,8 @@
   --animate-hero-drift-slow: hero-drift 30s ease-in-out -8s infinite alternate-reverse;
   --animate-hero-shine: hero-shine 6s linear infinite;
   --animate-hero-grid: hero-grid 40s linear infinite;
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-spin-slow: spin 24s linear infinite;
 
   @keyframes hero-rise {
     from {
@@ -44,6 +66,12 @@
     }
   }
 
+  @keyframes marquee {
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
   @keyframes hero-grid {
     to {
       background-position: 2.5rem 2.5rem;
@@ -62,6 +90,9 @@ body {
 
 html {
   font-family: var(--font-sans);
+  /* Le site n'a qu'un thème, clair : les contrôles natifs (barres de
+     défilement, champs) restent clairs même sur un système en mode sombre. */
+  color-scheme: light;
   /* Les halos du hero débordent à droite et à gauche : on les rogne au lieu
      de laisser la page défiler horizontalement. `clip` ne crée pas de
      conteneur de défilement, l'en-tête collant continue de fonctionner. */
@@ -78,6 +109,17 @@ body {
 /* Pousse le pied de page en bas quand la page est courte. */
 main {
   flex: 1 0 auto;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+}
+
+::selection {
+  background: var(--color-brand-200);
+  color: var(--color-brand-950);
 }
 
 /* Blocs de code des articles : lisibles et non débordants sur mobile. */
