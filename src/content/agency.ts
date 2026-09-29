@@ -108,6 +108,81 @@ export const expertises: Array<AgencyExpertise> = [
   },
 ]
 
+/**
+ * Une réalisation de la pile de cartes du hero : une capture d'un site ou
+ * d'une application livrés, jamais une maquette. `image` est le nom de base
+ * des fichiers de `public/realisations/`, déclinés en AVIF et WebP à deux
+ * largeurs — 480 et 800 px pour une capture `desktop` (8:7), 180 et 360 px
+ * pour une capture `mobile` (1:2), affichée dans un cadre de téléphone.
+ */
+export type AgencyWork = {
+  name: string
+  kind: string
+  url: string
+  image: string
+  format: 'desktop' | 'mobile'
+  alt: string
+}
+
+export const works: Array<AgencyWork> = [
+  {
+    name: 'Opoil',
+    kind: 'Plateforme de rendez-vous',
+    url: 'https://opoil.app',
+    image: 'opoil-accueil',
+    format: 'desktop',
+    alt: 'Page d’accueil d’Opoil, l’annuaire des professionnels animaliers avec sa recherche par métier et par ville.',
+  },
+  {
+    name: 'Opoil',
+    kind: 'Fiche d’établissement',
+    url: 'https://opoil.app/etablissement/le-bon-pas-lyon',
+    image: 'opoil-fiche',
+    format: 'mobile',
+    alt: 'Fiche d’un éducateur canin dans l’application Opoil, sur téléphone, avec le bouton de demande de rendez-vous.',
+  },
+  {
+    name: 'Le Bon Pas',
+    kind: 'Site vitrine de démonstration',
+    url: 'https://le-bon-pas.opoil.app',
+    image: 'le-bon-pas',
+    format: 'desktop',
+    alt: 'Site vitrine de démonstration d’un éducateur canin lyonnais : titre, boutons de réservation et photo du Vieux Lyon.',
+  },
+  {
+    name: 'react-resource-view',
+    kind: 'Site de bibliothèque',
+    url: 'https://cardona.digital/react-resource-view/',
+    image: 'react-resource-view',
+    format: 'desktop',
+    alt: 'Page d’accueil de react-resource-view, bibliothèque React de formulaires et d’écrans d’administration.',
+  },
+  {
+    name: 'whisper-desk',
+    kind: 'Site d’application',
+    url: 'https://cardona.digital/whisper-desk/',
+    image: 'whisper-desk',
+    format: 'mobile',
+    alt: 'Site de whisper-desk, l’outil de dictée vocale hors ligne, sur téléphone.',
+  },
+  {
+    name: 'ticket-runner',
+    kind: 'Site d’application',
+    url: 'https://cardona.digital/ticket-runner/',
+    image: 'ticket-runner',
+    format: 'desktop',
+    alt: 'Page d’accueil de ticket-runner avec sa mascotte et un tableau de tickets.',
+  },
+  {
+    name: 'ticket-runner',
+    kind: 'Console web',
+    url: 'https://cardona.digital/ticket-runner/#console',
+    image: 'ticket-runner-console',
+    format: 'desktop',
+    alt: 'La console web de ticket-runner : le menu, le tableau des tickets et la conversation avec l’espace de travail.',
+  },
+]
+
 export const offers: Array<AgencyOffer> = [
   {
     id: 'vitrine',
