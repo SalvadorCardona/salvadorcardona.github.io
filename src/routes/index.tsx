@@ -1,8 +1,13 @@
+import { useEffect, useState } from 'react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 
 import { LogoMark } from '../components/Logo'
 import { ServiceIcon } from '../components/ServiceIcon'
-import type { AgencyExpertise, AgencyOffer } from '../content/agency'
+import type {
+  AgencyExpertise,
+  AgencyOffer,
+  AgencyWork,
+} from '../content/agency'
 import {
   agency,
   commitments,
@@ -11,6 +16,7 @@ import {
   figures,
   offers,
   steps,
+  works,
 } from '../content/agency'
 import { clients, links, profile } from '../content/profile'
 import { PERSON_ID, SITE_URL, personJsonLd, seo } from '../lib/seo'
@@ -91,7 +97,9 @@ export const Route = createFileRoute('/')({
  * fondateur. Le contenu vit dans `content/agency.ts`.
  *
  * Le mouvement (halos, bandeau défilant, badge qui tourne) est décoratif,
- * en CSS, et entièrement derrière `motion-safe:`.
+ * en CSS, et entièrement derrière `motion-safe:` ; seule la pile de cartes
+ * du hero (`WorkDeck`) a un minuteur, qui ne démarre pas non plus avec
+ * « réduire les animations ».
  */
 function Home() {
   return (
@@ -115,7 +123,7 @@ function Home() {
 
 function Hero() {
   return (
-    <section className="relative mx-auto max-w-6xl px-6 pt-12 pb-20 sm:pt-20 lg:pb-28">
+    <section className="relative mx-auto max-w-6xl px-6 pt-12 pb-20 max-lg:overflow-x-clip sm:pt-20 lg:pb-28">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-24 -right-40 -left-40 -z-10 h-[44rem]"
@@ -224,34 +232,22 @@ function Scribble() {
 }
 
 /**
- * La composition à droite du titre : la tuile orange du logo, un badge
- * circulaire qui tourne et deux étiquettes qui reprennent les promesses.
+ * La composition à droite du titre : la pile de cartes des réalisations, un
+ * badge circulaire qui tourne et deux étiquettes qui reprennent les promesses.
  */
 function HeroVisual() {
   return (
-    <div
-      aria-hidden="true"
-      className="relative mx-auto aspect-square w-full max-w-sm motion-safe:animate-hero-rise motion-safe:[animation-delay:250ms] lg:max-w-md"
-    >
-      <div className="absolute inset-8 rotate-6 rounded-[3rem] bg-amber-200/70" />
-      <div className="absolute inset-8 -rotate-3 overflow-hidden rounded-[3rem] bg-brand-500 shadow-2xl shadow-brand-500/30">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgb(255_255_255/0.25),transparent_55%)]" />
-        <svg
-          viewBox="0 0 48 48"
-          className="absolute inset-0 m-auto h-3/5 w-3/5 rotate-3"
-        >
-          <path
-            d="M30.78 16.22A11 11 0 1 0 30.78 31.78"
-            fill="none"
-            stroke="#fff"
-            strokeWidth="7"
-            strokeLinecap="round"
-          />
-          <circle cx="36.5" cy="24" r="3.75" fill="#fff" />
-        </svg>
-      </div>
+    <div className="relative mx-auto aspect-square w-full max-w-[21rem] motion-safe:animate-hero-rise motion-safe:[animation-delay:250ms] sm:max-w-sm lg:max-w-md">
+      <div
+        aria-hidden="true"
+        className="absolute inset-8 rotate-6 rounded-[3rem] bg-amber-200/70"
+      />
+      <WorkDeck />
 
-      <div className="absolute -top-2 -right-2 h-32 w-32 rounded-full bg-white p-1 shadow-xl shadow-stone-300/50 sm:h-36 sm:w-36">
+      <div
+        aria-hidden="true"
+        className="absolute -top-4 -right-4 z-40 h-28 w-28 rounded-full bg-white p-1 shadow-xl shadow-stone-300/50 sm:-top-2 sm:-right-2 sm:h-36 sm:w-36"
+      >
         <svg
           viewBox="0 0 120 120"
           className="h-full w-full motion-safe:animate-spin-slow"
@@ -271,24 +267,249 @@ function HeroVisual() {
         <span className="absolute inset-0 m-auto h-5 w-5 rounded-full bg-brand-500" />
       </div>
 
-      <div className="absolute bottom-10 -left-4 rounded-2xl bg-white px-4 py-3 shadow-xl shadow-stone-300/50 sm:-left-8">
-        <p className="flex items-center gap-2 text-sm font-semibold text-stone-900">
-          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-100 text-xs text-emerald-700">
+      <div
+        aria-hidden="true"
+        className="absolute top-[40%] -left-3 z-40 rounded-2xl bg-white px-3 py-2 shadow-xl shadow-stone-300/50 sm:-left-10 sm:px-4 sm:py-3"
+      >
+        <p className="flex items-center gap-2 text-xs font-semibold text-stone-900 sm:text-sm">
+          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-[10px] text-emerald-700 sm:h-6 sm:w-6 sm:text-xs">
             ✓
           </span>
           Site en ligne
         </p>
-        <p className="mt-0.5 pl-8 text-xs text-stone-500">en deux semaines</p>
+        <p className="mt-0.5 pl-7 text-[11px] text-stone-500 sm:pl-8 sm:text-xs">
+          en deux semaines
+        </p>
       </div>
 
-      <div className="absolute -right-2 bottom-24 rounded-2xl bg-stone-900 px-4 py-3 text-white shadow-xl sm:-right-6">
-        <p className="font-display text-2xl leading-none font-extrabold">
+      <div
+        aria-hidden="true"
+        className="absolute -right-3 bottom-20 z-40 rounded-2xl bg-stone-900 px-3 py-2 text-white shadow-xl sm:-right-8 sm:bottom-24 sm:px-4 sm:py-3"
+      >
+        <p className="font-display text-xl leading-none font-extrabold sm:text-2xl">
           30 €
-          <span className="text-sm font-medium text-stone-300"> / mois</span>
+          <span className="text-xs font-medium text-stone-300 sm:text-sm">
+            {' '}
+            / mois
+          </span>
         </p>
-        <p className="mt-1 text-xs text-stone-300">création comprise</p>
+        <p className="mt-1 text-[11px] text-stone-300 sm:text-xs">
+          création comprise
+        </p>
       </div>
     </div>
+  )
+}
+
+/** Délai entre deux cartes de la pile. */
+const DECK_INTERVAL = 3200
+
+/**
+ * Position d'une carte selon son rang dans la pile (0 = dessus). Au-delà de
+ * la troisième, les cartes attendent derrière, invisibles.
+ */
+const DECK_POSES = [
+  'rotate(-3deg)',
+  'translate3d(5%, -3%, 0) rotate(4deg) scale(0.95)',
+  'translate3d(-4%, -6%, 0) rotate(-8deg) scale(0.9)',
+]
+const DECK_HIDDEN = 'translate3d(0, -4%, 0) rotate(3deg) scale(0.86)'
+
+/**
+ * La pile de cartes du hero : les captures de `works`, qui défilent toutes
+ * les ~3 s — la carte du dessus glisse sur le côté et repart derrière la
+ * pile (`animate-deck-out`). Le défilement s'arrête au survol et au focus,
+ * et ne démarre pas du tout avec « réduire les animations » : la pile reste
+ * fixe, les points permettent encore de changer de carte.
+ *
+ * Seule la première capture est chargée en priorité ; les autres, en différé.
+ */
+function WorkDeck() {
+  const [active, setActive] = useState(0)
+  const [leaving, setLeaving] = useState<number | null>(null)
+  const [paused, setPaused] = useState(false)
+
+  function show(index: number) {
+    if (index === active) return
+    setLeaving(active)
+    setActive(index)
+  }
+
+  useEffect(() => {
+    if (paused) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const timer = window.setTimeout(
+      () => show((active + 1) % works.length),
+      DECK_INTERVAL,
+    )
+    return () => window.clearTimeout(timer)
+  }, [active, paused])
+
+  return (
+    <div
+      role="region"
+      aria-roledescription="carrousel"
+      aria-label="Nos réalisations"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+      className="absolute inset-0"
+    >
+      <div className="absolute inset-8">
+        {works.map((work, index) => {
+          const rank = (index - active + works.length) % works.length
+          const isTop = rank === 0
+          return (
+            <a
+              key={work.image}
+              href={work.url}
+              target="_blank"
+              rel="noopener"
+              aria-hidden={isTop ? undefined : true}
+              tabIndex={isTop ? undefined : -1}
+              aria-label={`${work.name} — ${work.kind} (nouvel onglet)`}
+              style={{
+                transform: DECK_POSES[rank] ?? DECK_HIDDEN,
+                opacity: rank < DECK_POSES.length ? 1 : 0,
+                zIndex: 20 - Math.min(rank, 10),
+              }}
+              className={`group absolute inset-0 overflow-hidden rounded-[3rem] shadow-2xl shadow-stone-900/15 ring-1 ring-stone-900/5 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-brand-500 motion-safe:transition-[transform,opacity] motion-safe:duration-700 motion-safe:ease-[cubic-bezier(0.22,1,0.36,1)] ${
+                isTop ? '' : 'pointer-events-none'
+              } ${index === leaving ? 'motion-safe:animate-deck-out' : ''}`}
+            >
+              {work.format === 'desktop' ? (
+                <BrowserShot work={work} priority={index === 0} />
+              ) : (
+                <PhoneShot work={work} priority={index === 0} />
+              )}
+              <span className="absolute bottom-5 left-6 flex items-center gap-2 rounded-full bg-white/90 py-1.5 pr-3 pl-3.5 text-xs font-semibold whitespace-nowrap text-stone-900 shadow-lg shadow-stone-900/10 backdrop-blur sm:bottom-6 sm:left-8 sm:text-sm">
+                {work.name}
+                <span className="hidden font-normal text-stone-500 sm:inline">
+                  {work.kind}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="text-brand-600 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                >
+                  ↗
+                </span>
+              </span>
+            </a>
+          )
+        })}
+      </div>
+
+      <div className="absolute inset-x-0 bottom-0 flex h-8 items-center justify-center">
+        {works.map((work, index) => (
+          <button
+            key={work.image}
+            type="button"
+            onClick={() => show(index)}
+            aria-label={`Réalisation ${index + 1} sur ${works.length} : ${work.name}, ${work.kind}`}
+            aria-current={index === active ? true : undefined}
+            className="group/dot flex h-6 items-center px-1"
+          >
+            <span
+              className={`block h-1.5 rounded-full transition-all duration-300 ${
+                index === active
+                  ? 'w-5 bg-brand-500'
+                  : 'w-1.5 bg-stone-300 group-hover/dot:bg-stone-400'
+              }`}
+            />
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+/** Tailles d'affichage des captures, pour que le navigateur choisisse. */
+const DESKTOP_SIZES =
+  '(min-width: 1024px) 384px, (min-width: 640px) 320px, 272px'
+const PHONE_SIZES = '(min-width: 640px) 128px, 104px'
+
+/** Une capture de site vue dans une fenêtre de navigateur. */
+function BrowserShot({ work, priority }: { work: AgencyWork; priority: boolean }) {
+  return (
+    <div className="flex h-full flex-col bg-white">
+      <div className="flex h-10 shrink-0 items-center gap-3 border-b border-stone-200 bg-stone-100 px-8">
+        <span aria-hidden="true" className="flex gap-1.5">
+          <span className="h-2.5 w-2.5 rounded-full bg-stone-300" />
+          <span className="h-2.5 w-2.5 rounded-full bg-stone-300" />
+          <span className="h-2.5 w-2.5 rounded-full bg-stone-300" />
+        </span>
+        <span className="truncate rounded-full bg-white px-3 py-0.5 text-[11px] text-stone-500">
+          {work.url.replace(/^https:\/\//, '').replace(/\/$/, '')}
+        </span>
+      </div>
+      <WorkImage
+        work={work}
+        widths={[480, 800]}
+        height={7 / 8}
+        sizes={DESKTOP_SIZES}
+        priority={priority}
+        className="min-h-0 w-full flex-1 object-cover object-top"
+      />
+    </div>
+  )
+}
+
+/** Une capture d'application vue dans un cadre de téléphone. */
+function PhoneShot({ work, priority }: { work: AgencyWork; priority: boolean }) {
+  return (
+    <div className="relative h-full bg-brand-500">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgb(255_255_255/0.3),transparent_60%)]" />
+      <div className="absolute top-[7%] left-1/2 aspect-[1/2] h-[74%] -translate-x-1/2 rotate-3 rounded-[1.6rem] bg-stone-900 p-1.5 shadow-2xl shadow-brand-900/40">
+        <WorkImage
+          work={work}
+          widths={[180, 360]}
+          height={2}
+          sizes={PHONE_SIZES}
+          priority={priority}
+          className="h-full w-full rounded-[1.2rem] object-cover object-top"
+        />
+        <span className="absolute top-3 left-1/2 h-1.5 w-8 -translate-x-1/2 rounded-full bg-stone-900" />
+      </div>
+    </div>
+  )
+}
+
+/** Les captures de `public/realisations/`, en AVIF avec repli WebP. */
+function WorkImage({
+  work,
+  widths,
+  height,
+  sizes,
+  priority,
+  className,
+}: {
+  work: AgencyWork
+  widths: [number, number]
+  height: number
+  sizes: string
+  priority: boolean
+  className: string
+}) {
+  const srcSet = (format: string) =>
+    widths
+      .map((width) => `/realisations/${work.image}-${width}.${format} ${width}w`)
+      .join(', ')
+  return (
+    <picture className="contents">
+      <source type="image/avif" srcSet={srcSet('avif')} sizes={sizes} />
+      <source type="image/webp" srcSet={srcSet('webp')} sizes={sizes} />
+      <img
+        src={`/realisations/${work.image}-${widths[1]}.webp`}
+        width={widths[1]}
+        height={widths[1] * height}
+        alt={work.alt}
+        loading={priority ? 'eager' : 'lazy'}
+        fetchPriority={priority ? 'high' : 'low'}
+        decoding="async"
+        className={className}
+      />
+    </picture>
   )
 }
 

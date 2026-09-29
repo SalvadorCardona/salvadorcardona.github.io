@@ -75,6 +75,10 @@ Portfolio statique : TanStack Start prérendu au build, publié sur GitHub Pages
   trois exemplaires à garder synchrones : `components/Logo.tsx`,
   `public/favicon.svg` et `public/logo.svg` (mot vectorisé), plus les PNG de
   favicon qui en sont tirés.
+- **La pile de cartes du hero ne montre que de vraies réalisations.** Chaque
+  entrée de `works` (`agency.ts`) pointe vers des captures de
+  `public/realisations/`, en AVIF et WebP à deux largeurs (voir le type
+  `AgencyWork`). Une maquette générée n'y entre pas sous un nom de client.
 - **Ne pas supprimer `public/CNAME`** ni le désynchroniser de `SITE_URL`
   (`src/lib/seo.ts`) : il porte le domaine personnalisé `cardona.digital`.
 
