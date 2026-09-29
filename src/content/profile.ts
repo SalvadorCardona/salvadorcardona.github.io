@@ -67,8 +67,8 @@ export const links = {
 /**
  * Les clients cités en preuve sociale sur l'accueil, dans l'ordre
  * d'affichage. `logo` pointe vers un SVG monochrome dans `public/clients/` ;
- * absent, le nom s'affiche en texte stylé (cas de Greenweez, sans logo
- * disponible en qualité correcte).
+ * absent, le nom s'affiche en texte stylé (cas de Greenweez et de BASF, sans
+ * logo disponible en qualité correcte).
  */
 export type Client = {
   name: string
@@ -81,6 +81,8 @@ export const clients: Array<Client> = [
   { name: 'TF1', logo: '/clients/tf1.svg' },
   { name: 'M6', logo: '/clients/m6.svg' },
   { name: 'Greenweez' },
+  { name: 'Nokia', logo: '/clients/nokia.svg' },
+  { name: 'BASF' },
 ]
 
 export type SkillGroup = {
