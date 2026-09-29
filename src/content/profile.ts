@@ -76,6 +76,7 @@ export type Client = {
 }
 
 export const clients: Array<Client> = [
+  { name: 'Easy Cash', logo: '/clients/easy-cash.svg' },
   { name: 'OVH', logo: '/clients/ovh.svg' },
   { name: 'EDF', logo: '/clients/edf.svg' },
   { name: 'TF1', logo: '/clients/tf1.svg' },
