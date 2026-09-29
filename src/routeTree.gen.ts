@@ -13,7 +13,6 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as AgenceRouteImport } from './routes/agence'
 import { Route as ContactRouteImport } from './routes/contact'
-import { Route as ProjetsRouteImport } from './routes/projets'
 import { Route as QuiSuisJeRouteImport } from './routes/qui-suis-je'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
@@ -40,11 +39,6 @@ const AgenceRoute = AgenceRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProjetsRoute = ProjetsRouteImport.update({
-  id: '/projets',
-  path: '/projets',
   getParentRoute: () => rootRouteImport,
 } as any)
 const QuiSuisJeRoute = QuiSuisJeRouteImport.update({
@@ -90,7 +84,6 @@ export interface FileRoutesByFullPath {
   '/404': typeof R404Route
   '/agence': typeof AgenceRoute
   '/contact': typeof ContactRoute
-  '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
@@ -104,7 +97,6 @@ export interface FileRoutesByTo {
   '/404': typeof R404Route
   '/agence': typeof AgenceRoute
   '/contact': typeof ContactRoute
-  '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
@@ -119,7 +111,6 @@ export interface FileRoutesById {
   '/404': typeof R404Route
   '/agence': typeof AgenceRoute
   '/contact': typeof ContactRoute
-  '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
@@ -135,7 +126,6 @@ export interface FileRouteTypes {
     | '/404'
     | '/agence'
     | '/contact'
-    | '/projets'
     | '/qui-suis-je'
     | '/blog/$slug'
     | '/services/audit-securite-application'
@@ -149,7 +139,6 @@ export interface FileRouteTypes {
     | '/404'
     | '/agence'
     | '/contact'
-    | '/projets'
     | '/qui-suis-je'
     | '/blog/$slug'
     | '/services/audit-securite-application'
@@ -163,7 +152,6 @@ export interface FileRouteTypes {
     | '/404'
     | '/agence'
     | '/contact'
-    | '/projets'
     | '/qui-suis-je'
     | '/blog/$slug'
     | '/services/audit-securite-application'
@@ -178,7 +166,6 @@ export interface RootRouteChildren {
   R404Route: typeof R404Route
   AgenceRoute: typeof AgenceRoute
   ContactRoute: typeof ContactRoute
-  ProjetsRoute: typeof ProjetsRoute
   QuiSuisJeRoute: typeof QuiSuisJeRoute
   BlogSlugRoute: typeof BlogSlugRoute
   ServicesAuditSecuriteApplicationRoute: typeof ServicesAuditSecuriteApplicationRoute
@@ -216,13 +203,6 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projets': {
-      id: '/projets'
-      path: '/projets'
-      fullPath: '/projets'
-      preLoaderRoute: typeof ProjetsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/qui-suis-je': {
@@ -282,7 +262,6 @@ const rootRouteChildren: RootRouteChildren = {
   R404Route: R404Route,
   AgenceRoute: AgenceRoute,
   ContactRoute: ContactRoute,
-  ProjetsRoute: ProjetsRoute,
   QuiSuisJeRoute: QuiSuisJeRoute,
   BlogSlugRoute: BlogSlugRoute,
   ServicesAuditSecuriteApplicationRoute: ServicesAuditSecuriteApplicationRoute,

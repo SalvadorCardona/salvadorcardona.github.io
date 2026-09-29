@@ -11,6 +11,7 @@ import {
   projects,
   skills,
 } from '../content/profile'
+import type { Project } from '../content/profile'
 import type { Experience } from '../content/experiences'
 import {
   companyInitials,
@@ -68,7 +69,6 @@ function About() {
   const recentExperiences = sortedExperiences.slice(0, VISIBLE_EXPERIENCES)
   const olderExperiences = sortedExperiences.slice(VISIBLE_EXPERIENCES)
   const visibleEducation = education.filter((item) => isFilled(item.school))
-  const featured = projects.filter((project) => project.featured)
   const latestPosts = sortedPosts.slice(0, 2)
 
   return (
@@ -221,45 +221,44 @@ function About() {
         intro="Ce que je construis sur mon temps libre, et que j’utilise tous les jours."
       >
         <ul className="grid gap-4 sm:grid-cols-2">
-          {featured.map((project) => (
-            <li key={project.name}>
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noreferrer"
-                className="flex h-full flex-col rounded-xl border border-stone-200 p-5 transition-colors hover:border-stone-300 hover:bg-stone-50"
-              >
-                <div className="flex items-center gap-3">
-                  {/* Le nom suit juste à côté : l'icône est décorative. */}
-                  <img
-                    src={projectIcon(project)}
-                    alt=""
-                    width={128}
-                    height={128}
-                    loading="lazy"
-                    className="h-10 w-10 shrink-0 rounded-lg ring-1 ring-stone-200"
-                  />
-                  <h3 className="font-semibold text-stone-900">
-                    {project.name}
-                  </h3>
-                </div>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-stone-600">
-                  {project.description}
-                </p>
-                <p className="mt-3 text-xs text-stone-500">
-                  {project.tags.join(' · ')}
-                </p>
-              </a>
+          {projects.map((project) => (
+            <li
+              key={project.name}
+              className="flex flex-col rounded-xl border border-stone-200 p-5 transition-colors hover:border-stone-300"
+            >
+              <div className="flex items-center gap-3">
+                {/* Le nom suit juste à côté : l'icône est décorative. */}
+                <img
+                  src={projectIcon(project)}
+                  alt=""
+                  width={128}
+                  height={128}
+                  loading="lazy"
+                  className="h-10 w-10 shrink-0 rounded-lg ring-1 ring-stone-200"
+                />
+                <h3 className="font-semibold text-stone-900">
+                  {project.name}
+                </h3>
+              </div>
+              <p className="mt-3 flex-1 text-sm leading-relaxed text-stone-600">
+                {project.description}
+              </p>
+              <p className="mt-3 text-xs text-stone-500">
+                {project.tags.join(' · ')}
+              </p>
+              <ProjectLinks project={project} />
             </li>
           ))}
         </ul>
         <p className="mt-4 text-sm">
-          <Link
-            to="/projets"
+          <a
+            href={links.github}
+            target="_blank"
+            rel="noreferrer"
             className="text-brand-600 hover:underline"
           >
-            Tous les projets, avec leurs dépôts et leurs sites →
-          </Link>
+            Le reste des dépôts sur GitHub →
+          </a>
         </p>
       </Section>
 
@@ -386,6 +385,38 @@ function ExperienceLogo({ item }: { item: Experience }) {
  * mot clé du titre brille. Tout est derrière `motion-safe:`, donc désactivé
  * pour qui a demandé moins d'animations.
  */
+/**
+ * Le dépôt et, quand ils existent, le site en ligne et la documentation. Les
+ * liens sont écrits en dur dans le HTML prérendu, sans `nofollow`, pour que le
+ * maillage avec les dépôts — qui renvoient ici — soit suivi.
+ */
+function ProjectLinks({ project }: { project: Project }) {
+  const targets = [
+    { label: 'Code source', href: project.url },
+    { label: 'Site en ligne', href: project.site },
+    { label: 'Documentation', href: project.docs },
+  ].filter((target): target is { label: string; href: string } =>
+    Boolean(target.href),
+  )
+
+  return (
+    <ul className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
+      {targets.map((target) => (
+        <li key={target.label}>
+          <a
+            href={target.href}
+            target="_blank"
+            rel="noreferrer"
+            className="font-medium text-brand-600 hover:underline"
+          >
+            {target.label} →
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
 function Hero() {
   return (
     <section className="relative py-16 sm:py-24">

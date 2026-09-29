@@ -42,8 +42,8 @@ reste vit dans `src/content/`.
 - **`profile.ts`** — identité, liens, technologies, diplômes, projets. Les
   entrées contenant `À COMPLÉTER` ne s'affichent pas : elles servent de
   gabarit. Un projet porte son dépôt (`url`) et, s'ils existent, son site en
-  ligne (`site`) et sa documentation (`docs`) : la page `/projets` les liste
-  tous, `/qui-suis-je` ne montre que ceux marqués `featured`.
+  ligne (`site`) et sa documentation (`docs`) : la section projets de
+  `/qui-suis-je` les liste tous. L'ancienne page `/projets` y renvoie.
 - **`services.ts`** — les prestations (`/services/<slug>`) et les interventions
   ponctuelles. Chaque prestation porte son titre, sa description SEO, son
   contenu section par section et sa FAQ ; le gabarit

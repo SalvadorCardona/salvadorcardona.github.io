@@ -15,11 +15,17 @@
  *
  * 4. Garde-fou : on échoue si une page attendue manque, plutôt que de publier
  *    un site amputé.
+ *
+ * 5. `dist/client/projets/index.html` : redirection de l'ancienne page
+ *    Projets vers la section projets de `/qui-suis-je`. Pages ne sait pas
+ *    rediriger : c'est un HTML statique avec `<meta refresh>`, URL canonique
+ *    vers la cible et `noindex`.
  */
 
 import {
   access,
   copyFile,
+  mkdir,
   readFile,
   readdir,
   rm,
@@ -36,7 +42,6 @@ const REQUIRED_PAGES = [
   'index.html',
   'qui-suis-je/index.html',
   'agence/index.html',
-  'projets/index.html',
   'blog/index.html',
   'contact/index.html',
   'services/index.html',
@@ -46,6 +51,31 @@ const REQUIRED_PAGES = [
   '404/index.html',
   'sitemap.xml',
 ]
+
+const SITE_URL = 'https://cardona.digital'
+
+/**
+ * L'ancienne page Projets, fondue dans la section projets de « Qui suis-je ».
+ * Les README des dépôts pointent encore sur `/projets` : l'adresse doit
+ * continuer de répondre, sans être indexée.
+ */
+const PROJECTS_REDIRECT = `<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Projets — Salvador Cardona</title>
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content="0; url=/qui-suis-je#projets" />
+    <link rel="canonical" href="${SITE_URL}/qui-suis-je" />
+  </head>
+  <body>
+    <p>
+      Les projets sont désormais sur
+      <a href="/qui-suis-je#projets">la page « Qui suis-je »</a>.
+    </p>
+  </body>
+</html>
+`
 
 async function exists(path) {
   try {
@@ -93,6 +123,10 @@ async function main() {
   await copyFile(join(OUT_DIR, '404/index.html'), join(OUT_DIR, '404.html'))
   await rm(join(OUT_DIR, '404'), { recursive: true, force: true })
   console.log('[postbuild] 404.html écrit à la racine')
+
+  await mkdir(join(OUT_DIR, 'projets'), { recursive: true })
+  await writeFile(join(OUT_DIR, 'projets/index.html'), PROJECTS_REDIRECT)
+  console.log('[postbuild] /projets redirige vers /qui-suis-je#projets')
 
   if (!(await exists(join(OUT_DIR, '.nojekyll')))) {
     await writeFile(join(OUT_DIR, '.nojekyll'), '')
