@@ -89,8 +89,10 @@ npm run build        # échoue si une page attendue manque
 
 Le build doit annoncer les pages fixes (`/` — l'agence —, `/qui-suis-je`,
 `/services` et ses trois pages service, `/agence` — l'ancienne adresse, qui
-renvoie vers `/` —, `/projets`, `/blog`, `/contact`, `/404`) plus un article par
-`src/content/posts/<slug>.tsx`, et écrire `dist/client/404.html`. Il échoue si une page attendue manque, ou si une
+renvoie vers `/` —, `/blog`, `/contact`, `/404`) plus un article par
+`src/content/posts/<slug>.tsx`, écrire `dist/client/404.html` et
+`dist/client/projets/index.html` — l'ancienne page Projets, qui renvoie vers
+`/qui-suis-je#projets`. Il échoue si une page attendue manque, ou si une
 illustration déclarée dans `covers.json` ou un logo déclaré dans
 `experiences.json` n'a pas suivi.
 Pour inspecter le rendu réel : `npm run serve`.

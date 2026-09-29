@@ -169,8 +169,8 @@ export const education: Array<Education> = [
 
 /**
  * Un projet : son dépôt, et — quand ils existent — le site en ligne et la
- * documentation publiée. Les trois liens alimentent la page `/projets`, qui
- * sert de point d'entrée vers tous les dépôts.
+ * documentation publiée. Les trois liens alimentent la section projets de
+ * `/qui-suis-je`, qui sert de point d'entrée vers tous les dépôts.
  */
 export type Project = {
   name: string
@@ -188,8 +188,6 @@ export type Project = {
   /** La documentation publiée, pour les librairies qui en ont une. */
   docs?: string
   tags: Array<string>
-  /** Affiché sur l'accueil ; les autres n'apparaissent que sur `/projets`. */
-  featured?: boolean
 }
 
 export const projects: Array<Project> = [
@@ -201,7 +199,6 @@ export const projects: Array<Project> = [
     url: 'https://github.com/SalvadorCardona/ticket-runner',
     docs: 'https://cardona.digital/ticket-runner/',
     tags: ['Python', 'Agents LLM', 'Notion API'],
-    featured: true,
   },
   {
     name: 'React Resource View',
@@ -211,7 +208,6 @@ export const projects: Array<Project> = [
     url: 'https://github.com/SalvadorCardona/react-resource-view',
     docs: 'https://cardona.digital/react-resource-view/',
     tags: ['React', 'TypeScript', 'JSON-LD'],
-    featured: true,
   },
   {
     name: 'Whisper Desk',
@@ -221,7 +217,6 @@ export const projects: Array<Project> = [
     url: 'https://github.com/SalvadorCardona/whisper-desk',
     docs: 'https://cardona.digital/whisper-desk/',
     tags: ['Python', 'Whisper', 'Linux', 'macOS'],
-    featured: true,
   },
   {
     name: 'Lead Finder',
@@ -239,7 +234,6 @@ export const projects: Array<Project> = [
     brand: 'gnome-claude-usage',
     url: 'https://github.com/SalvadorCardona/gnome-claude-usage',
     tags: ['GNOME Shell', 'GJS', 'Python'],
-    featured: true,
   },
   {
     name: 'React Data Form',
@@ -249,7 +243,6 @@ export const projects: Array<Project> = [
     url: 'https://github.com/SalvadorCardona/react-data-form',
     docs: 'https://cardona.digital/react-data-form/',
     tags: ['React', 'TypeScript', 'Formulaires'],
-    featured: true,
   },
   {
     name: 'jsonld-api-client',
