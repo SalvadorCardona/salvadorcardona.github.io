@@ -64,6 +64,25 @@ export const links = {
   instagram: 'https://www.instagram.com/salvadorcardona81/',
 } as const
 
+/**
+ * Les clients cités en preuve sociale sur l'accueil, dans l'ordre
+ * d'affichage. `logo` pointe vers un SVG monochrome dans `public/clients/` ;
+ * absent, le nom s'affiche en texte stylé (cas de Greenweez, sans logo
+ * disponible en qualité correcte).
+ */
+export type Client = {
+  name: string
+  logo?: string
+}
+
+export const clients: Array<Client> = [
+  { name: 'OVH', logo: '/clients/ovh.svg' },
+  { name: 'EDF', logo: '/clients/edf.svg' },
+  { name: 'TF1', logo: '/clients/tf1.svg' },
+  { name: 'M6', logo: '/clients/m6.svg' },
+  { name: 'Greenweez' },
+]
+
 export type SkillGroup = {
   title: string
   items: Array<string>
