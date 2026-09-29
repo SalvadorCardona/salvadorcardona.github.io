@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 
 import { LogoMark } from '../components/Logo'
@@ -79,6 +79,17 @@ export const Route = createFileRoute('/')({
         },
         {
           '@context': 'https://schema.org',
+          '@type': 'VideoObject',
+          name: VIDEO.title,
+          description: VIDEO.description,
+          thumbnailUrl: `${SITE_URL}${VIDEO.poster}`,
+          contentUrl: `${SITE_URL}${VIDEO.src}`,
+          uploadDate: '2026-09-29',
+          duration: 'PT1M1S',
+          inLanguage: 'fr',
+        },
+        {
+          '@context': 'https://schema.org',
           '@type': 'FAQPage',
           mainEntity: faq.map((item) => ({
             '@type': 'Question',
@@ -108,6 +119,7 @@ function Home() {
       <Marquee />
 
       <div className="mx-auto max-w-6xl px-6">
+        <Showreel />
         <Expertises />
         <Figures />
         <Offers />
@@ -543,6 +555,71 @@ function Marquee() {
             ))}
           </ul>
         ))}
+      </div>
+    </section>
+  )
+}
+
+/**
+ * La vidéo de présentation, dont les sources vivent dans `video-source/`.
+ * Titre et description servent aussi au `VideoObject` du JSON-LD.
+ */
+const VIDEO = {
+  src: '/video/agence-cardona.mp4',
+  poster: '/video/agence-cardona-poster.jpg',
+  subtitles: '/video/agence-cardona.fr.vtt',
+  title: `L’agence ${agency.name} en une minute`,
+  description:
+    'Ce que fait l’agence Cardona, ses deux abonnements — Vitrine à 30 € et Application à 100 € HT par mois — et comment prendre rendez-vous.',
+}
+
+/**
+ * Rien n'est chargé avant le clic (`preload="none"`), hormis l'image
+ * d'attente. Les sous-titres sont incrustés dans l'image : la piste WebVTT,
+ * désactivée par défaut, ne sert qu'à l'accessibilité et au référencement.
+ */
+function Showreel() {
+  const video = useRef<HTMLVideoElement>(null)
+  const [started, setStarted] = useState(false)
+
+  return (
+    <section id="video" className="scroll-mt-24 pt-24 lg:pt-32">
+      <SectionHeading eyebrow="En vidéo" title="L’agence en une minute." />
+      <div className="relative mt-12 aspect-video overflow-hidden rounded-[2.5rem] bg-stone-900 shadow-2xl shadow-brand-100 ring-1 ring-brand-100">
+        <video
+          ref={video}
+          controls
+          preload="none"
+          playsInline
+          poster={VIDEO.poster}
+          aria-label={`Vidéo : ${VIDEO.title}, 1 min 01, voix off et sous-titres incrustés`}
+          onPlay={() => setStarted(true)}
+          className="absolute inset-0 h-full w-full"
+        >
+          <source src={VIDEO.src} type="video/mp4" />
+          <track
+            kind="subtitles"
+            srcLang="fr"
+            label="Français"
+            src={VIDEO.subtitles}
+          />
+        </video>
+        {!started && (
+          <button
+            type="button"
+            onClick={() => void video.current?.play()}
+            aria-label="Lire la vidéo"
+            className="group absolute top-1/2 left-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand-500 text-white shadow-2xl shadow-stone-900/30 ring-8 ring-white/30 transition-transform hover:scale-110 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-brand-500 sm:h-28 sm:w-28"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              className="ml-1 h-8 w-8 fill-current sm:h-11 sm:w-11"
+            >
+              <path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l10.6-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z" />
+            </svg>
+          </button>
+        )}
       </div>
     </section>
   )
