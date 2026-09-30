@@ -1,0 +1,17 @@
+# Redirection www.cardona.digital → cardona.digital.
+#
+# Le domaine www.cardona.digital est déclaré dans Dokploy sur l'application du
+# site, avec le middleware `www-to-apex@file` : Traefik répond par un 301 vers
+# l'apex en conservant le chemin et la query string.
+#
+# À déposer dans le dossier de configuration dynamique de Traefik sur le
+# serveur Dokploy (/etc/dokploy/traefik/dynamic/www-redirect.yml) : voir
+# DEPLOY.md, étape 4.
+
+http:
+  middlewares:
+    www-to-apex:
+      redirectRegex:
+        regex: ^https?://www\.cardona\.digital/(.*)
+        replacement: https://cardona.digital/${1}
+        permanent: true
