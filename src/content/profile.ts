@@ -57,7 +57,7 @@ export const profile = {
 } as const
 
 export const links = {
-  email: 'cardona.salvador2022@gmail.com',
+  email: 'contact@cardona.digital',
   github: 'https://github.com/SalvadorCardona',
   linkedin: 'https://www.linkedin.com/in/salvador-cardona-70911113a/',
   x: 'https://x.com/salvadevme',
