@@ -38,11 +38,6 @@ export function SiteFooter() {
                 Contact
               </Link>
             </li>
-            <li>
-              <Link to="/rendez-vous" className={linkClass}>
-                Prendre rendez-vous
-              </Link>
-            </li>
           </ul>
         </div>
 

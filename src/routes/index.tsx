@@ -1243,7 +1243,8 @@ function FinalCall() {
         </p>
         <div className="relative mt-10 flex flex-wrap gap-3">
           <Link
-            to="/rendez-vous"
+            to="/contact"
+            search={{ appel: 1 }}
             className="rounded-full bg-white px-6 py-3.5 text-base font-semibold text-brand-700 transition-all hover:-translate-y-0.5 hover:bg-brand-50"
           >
             Prendre rendez-vous

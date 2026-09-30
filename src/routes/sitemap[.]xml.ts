@@ -9,8 +9,8 @@ import { SITE_URL } from '../lib/seo'
  *
  * Plus rien n'est prérendu (voir `vite.config.ts`) : la liste suit donc les
  * données, pas un crawl du build. Une page ajoutée hors de `services.ts` et
- * des articles doit être ajoutée ici. `/agence`, `/projets` et `/404` n'y
- * figurent pas : ce sont des renvois, ou une page d'erreur.
+ * des articles doit être ajoutée ici. `/agence`, `/projets`, `/rendez-vous`
+ * et `/404` n'y figurent pas : ce sont des renvois, ou une page d'erreur.
  */
 const pages = [
   '/',
@@ -19,7 +19,6 @@ const pages = [
   '/qui-suis-je',
   '/blog',
   '/contact',
-  '/rendez-vous',
 ]
 
 function entry(path: string, lastmod?: string) {

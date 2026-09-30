@@ -2,8 +2,8 @@
 
 La feuille de route de la mise en ligne : du dépôt fusionné sur `main` à
 `cardona.digital` servi par Dokploy, sous-sites GitHub Pages compris. Tout ce
-qui suit se fait dans les interfaces (Dokploy, Hostinger, GitHub, Brevo,
-Google Agenda) ; le code est déjà prêt.
+qui suit se fait dans les interfaces (Dokploy, Hostinger, GitHub, Brevo) ; le
+code est déjà prêt.
 
 - Dokploy : <https://dokploy.cardona.digital>, VPS `148.230.109.72`.
 - DNS : zone `cardona.digital` chez Hostinger.
@@ -62,14 +62,13 @@ CONTACT_TO_EMAIL=contact@cardona.digital
 CONTACT_FROM_EMAIL=contact@cardona.digital
 CONTACT_FROM_NAME=Agence Cardona
 BREVO_LIST_ID=                                 # facultatif, étape 7
-BOOKING_URL=https://calendar.google.com/calendar/appointments/schedules/<id>?gv=true   # étape 8
-TURNSTILE_SITE_KEY=    # facultatif, étape 9
-TURNSTILE_SECRET=      # facultatif, étape 9
+TURNSTILE_SITE_KEY=    # facultatif, étape 8
+TURNSTILE_SECRET=      # facultatif, étape 8
 ```
 
 Vides, les pages restent en ligne : `/contact` annonce que le formulaire n'est
-pas branché et renvoie vers l'e-mail, `/rendez-vous` affiche un bloc qui
-renvoie vers `/contact`. On peut donc déployer d'abord, brancher ensuite.
+pas branché et renvoie vers l'e-mail. On peut donc déployer d'abord, brancher
+ensuite.
 
 Aucun de ces secrets ne part dans l'image ni dans le navigateur : ne pas les
 saisir en *Build-time arguments*.
@@ -215,9 +214,8 @@ se déconnecter puis se reconnecter au bon compte, il n'y a pas de sélecteur).
 2. **Clé d'API** : **SMTP & API → API Keys → Generate a new API key**, nom
    `cardona.digital (Dokploy)`, dans `BREVO_API_KEY`. Si Brevo restreint les
    IP autorisées (**Security → Authorised IPs**), y ajouter `148.230.109.72`.
-3. **Destinataire** : `CONTACT_TO_EMAIL`, la boîte qui reçoit les demandes.
-   `contact@cardona.digital` passe par ImprovMX et arrive dans la même boîte
-   Gmail.
+3. **Destinataire** : `CONTACT_TO_EMAIL`, la boîte qui reçoit les demandes :
+   `contact@cardona.digital`, boîte Hostinger Mail (webmail Hostinger).
 4. **Facultatif, fichier de leads** : **Contacts → Lists → Create a list**
    (« Prospects cardona.digital »), puis reporter son identifiant numérique
    dans `BREVO_LIST_ID`. Seule l'adresse e-mail est enregistrée.
@@ -225,9 +223,11 @@ se déconnecter puis se reconnecter au bon compte, il n'y a pas de sélecteur).
 Ce qui part à chaque message valide :
 
 - **à l'agence** : toutes les réponses du formulaire, `replyTo` = l'e-mail du
-  prospect (« Répondre » lui écrit directement) ;
-- **au prospect** : un remerciement, le rappel de sa demande et le lien vers
-  `/rendez-vous` ;
+  prospect (« Répondre » lui écrit directement). Si la case « appel
+  découverte » est cochée, l'objet commence par « Appel demandé » et un
+  encadré en tête reprend les disponibilités saisies ;
+- **au prospect** : un remerciement (ou, si l'appel est demandé, « nous
+  revenons vers vous pour fixer l'appel ») et le rappel de sa demande ;
 - **si `BREVO_LIST_ID`** : `POST /v3/contacts` avec `updateEnabled: true`.
 
 Toutes les valeurs saisies sont échappées avant d'entrer dans le HTML des
@@ -242,26 +242,7 @@ remplissent reçoivent un faux succès, rien n'est transmis), 5 envois par IP et
 par quart d'heure (en mémoire du conteneur, remis à zéro au redémarrage).
 L'IP est lue dans `X-Forwarded-For`, posé par Traefik.
 
-## 8. Google Agenda : la page de réservation
-
-Avec le compte `cardona.salvador2022@gmail.com` :
-
-1. **Google Agenda → Créer → Agenda de prise de rendez-vous**, titre « Appel
-   découverte — Agence Cardona ».
-2. **Durée : 1 heure** — c'est ce qu'annonce le site (`discoveryCall` dans
-   `src/content/agency.ts` et la méthode de l'accueil). Changer l'un sans
-   l'autre crée une contradiction.
-3. **Visioconférence : Google Meet**, disponibilités et délai de prévenance au
-   choix.
-4. **Partager → Intégrer au site web → Code intégré** : dans le code
-   `<iframe src="…">` proposé, copier la seule valeur de `src`
-   (`https://calendar.google.com/calendar/appointments/schedules/…?gv=true`)
-   dans `BOOKING_URL`.
-
-Une URL qui ne commence pas par `https://` est ignorée et la page affiche son
-bloc de repli.
-
-## 9. Facultatif : Cloudflare Turnstile
+## 8. Facultatif : Cloudflare Turnstile
 
 Sur le tableau de bord Cloudflare, **Turnstile → Add widget**, domaine
 `cardona.digital`, mode *Managed*. Copier la clé de site dans
@@ -270,12 +251,13 @@ deux : avec une seule, Turnstile reste désactivé. Une fois actif, le widget
 apparaît sous le message et chaque envoi est vérifié côté serveur auprès de
 Cloudflare.
 
-## 10. Vérifications
+## 9. Vérifications
 
 ```bash
 curl -s https://cardona.digital/healthz                     # ok
 curl -sI https://cardona.digital/ | head -1                 # HTTP/2 200
-curl -s https://cardona.digital/sitemap.xml | grep -c '<loc>'   # 7 pages + un par article
+curl -s https://cardona.digital/sitemap.xml | grep -c '<loc>'   # 8 pages + un par article
+curl -sI https://cardona.digital/rendez-vous | grep -i location # /contact?appel=1 (301)
 curl -sI https://cardona.digital/n-existe-pas | head -1     # HTTP/2 404
 curl -sI https://cardona.digital/whisper-desk/ | head -1    # HTTP/2 200, servi par GitHub
 curl -sI https://cardona.digital/whisper-desk | grep -i location   # …/whisper-desk/
@@ -286,8 +268,9 @@ done                                                        # 200 partout
 ```
 
 Puis, dans un navigateur : envoyer un message de test depuis `/contact` avec
-sa propre adresse, et recevoir les deux e-mails (notification et accusé de
-réception ; **Brevo → Transactional → Logs** en cas de doute) ; ouvrir `/rendez-vous` et voir l'agenda.
+sa propre adresse et la case « appel découverte » cochée, et recevoir les deux
+e-mails (notification et accusé de réception ; **Brevo → Transactional →
+Logs** en cas de doute).
 Enfin, dans Google Search Console, soumettre de nouveau
 `https://cardona.digital/sitemap.xml`.
 
@@ -296,4 +279,4 @@ Enfin, dans Google Search Console, soumettre de nouveau
 Remettre les quatre `A` GitHub sur `@` et le `CNAME` `www`, puis redéclarer
 `cardona.digital` dans Settings → Pages du dépôt. Attention : `deploy.yml` a
 été retiré avec le passage à Dokploy ; GitHub Pages resservirait donc le
-dernier build statique publié, sans `/rendez-vous` ni le nouveau `/contact`.
+dernier build statique publié, sans le nouveau `/contact`.

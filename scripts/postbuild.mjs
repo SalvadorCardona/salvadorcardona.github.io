@@ -8,9 +8,10 @@
  *    vérification pour les logos déclarés dans `experiences.json`.
  *
  * 3. Le serveur construit démarre, répond sur `/healthz`, rend chaque page de
- *    `REQUIRED_PAGES` et chaque URL de son propre sitemap en 200, et une
- *    adresse inconnue en 404. C'est le garde-fou qu'assurait le prérendu
- *    (`failOnError`) : on échoue plutôt que de publier un site amputé.
+ *    `REQUIRED_PAGES` et chaque URL de son propre sitemap en 200, une
+ *    adresse inconnue en 404 et `/rendez-vous` en 301 vers `/contact`. C'est
+ *    le garde-fou qu'assurait le prérendu (`failOnError`) : on échoue plutôt
+ *    que de publier un site amputé.
  */
 
 import { spawn } from 'node:child_process'
@@ -36,7 +37,6 @@ const REQUIRED_PAGES = [
   '/projets',
   '/blog',
   '/contact',
-  '/rendez-vous',
   '/services',
   '/services/developpement-web',
   '/services/audit-securite-application',
@@ -122,6 +122,13 @@ async function checkServer() {
       if (response.status !== 200 || !type.startsWith('text/html')) {
         failures.push(`${path} : HTTP ${response.status} ${type}`)
       }
+    }
+
+    // L'ancienne page de réservation, partagée avant son retrait.
+    const booking = await fetch(`${base}/rendez-vous`, { redirect: 'manual' })
+    const target = booking.headers.get('location') ?? ''
+    if (booking.status !== 301 || !target.startsWith('/contact')) {
+      failures.push(`/rendez-vous : HTTP ${booking.status} ${target}, 301 vers /contact attendu`)
     }
 
     const unknown = await fetch(`${base}/cette-page-n-existe-pas`)
