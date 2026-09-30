@@ -3,12 +3,9 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { seo } from '../lib/seo'
 
 /**
- * Page 404 servie par GitHub Pages.
- *
- * Pages n'a pas de règle de réécriture : toute URL sans fichier correspondant
- * tombe sur `/404.html` à la racine. Cette route est prérendue comme les
- * autres, puis `scripts/postbuild.mjs` déplace le HTML obtenu vers
- * `dist/client/404.html`.
+ * Page 404 à adresse fixe, héritée de GitHub Pages. Depuis le passage en SSR,
+ * une URL inconnue reçoit `NotFound` (`__root.tsx`) avec un statut 404 ;
+ * `/404` reste joignable pour les liens qui y mènent déjà.
  */
 export const Route = createFileRoute('/404')({
   head: () =>

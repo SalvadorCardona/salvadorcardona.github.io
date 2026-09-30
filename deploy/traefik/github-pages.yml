@@ -1,0 +1,96 @@
+# Sous-sites GitHub Pages servis sous cardona.digital/<projet>/.
+#
+# Une fois le domaine sur Dokploy, Traefik renvoie ces chemins vers
+# salvadorcardona.github.io/<projet>/, en conservant le chemin complet :
+# /whisper-desk/assets/app.js → https://salvadorcardona.github.io/whisper-desk/assets/app.js.
+# Le reste de cardona.digital va à l'application Dokploy du site.
+#
+# À déposer dans le dossier de configuration dynamique de Traefik sur le
+# serveur Dokploy (/etc/dokploy/traefik/dynamic/github-pages.yml), à la main ou
+# par « Web Server → Traefik → File System » : voir DEPLOY.md, étape 6.
+#
+# PRÉREQUIS : retirer le domaine personnalisé du dépôt
+# salvadorcardona.github.io (Settings → Pages → Custom domain). Tant qu'il y
+# est, GitHub répond à salvadorcardona.github.io/<projet>/ par un 301 vers
+# cardona.digital/<projet>/, qui repasse par ce proxy : boucle de redirection.
+#
+# Sous-chemins recensés le 2026-09-30 (dépôts SalvadorCardona avec Pages
+# actif, tous en 200 sur cardona.digital) :
+#   - /adam-eve/
+#   - /CoookingPubSub/
+#   - /des-3d/
+#   - /gnome-claude-usage/
+#   - /mobile-factory/
+#   - /react-data-form/
+#   - /react-game/
+#   - /react-resource-view/
+#   - /ticket-runner/
+#   - /trigo-js/
+#   - /whisper-desk/
+# Un nouveau dépôt publié sur Pages s'ajoute aux deux règles ci-dessous.
+
+http:
+  routers:
+    # Priorité au-dessus du routeur de l'application (Host seul), sinon le site
+    # TanStack prendrait ces chemins et répondrait 404.
+    github-pages:
+      entryPoints:
+        - websecure
+      rule: >-
+        Host(`cardona.digital`) && (
+        PathPrefix(`/adam-eve/`) ||
+        PathPrefix(`/CoookingPubSub/`) ||
+        PathPrefix(`/des-3d/`) ||
+        PathPrefix(`/gnome-claude-usage/`) ||
+        PathPrefix(`/mobile-factory/`) ||
+        PathPrefix(`/react-data-form/`) ||
+        PathPrefix(`/react-game/`) ||
+        PathPrefix(`/react-resource-view/`) ||
+        PathPrefix(`/ticket-runner/`) ||
+        PathPrefix(`/trigo-js/`) ||
+        PathPrefix(`/whisper-desk/`))
+      priority: 1000
+      service: github-pages
+      tls:
+        certResolver: letsencrypt
+
+    # Sans slash final, Pages répondrait par un 301 vers sa propre adresse
+    # (salvadorcardona.github.io) : on ajoute le slash ici, sur cardona.digital.
+    github-pages-slash:
+      entryPoints:
+        - websecure
+      rule: >-
+        Host(`cardona.digital`) && (
+        Path(`/adam-eve`) ||
+        Path(`/CoookingPubSub`) ||
+        Path(`/des-3d`) ||
+        Path(`/gnome-claude-usage`) ||
+        Path(`/mobile-factory`) ||
+        Path(`/react-data-form`) ||
+        Path(`/react-game`) ||
+        Path(`/react-resource-view`) ||
+        Path(`/ticket-runner`) ||
+        Path(`/trigo-js`) ||
+        Path(`/whisper-desk`))
+      priority: 1000
+      middlewares:
+        - github-pages-slash
+      service: github-pages
+      tls:
+        certResolver: letsencrypt
+
+  middlewares:
+    github-pages-slash:
+      redirectRegex:
+        regex: ^(https?://[^/]+/[^/?]+)(\?.*)?$
+        replacement: ${1}/${2}
+        permanent: true
+
+  services:
+    github-pages:
+      loadBalancer:
+        # GitHub sert le site d'après l'en-tête Host : il doit recevoir
+        # salvadorcardona.github.io, pas cardona.digital.
+        passHostHeader: false
+        servers:
+          - url: https://salvadorcardona.github.io

@@ -1,81 +1,48 @@
 /**
- * Adaptation du build statique aux règles de GitHub Pages.
+ * Vérification du build serveur, avant qu'il ne parte dans l'image Docker.
  *
- * 1. `dist/client/404/index.html` → `dist/client/404.html`
- *    Pages sert ce fichier pour toute URL sans fichier correspondant. Il doit
- *    être à la racine et s'appeler exactement `404.html`.
+ * 1. Le serveur Nitro (`.output/server/index.mjs`) est bien là.
  *
- * 2. Vérification que `.nojekyll` est bien présent.
- *    Sans lui, Pages passe le site par Jekyll, qui supprime silencieusement
- *    tout fichier ou dossier commençant par un underscore.
- *
- * 3. Vérification que chaque illustration déclarée dans `covers.json` est bien
- *    partie dans le build, sinon l'article afficherait une image cassée. Même
+ * 2. Chaque illustration déclarée dans `covers.json` est bien partie dans
+ *    `.output/public`, sinon l'article afficherait une image cassée. Même
  *    vérification pour les logos déclarés dans `experiences.json`.
  *
- * 4. Garde-fou : on échoue si une page attendue manque, plutôt que de publier
- *    un site amputé.
- *
- * 5. `dist/client/projets/index.html` : redirection de l'ancienne page
- *    Projets vers la section projets de `/qui-suis-je`. Pages ne sait pas
- *    rediriger : c'est un HTML statique avec `<meta refresh>`, URL canonique
- *    vers la cible et `noindex`.
+ * 3. Le serveur construit démarre, répond sur `/healthz`, rend chaque page de
+ *    `REQUIRED_PAGES` et chaque URL de son propre sitemap en 200, et une
+ *    adresse inconnue en 404. C'est le garde-fou qu'assurait le prérendu
+ *    (`failOnError`) : on échoue plutôt que de publier un site amputé.
  */
 
-import {
-  access,
-  copyFile,
-  mkdir,
-  readFile,
-  readdir,
-  rm,
-  writeFile,
-} from 'node:fs/promises'
+import { spawn } from 'node:child_process'
+import { access, readFile } from 'node:fs/promises'
+import { createServer } from 'node:net'
 import { join } from 'node:path'
 import process from 'node:process'
+import { setTimeout as sleep } from 'node:timers/promises'
 
-const OUT_DIR = 'dist/client'
+const OUTPUT_DIR = '.output'
+const PUBLIC_DIR = join(OUTPUT_DIR, 'public')
+const SERVER_ENTRY = join(OUTPUT_DIR, 'server/index.mjs')
 const COVERS_FILE = 'src/content/covers.json'
 const EXPERIENCES_FILE = 'src/content/experiences.json'
 
-const REQUIRED_PAGES = [
-  'index.html',
-  'qui-suis-je/index.html',
-  'agence/index.html',
-  'blog/index.html',
-  'contact/index.html',
-  'services/index.html',
-  'services/developpement-web/index.html',
-  'services/audit-securite-application/index.html',
-  'services/integration-ia/index.html',
-  '404/index.html',
-  'sitemap.xml',
-]
-
 const SITE_URL = 'https://cardona.digital'
 
-/**
- * L'ancienne page Projets, fondue dans la section projets de « Qui suis-je ».
- * Les README des dépôts pointent encore sur `/projets` : l'adresse doit
- * continuer de répondre, sans être indexée.
- */
-const PROJECTS_REDIRECT = `<!doctype html>
-<html lang="fr">
-  <head>
-    <meta charset="utf-8" />
-    <title>Projets — Salvador Cardona</title>
-    <meta name="robots" content="noindex" />
-    <meta http-equiv="refresh" content="0; url=/qui-suis-je#projets" />
-    <link rel="canonical" href="${SITE_URL}/qui-suis-je" />
-  </head>
-  <body>
-    <p>
-      Les projets sont désormais sur
-      <a href="/qui-suis-je#projets">la page « Qui suis-je »</a>.
-    </p>
-  </body>
-</html>
-`
+/** Les pages fixes ; les articles viennent du sitemap. */
+const REQUIRED_PAGES = [
+  '/',
+  '/qui-suis-je',
+  '/agence',
+  '/projets',
+  '/blog',
+  '/contact',
+  '/rendez-vous',
+  '/services',
+  '/services/developpement-web',
+  '/services/audit-securite-application',
+  '/services/integration-ia',
+  '/404',
+]
 
 async function exists(path) {
   try {
@@ -102,43 +69,91 @@ async function requiredLogos() {
     .map((experience) => experience.logo.replace(/^\//, ''))
 }
 
-async function main() {
-  const missing = []
-  const required = [
-    ...REQUIRED_PAGES,
-    ...(await requiredCovers()),
-    ...(await requiredLogos()),
-  ]
-  for (const page of required) {
-    if (!(await exists(join(OUT_DIR, page)))) missing.push(page)
-  }
-
-  if (missing.length > 0) {
-    console.error(
-      `[postbuild] Fichiers manquants dans ${OUT_DIR} :\n  - ${missing.join('\n  - ')}`,
-    )
-    process.exit(1)
-  }
-
-  await copyFile(join(OUT_DIR, '404/index.html'), join(OUT_DIR, '404.html'))
-  await rm(join(OUT_DIR, '404'), { recursive: true, force: true })
-  console.log('[postbuild] 404.html écrit à la racine')
-
-  await mkdir(join(OUT_DIR, 'projets'), { recursive: true })
-  await writeFile(join(OUT_DIR, 'projets/index.html'), PROJECTS_REDIRECT)
-  console.log('[postbuild] /projets redirige vers /qui-suis-je#projets')
-
-  if (!(await exists(join(OUT_DIR, '.nojekyll')))) {
-    await writeFile(join(OUT_DIR, '.nojekyll'), '')
-    console.log('[postbuild] .nojekyll ajouté')
-  }
-
-  const articles = await readdir(join(OUT_DIR, 'blog'), { withFileTypes: true })
-  const count = articles.filter((entry) => entry.isDirectory()).length
-  console.log(`[postbuild] ${count} article(s) prérendu(s)`)
+function fail(message) {
+  console.error(`[postbuild] ${message}`)
+  process.exit(1)
 }
 
-main().catch((error) => {
-  console.error('[postbuild]', error)
-  process.exit(1)
-})
+function freePort() {
+  return new Promise((resolve, reject) => {
+    const server = createServer()
+    server.on('error', reject)
+    server.listen(0, () => {
+      const { port } = server.address()
+      server.close(() => resolve(port))
+    })
+  })
+}
+
+async function waitForHealth(base) {
+  for (let attempt = 0; attempt < 50; attempt++) {
+    try {
+      const response = await fetch(`${base}/healthz`)
+      if (response.ok) return
+    } catch {
+      // Le serveur n'écoute pas encore.
+    }
+    await sleep(200)
+  }
+  throw new Error('le serveur ne répond pas sur /healthz')
+}
+
+async function checkServer() {
+  const port = await freePort()
+  const base = `http://127.0.0.1:${port}`
+  const server = spawn(process.execPath, [SERVER_ENTRY], {
+    env: { ...process.env, PORT: String(port), HOST: '127.0.0.1' },
+    stdio: ['ignore', 'ignore', 'inherit'],
+  })
+
+  try {
+    await waitForHealth(base)
+
+    const sitemap = await fetch(`${base}/sitemap.xml`)
+    if (!sitemap.ok) throw new Error(`/sitemap.xml : HTTP ${sitemap.status}`)
+    const listed = [...(await sitemap.text()).matchAll(/<loc>([^<]+)<\/loc>/g)]
+      .map((match) => match[1].replace(SITE_URL, '') || '/')
+
+    const failures = []
+    const paths = [...new Set([...REQUIRED_PAGES, ...listed])]
+    for (const path of paths) {
+      const response = await fetch(`${base}${path}`, { redirect: 'manual' })
+      const type = response.headers.get('content-type') ?? ''
+      if (response.status !== 200 || !type.startsWith('text/html')) {
+        failures.push(`${path} : HTTP ${response.status} ${type}`)
+      }
+    }
+
+    const unknown = await fetch(`${base}/cette-page-n-existe-pas`)
+    if (unknown.status !== 404) {
+      failures.push(`adresse inconnue : HTTP ${unknown.status}, 404 attendu`)
+    }
+
+    if (failures.length > 0) {
+      throw new Error(`pages en échec :\n  - ${failures.join('\n  - ')}`)
+    }
+
+    const articles = listed.filter((path) => path.startsWith('/blog/')).length
+    console.log(
+      `[postbuild] ${paths.length} pages rendues par le serveur, dont ${articles} article(s)`,
+    )
+  } finally {
+    server.kill()
+  }
+}
+
+async function main() {
+  if (!(await exists(SERVER_ENTRY))) fail(`${SERVER_ENTRY} manquant`)
+
+  const missing = []
+  for (const file of [...(await requiredCovers()), ...(await requiredLogos())]) {
+    if (!(await exists(join(PUBLIC_DIR, file)))) missing.push(file)
+  }
+  if (missing.length > 0) {
+    fail(`Fichiers manquants dans ${PUBLIC_DIR} :\n  - ${missing.join('\n  - ')}`)
+  }
+
+  await checkServer()
+}
+
+main().catch((error) => fail(error.message))

@@ -6,7 +6,7 @@
  *   npm run posts:publish -- --no-watch            # sans suivre le run
  *
  * Rien ne tourne en local : c'est l'Action qui lit Notion, commite les
- * articles sur `main` et déclenche le déploiement. Le jeton Notion vit dans
+ * articles sur `main`, et Dokploy redéploie sur ce push. Le jeton Notion vit dans
  * les secrets du dépôt, pas sur le poste — il n'y a donc rien à exporter avant
  * d'appeler cette commande, seulement un `gh auth login` fait une fois.
  *

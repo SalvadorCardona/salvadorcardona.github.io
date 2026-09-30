@@ -2,72 +2,35 @@ import { defineConfig } from 'vite'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { nitro } from 'nitro/vite'
 
 /**
- * Build statique pour GitHub Pages.
+ * Build serveur pour Dokploy : Nitro, preset `node-server`.
  *
- * `prerender` fige chaque route en HTML au build : le dossier `dist/client`
- * devient un site complet, servable par n'importe quel hébergeur de fichiers.
+ * `vite build` écrit `.output/` : `server/index.mjs`, le serveur Node qui rend
+ * chaque page à la requête et répond aux server functions, et `public/`, les
+ * fichiers statiques qu'il sert tels quels. C'est tout ce que copie l'image
+ * Docker (voir le Dockerfile).
+ *
+ * Rien n'est prérendu. Nitro dresse la liste des fichiers qu'il sert avant que
+ * le prérendu de Start n'écrive les siens : les pages et le sitemap prérendus
+ * resteraient sur le disque sans jamais être servis. Le sitemap est donc une
+ * route (`routes/sitemap[.]xml.ts`), et `scripts/postbuild.mjs` démarre le
+ * serveur construit pour vérifier chaque page, à la place du `failOnError`
+ * du prérendu.
  *
  * Le mode SPA reste désactivé : activé, il remplace la page d'accueil par une
- * coquille vide (`_shell.html`) et fait perdre son HTML au `/`. Le repli sur
- * URL inconnue passe donc par une vraie route `/404`, prérendue puis déplacée
- * en `dist/client/404.html` par `scripts/postbuild.mjs` — c'est le fichier que
- * GitHub Pages sert quand aucune autre correspondance n'existe.
+ * coquille vide (`_shell.html`).
  *
- * Le `base` reste `/` : le site est publié sur un dépôt `<pseudo>.github.io`,
- * servi à la racine du domaine. Un dépôt de projet imposerait `/<repo>/` et
- * la gestion — encore fragile — du `basepath` dans Start.
+ * Le `base` reste `/` : le site est servi à la racine de `cardona.digital`.
  */
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
   base: '/',
   plugins: [
     tailwindcss(),
-    tanstackStart({
-      prerender: {
-        enabled: true,
-        // Suit les <a href> internes : /→/blog→/blog/<slug>. Aucune liste
-        // d'URL à maintenir quand un article est ajouté.
-        crawlLinks: true,
-        // Écrit /blog/index.html plutôt que /blog.html, ce qu'attend un
-        // hébergeur statique pour résoudre /blog.
-        autoSubfolderIndex: true,
-        failOnError: true,
-        retryCount: 1,
-        // Le crawler trouve /blog par le lien et /blog/ par la route : sans
-        // ce filtre, la même page est rendue deux fois et apparaît en double
-        // dans le sitemap. Même chose pour les liens vers une ancre
-        // (/services#interventions) : c'est la même page que /services.
-        filter: ({ path }) =>
-          !path.includes('#') && (path === '/' || !path.endsWith('/')),
-      },
-      pages: [
-        // Route non liée depuis le site : le crawler ne peut pas la trouver,
-        // on la déclare explicitement. Elle n'a rien à faire dans le sitemap.
-        { path: '/404', sitemap: { exclude: true } },
-        // Ancienne adresse de l'agence, qui renvoie vers l'accueil : plus
-        // aucun lien n'y mène, mais elle a été publiée et partagée.
-        { path: '/agence', sitemap: { exclude: true } },
-        // Variante avec slash final de /blog : ni rendue, ni indexée, pour
-        // éviter le contenu dupliqué.
-        {
-          path: '/blog/',
-          sitemap: { exclude: true },
-          prerender: { enabled: false },
-        },
-        // Même chose pour /services, qui a aussi une route d'index.
-        {
-          path: '/services/',
-          sitemap: { exclude: true },
-          prerender: { enabled: false },
-        },
-      ],
-      sitemap: {
-        enabled: true,
-        host: 'https://cardona.digital',
-      },
-    }),
+    tanstackStart(),
+    nitro({ preset: 'node-server' }),
     viteReact(),
   ],
 })

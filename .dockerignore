@@ -1,0 +1,21 @@
+# Le contexte de build ne contient que ce qu'il faut pour `npm ci` et
+# `npm run build`. Aucun fichier d'environnement : les valeurs arrivent au
+# conteneur par Dokploy, jamais par l'image.
+.git
+.github
+.vscode
+node_modules
+.output
+.nitro
+.tanstack
+dist
+video-source
+.env
+.env.*
+!.env.example
+*.local
+npm-debug.log*
+.DS_Store
+Dockerfile
+.dockerignore
+compose.yaml

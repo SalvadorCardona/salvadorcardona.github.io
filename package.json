@@ -14,7 +14,7 @@
     "posts:publish": "node scripts/publish-blog.mjs",
     "posts:sync": "node scripts/sync-posts.mjs",
     "preview": "vite preview",
-    "serve": "npx --yes serve dist/client",
+    "serve": "node .output/server/index.mjs",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -22,6 +22,7 @@
     "@tailwindcss/vite": "^4.1.18",
     "@tanstack/react-router": "latest",
     "@tanstack/react-start": "latest",
+    "nitro": "3.0.260903-beta",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.18"
@@ -42,5 +43,5 @@
       "lightningcss"
     ]
   },
-  "description": "Portfolio et blog de Salvador Cardona — TanStack Start, prérendu statique, GitHub Pages."
+  "description": "Site de l'agence Cardona — TanStack Start rendu côté serveur (Nitro), conteneur Docker sur Dokploy."
 }

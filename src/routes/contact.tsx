@@ -1,121 +1,427 @@
+import { useState } from 'react'
+import type { FormEvent } from 'react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 
-import { links, profile } from '../content/profile'
-import { servicePath, services } from '../content/services'
+import { agency, discoveryCall } from '../content/agency'
+import { links } from '../content/profile'
+import type { ContactErrors, ContactInput } from '../lib/contact'
+import {
+  MESSAGE_MAX,
+  budgets,
+  getContactSettings,
+  projectTypes,
+  sendContact,
+  validateContact,
+} from '../lib/contact'
 import { seo } from '../lib/seo'
 
 export const Route = createFileRoute('/contact')({
-  head: () =>
-    seo({
+  // Rendue à chaque requête, jamais prérendue : la page dépend des variables
+  // d'environnement du conteneur (Brevo configuré ou non, clé Turnstile).
+  loader: () => getContactSettings(),
+  head: ({ loaderData }) => {
+    const head = seo({
       title: 'Contact',
-      description:
-        'Contacter Salvador Cardona, développeur web freelance à Lyon, pour un projet de développement, un audit ou une intégration IA : e-mail, LinkedIn, GitHub.',
+      description: `Parlez-nous de votre projet : site, application métier, intégration IA ou formation. L’agence ${agency.name}, à Lyon, répond sous deux jours ouvrés.`,
       path: '/contact',
-    }),
+    })
+    return {
+      ...head,
+      scripts: loaderData?.turnstileSiteKey
+        ? [
+            ...head.scripts,
+            {
+              src: 'https://challenges.cloudflare.com/turnstile/v0/api.js',
+              async: true,
+              defer: true,
+            },
+          ]
+        : head.scripts,
+    }
+  },
   component: Contact,
 })
 
-/**
- * Pas de formulaire : un site statique n'a pas de backend pour recevoir un
- * POST. Un `mailto:` ouvre le client mail du visiteur, sans service tiers,
- * sans cookie et sans clé d'API à gérer.
- */
-const channels = [
-  {
-    label: 'E-mail',
-    value: links.email,
-    href: `mailto:${links.email}`,
-    hint: 'Le plus direct. Je réponds sous deux jours ouvrés.',
-    external: false,
-  },
-  {
-    label: 'LinkedIn',
-    value: 'salvador-cardona',
-    href: links.linkedin,
-    hint: 'Parcours professionnel et mise en relation.',
-    external: true,
-  },
-  {
-    label: 'GitHub',
-    value: 'SalvadorCardona',
-    href: links.github,
-    hint: 'Le code, les projets ouverts, les issues.',
-    external: true,
-  },
-  {
-    label: 'X',
-    value: '@salvadevme',
-    href: links.x,
-    hint: 'Notes courtes sur le dev et l’IA.',
-    external: true,
-  },
-  {
-    label: 'Instagram',
-    value: '@salvadorcardona81',
-    href: links.instagram,
-    hint: 'Le reste.',
-    external: true,
-  },
-]
+type Status =
+  | { state: 'idle' }
+  | { state: 'sending' }
+  | { state: 'sent' }
+  | { state: 'error'; message: string }
+
+const fieldClass =
+  'mt-2 block w-full rounded-xl border bg-white px-4 py-3 text-base text-stone-900 shadow-sm transition-colors placeholder:text-stone-400 focus:border-brand-400 focus:ring-4 focus:ring-brand-100 focus:outline-none'
+
+function readForm(form: HTMLFormElement): ContactInput {
+  const data = new FormData(form)
+  const value = (key: string) => String(data.get(key) ?? '')
+  return {
+    name: value('name'),
+    email: value('email'),
+    company: value('company'),
+    projectType: value('projectType'),
+    budget: value('budget'),
+    message: value('message'),
+    website: value('website'),
+    // Le widget Turnstile ajoute lui-même ce champ caché au formulaire.
+    turnstileToken: value('cf-turnstile-response'),
+  }
+}
 
 function Contact() {
+  const settings = Route.useLoaderData()
+  const [status, setStatus] = useState<Status>({ state: 'idle' })
+  const [errors, setErrors] = useState<ContactErrors>({})
+
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const form = event.currentTarget
+    const input = readForm(form)
+
+    const found = validateContact(input)
+    setErrors(found)
+    if (Object.keys(found).length > 0) {
+      const first = Object.keys(found)[0]
+      form.querySelector<HTMLElement>(`[name="${first}"]`)?.focus()
+      return
+    }
+
+    setStatus({ state: 'sending' })
+    try {
+      const result = await sendContact({ data: input })
+      if (result.status === 'sent') {
+        form.reset()
+        setStatus({ state: 'sent' })
+      } else if (result.status === 'invalid') {
+        setErrors(result.errors)
+        setStatus({ state: 'idle' })
+      } else {
+        setStatus({ state: 'error', message: result.message })
+      }
+    } catch {
+      setStatus({
+        state: 'error',
+        message:
+          'La connexion au serveur a échoué. Vérifiez votre réseau et réessayez.',
+      })
+    }
+  }
+
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16">
-      <h1 className="text-4xl font-bold tracking-tight text-stone-900">
-        Contact
-      </h1>
-      <p className="mt-4 text-lg text-stone-600">
-        {profile.availability}
-      </p>
-      <p className="mt-4 leading-relaxed text-stone-600">
-        Une proposition de mission, une question technique, une envie de
-        collaborer sur un projet ouvert : l’e-mail reste le canal le plus fiable.
-        Décrivez le contexte en quelques lignes, je réponds avec des questions
-        ou un créneau pour en parler.
-      </p>
+    <div className="mx-auto max-w-6xl px-6 py-16 lg:grid lg:grid-cols-[1fr_1.4fr] lg:gap-16">
+      <div>
+        <p className="text-sm font-medium tracking-widest text-brand-600 uppercase">
+          Contact
+        </p>
+        <h1 className="mt-4 text-4xl font-bold tracking-tight text-balance text-stone-900 sm:text-5xl">
+          Parlez-nous de votre projet.
+        </h1>
+        <p className="mt-6 text-lg leading-relaxed text-pretty text-stone-600">
+          Un site à créer, une application à reprendre, de l’IA à intégrer ou
+          une équipe à former : quelques lignes suffisent. L’agence vous
+          répond sous deux jours ouvrés, avec des questions ou un créneau pour
+          en parler.
+        </p>
 
-      <ul className="mt-6 flex flex-wrap gap-2 text-sm">
-        {services.map((service) => (
-          <li key={service.slug}>
-            <Link
-              to={servicePath(service.slug)}
-              className="rounded-full border border-stone-200 px-3 py-1 text-stone-600 transition-colors hover:border-brand-300 hover:text-brand-600"
+        <div className="mt-10 space-y-3">
+          <Link
+            to="/rendez-vous"
+            className="flex flex-col gap-1 rounded-xl border border-stone-200 p-5 transition-colors hover:border-brand-300 hover:bg-brand-50/40"
+          >
+            <span className="font-semibold text-stone-900">
+              Plutôt de vive voix ?
+            </span>
+            <span className="text-sm text-stone-500">
+              Réservez directement un appel découverte, gratuit, en visio.
+            </span>
+            <span className="mt-1 text-sm font-semibold text-brand-600">
+              Prendre rendez-vous →
+            </span>
+          </Link>
+          <a
+            href={`mailto:${links.email}`}
+            className="flex flex-col gap-1 rounded-xl border border-stone-200 p-5 transition-colors hover:border-stone-300 hover:bg-stone-50"
+          >
+            <span className="font-semibold text-stone-900">Par e-mail</span>
+            <span className="text-sm break-all text-brand-600">
+              {links.email}
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div className="mt-12 lg:mt-0">
+        {status.state === 'sent' ? (
+          <Sent onReset={() => setStatus({ state: 'idle' })} />
+        ) : (
+          <form
+            noValidate
+            onSubmit={onSubmit}
+            className="rounded-[2rem] border border-stone-200 bg-stone-50/60 p-6 sm:p-10"
+          >
+            {!settings.enabled && (
+              <p
+                role="status"
+                className="mb-8 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm leading-relaxed text-amber-900"
+              >
+                Le formulaire n’est pas encore branché. En attendant, écrivez-nous
+                à{' '}
+                <a href={`mailto:${links.email}`} className="font-semibold underline">
+                  {links.email}
+                </a>{' '}
+                ou réservez un appel.
+              </p>
+            )}
+
+            <div className="grid gap-6 sm:grid-cols-2">
+              <Field label="Nom" name="name" error={errors.name}>
+                <input
+                  id="name"
+                  name="name"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  maxLength={120}
+                  {...invalid('name', errors.name)}
+                  className={`${fieldClass} ${borderFor(errors.name)}`}
+                />
+              </Field>
+              <Field label="E-mail" name="email" error={errors.email}>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  maxLength={200}
+                  {...invalid('email', errors.email)}
+                  className={`${fieldClass} ${borderFor(errors.email)}`}
+                />
+              </Field>
+              <Field label="Entreprise" name="company" optional>
+                <input
+                  id="company"
+                  name="company"
+                  type="text"
+                  autoComplete="organization"
+                  maxLength={120}
+                  className={`${fieldClass} ${borderFor()}`}
+                />
+              </Field>
+              <Field
+                label="Budget indicatif"
+                name="budget"
+                optional
+                error={errors.budget}
+              >
+                <select
+                  id="budget"
+                  name="budget"
+                  defaultValue=""
+                  {...invalid('budget', errors.budget)}
+                  className={`${fieldClass} ${borderFor(errors.budget)}`}
+                >
+                  <option value="">Non précisé</option>
+                  {budgets.map((budget) => (
+                    <option key={budget} value={budget}>
+                      {budget}
+                    </option>
+                  ))}
+                </select>
+              </Field>
+            </div>
+
+            <fieldset className="mt-6">
+              <legend className="text-sm font-semibold text-stone-900">
+                Type de projet
+              </legend>
+              <div
+                className="mt-3 flex flex-wrap gap-2"
+                {...(errors.projectType
+                  ? { 'aria-describedby': 'projectType-error' }
+                  : {})}
+              >
+                {projectTypes.map((type) => (
+                  <label key={type.value} className="cursor-pointer">
+                    <input
+                      type="radio"
+                      name="projectType"
+                      value={type.value}
+                      required
+                      className="peer sr-only"
+                    />
+                    <span className="block rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition-colors peer-checked:border-brand-500 peer-checked:bg-brand-500 peer-checked:text-white peer-focus-visible:ring-4 peer-focus-visible:ring-brand-100 hover:border-stone-400">
+                      {type.label}
+                    </span>
+                  </label>
+                ))}
+              </div>
+              {errors.projectType && (
+                <p id="projectType-error" className="mt-2 text-sm text-red-700">
+                  {errors.projectType}
+                </p>
+              )}
+            </fieldset>
+
+            <div className="mt-6">
+              <Field label="Message" name="message" error={errors.message}>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={7}
+                  required
+                  maxLength={MESSAGE_MAX}
+                  placeholder="Votre activité, ce que vous aimeriez obtenir, vos délais…"
+                  {...invalid('message', errors.message)}
+                  className={`${fieldClass} ${borderFor(errors.message)} resize-y`}
+                />
+              </Field>
+            </div>
+
+            {/* Champ piège : invisible et hors du parcours clavier. Un humain
+                le laisse vide ; un robot qui remplit tout se trahit. */}
+            <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
+              <label htmlFor="website">Site web</label>
+              <input
+                id="website"
+                name="website"
+                type="text"
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </div>
+
+            {settings.turnstileSiteKey && (
+              <div
+                className="cf-turnstile mt-6"
+                data-sitekey={settings.turnstileSiteKey}
+                data-language="fr"
+              />
+            )}
+
+            {status.state === 'error' && (
+              <p
+                role="alert"
+                className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm leading-relaxed text-red-800"
+              >
+                {status.message}{' '}
+                <a href={`mailto:${links.email}`} className="font-semibold underline">
+                  {links.email}
+                </a>
+              </p>
+            )}
+
+            <button
+              type="submit"
+              disabled={status.state === 'sending'}
+              className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-500 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-brand-500/25 transition-all hover:bg-brand-600 disabled:cursor-wait disabled:opacity-70 sm:w-auto"
             >
-              {service.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
+              {status.state === 'sending' ? (
+                <>
+                  <span
+                    aria-hidden="true"
+                    className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white"
+                  />
+                  Envoi en cours…
+                </>
+              ) : (
+                'Envoyer le message'
+              )}
+            </button>
 
-      <ul className="mt-10 space-y-3">
-        {channels.map((channel) => (
-          <li key={channel.label}>
-            <a
-              href={channel.href}
-              {...(channel.external
-                ? { target: '_blank', rel: 'noreferrer me' }
-                : {})}
-              className="flex flex-col gap-1 rounded-xl border border-stone-200 p-5 transition-colors hover:border-stone-300 hover:bg-stone-50 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
-            >
-              <span>
-                <span className="block font-semibold text-stone-900">
-                  {channel.label}
-                </span>
-                <span className="mt-1 block text-sm text-stone-500">
-                  {channel.hint}
-                </span>
-              </span>
-              <span className="text-sm text-brand-600">
-                {channel.value}
-              </span>
-            </a>
-          </li>
-        ))}
-      </ul>
-
-      <p className="mt-10 text-sm text-stone-500">
-        {profile.location} · {profile.role}
-      </p>
+            <p className="mt-4 text-xs leading-relaxed text-stone-500">
+              Vos informations servent uniquement à répondre à votre demande.
+              Elles sont transmises à l’agence {agency.name}, ne sont ni
+              revendues ni utilisées pour de la prospection, et sont supprimées
+              au plus tard trois ans après notre dernier échange. Pour y
+              accéder, les corriger ou les faire effacer, écrivez à{' '}
+              <a href={`mailto:${links.email}`} className="underline">
+                {links.email}
+              </a>
+              .
+            </p>
+          </form>
+        )}
+      </div>
     </div>
   )
+}
+
+function Sent({ onReset }: { onReset: () => void }) {
+  return (
+    <div
+      role="status"
+      className="rounded-[2rem] border border-emerald-200 bg-emerald-50/60 p-8 sm:p-12"
+    >
+      <span
+        aria-hidden="true"
+        className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-100 text-xl text-emerald-700"
+      >
+        ✓
+      </span>
+      <h2 className="mt-6 text-2xl font-bold tracking-tight text-stone-900 sm:text-3xl">
+        Message bien reçu, merci.
+      </h2>
+      <p className="mt-4 leading-relaxed text-stone-600">
+        L’agence vous répond sous deux jours ouvrés. Pour gagner du temps,
+        vous pouvez dès maintenant réserver un appel découverte, gratuit et
+        en visio ({discoveryCall.duration.toLowerCase()}).
+      </p>
+      <div className="mt-8 flex flex-wrap gap-3">
+        <Link
+          to="/rendez-vous"
+          className="rounded-full bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+        >
+          Réserver un appel
+        </Link>
+        <button
+          type="button"
+          onClick={onReset}
+          className="rounded-full border border-stone-300 px-6 py-3 text-sm font-semibold text-stone-700 transition-colors hover:border-stone-400 hover:bg-white"
+        >
+          Envoyer un autre message
+        </button>
+      </div>
+    </div>
+  )
+}
+
+function Field({
+  label,
+  name,
+  optional,
+  error,
+  children,
+}: {
+  label: string
+  name: string
+  optional?: boolean
+  error?: string
+  children: React.ReactNode
+}) {
+  return (
+    <div>
+      <label htmlFor={name} className="text-sm font-semibold text-stone-900">
+        {label}
+        {optional && (
+          <span className="ml-1 font-normal text-stone-500">(facultatif)</span>
+        )}
+      </label>
+      {children}
+      {error && (
+        <p id={`${name}-error`} className="mt-2 text-sm text-red-700">
+          {error}
+        </p>
+      )}
+    </div>
+  )
+}
+
+function invalid(name: string, error?: string) {
+  return error
+    ? { 'aria-invalid': true, 'aria-describedby': `${name}-error` }
+    : {}
+}
+
+function borderFor(error?: string) {
+  return error ? 'border-red-400' : 'border-stone-300'
 }

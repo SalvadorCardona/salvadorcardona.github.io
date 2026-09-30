@@ -297,3 +297,21 @@ export const faq: Array<AgencyFaq> = [
       'On en parle et on vous fait une proposition classique, au forfait ou en régie : reprise d’une application existante, audit de sécurité, intégration de l’IA. Les pages service décrivent ces prestations.',
   },
 ]
+
+/**
+ * L'appel découverte, tel que le présente la page `/rendez-vous`. La durée
+ * doit rester celle du premier temps de `steps` et de l'agenda de prise de
+ * rendez-vous Google (voir DEPLOY.md).
+ */
+export const discoveryCall = {
+  duration: 'Une heure',
+  where: 'En visio (Google Meet), ou autour d’un café à Lyon',
+  price: 'Gratuit et sans engagement',
+  /** Le déroulé de l'appel, dans l'ordre. */
+  agenda: [
+    'Vous nous présentez votre activité, vos clients et ce qui vous freine aujourd’hui.',
+    'On pose nos questions : ce qui existe déjà, ce qui manque, les délais qui comptent.',
+    'On vous dit ce qu’on ferait à votre place, et quel forfait ou quelle mission s’y prête.',
+    'Si vous voulez aller plus loin, une proposition écrite suit sous deux jours ouvrés.',
+  ],
+} as const
