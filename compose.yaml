@@ -1,0 +1,27 @@
+# Lancement local de l'image, et référence des réglages Dokploy (DEPLOY.md) :
+#   cp .env.example .env && docker compose up --build
+# puis http://localhost:3000.
+services:
+  site:
+    build: .
+    image: cardona-digital
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      PORT: ${PORT:-3000}
+    ports:
+      - '${PORT:-3000}:${PORT:-3000}'
+    # Le même contrôle que le HEALTHCHECK du Dockerfile, repris ici pour
+    # qu'il reste visible à côté du port.
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - fetch(`http://127.0.0.1:$${process.env.PORT}/healthz`).then((r) => process.exit(r.ok ? 0 : 1), () => process.exit(1))
+      interval: 30s
+      timeout: 5s
+      start_period: 15s
+      retries: 3

@@ -5,14 +5,14 @@
 Portfolio et blog de Salvador Cardona.
 En ligne : <https://cardona.digital>
 
-TanStack Start, entièrement prérendu au build et publié sur GitHub Pages. Pas de
-serveur, pas de base de données interrogée en ligne : les articles sont rédigés
-dans Notion, puis figés dans le dépôt par un script lancé à la main. Le site
-publié ne dépend de rien d'autre que de ses fichiers.
+TanStack Start rendu côté serveur par Nitro, dans un conteneur Docker déployé
+sur Dokploy. Pas de base de données : les articles sont rédigés dans Notion,
+puis figés dans le dépôt par un script lancé à la main. Le serveur ne sert qu'à
+rendre les pages et à envoyer les e-mails du formulaire de contact (API Brevo).
 
 Avant toute modification, lire [`AGENTS.md`](AGENTS.md) : les règles du projet —
-site statique sans exception, contenu en dur, réglages GitHub Pages à ne pas
-casser — et les commandes à lancer pour vérifier son travail.
+contenu en dur, rien de sensible dans le dépôt ni dans l'image, configuration
+par variables d'environnement — et les commandes à lancer pour vérifier son travail.
 
 ## Démarrer
 
@@ -24,10 +24,10 @@ npm run dev        # http://localhost:3000
 | Commande            | Effet                                                      |
 | ------------------- | ---------------------------------------------------------- |
 | `npm run dev`       | Serveur de développement                                    |
-| `npm run build`     | Build statique dans `dist/client` (prérendu + sitemap + 404) |
-| `npm run serve`     | Sert `dist/client` comme le fera GitHub Pages               |
+| `npm run build`     | Build serveur dans `.output/`, puis contrôle de chaque page |
+| `npm run serve`     | Lance le serveur construit, comme dans le conteneur         |
 | `npm run typecheck` | Vérification TypeScript                                    |
-| `npm run posts:publish` | Publie le blog : Notion, puis déploiement, via GitHub Actions |
+| `npm run posts:publish` | Publie le blog : Notion, puis commit sur `main`, via GitHub Actions |
 | `npm run posts:sync`| Régénère les articles depuis Notion, en local (aperçu)       |
 | `npm run post:image`| Génère avec OpenRouter les illustrations d'articles manquantes |
 | `npm run experiences:sync` | Régénère les expériences depuis Notion, en local (aperçu) |
@@ -70,8 +70,8 @@ reste vit dans `src/content/`.
 
 Les articles vivent dans la database Notion
 [Blog Salvador Cardona](https://salvadorcardona.notion.site/Blog-Salvador-Cardona-3cf451680af4803f83fdd0cf0d824fa6),
-qui fait foi. Le dépôt n'en est que le reflet, et le site reste entièrement
-statique : rien n'appelle Notion au build ni au runtime.
+qui fait foi. Le dépôt n'en est que le reflet, et le contenu reste figé dans
+le dépôt : rien n'appelle Notion au build ni au runtime.
 
 1. Créer une page dans la database et remplir ses propriétés :
 
@@ -158,7 +158,7 @@ rapatrie dans `public/blog/` et remplit `covers.json` tout seul.
 
 Reste la voie alternative, pour fabriquer une illustration quand on n'en a pas :
 la générer avec OpenRouter à partir d'un prompt. Elle est versionnée dans
-`public/blog/` de la même façon, et le site reste statique — aucun appel au
+`public/blog/` de la même façon, et rien n'est appelé au
 build ni au runtime, le script se lance à la main.
 
 1. Ajouter une entrée dans `src/content/covers.json`, avec la même clé que le
@@ -197,7 +197,7 @@ changer avec `OPENROUTER_IMAGE_MODEL`.
 
 Les expériences vivent dans la database Notion **Experience Salvador
 Cardona**, qui fait foi. Le dépôt n'en est que le reflet
-(`src/content/experiences.json`), et le site reste entièrement statique :
+(`src/content/experiences.json`), et le contenu reste figé dans le dépôt :
 rien n'appelle Notion au build ni au runtime, seule la synchronisation le
 fait, à la main ou depuis le workflow planifié.
 
@@ -255,55 +255,33 @@ Ce que la synchronisation fait, en plus d'écrire `experiences.json` :
 
 ## Fonctionnement du build
 
-`vite.config.ts` active le prérendu du plugin TanStack Start. Chaque route est
-rendue une fois au build et écrite en HTML complet, puis reprise par le routeur
-client une fois le bundle chargé.
+`vite.config.ts` ajoute le plugin Nitro (preset `node-server`) à TanStack
+Start. `vite build` écrit `.output/` : `server/index.mjs`, qui rend chaque page
+à la requête et exécute les server functions, et `public/`, les fichiers
+statiques. Rien n'est prérendu : le sitemap est une route
+(`src/routes/sitemap[.]xml.ts`) construite depuis le contenu.
 
-Quatre points sont propres à GitHub Pages :
-
-- **`base: '/'`** — le dépôt s'appelle `salvadorcardona.github.io`, il est donc
-  servi à la racine du domaine. Un dépôt de projet imposerait `/<repo>/` et la
-  gestion du `basepath` dans le routeur, encore fragile côté Start.
-- **`public/CNAME`** — déclare le domaine personnalisé `cardona.digital`. Il
-  part avec le build et garde le domaine inscrit dans le dépôt plutôt que
-  seulement dans les réglages GitHub.
-- **`public/.nojekyll`** — sans ce fichier, Pages fait passer le site par
-  Jekyll, qui ignore silencieusement tout chemin commençant par un underscore.
-- **`404.html`** — Pages n'a pas de règle de réécriture. La route `/404` est
-  prérendue puis déplacée à la racine par `scripts/postbuild.mjs`.
+`scripts/postbuild.mjs` démarre ensuite le serveur construit et demande chaque
+page attendue et chaque URL du sitemap : le build échoue plutôt que de livrer
+un site amputé.
 
 Le mode SPA de Start reste désactivé : activé, il remplace la page d'accueil par
 une coquille vide et lui fait perdre son HTML.
 
-`scripts/postbuild.mjs` échoue si une page attendue manque — le déploiement
-s'arrête plutôt que de publier un site amputé.
-
 ## Déploiement
 
-`.github/workflows/deploy.yml` construit et publie à chaque push sur `main`.
-Source des Pages à régler une fois : **Settings → Pages → Source : GitHub
-Actions**.
+Le site tourne sur Dokploy, construit depuis le `Dockerfile` à chaque push sur
+`main` ; `publish-blog.yml` et `publish-experiences.yml` n'ont donc qu'à
+commiter. Les réglages Dokploy, les variables d'environnement, le domaine et
+le proxy des sous-sites GitHub Pages (`/whisper-desk/`, `/ticket-runner/`…)
+sont décrits pas à pas dans [`DEPLOY.md`](DEPLOY.md).
 
-Il se lance aussi à la demande, ce dont `publish-blog.yml` et
-`publish-experiences.yml` se servent une fois leur contenu commité : un push
-fait par une Action ne déclenche aucun workflow, GitHub coupant court aux
-boucles.
+En local, avec Docker :
 
-### Domaine
-
-Le site est servi sur `cardona.digital`, dont le DNS est géré chez Hostinger.
-Trois réglages, faits une seule fois :
-
-1. **Settings → Pages → Custom domain : `cardona.digital`**, puis **Enforce
-   HTTPS** une fois le certificat émis (quelques minutes après la propagation).
-2. **DNS Hostinger — apex** : quatre enregistrements `A` sur `@` vers
-   `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-   (les serveurs Pages), et un `CNAME` `www` vers `salvadorcardona.github.io`.
-3. **Ne pas toucher aux autres enregistrements** : `trader.cardona.digital`
-   (Trader IA) a son propre enregistrement et reste inchangé.
-
-C'est le réglage **Settings → Pages** qui fait foi ; `public/CNAME` doit rester
-aligné dessus, comme `SITE_URL` dans `src/lib/seo.ts`.
+```bash
+cp .env.example .env    # facultatif : Brevo, agenda, Turnstile
+docker compose up --build
+```
 
 ## Pile
 

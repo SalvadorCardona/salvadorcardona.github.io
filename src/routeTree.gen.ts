@@ -13,7 +13,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as AgenceRouteImport } from './routes/agence'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as HealthzRouteImport } from './routes/healthz'
+import { Route as ProjetsRouteImport } from './routes/projets'
 import { Route as QuiSuisJeRouteImport } from './routes/qui-suis-je'
+import { Route as RendezVousRouteImport } from './routes/rendez-vous'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as ServicesIndexRouteImport } from './routes/services/index'
@@ -41,9 +45,29 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HealthzRoute = HealthzRouteImport.update({
+  id: '/healthz',
+  path: '/healthz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjetsRoute = ProjetsRouteImport.update({
+  id: '/projets',
+  path: '/projets',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const QuiSuisJeRoute = QuiSuisJeRouteImport.update({
   id: '/qui-suis-je',
   path: '/qui-suis-je',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RendezVousRoute = RendezVousRouteImport.update({
+  id: '/rendez-vous',
+  path: '/rendez-vous',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -84,7 +108,11 @@ export interface FileRoutesByFullPath {
   '/404': typeof R404Route
   '/agence': typeof AgenceRoute
   '/contact': typeof ContactRoute
+  '/healthz': typeof HealthzRoute
+  '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
+  '/rendez-vous': typeof RendezVousRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
   '/services/developpement-web': typeof ServicesDeveloppementWebRoute
@@ -97,7 +125,11 @@ export interface FileRoutesByTo {
   '/404': typeof R404Route
   '/agence': typeof AgenceRoute
   '/contact': typeof ContactRoute
+  '/healthz': typeof HealthzRoute
+  '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
+  '/rendez-vous': typeof RendezVousRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
   '/services/developpement-web': typeof ServicesDeveloppementWebRoute
@@ -111,7 +143,11 @@ export interface FileRoutesById {
   '/404': typeof R404Route
   '/agence': typeof AgenceRoute
   '/contact': typeof ContactRoute
+  '/healthz': typeof HealthzRoute
+  '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
+  '/rendez-vous': typeof RendezVousRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
   '/services/developpement-web': typeof ServicesDeveloppementWebRoute
@@ -126,7 +162,11 @@ export interface FileRouteTypes {
     | '/404'
     | '/agence'
     | '/contact'
+    | '/healthz'
+    | '/projets'
     | '/qui-suis-je'
+    | '/rendez-vous'
+    | '/sitemap.xml'
     | '/blog/$slug'
     | '/services/audit-securite-application'
     | '/services/developpement-web'
@@ -139,7 +179,11 @@ export interface FileRouteTypes {
     | '/404'
     | '/agence'
     | '/contact'
+    | '/healthz'
+    | '/projets'
     | '/qui-suis-je'
+    | '/rendez-vous'
+    | '/sitemap.xml'
     | '/blog/$slug'
     | '/services/audit-securite-application'
     | '/services/developpement-web'
@@ -152,7 +196,11 @@ export interface FileRouteTypes {
     | '/404'
     | '/agence'
     | '/contact'
+    | '/healthz'
+    | '/projets'
     | '/qui-suis-je'
+    | '/rendez-vous'
+    | '/sitemap.xml'
     | '/blog/$slug'
     | '/services/audit-securite-application'
     | '/services/developpement-web'
@@ -166,7 +214,11 @@ export interface RootRouteChildren {
   R404Route: typeof R404Route
   AgenceRoute: typeof AgenceRoute
   ContactRoute: typeof ContactRoute
+  HealthzRoute: typeof HealthzRoute
+  ProjetsRoute: typeof ProjetsRoute
   QuiSuisJeRoute: typeof QuiSuisJeRoute
+  RendezVousRoute: typeof RendezVousRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
   ServicesAuditSecuriteApplicationRoute: typeof ServicesAuditSecuriteApplicationRoute
   ServicesDeveloppementWebRoute: typeof ServicesDeveloppementWebRoute
@@ -205,11 +257,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/healthz': {
+      id: '/healthz'
+      path: '/healthz'
+      fullPath: '/healthz'
+      preLoaderRoute: typeof HealthzRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projets': {
+      id: '/projets'
+      path: '/projets'
+      fullPath: '/projets'
+      preLoaderRoute: typeof ProjetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/qui-suis-je': {
       id: '/qui-suis-je'
       path: '/qui-suis-je'
       fullPath: '/qui-suis-je'
       preLoaderRoute: typeof QuiSuisJeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rendez-vous': {
+      id: '/rendez-vous'
+      path: '/rendez-vous'
+      fullPath: '/rendez-vous'
+      preLoaderRoute: typeof RendezVousRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -262,7 +342,11 @@ const rootRouteChildren: RootRouteChildren = {
   R404Route: R404Route,
   AgenceRoute: AgenceRoute,
   ContactRoute: ContactRoute,
+  HealthzRoute: HealthzRoute,
+  ProjetsRoute: ProjetsRoute,
   QuiSuisJeRoute: QuiSuisJeRoute,
+  RendezVousRoute: RendezVousRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,
   ServicesAuditSecuriteApplicationRoute: ServicesAuditSecuriteApplicationRoute,
   ServicesDeveloppementWebRoute: ServicesDeveloppementWebRoute,

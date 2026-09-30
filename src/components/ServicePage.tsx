@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 
 import { formatDate, getPost } from '../content/posts'
-import { links, profile } from '../content/profile'
+import { profile } from '../content/profile'
 import type { Service } from '../content/services'
 import { getService, servicePath, services } from '../content/services'
 import {
@@ -384,12 +384,12 @@ export function CallToAction() {
         >
           Me contacter
         </Link>
-        <a
-          href={`mailto:${links.email}`}
+        <Link
+          to="/rendez-vous"
           className="rounded-full border border-white/50 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-white hover:bg-white/10"
         >
-          {links.email}
-        </a>
+          Réserver un appel
+        </Link>
       </div>
     </section>
   )

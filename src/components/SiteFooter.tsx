@@ -32,6 +32,18 @@ export function SiteFooter() {
           <a href={`mailto:${links.email}`} className={`mt-3 block ${linkClass}`}>
             {links.email}
           </a>
+          <ul className="mt-3 space-y-1.5">
+            <li>
+              <Link to="/contact" className={linkClass}>
+                Contact
+              </Link>
+            </li>
+            <li>
+              <Link to="/rendez-vous" className={linkClass}>
+                Prendre rendez-vous
+              </Link>
+            </li>
+          </ul>
         </div>
 
         <nav aria-label="Services">

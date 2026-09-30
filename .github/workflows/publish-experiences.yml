@@ -1,7 +1,8 @@
 name: Publier les expériences
 
-# Synchronise les expériences depuis Notion, les commite sur main, puis
-# déclenche le déploiement. Le jeton Notion vit dans les secrets du dépôt
+# Synchronise les expériences depuis Notion et les commite sur main ; Dokploy
+# redéploie le site sur ce push (voir DEPLOY.md). Le jeton Notion vit dans
+# les secrets du dépôt
 # (Settings → Secrets and variables → Actions → `NOTION_TOKEN`), partagé avec
 # publish-blog.yml.
 #
@@ -26,8 +27,6 @@ concurrency:
 
 permissions:
   contents: write
-  # Pour déclencher `deploy.yml` à la fin — voir la dernière étape.
-  actions: write
 
 jobs:
   publish:
@@ -66,7 +65,7 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         run: npm run typecheck
 
-      - name: Build statique (prérendu + sitemap + 404.html)
+      - name: Build serveur (Nitro + contrôle de chaque page)
         if: steps.changes.outputs.changed == 'true'
         run: npm run build
 
@@ -84,12 +83,3 @@ jobs:
           git add -A
           git commit -m "${MESSAGE:-Synchronise les expériences depuis Notion}"
           git push origin HEAD:main
-
-      # Un push signé par le GITHUB_TOKEN ne déclenche aucun workflow — GitHub
-      # coupe court aux boucles. `deploy.yml` ne partirait donc jamais tout
-      # seul : on l'appelle explicitement sur main, qui porte le commit ci-dessus.
-      - name: Déploiement
-        if: steps.changes.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run deploy.yml --ref main

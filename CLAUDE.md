@@ -1,18 +1,20 @@
 # CLAUDE.md
 
 Ce fichier complète [`AGENTS.md`](AGENTS.md), qui porte les règles du projet
-(site statique, articles depuis Notion, contenu généré, garde-fous GitHub
-Pages). Le lire d'abord : ce document ne les répète pas.
+(rendu serveur, articles depuis Notion, contenu généré, variables
+d'environnement). Le lire d'abord : ce document ne les répète pas.
 
 ## Le projet
 
-Portfolio et blog de Salvador Cardona, publié sur `cardona.digital` via GitHub
-Pages. Le site est entièrement prérendu au build : aucune fonction serveur,
-aucun appel réseau au runtime.
+Site de l'agence Cardona (portfolio et blog de Salvador Cardona), publié sur
+`cardona.digital` par Dokploy, dans un conteneur Docker. Les pages sont rendues
+côté serveur par Nitro ; le serveur envoie aussi les e-mails du formulaire de
+contact par l'API transactionnelle Brevo. Réglages de production : [`DEPLOY.md`](DEPLOY.md).
 
 ## Stack
 
-- **TanStack Start** (React 19) + **Vite 8**, prérendu statique.
+- **TanStack Start** (React 19) + **Vite 8**, rendu serveur par **Nitro**
+  (preset `node-server`, version bêta épinglée).
 - **TypeScript** en mode strict (`tsconfig.json` : `strict`, `noUnusedLocals`,
   `noUnusedParameters`).
 - **Tailwind CSS 4** (`@tailwindcss/vite`).
@@ -26,7 +28,9 @@ aucun appel réseau au runtime.
 ```bash
 npm install           # installation
 npm run dev            # serveur de dev, http://localhost:3000
-npm run build           # vite build && node scripts/postbuild.mjs
+npm run build           # vite build && node scripts/postbuild.mjs (.output/)
+npm run serve           # lance le serveur construit
+docker compose up --build  # l'image de production, en local
 npm run typecheck        # tsc --noEmit
 npm run generate-routes   # régénère src/routeTree.gen.ts (tsr generate)
 npm run posts:sync        # rapatrie les articles depuis Notion
@@ -48,8 +52,11 @@ src/
   content/       contenu en dur : profile.ts, services.ts, covers.json
   content/posts/  articles générés depuis Notion (voir AGENTS.md)
   lib/seo.ts     constantes SEO (SITE_URL, JSON-LD, images de partage)
+  lib/contact.ts formulaire de contact : validation partagée, server functions
 scripts/         scripts Node lancés à la main (sync, publish, images, postbuild)
-public/          statique servi tel quel (CNAME, favicons, banner.png, blog/)
+public/          statique servi tel quel (favicons, banner.png, blog/)
+deploy/traefik/  proxy Traefik des sous-sites GitHub Pages
+Dockerfile, compose.yaml, .env.example   image et variables d'environnement
 ```
 
 ## Conventions de code
@@ -76,8 +83,11 @@ public/          statique servi tel quel (CNAME, favicons, banner.png, blog/)
 - `src/content/posts/<slug>.tsx` et `index.ts` sont générés : toute
   modification manuelle est écrasée par le prochain `posts:sync` (voir
   AGENTS.md pour la procédure correcte).
-- `npm run build` échoue volontairement si une page attendue manque ou si une
-  illustration déclarée dans `covers.json` est absente : un échec de build est
-  souvent un contenu incomplet, pas un bug de build.
+- `npm run build` échoue volontairement si une page ne rend pas en 200 sur le
+  serveur construit ou si une illustration déclarée dans `covers.json` est
+  absente : un échec de build est souvent un contenu incomplet, pas un bug de
+  build.
+- `process.env` ne se lit que dans le `handler` d'une server function : ailleurs,
+  le code part aussi dans le bundle client, où la variable n'existe pas.
 - Le bloc `pnpm.onlyBuiltDependencies` dans `package.json` est un résidu :
   l'installation du projet se fait avec `npm`.

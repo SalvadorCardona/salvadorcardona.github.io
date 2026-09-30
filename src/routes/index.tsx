@@ -18,7 +18,7 @@ import {
   steps,
   works,
 } from '../content/agency'
-import { clients, links, profile } from '../content/profile'
+import { clients, profile } from '../content/profile'
 import { PERSON_ID, SITE_URL, personJsonLd, seo } from '../lib/seo'
 
 export const Route = createFileRoute('/')({
@@ -1243,17 +1243,17 @@ function FinalCall() {
         </p>
         <div className="relative mt-10 flex flex-wrap gap-3">
           <Link
-            to="/contact"
+            to="/rendez-vous"
             className="rounded-full bg-white px-6 py-3.5 text-base font-semibold text-brand-700 transition-all hover:-translate-y-0.5 hover:bg-brand-50"
           >
             Prendre rendez-vous
           </Link>
-          <a
-            href={`mailto:${links.email}`}
+          <Link
+            to="/contact"
             className="rounded-full border border-white/50 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
           >
             Nous écrire
-          </a>
+          </Link>
         </div>
       </div>
     </section>
