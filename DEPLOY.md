@@ -58,7 +58,7 @@ façon).
 ```env
 PORT=3000
 BREVO_API_KEY=xkeysib-…                        # étape 7
-CONTACT_TO_EMAIL=cardona.salvador2022@gmail.com  # ou contact@cardona.digital
+CONTACT_TO_EMAIL=contact@cardona.digital
 CONTACT_FROM_EMAIL=contact@cardona.digital
 CONTACT_FROM_NAME=Agence Cardona
 BREVO_LIST_ID=                                 # facultatif, étape 7
