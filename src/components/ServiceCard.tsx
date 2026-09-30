@@ -3,6 +3,7 @@ import { Link } from '@tanstack/react-router'
 import type { Intervention, Service } from '../content/services'
 import { interventions, servicePath, services } from '../content/services'
 import { ServiceIcon } from './ServiceIcon'
+import { ServiceIllustration } from './ServiceIllustration'
 
 const cardClass =
   'group relative flex h-full flex-col rounded-2xl border border-stone-200 bg-white p-6 transition-all ' +
@@ -17,9 +18,10 @@ const iconClass =
 export function ServiceCard({ service }: { service: Service }) {
   return (
     <Link to={servicePath(service.slug)} className={cardClass}>
-      <span className={iconClass}>
-        <ServiceIcon name={service.icon} />
-      </span>
+      <ServiceIllustration
+        name={service.illustration}
+        className="transition-colors group-hover:bg-brand-50/60 group-hover:ring-brand-200"
+      />
       <h3 className="mt-5 text-lg font-semibold tracking-tight text-stone-900">
         {service.name}
       </h3>
