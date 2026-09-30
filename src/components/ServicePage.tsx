@@ -12,7 +12,7 @@ import {
   seo,
 } from '../lib/seo'
 import { ServiceCard } from './ServiceCard'
-import { ServiceIcon } from './ServiceIcon'
+import { ServiceIllustration } from './ServiceIllustration'
 
 /**
  * Le gabarit commun des trois pages service. Une seule structure HTML, un
@@ -111,21 +111,21 @@ export function ServicePage({ slug }: { slug: string }) {
           </div>
         </div>
 
-        <aside className="rounded-2xl border border-stone-200 bg-stone-50 p-6 text-sm">
-          <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-white text-brand-600 ring-1 ring-stone-200">
-            <ServiceIcon name={service.icon} />
-          </span>
-          <dl className="mt-5 space-y-3">
-            <Fact label="Par">
-              {profile.name}, {profile.role.toLowerCase()}
-            </Fact>
-            <Fact label="Expérience">
-              {profile.yearsOfExperience} ans d’applications web
-            </Fact>
-            <Fact label="Zone">{profile.area}</Fact>
-            <Fact label="Facturation">Forfait ou régie, devis écrit</Fact>
-          </dl>
-        </aside>
+        <div className="grid gap-5 sm:grid-cols-2 sm:items-start lg:grid-cols-1">
+          <ServiceIllustration name={service.illustration} />
+          <aside className="rounded-2xl border border-stone-200 bg-stone-50 p-6 text-sm">
+            <dl className="space-y-3">
+              <Fact label="Par">
+                {profile.name}, {profile.role.toLowerCase()}
+              </Fact>
+              <Fact label="Expérience">
+                {profile.yearsOfExperience} ans d’applications web
+              </Fact>
+              <Fact label="Zone">{profile.area}</Fact>
+              <Fact label="Facturation">Forfait ou régie, devis écrit</Fact>
+            </dl>
+          </aside>
+        </div>
       </header>
 
       <Section id="contexte" title="De quoi il s’agit">
