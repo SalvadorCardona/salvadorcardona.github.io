@@ -10,6 +10,7 @@ node_modules
 .tanstack
 dist
 video-source
+print
 .env
 .env.*
 !.env.example
