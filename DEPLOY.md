@@ -105,10 +105,13 @@ http://localhost:3000/`.
 | HTTPS            | activé            |
 | Certificate      | Let's Encrypt     |
 
-Ajouter aussi `www.cardona.digital` (mêmes réglages). Le site déclare
-`https://cardona.digital` comme URL canonique sur chaque page : `www` peut
-servir le même contenu sans risque pour le référencement, ou être redirigé
-vers l'apex par un middleware Traefik si on le souhaite.
+Ajouter aussi `www.cardona.digital` (mêmes réglages), avec dans
+**Middlewares** `www-to-apex@file` : ce middleware, défini dans
+`deploy/traefik/www-redirect.yml`, répond par un 301 vers
+`https://cardona.digital` en conservant le chemin et la query string. Déposer
+ce fichier dans `/etc/dokploy/traefik/dynamic/` (comme celui de l'étape 6)
+avant de créer le domaine, sinon Traefik ignore le routeur `www` faute de
+middleware.
 
 Un domaine ajouté ou modifié n'est appliqué qu'au **Redeploy** suivant ;
 avant, Traefik répond 404 avec son certificat par défaut.
