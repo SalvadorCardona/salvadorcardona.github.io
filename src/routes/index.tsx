@@ -1175,12 +1175,14 @@ function About() {
         </p>
         <p className="mt-2 font-display text-2xl font-bold">{profile.name}</p>
         <p className="mt-1 text-sm text-stone-300">
-          Fondateur, développeur web depuis 2013
+          Fondateur · 13 ans de projets web
         </p>
         <p className="mt-5 text-sm leading-relaxed text-stone-300">
-          Treize ans à construire des marketplaces, une plateforme de
-          streaming et une application de soin animalier. Aujourd’hui, le même
-          soin pour votre présence en ligne.
+          Treize ans aux côtés de grandes marques comme TF1, M6 ou OVH m’ont
+          appris ce qui fait qu’un visiteur devient un client. Aujourd’hui, je
+          mets ce savoir-faire au service des entreprises lyonnaises, sans
+          intermédiaire : vous parlez directement à celui qui conçoit, écrit et
+          construit.
         </p>
         <Link
           to="/qui-suis-je"
