@@ -7,8 +7,8 @@ conteneur Docker déployé sur Dokploy (voir `DEPLOY.md`).
 
 - **Le serveur ne fait que rendre et relayer.** Les pages sont rendues à la
   requête (SSR) ; les seules server functions sont celles du formulaire de
-  contact (`src/lib/contact.ts`, qui envoie les e-mails par l'API Brevo) et la lecture
-  de `BOOKING_URL` (`/rendez-vous`). Pas de base de données, pas d'appel à
+  contact (`src/lib/contact.ts`, qui envoie les e-mails par l'API Brevo, demande
+  d'appel découverte comprise). Pas de base de données, pas d'appel à
   Notion au runtime. Toute valeur de configuration passe par une variable
   d'environnement lue dans un `handler` de server function, jamais figée dans
   le code ni dans l'image : la liste est dans `.env.example`, à tenir à jour.
@@ -114,7 +114,8 @@ Le build écrit `.output/`, puis `scripts/postbuild.mjs` démarre le serveur
 construit et vérifie `/healthz`, les pages fixes (`/` — l'agence —,
 `/qui-suis-je`, `/services` et ses trois pages service, `/agence` et
 `/projets` — anciennes adresses qui renvoient ailleurs —, `/blog`,
-`/contact`, `/rendez-vous`, `/404`), chaque URL du sitemap (donc chaque
+`/contact`, `/404`), la redirection 301 de `/rendez-vous` vers `/contact`,
+chaque URL du sitemap (donc chaque
 article) et le 404 d'une adresse inconnue. Il échoue aussi si une illustration
 déclarée dans `covers.json` ou un logo déclaré dans `experiences.json` n'a pas
 suivi. Pour inspecter le rendu réel : `npm run serve`.

@@ -385,7 +385,8 @@ export function CallToAction() {
           Me contacter
         </Link>
         <Link
-          to="/rendez-vous"
+          to="/contact"
+          search={{ appel: 1 }}
           className="rounded-full border border-white/50 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-white hover:bg-white/10"
         >
           Réserver un appel

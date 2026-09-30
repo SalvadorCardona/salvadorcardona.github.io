@@ -42,13 +42,23 @@ export type ContactInput = {
   projectType: string
   budget: string
   message: string
+  /** Case « appel découverte » cochée. */
+  callRequested: boolean
+  /** Créneaux proposés pour l'appel, facultatif et ignoré sans la case. */
+  availability: string
   /** Champ piège, caché aux humains : rempli, c'est un robot. */
   website: string
   /** Jeton Cloudflare Turnstile, vide tant que Turnstile n'est pas activé. */
   turnstileToken: string
 }
 
-export type ContactField = 'name' | 'email' | 'projectType' | 'budget' | 'message'
+export type ContactField =
+  | 'name'
+  | 'email'
+  | 'projectType'
+  | 'budget'
+  | 'message'
+  | 'availability'
 export type ContactErrors = Partial<Record<ContactField, string>>
 
 export type ContactResult =
@@ -59,6 +69,7 @@ export type ContactResult =
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 export const MESSAGE_MIN = 20
 export const MESSAGE_MAX = 5000
+export const AVAILABILITY_MAX = 300
 
 /** La même validation dans le navigateur, avant l'envoi, et sur le serveur. */
 export function validateContact(input: ContactInput): ContactErrors {
@@ -85,6 +96,10 @@ export function validateContact(input: ContactInput): ContactErrors {
     errors.message = `Décrivez votre projet en quelques phrases (${MESSAGE_MIN} caractères au moins).`
   } else if (message.length > MESSAGE_MAX) {
     errors.message = `Le message dépasse ${MESSAGE_MAX} caractères.`
+  }
+
+  if (input.callRequested && input.availability.trim().length > AVAILABILITY_MAX) {
+    errors.availability = `Vos disponibilités dépassent ${AVAILABILITY_MAX} caractères.`
   }
 
   return errors
@@ -199,6 +214,22 @@ function answers(data: ContactInput) {
   ] as const
 }
 
+/**
+ * La demande d'appel, en tête des deux e-mails quand la case est cochée :
+ * les disponibilités sont libres, donc échappées comme le reste.
+ */
+function callHtml(data: ContactInput) {
+  if (!data.callRequested) return ''
+  const availability = data.availability.trim() || 'Non précisées'
+  return `<p style="margin:16px 0;padding:12px 16px;background:#fff7ed;border:1px solid #fdba74;border-radius:8px"><strong>Appel découverte demandé</strong> (visio, gratuit)<br>Disponibilités : ${escapeHtml(availability)}</p>`
+}
+
+function callText(data: ContactInput) {
+  if (!data.callRequested) return ''
+  const availability = data.availability.trim() || 'Non précisées'
+  return `APPEL DÉCOUVERTE DEMANDÉ (visio, gratuit)\nDisponibilités : ${availability}\n\n`
+}
+
 function answersHtml(data: ContactInput) {
   const rows = answers(data)
     .map(
@@ -223,18 +254,22 @@ function notification(config: BrevoConfig, data: ContactInput) {
     sender: config.sender,
     to: [{ email: config.to }],
     replyTo: { email: data.email.trim(), name: data.name.trim() },
-    subject: `Nouveau contact : ${data.name.trim()} (${type?.label ?? data.projectType})`,
+    subject: `${data.callRequested ? 'Appel demandé' : 'Nouveau contact'} : ${data.name.trim()} (${type?.label ?? data.projectType})`,
     htmlContent: `<div style="font-family:sans-serif;color:#292524">
+${callHtml(data)}
 <p>Nouveau message depuis <a href="${SITE_URL}/contact">${SITE_URL}/contact</a>. Répondre à cet e-mail écrit directement au prospect.</p>
 ${answersHtml(data)}
 </div>`,
-    textContent: `Nouveau message depuis ${SITE_URL}/contact.\n\n${answersText(data)}`,
+    textContent: `${callText(data)}Nouveau message depuis ${SITE_URL}/contact.\n\n${answersText(data)}`,
   }
 }
 
-/** L'accusé de réception au prospect, avec l'invitation à réserver un appel. */
+/** L'accusé de réception au prospect, qui reprend sa demande d'appel s'il en a fait une. */
 function confirmation(config: BrevoConfig, data: ContactInput) {
   const name = data.name.trim()
+  const next = data.callRequested
+    ? 'Vous souhaitez un appel découverte : nous revenons vers vous sous deux jours ouvrés pour fixer l’appel, en visio.'
+    : 'Merci pour votre message : l’agence Cardona vous répond sous deux jours ouvrés.'
   return {
     sender: config.sender,
     to: [{ email: data.email.trim(), name }],
@@ -242,13 +277,13 @@ function confirmation(config: BrevoConfig, data: ContactInput) {
     subject: 'Votre demande à l’agence Cardona',
     htmlContent: `<div style="font-family:sans-serif;color:#292524">
 <p>Bonjour ${escapeHtml(name)},</p>
-<p>Merci pour votre message : l’agence Cardona vous répond sous deux jours ouvrés.</p>
-<p>Pour gagner du temps, vous pouvez dès maintenant <a href="${SITE_URL}/rendez-vous">réserver un appel découverte</a> : gratuit, sans engagement, en visio.</p>
+<p>${next}</p>
 <p>Pour mémoire, votre demande :</p>
+${callHtml(data)}
 ${answersHtml(data)}
 <p>À très vite,<br>L’agence Cardona</p>
 </div>`,
-    textContent: `Bonjour ${name},\n\nMerci pour votre message : l’agence Cardona vous répond sous deux jours ouvrés.\n\nPour gagner du temps, réservez dès maintenant un appel découverte, gratuit et en visio : ${SITE_URL}/rendez-vous\n\nPour mémoire, votre demande :\n\n${answersText(data)}\n\nÀ très vite,\nL’agence Cardona`,
+    textContent: `Bonjour ${name},\n\n${next}\n\nPour mémoire, votre demande :\n\n${callText(data)}${answersText(data)}\n\nÀ très vite,\nL’agence Cardona`,
   }
 }
 
@@ -266,6 +301,8 @@ export const sendContact = createServerFn({ method: 'POST' })
       projectType: asString(input.projectType),
       budget: asString(input.budget),
       message: asString(input.message),
+      callRequested: input.callRequested === true,
+      availability: asString(input.availability),
       website: asString(input.website),
       turnstileToken: asString(input.turnstileToken),
     }

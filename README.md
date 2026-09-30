@@ -279,7 +279,7 @@ sont décrits pas à pas dans [`DEPLOY.md`](DEPLOY.md).
 En local, avec Docker :
 
 ```bash
-cp .env.example .env    # facultatif : Brevo, agenda, Turnstile
+cp .env.example .env    # facultatif : Brevo, Turnstile
 docker compose up --build
 ```
 

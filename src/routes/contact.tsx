@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { createFileRoute } from '@tanstack/react-router'
 
-import { agency, discoveryCall } from '../content/agency'
+import { agency } from '../content/agency'
 import { links } from '../content/profile'
 import type { ContactErrors, ContactInput } from '../lib/contact'
 import {
+  AVAILABILITY_MAX,
   MESSAGE_MAX,
   budgets,
   getContactSettings,
@@ -16,6 +17,10 @@ import {
 import { seo } from '../lib/seo'
 
 export const Route = createFileRoute('/contact')({
+  // `?appel=1` coche d'avance la case « appel découverte » : c'est là que
+  // mènent les boutons « Réserver un appel » et l'ancienne adresse /rendez-vous.
+  validateSearch: (search: Record<string, unknown>): { appel?: 1 } =>
+    String(search.appel) === '1' ? { appel: 1 } : {},
   // Rendue à chaque requête, jamais prérendue : la page dépend des variables
   // d'environnement du conteneur (Brevo configuré ou non, clé Turnstile).
   loader: () => getContactSettings(),
@@ -45,7 +50,7 @@ export const Route = createFileRoute('/contact')({
 type Status =
   | { state: 'idle' }
   | { state: 'sending' }
-  | { state: 'sent' }
+  | { state: 'sent'; callRequested: boolean }
   | { state: 'error'; message: string }
 
 const fieldClass =
@@ -61,6 +66,8 @@ function readForm(form: HTMLFormElement): ContactInput {
     projectType: value('projectType'),
     budget: value('budget'),
     message: value('message'),
+    callRequested: data.get('callRequested') === 'on',
+    availability: value('availability'),
     website: value('website'),
     // Le widget Turnstile ajoute lui-même ce champ caché au formulaire.
     turnstileToken: value('cf-turnstile-response'),
@@ -69,6 +76,8 @@ function readForm(form: HTMLFormElement): ContactInput {
 
 function Contact() {
   const settings = Route.useLoaderData()
+  const { appel } = Route.useSearch()
+  const [callRequested, setCallRequested] = useState(appel === 1)
   const [status, setStatus] = useState<Status>({ state: 'idle' })
   const [errors, setErrors] = useState<ContactErrors>({})
 
@@ -90,7 +99,8 @@ function Contact() {
       const result = await sendContact({ data: input })
       if (result.status === 'sent') {
         form.reset()
-        setStatus({ state: 'sent' })
+        setCallRequested(false)
+        setStatus({ state: 'sent', callRequested: input.callRequested })
       } else if (result.status === 'invalid') {
         setErrors(result.errors)
         setStatus({ state: 'idle' })
@@ -123,20 +133,6 @@ function Contact() {
         </p>
 
         <div className="mt-10 space-y-3">
-          <Link
-            to="/rendez-vous"
-            className="flex flex-col gap-1 rounded-xl border border-stone-200 p-5 transition-colors hover:border-brand-300 hover:bg-brand-50/40"
-          >
-            <span className="font-semibold text-stone-900">
-              Plutôt de vive voix ?
-            </span>
-            <span className="text-sm text-stone-500">
-              Réservez directement un appel découverte, gratuit, en visio.
-            </span>
-            <span className="mt-1 text-sm font-semibold text-brand-600">
-              Prendre rendez-vous →
-            </span>
-          </Link>
           <a
             href={`mailto:${links.email}`}
             className="flex flex-col gap-1 rounded-xl border border-stone-200 p-5 transition-colors hover:border-stone-300 hover:bg-stone-50"
@@ -151,7 +147,10 @@ function Contact() {
 
       <div className="mt-12 lg:mt-0">
         {status.state === 'sent' ? (
-          <Sent onReset={() => setStatus({ state: 'idle' })} />
+          <Sent
+            callRequested={status.callRequested}
+            onReset={() => setStatus({ state: 'idle' })}
+          />
         ) : (
           <form
             noValidate
@@ -167,8 +166,8 @@ function Contact() {
                 à{' '}
                 <a href={`mailto:${links.email}`} className="font-semibold underline">
                   {links.email}
-                </a>{' '}
-                ou réservez un appel.
+                </a>
+                .
               </p>
             )}
 
@@ -277,6 +276,41 @@ function Contact() {
               </Field>
             </div>
 
+            <div className="mt-6 rounded-xl border border-stone-200 bg-white p-4 sm:p-5">
+              <label className="flex cursor-pointer items-start gap-3">
+                <input
+                  type="checkbox"
+                  name="callRequested"
+                  checked={callRequested}
+                  onChange={(event) => setCallRequested(event.target.checked)}
+                  className="mt-0.5 h-5 w-5 shrink-0 accent-brand-500"
+                />
+                <span className="text-sm font-semibold text-stone-900">
+                  Je souhaite un appel découverte (visio, gratuit)
+                </span>
+              </label>
+              {callRequested && (
+                <div className="mt-4">
+                  <Field
+                    label="Vos disponibilités"
+                    name="availability"
+                    optional
+                    error={errors.availability}
+                  >
+                    <input
+                      id="availability"
+                      name="availability"
+                      type="text"
+                      maxLength={AVAILABILITY_MAX}
+                      placeholder="Ex. : mardi ou jeudi après-midi"
+                      {...invalid('availability', errors.availability)}
+                      className={`${fieldClass} ${borderFor(errors.availability)}`}
+                    />
+                  </Field>
+                </div>
+              )}
+            </div>
+
             {/* Champ piège : invisible et hors du parcours clavier. Un humain
                 le laisse vide ; un robot qui remplit tout se trahit. */}
             <div aria-hidden="true" className="absolute -left-[9999px] h-px w-px overflow-hidden">
@@ -346,7 +380,13 @@ function Contact() {
   )
 }
 
-function Sent({ onReset }: { onReset: () => void }) {
+function Sent({
+  callRequested,
+  onReset,
+}: {
+  callRequested: boolean
+  onReset: () => void
+}) {
   return (
     <div
       role="status"
@@ -362,17 +402,11 @@ function Sent({ onReset }: { onReset: () => void }) {
         Message bien reçu, merci.
       </h2>
       <p className="mt-4 leading-relaxed text-stone-600">
-        L’agence vous répond sous deux jours ouvrés. Pour gagner du temps,
-        vous pouvez dès maintenant réserver un appel découverte, gratuit et
-        en visio ({discoveryCall.duration.toLowerCase()}).
+        {callRequested
+          ? 'Nous revenons vers vous sous deux jours ouvrés pour fixer l’appel découverte.'
+          : 'L’agence vous répond sous deux jours ouvrés.'}
       </p>
       <div className="mt-8 flex flex-wrap gap-3">
-        <Link
-          to="/rendez-vous"
-          className="rounded-full bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
-        >
-          Réserver un appel
-        </Link>
         <button
           type="button"
           onClick={onReset}
