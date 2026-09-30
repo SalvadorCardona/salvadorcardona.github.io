@@ -283,6 +283,15 @@ cp .env.example .env    # facultatif : Brevo, Turnstile
 docker compose up --build
 ```
 
+## Supports imprimés
+
+Les supports papier de l'agence vivent dans `print/`, hors du site et de
+l'image Docker :
+
+- [`print/flyer-boites-aux-lettres/`](print/flyer-boites-aux-lettres/) — le
+  flyer A5 recto verso distribué en boîtes aux lettres : PDF à télécharger et
+  sources du canevas Design.
+
 ## Pile
 
 React 19 · TanStack Start · TanStack Router · Vite · Tailwind CSS v4 ·
