@@ -75,7 +75,7 @@ const config = defineConfig({
         '/projects/**': cacheFor(30 * ONE_DAY),
         ...blogImages,
         '/video/**': cacheFor(30 * ONE_DAY),
-        '/banner.png': cacheFor(ONE_DAY),
+        '/og/**': cacheFor(ONE_DAY),
         '/favicon.svg': cacheFor(ONE_DAY),
         '/favicon-16x16.png': cacheFor(ONE_DAY),
         '/favicon-32x32.png': cacheFor(ONE_DAY),

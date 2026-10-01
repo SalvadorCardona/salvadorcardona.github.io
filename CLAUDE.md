@@ -54,7 +54,7 @@ src/
   lib/seo.ts     constantes SEO (SITE_URL, JSON-LD, images de partage)
   lib/contact.ts formulaire de contact : validation partagée, server functions
 scripts/         scripts Node lancés à la main (sync, publish, images, postbuild)
-public/          statique servi tel quel (favicons, banner.png, blog/)
+public/          statique servi tel quel (favicons, og/, blog/)
 deploy/traefik/  proxy Traefik des sous-sites GitHub Pages
 Dockerfile, compose.yaml, .env.example   image et variables d'environnement
 ```
