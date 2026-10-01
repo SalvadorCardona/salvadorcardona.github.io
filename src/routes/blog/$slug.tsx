@@ -1,9 +1,16 @@
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 
 import { PostCoverImage } from '../../components/PostCoverImage'
+import { agency } from '../../content/agency'
 import { formatDate, getCover, getPost, sortedPosts } from '../../content/posts'
 import { links } from '../../content/profile'
-import { AUTHOR_NAME, SITE_URL, seo } from '../../lib/seo'
+import {
+  AGENCY_ID,
+  AUTHOR_NAME,
+  PERSON_ID,
+  SITE_URL,
+  seo,
+} from '../../lib/seo'
 
 /**
  * Un article est rendu à la requête depuis `content/posts` ; un slug inconnu
@@ -34,6 +41,34 @@ export const Route = createFileRoute('/blog/$slug')({
           publishedTime: loaderData.date,
           image: loaderData.cover,
           signature: AUTHOR_NAME,
+          jsonLd: [
+            {
+              '@context': 'https://schema.org',
+              '@type': 'BlogPosting',
+              headline: loaderData.title,
+              description: loaderData.excerpt,
+              image: `${SITE_URL}${loaderData.cover?.src ?? '/og/cardona.png'}`,
+              datePublished: loaderData.date,
+              inLanguage: 'fr-FR',
+              keywords: loaderData.tags,
+              mainEntityOfPage: `${SITE_URL}/blog/${loaderData.slug}`,
+              // Nom et adresse repris à côté de l'`@id` : l'auteur et l'agence
+              // ne sont décrits en entier que sur l'accueil.
+              author: {
+                '@type': 'Person',
+                '@id': PERSON_ID,
+                name: AUTHOR_NAME,
+                url: SITE_URL,
+              },
+              publisher: {
+                '@type': 'ProfessionalService',
+                '@id': AGENCY_ID,
+                name: `Agence ${agency.name}`,
+                url: SITE_URL,
+                logo: `${SITE_URL}/logo.png`,
+              },
+            },
+          ],
         })
       : {},
   component: PostPage,

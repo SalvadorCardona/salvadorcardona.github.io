@@ -20,9 +20,15 @@ import {
   techSkills,
   works,
 } from '../content/agency'
-import { clients, profile } from '../content/profile'
+import { clients, links, profile } from '../content/profile'
 import { servicePath } from '../content/services'
-import { PERSON_ID, SITE_URL, personJsonLd, seo } from '../lib/seo'
+import {
+  AGENCY_ID,
+  PERSON_ID,
+  SITE_URL,
+  personJsonLd,
+  seo,
+} from '../lib/seo'
 
 export const Route = createFileRoute('/')({
   head: () =>
@@ -39,24 +45,36 @@ export const Route = createFileRoute('/')({
           url: SITE_URL,
           name: `Agence ${agency.name}`,
           inLanguage: 'fr-FR',
-          publisher: { '@id': `${SITE_URL}/#agence` },
+          publisher: { '@id': AGENCY_ID },
         },
         {
           '@context': 'https://schema.org',
           '@type': 'ProfessionalService',
-          '@id': `${SITE_URL}/#agence`,
+          '@id': AGENCY_ID,
           name: `Agence ${agency.name}`,
           slogan: agency.tagline,
           description: agency.pitch,
           url: SITE_URL,
-          logo: `${SITE_URL}/logo.svg`,
+          email: links.email,
+          // Google n'accepte qu'un logo raster d'au moins 112 px : le PNG est
+          // tiré de `public/logo.svg`.
+          logo: `${SITE_URL}/logo.png`,
+          image: `${SITE_URL}/og/cardona.png`,
+          sameAs: [links.linkedin, links.github],
           founder: { '@id': PERSON_ID },
           address: {
             '@type': 'PostalAddress',
             addressLocality: 'Lyon',
             addressCountry: 'FR',
           },
-          areaServed: 'France',
+          // Lyon d'abord, pour le référencement local ; la France pour le
+          // travail à distance.
+          areaServed: [
+            { '@type': 'City', name: 'Lyon' },
+            { '@type': 'AdministrativeArea', name: 'Métropole de Lyon' },
+            { '@type': 'AdministrativeArea', name: 'Auvergne-Rhône-Alpes' },
+            { '@type': 'Country', name: 'France' },
+          ],
           priceRange: '30 € – 100 € / mois',
           makesOffer: offers.map((offer) => ({
             '@type': 'Offer',
