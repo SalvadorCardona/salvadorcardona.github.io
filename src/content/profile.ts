@@ -66,25 +66,30 @@ export const links = {
 
 /**
  * Les clients cités en preuve sociale sur l'accueil, dans l'ordre
- * d'affichage. `logo` pointe vers un SVG monochrome dans `public/clients/` ;
- * absent, le nom s'affiche en texte stylé (cas de Greenweez et de BASF, sans
- * logo disponible en qualité correcte).
+ * d'affichage. `logo` pointe vers un SVG monochrome dans `public/clients/`,
+ * d'une seule teinte (stone-900, le gris vient de l'opacité au rendu) et
+ * recadré au plus près du dessin. `width` et `height` sont les dimensions
+ * affichées, en pixels, au ratio du `viewBox` : elles équilibrent les logos
+ * à l'œil (un logo très large est moins haut, un logo sur deux lignes l'est
+ * davantage) et évitent le décalage de mise en page au chargement.
  */
 export type Client = {
   name: string
-  logo?: string
+  logo: string
+  width: number
+  height: number
 }
 
 export const clients: Array<Client> = [
-  { name: 'Easy Cash', logo: '/clients/easy-cash.svg' },
-  { name: 'Carrefour', logo: '/clients/carrefour.svg' },
-  { name: 'OVH', logo: '/clients/ovh.svg' },
-  { name: 'EDF', logo: '/clients/edf.svg' },
-  { name: 'TF1', logo: '/clients/tf1.svg' },
-  { name: 'M6', logo: '/clients/m6.svg' },
-  { name: 'Greenweez' },
-  { name: 'Nokia', logo: '/clients/nokia.svg' },
-  { name: 'BASF' },
+  { name: 'Easy Cash', logo: '/clients/easy-cash.svg', width: 95, height: 26 },
+  { name: 'Carrefour', logo: '/clients/carrefour.svg', width: 119, height: 25 },
+  { name: 'OVHcloud', logo: '/clients/ovh.svg', width: 126, height: 20 },
+  { name: 'EDF', logo: '/clients/edf.svg', width: 61, height: 26 },
+  { name: 'TF1', logo: '/clients/tf1.svg', width: 63, height: 34 },
+  { name: 'M6', logo: '/clients/m6.svg', width: 40, height: 30 },
+  { name: 'Greenweez', logo: '/clients/greenweez.svg', width: 54, height: 34 },
+  { name: 'Nokia', logo: '/clients/nokia.svg', width: 76, height: 18 },
+  { name: 'BASF', logo: '/clients/basf.svg', width: 95, height: 18 },
 ]
 
 export type SkillGroup = {
