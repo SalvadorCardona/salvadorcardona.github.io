@@ -6,8 +6,8 @@ import type { Service } from '../content/services'
 import { getService, servicePath, services } from '../content/services'
 import type { ProjectType } from '../lib/contact'
 import {
-  PERSON_ID,
   SITE_URL,
+  agencyJsonLd,
   breadcrumbJsonLd,
   personJsonLd,
   seo,
@@ -42,7 +42,7 @@ export function serviceHead(slug: string) {
         serviceType: service.name,
         description: service.description,
         url: `${SITE_URL}${path}`,
-        provider: { '@id': PERSON_ID },
+        provider: agencyJsonLd(),
         areaServed: [
           { '@type': 'City', name: 'Lyon' },
           { '@type': 'Country', name: 'France' },

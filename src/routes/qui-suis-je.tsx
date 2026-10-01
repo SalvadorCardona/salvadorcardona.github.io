@@ -20,7 +20,7 @@ import {
   sortedExperiences,
 } from '../content/experiences'
 import { formatDate, sortedPosts } from '../content/posts'
-import { breadcrumbJsonLd, personJsonLd, seo } from '../lib/seo'
+import { AUTHOR_NAME, breadcrumbJsonLd, personJsonLd, seo } from '../lib/seo'
 
 export const Route = createFileRoute('/qui-suis-je')({
   head: () =>
@@ -28,6 +28,7 @@ export const Route = createFileRoute('/qui-suis-je')({
       title: `Qui suis-je — ${profile.role} à Lyon`,
       description: profile.pitch,
       path: '/qui-suis-je',
+      signature: AUTHOR_NAME,
       jsonLd: [
         personJsonLd(),
         breadcrumbJsonLd([
