@@ -12,6 +12,8 @@
  * dans le balisage `FAQPage`.
  */
 
+import type { ProjectType } from '../lib/contact'
+
 export type ServiceIcon = 'code' | 'shield' | 'sparkles' | 'api' | 'workflow' | 'compass'
 
 export type ServiceIllustration = 'web-development' | 'security-audit' | 'ai-integration'
@@ -40,6 +42,8 @@ export type Service = {
   icon: ServiceIcon
   /** Le dessin du livrable, en tête de la carte et de la page. */
   illustration: ServiceIllustration
+  /** Le type de projet coché d'avance quand on écrit depuis la page. */
+  projectType: ProjectType
   /** Accroche sous le H1. */
   lead: string
   /** Le problème que ça résout, en deux ou trois paragraphes. */
@@ -70,6 +74,7 @@ export const services: Array<Service> = [
       'Des applications web de bout en bout : API Symfony structurées, interfaces React typées, et l’outillage qui va avec.',
     icon: 'code',
     illustration: 'web-development',
+    projectType: 'application',
     lead:
       'Une application web sur mesure, du contrat d’API à l’interface, que votre équipe pourra reprendre et faire évoluer sans moi.',
     context: [
@@ -191,6 +196,7 @@ export const services: Array<Service> = [
       'Un regard extérieur sur votre application : failles, dette technique, dépendances, configuration. Un rapport court, classé par urgence.',
     icon: 'shield',
     illustration: 'security-audit',
+    projectType: 'application',
     lead:
       'Savoir où en est votre application avant qu’un incident, un client ou un investisseur ne pose la question.',
     context: [
@@ -307,6 +313,7 @@ export const services: Array<Service> = [
       'Des agents et des automatisations branchés sur vos API et vos données : ce qui fait gagner du temps à l’équipe, en production.',
     icon: 'sparkles',
     illustration: 'ai-integration',
+    projectType: 'ia',
     lead:
       'Faire entrer un modèle de langage dans un outil existant sans casser ce qui marche pour les humains.',
     context: [
