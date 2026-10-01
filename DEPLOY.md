@@ -104,6 +104,14 @@ http://localhost:3000/`.
 | Container Port   | `3000`            |
 | HTTPS            | activé            |
 | Certificate      | Let's Encrypt     |
+| Middlewares      | `compress@file`   |
+
+Le middleware `compress@file`, défini dans `deploy/traefik/compress.yml`,
+compresse en brotli ou gzip les pages rendues à la requête ; les fichiers
+statiques arrivent déjà compressés de Nitro. Sans lui, le HTML part brut
+(92 Ko pour l'accueil). Déposer ce fichier dans
+`/etc/dokploy/traefik/dynamic/` avant de l'ajouter au domaine, comme
+`www-redirect.yml` ci-dessous.
 
 Ajouter aussi `www.cardona.digital` (mêmes réglages), avec dans
 **Middlewares** `www-to-apex@file` : ce middleware, défini dans
@@ -259,6 +267,10 @@ Cloudflare.
 ```bash
 curl -s https://cardona.digital/healthz                     # ok
 curl -sI https://cardona.digital/ | head -1                 # HTTP/2 200
+curl -s -o /dev/null -w '%header{content-encoding}\n' \
+  -H 'Accept-Encoding: br, gzip' https://cardona.digital/    # br (compress@file)
+curl -sI https://cardona.digital/video/agence-cardona-poster.jpg | grep -i cache-control
+                                                            # public, max-age=2592000
 curl -s https://cardona.digital/sitemap.xml | grep -c '<loc>'   # 8 pages + un par article
 curl -sI https://cardona.digital/rendez-vous | grep -i location # /contact?appel=1 (301)
 curl -sI https://cardona.digital/n-existe-pas | head -1     # HTTP/2 404
