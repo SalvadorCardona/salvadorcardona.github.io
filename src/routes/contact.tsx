@@ -15,7 +15,7 @@ import {
   sendContact,
   validateContact,
 } from '../lib/contact'
-import { seo } from '../lib/seo'
+import { AGENCY_ID, SITE_URL, seo } from '../lib/seo'
 
 type ContactSearch = {
   appel?: 1
@@ -50,6 +50,27 @@ export const Route = createFileRoute('/contact')({
       title: 'Contact',
       description: `Parlez-nous de votre projet : site, application métier, intégration IA ou formation. L’agence ${agency.name}, à Lyon, répond sous deux jours ouvrés.`,
       path: '/contact',
+      jsonLd: [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'ContactPage',
+          url: `${SITE_URL}/contact`,
+          name: `Contacter l’agence ${agency.name}`,
+          inLanguage: 'fr-FR',
+          mainEntity: {
+            '@type': 'ProfessionalService',
+            '@id': AGENCY_ID,
+            name: `Agence ${agency.name}`,
+            url: SITE_URL,
+            email: links.email,
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: 'Lyon',
+              addressCountry: 'FR',
+            },
+          },
+        },
+      ],
     })
     return {
       ...head,

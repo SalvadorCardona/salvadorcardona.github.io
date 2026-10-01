@@ -99,7 +99,8 @@ conteneur Docker déployé sur Dokploy (voir `DEPLOY.md`).
   d'Animalink en 500 ; les gris sont `stone-*`. Le logo de l'agence existe en
   trois exemplaires à garder synchrones : `components/Logo.tsx`,
   `public/favicon.svg` et `public/logo.svg` (mot vectorisé), plus les PNG de
-  favicon qui en sont tirés.
+  favicon qui en sont tirés et `public/logo.png` (le logo du JSON-LD, Google
+  n'acceptant pas de SVG).
 - **La pile de cartes du hero ne montre que de vraies réalisations.** Chaque
   entrée de `works` (`agency.ts`) pointe vers des captures de
   `public/realisations/`, en AVIF et WebP à deux largeurs (voir le type
