@@ -1,7 +1,8 @@
 # Vidéo de présentation de l'agence Cardona
 
 La vidéo publiée est `public/video/agence-cardona.mp4` (1 min 01, 1920×1080), avec son
-image d'attente `agence-cardona-poster.jpg` et ses sous-titres `agence-cardona.fr.vtt`.
+image d'attente `agence-cardona-poster.jpg` (servie en `.webp`, le JPEG restant la vignette du
+JSON-LD) et ses sous-titres `agence-cardona.fr.vtt`.
 Ce dossier garde de quoi la refaire.
 
 - `storyboard/build.py` : les sept plans (accroche, services, abonnements, Vitrine,

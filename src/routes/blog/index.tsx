@@ -1,5 +1,6 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 
+import { PostCoverImage } from '../../components/PostCoverImage'
 import type { Post } from '../../content/posts'
 import { allTags, formatDate, getCover, sortedPosts } from '../../content/posts'
 import { seo } from '../../lib/seo'
@@ -16,6 +17,9 @@ export const Route = createFileRoute('/blog/')({
 })
 
 function BlogIndex() {
+  // Le plus récent article peut ne pas avoir encore d'illustration.
+  const firstCover = sortedPosts.find((post) => getCover(post.slug))?.slug
+
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
       <h1 className="text-4xl font-bold tracking-tight text-stone-900">
@@ -45,7 +49,7 @@ function BlogIndex() {
             className="border-b border-stone-200 pb-10 last:border-0"
           >
             <article>
-              <Cover post={post} />
+              <Cover post={post} priority={post.slug === firstCover} />
 
               <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-stone-500">
                 <time dateTime={post.date}>{formatDate(post.date)}</time>
@@ -95,19 +99,20 @@ function BlogIndex() {
   )
 }
 
-/** La vignette d'un article, absente tant que son image n'a pas été générée. */
-function Cover({ post }: { post: Post }) {
+/**
+ * La vignette d'un article, absente tant que son image n'a pas été générée.
+ * Seule la première, au-dessus de la ligne de flottaison, est chargée tout de
+ * suite.
+ */
+function Cover({ post, priority }: { post: Post; priority: boolean }) {
   const cover = getCover(post.slug)
 
   if (!cover) return null
 
   return (
-    <img
-      src={cover.src}
-      alt={cover.alt}
-      width={cover.width}
-      height={cover.height}
-      loading="lazy"
+    <PostCoverImage
+      cover={cover}
+      priority={priority}
       className="mb-5 aspect-video w-full rounded-xl border border-stone-200 object-cover"
     />
   )

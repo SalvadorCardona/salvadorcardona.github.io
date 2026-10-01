@@ -58,8 +58,10 @@ conteneur Docker déployé sur Dokploy (voir `DEPLOY.md`).
 - **Un article = une illustration.** Deux sources possibles : la couverture de
   la page Notion, rapatriée par `posts:sync` ; ou, à défaut, une image générée
   par `npm run post:image -- <slug>` depuis le `prompt` de `covers.json`. Dans
-  les deux cas l'image atterrit dans `public/blog/` et est versionnée — voir
-  « Son illustration » dans le README.
+  les deux cas l'image atterrit dans `public/blog/`, déclinée en AVIF et WebP
+  à 480 et 960 px (`scripts/cover-variants.mjs`), et est versionnée — voir
+  « Son illustration » dans le README. Le site affiche les déclinaisons ;
+  l'image d'origine reste l'`og:image`.
 - **Le logo d'une expérience est optionnel.** Rapatrié par `experiences:sync`
   dans `public/experiences/` quand la propriété `logo` est renseignée dans
   Notion ; sinon la carte affiche les initiales de l'entreprise

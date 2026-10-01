@@ -4,8 +4,9 @@
  * 1. Le serveur Nitro (`.output/server/index.mjs`) est bien là.
  *
  * 2. Chaque illustration déclarée dans `covers.json` est bien partie dans
- *    `.output/public`, sinon l'article afficherait une image cassée. Même
- *    vérification pour les logos déclarés dans `experiences.json`.
+ *    `.output/public`, avec ses déclinaisons AVIF et WebP, sinon l'article
+ *    afficherait une image cassée. Même vérification pour les logos déclarés
+ *    dans `experiences.json`.
  *
  * 3. Le serveur construit démarre, répond sur `/healthz`, rend chaque page de
  *    `REQUIRED_PAGES` et chaque URL de son propre sitemap en 200, une
@@ -20,6 +21,8 @@ import { createServer } from 'node:net'
 import { join } from 'node:path'
 import process from 'node:process'
 import { setTimeout as sleep } from 'node:timers/promises'
+
+import { variantsOf } from './cover-variants.mjs'
 
 const OUTPUT_DIR = '.output'
 const PUBLIC_DIR = join(OUTPUT_DIR, 'public')
@@ -60,12 +63,16 @@ async function exists(path) {
   }
 }
 
-/** Les illustrations déjà générées, telles que le site les référence. */
+/**
+ * Les illustrations déjà générées et leurs déclinaisons, telles que le site
+ * les référence.
+ */
 async function requiredCovers() {
   const covers = JSON.parse(await readFile(COVERS_FILE, 'utf8'))
   return Object.values(covers)
     .filter((cover) => cover.file)
-    .map((cover) => `blog/${cover.file}`)
+    .flatMap((cover) => [cover.file, ...variantsOf(cover.file)])
+    .map((file) => `blog/${file}`)
 }
 
 /** Les logos déjà rapatriés par `npm run experiences:sync`, tels que référencés. */

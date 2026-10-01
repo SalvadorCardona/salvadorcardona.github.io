@@ -85,7 +85,7 @@ export const Route = createFileRoute('/')({
           '@type': 'VideoObject',
           name: VIDEO.title,
           description: VIDEO.description,
-          thumbnailUrl: `${SITE_URL}${VIDEO.poster}`,
+          thumbnailUrl: `${SITE_URL}${VIDEO.thumbnail}`,
           contentUrl: `${SITE_URL}${VIDEO.src}`,
           uploadDate: '2026-09-29',
           duration: 'PT1M1S',
@@ -652,7 +652,9 @@ function Audiences() {
  */
 const VIDEO = {
   src: '/video/agence-cardona.mp4',
-  poster: '/video/agence-cardona-poster.jpg',
+  poster: '/video/agence-cardona-poster.webp',
+  /** Le JPEG reste la vignette du JSON-LD, lue par les moteurs et les réseaux. */
+  thumbnail: '/video/agence-cardona-poster.jpg',
   subtitles: '/video/agence-cardona.fr.vtt',
   title: `L’agence ${agency.name} en une minute`,
   description:

@@ -14,11 +14,15 @@
  * anglais, mieux suivi par les modèles d'image que le français. Le script y
  * réécrit `file` — le nom du fichier produit, dont l'extension dépend du
  * modèle. C'est ce champ qui fait apparaître l'illustration sur le site.
+ * Les déclinaisons AVIF et WebP affichées par le site sont écrites à côté
+ * (`scripts/cover-variants.mjs`).
  */
 
 import { access, mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import process from 'node:process'
+
+import { writeVariants } from './cover-variants.mjs'
 
 const COVERS_FILE = 'src/content/covers.json'
 const OUT_DIR = 'public/blog'
@@ -143,6 +147,7 @@ async function main() {
     }
 
     covers[slug].file = await generate(slug, covers[slug].prompt, apiKey)
+    await writeVariants(covers[slug].file)
     await writeFile(COVERS_FILE, `${JSON.stringify(covers, null, 2)}\n`)
     generated += 1
   }
