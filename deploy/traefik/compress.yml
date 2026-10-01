@@ -1,0 +1,21 @@
+# Compression gzip / brotli des réponses de cardona.digital.
+#
+# Nitro sert déjà une version pré-compressée des fichiers statiques (JS, CSS,
+# SVG : voir `compressPublicAssets` dans vite.config.ts) ; ce middleware
+# compresse le reste, à commencer par les pages rendues à la requête. Traefik
+# laisse telle quelle une réponse qui porte déjà un Content-Encoding.
+#
+# Le domaine cardona.digital est déclaré dans Dokploy sur l'application du
+# site, avec le middleware `compress@file`.
+#
+# À déposer dans le dossier de configuration dynamique de Traefik sur le
+# serveur Dokploy (/etc/dokploy/traefik/dynamic/compress.yml) : voir
+# DEPLOY.md, étape 4.
+
+http:
+  middlewares:
+    compress:
+      compress:
+        encodings:
+          - br
+          - gzip
