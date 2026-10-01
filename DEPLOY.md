@@ -260,7 +260,8 @@ Sur le tableau de bord Cloudflare, **Turnstile → Add widget**, domaine
 `TURNSTILE_SITE_KEY` et la clé secrète dans `TURNSTILE_SECRET`. Il faut les
 deux : avec une seule, Turnstile reste désactivé. Une fois actif, le widget
 apparaît sous le message et chaque envoi est vérifié côté serveur auprès de
-Cloudflare.
+Cloudflare. La Content-Security-Policy du site autorise déjà son script et
+son iframe (voir l'étape 9).
 
 ## 9. Vérifications
 
@@ -280,7 +281,21 @@ for p in adam-eve CoookingPubSub des-3d gnome-claude-usage mobile-factory \
   react-data-form react-game react-resource-view ticket-runner trigo-js whisper-desk; do
   printf '%-22s %s\n' "$p" "$(curl -s -o /dev/null -w '%{http_code}' https://cardona.digital/$p/)"
 done                                                        # 200 partout
+curl -sI https://cardona.digital/ | grep -iE 'strict-transport|content-security|x-content-type|x-frame|referrer-policy|permissions-policy'   # six lignes
 ```
+
+Les en-têtes de sécurité sont posés par l'application, sans réglage dans
+Dokploy ni fichier Traefik : HSTS (un an, sans `includeSubDomains`),
+`X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy` et
+`Permissions-Policy` par les `routeRules` de `vite.config.ts`, sur toutes les
+réponses ; la `Content-Security-Policy`, avec un nonce tiré à chaque requête,
+par le middleware de `src/start.ts`, sur les pages. Elle n'autorise comme
+origines externes qu'Umami (`umami.cardona.digital`) et Cloudflare Turnstile
+(`challenges.cloudflare.com`) : un nouveau script ou service tiers s'ajoute
+là, sinon le navigateur le bloque. Les sous-sites GitHub Pages passent par le
+routeur Traefik de l'étape 6 et n'en héritent pas. Contrôle externe :
+<https://securityheaders.com/?q=cardona.digital&followRedirects=on>, note A
+attendue.
 
 Puis, dans un navigateur : envoyer un message de test depuis `/contact` avec
 sa propre adresse et la case « appel découverte » cochée, et recevoir les deux

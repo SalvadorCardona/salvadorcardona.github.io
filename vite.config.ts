@@ -35,6 +35,12 @@ import { nitro } from 'nitro/vite'
  * plus courte pour ceux qui ne sont pas rangés par dossier. `/blog/` partage
  * son préfixe avec les pages d'articles, que `/blog/**` mettrait aussi en
  * cache : on y vise chaque illustration par son nom.
+ *
+ * Les en-têtes de sécurité valent pour toutes les réponses, fichiers statiques
+ * compris. La Content-Security-Policy, qui porte un nonce par requête, est
+ * posée à part par le middleware de `src/start.ts`. HSTS sans
+ * `includeSubDomains` : tous les sous-domaines de `cardona.digital` ne sont pas
+ * servis par ce conteneur.
  */
 const ONE_DAY = 60 * 60 * 24
 const cacheFor = (seconds: number) => ({
@@ -43,6 +49,15 @@ const cacheFor = (seconds: number) => ({
 const blogImages = Object.fromEntries(
   readdirSync('public/blog').map((file) => [`/blog/${file}`, cacheFor(30 * ONE_DAY)]),
 )
+
+const securityHeaders = {
+  'Strict-Transport-Security': 'max-age=31536000',
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy':
+    'camera=(), microphone=(), geolocation=(), payment=(), usb=(), browsing-topics=()',
+}
 
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
@@ -54,6 +69,7 @@ const config = defineConfig({
       preset: 'node-server',
       compressPublicAssets: { gzip: true, brotli: true },
       routeRules: {
+        '/**': { headers: securityHeaders },
         '/realisations/**': cacheFor(30 * ONE_DAY),
         '/clients/**': cacheFor(30 * ONE_DAY),
         '/projects/**': cacheFor(30 * ONE_DAY),
