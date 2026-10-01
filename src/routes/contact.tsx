@@ -308,7 +308,7 @@ function Contact() {
                       required
                       className="peer sr-only"
                     />
-                    <span className="block rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition-colors peer-checked:border-brand-500 peer-checked:bg-brand-500 peer-checked:text-white peer-focus-visible:ring-4 peer-focus-visible:ring-brand-100 hover:border-stone-400">
+                    <span className="block rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-medium text-stone-700 transition-colors peer-checked:border-brand-600 peer-checked:bg-brand-600 peer-checked:text-white peer-focus-visible:ring-4 peer-focus-visible:ring-brand-100 hover:border-stone-400">
                       {type.label}
                     </span>
                   </label>
@@ -413,7 +413,7 @@ function Contact() {
             <button
               type="submit"
               disabled={status.state === 'sending'}
-              className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-500 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-brand-500/25 transition-all hover:bg-brand-600 disabled:cursor-wait disabled:opacity-70 sm:w-auto"
+              className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-brand-500/25 transition-all hover:bg-brand-700 disabled:cursor-wait disabled:opacity-70 sm:w-auto"
             >
               {status.state === 'sending' ? (
                 <>

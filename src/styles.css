@@ -13,7 +13,9 @@
   /* La couleur de l'agence : l'orange d'Animalink, `oklch(0.65 0.18 45)`
      (#e46212), en 500. Le reste de la gamme est dérivé sur la même teinte.
      Pour un texte courant sur fond blanc, prendre 600 ou plus foncé : 500
-     n'atteint pas le contraste AA en petit corps. */
+     n'atteint pas le contraste AA en petit corps. De même, un fond qui porte
+     du texte blanc (bouton plein, bandeau d'appel) se pose en 600, sans
+     opacité sur le texte : blanc sur 500, 3,5:1 ; blanc sur 600, 5:1. */
   --color-brand-50: oklch(0.98 0.016 60);
   --color-brand-100: oklch(0.955 0.04 58);
   --color-brand-200: oklch(0.905 0.08 55);

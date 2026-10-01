@@ -110,7 +110,7 @@ export function ServicePage({ slug }: { slug: string }) {
               data-umami-event="cta-contact"
               data-umami-event-page={servicePath(service.slug)}
               data-umami-event-emplacement="haut-de-page"
-              className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+              className="rounded-full bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
             >
               Parler de votre projet
             </Link>
@@ -384,11 +384,11 @@ function Check() {
 export function CallToAction({ projectType }: { projectType?: ProjectType }) {
   const { pathname } = useLocation()
   return (
-    <section className="my-12 rounded-3xl bg-brand-500 px-8 py-12 text-white sm:px-12">
+    <section className="my-12 rounded-3xl bg-brand-600 px-8 py-12 text-white sm:px-12">
       <h2 className="text-2xl font-bold tracking-tight text-balance sm:text-3xl">
         Parlons de votre projet
       </h2>
-      <p className="mt-4 max-w-2xl text-pretty text-white/90">
+      <p className="mt-4 max-w-2xl text-pretty text-white">
         Un premier échange d’une heure, gratuit et sans engagement, pour
         comprendre votre besoin et vous dire si je suis la bonne personne. À
         Lyon ou à distance.
