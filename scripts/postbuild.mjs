@@ -9,7 +9,7 @@
  *
  * 3. Le serveur construit démarre, répond sur `/healthz`, rend chaque page de
  *    `REQUIRED_PAGES` et chaque URL de son propre sitemap en 200, une
- *    adresse inconnue en 404 et `/rendez-vous` en 301 vers `/contact`. C'est
+ *    adresse inconnue en 404 et chaque adresse de `REDIRECTS` en 301. C'est
  *    le garde-fou qu'assurait le prérendu (`failOnError`) : on échoue plutôt
  *    que de publier un site amputé.
  */
@@ -33,16 +33,23 @@ const SITE_URL = 'https://cardona.digital'
 const REQUIRED_PAGES = [
   '/',
   '/qui-suis-je',
-  '/agence',
-  '/projets',
   '/blog',
   '/contact',
   '/services',
   '/services/developpement-web',
   '/services/audit-securite-application',
   '/services/integration-ia',
-  '/404',
 ]
+
+/** Les anciennes adresses et les slashs finaux, renvoyés en 301 exactement là. */
+const REDIRECTS = {
+  '/rendez-vous': '/contact?appel=1',
+  '/agence': '/',
+  '/projets': '/qui-suis-je#projets',
+  '/404': '/',
+  '/blog/': '/blog',
+  '/services/': '/services',
+}
 
 async function exists(path) {
   try {
@@ -124,11 +131,12 @@ async function checkServer() {
       }
     }
 
-    // L'ancienne page de réservation, partagée avant son retrait.
-    const booking = await fetch(`${base}/rendez-vous`, { redirect: 'manual' })
-    const target = booking.headers.get('location') ?? ''
-    if (booking.status !== 301 || !target.startsWith('/contact')) {
-      failures.push(`/rendez-vous : HTTP ${booking.status} ${target}, 301 vers /contact attendu`)
+    for (const [path, expected] of Object.entries(REDIRECTS)) {
+      const response = await fetch(`${base}${path}`, { redirect: 'manual' })
+      const target = response.headers.get('location') ?? ''
+      if (response.status !== 301 || target !== expected) {
+        failures.push(`${path} : HTTP ${response.status} ${target}, 301 vers ${expected} attendu`)
+      }
     }
 
     const unknown = await fetch(`${base}/cette-page-n-existe-pas`)
