@@ -195,20 +195,16 @@ function Hero() {
             <p className="text-sm font-semibold text-stone-500">
               Ils m’ont fait confiance
             </p>
-            <ul className="mt-3 flex flex-wrap items-center gap-x-7 gap-y-3">
+            <ul className="mt-3 flex flex-wrap items-center gap-x-7 gap-y-4">
               {clients.map((client) => (
                 <li key={client.name}>
-                  {client.logo ? (
-                    <img
-                      src={client.logo}
-                      alt={client.name}
-                      className="h-6 w-auto grayscale transition-[filter] duration-300 hover:grayscale-0"
-                    />
-                  ) : (
-                    <span className="font-display text-base font-bold text-stone-400 transition-colors hover:text-stone-600">
-                      {client.name}
-                    </span>
-                  )}
+                  <img
+                    src={client.logo}
+                    alt={client.name}
+                    width={client.width}
+                    height={client.height}
+                    className="opacity-60 transition-opacity duration-300 hover:opacity-100"
+                  />
                 </li>
               ))}
             </ul>
