@@ -8,7 +8,7 @@
  * dupliquer les textes dans la route, éditer la donnée.
  */
 
-import type { ServiceIcon } from './services'
+import type { Service, ServiceIcon } from './services'
 
 export type AgencyOffer = {
   /** Ancre sur la page, et clé de liste. Ne plus la changer une fois publiée. */
@@ -52,12 +52,12 @@ export const agency = {
   keywords: [
     'Sites vitrines',
     'Applications métier',
+    'Intégration IA',
     'Identité web',
     'Rédaction',
     'Référencement',
     'Hébergement',
     'Maintenance',
-    'Intégration IA',
   ],
 } as const
 
@@ -106,6 +106,60 @@ export const expertises: Array<AgencyExpertise> = [
       'Hébergement, sauvegardes, sécurité, modifications à la demande. Votre site ne vieillit pas dans un coin : on s’en occupe chaque mois.',
     icon: 'shield',
   },
+]
+
+/**
+ * Les deux publics, juste sous le hero : les petites entreprises, qui
+ * prennent un abonnement, et les équipes qui cherchent un lead dev, en
+ * mission au forfait ou en régie (les pages `/services`).
+ */
+export type AgencyAudience = {
+  eyebrow: string
+  title: string
+  description: string
+}
+
+export const audiences: { business: AgencyAudience; tech: AgencyAudience } = {
+  business: {
+    eyebrow: 'Petites entreprises',
+    title: 'Votre site ou votre application, au mois.',
+    description:
+      'Artisans, commerçants, indépendants : abonnement Vitrine à 30 €, Application à 100 € HT par mois, création comprise.',
+  },
+  tech: {
+    eyebrow: 'Équipes tech et produits',
+    title: 'Un lead dev IA freelance, au forfait ou en régie.',
+    description:
+      'Treize ans de développement web, de l’API au déploiement, et des modèles de langage mis en production dans de vraies applications.',
+  },
+}
+
+/**
+ * Les expertises du lead dev, en étiquettes sous le bloc « équipes tech ».
+ * Chacune renvoie à la page service qui en parle : n'ajouter une étiquette
+ * que si la page la décrit, et seulement sur une référence réelle.
+ */
+export type AgencyTechSkill = {
+  label: string
+  /** Le détail entre parenthèses, quand l'étiquette regroupe plusieurs outils. */
+  detail?: string
+  service: Service['slug']
+}
+
+export const techSkills: Array<AgencyTechSkill> = [
+  {
+    label: 'IA en production',
+    detail: 'RAG, OCR, Whisper, agents, MCP',
+    service: 'integration-ia',
+  },
+  { label: 'React & TypeScript', service: 'developpement-web' },
+  { label: 'Symfony / API Platform', service: 'developpement-web' },
+  {
+    label: 'DevOps',
+    detail: 'Docker, CI, AWS',
+    service: 'developpement-web',
+  },
+  { label: 'Formation IA', service: 'integration-ia' },
 ]
 
 /**

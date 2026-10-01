@@ -302,7 +302,7 @@ export const services: Array<Service> = [
     name: 'Intégration IA',
     title: 'Intégration de l’IA dans vos outils : agents LLM, automatisations, assistants',
     description:
-      'Intégration de l’IA dans votre application : agents LLM branchés sur vos API, automatisations n8n, analyse de documents, chatbot. Livré en production.',
+      'Intégration de l’IA dans votre application : agents LLM branchés sur vos API, n8n, OCR, RAG, transcription Whisper, chatbot. Livré en production.',
     excerpt:
       'Des agents et des automatisations branchés sur vos API et vos données : ce qui fait gagner du temps à l’équipe, en production.',
     icon: 'sparkles',
@@ -339,7 +339,7 @@ export const services: Array<Service> = [
       {
         title: 'Analyse de documents et recherche',
         description:
-          'Extraction d’informations dans des PDF, des mails, des formulaires ; recherche augmentée (RAG) sur votre documentation ; transcription audio avec Whisper.',
+          'Extraction d’informations dans des PDF, des mails, des formulaires, OCR des documents scannés ; recherche augmentée (RAG) sur votre documentation ; transcription audio avec Whisper.',
       },
       {
         title: 'Assistants et chatbots',
@@ -369,9 +369,9 @@ export const services: Array<Service> = [
           'Droits, journalisation, supervision, gestion des erreurs, documentation. L’agent devient un composant de votre système comme un autre.',
       },
       {
-        title: 'Transmission',
+        title: 'Transmission et formation',
         description:
-          'L’équipe sait relire les prompts, surveiller les coûts et faire évoluer le flux sans moi.',
+          'Une formation à la mesure de l’équipe : elle sait relire les prompts, surveiller les coûts et faire évoluer le flux sans moi.',
       },
     ],
     deliverables: [
@@ -388,6 +388,8 @@ export const services: Array<Service> = [
       'MCP',
       'n8n',
       'Whisper',
+      'RAG',
+      'OCR',
       'Python',
       'TypeScript',
       'Symfony',
