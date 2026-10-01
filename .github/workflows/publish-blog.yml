@@ -27,13 +27,16 @@ permissions:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    # Image épinglée : `ubuntu-latest` bascule sur Ubuntu 26.04 à partir du
+    # 19 octobre 2026. Changer de version reste un choix explicite, validé par
+    # un lancement à la main.
+    runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: main
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: 22
           cache: npm
