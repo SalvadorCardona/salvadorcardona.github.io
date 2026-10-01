@@ -29,8 +29,15 @@ export type Post = {
  * n'est appelé au build ni au runtime.
  */
 export type PostCover = {
-  /** Chemin public de l'image, ex. `/blog/mon-article.jpg`. */
+  /**
+   * Chemin public de l'image d'origine, ex. `/blog/mon-article.jpg` : l'image
+   * de partage, LinkedIn ne lisant pas l'AVIF.
+   */
   src: string
+  /** Les déclinaisons affichées sur le site, par format, en `srcset`. */
+  srcSet: { avif: string; webp: string }
+  /** La plus grande déclinaison WebP, repli de `<img>`. */
+  fallback: string
   alt: string
   width: number
   height: number
@@ -39,6 +46,9 @@ export type PostCover = {
 /** Toutes les couvertures sont demandées en 16:9, 1K. */
 const COVER_WIDTH = 1024
 const COVER_HEIGHT = 576
+
+/** Les largeurs écrites par `scripts/cover-variants.mjs`. */
+const VARIANT_WIDTHS = [480, 960]
 
 const covers: Record<string, { alt: string; prompt: string; file?: string }> =
   coverData
@@ -51,8 +61,16 @@ export function getCover(slug: string): PostCover | undefined {
   const cover = covers[slug]
   if (!cover?.file) return undefined
 
+  const base = `/blog/${cover.file.replace(/\.[^.]+$/, '')}`
+  const srcSet = (format: string) =>
+    VARIANT_WIDTHS.map((width) => `${base}-${width}.${format} ${width}w`).join(
+      ', ',
+    )
+
   return {
     src: `/blog/${cover.file}`,
+    srcSet: { avif: srcSet('avif'), webp: srcSet('webp') },
+    fallback: `${base}-${VARIANT_WIDTHS[1]}.webp`,
     alt: cover.alt,
     width: COVER_WIDTH,
     height: COVER_HEIGHT,

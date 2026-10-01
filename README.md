@@ -190,6 +190,11 @@ Le script écrit `public/blog/<slug>.<ext>` et note le nom du fichier dans
 en tête de l'article et dans les cartes de partage. Tant qu'il est absent,
 l'article s'affiche simplement sans illustration.
 
+Dans les deux cas, l'image est déclinée à côté en AVIF et WebP, en 480 et
+960 px (`<slug>-480.avif`…) : ce sont elles que le site affiche, l'image
+d'origine ne servant plus qu'au partage. Pour rattraper celles qui manquent :
+`node scripts/cover-variants.mjs`. Le build échoue si l'une d'elles manque.
+
 Le modèle par défaut est `black-forest-labs/flux.2-flex` (~0,05 $ l'image), à
 changer avec `OPENROUTER_IMAGE_MODEL`.
 

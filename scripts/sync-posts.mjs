@@ -20,6 +20,8 @@ import { mkdir, readFile, readdir, unlink, writeFile } from 'node:fs/promises'
 import { basename, extname, join } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
+import { writeVariants } from './cover-variants.mjs'
+
 const DATABASE_ID = '3cf45168-0af4-8034-aa5e-fa9f741b807f'
 const NOTION_VERSION = '2022-06-28'
 const API = 'https://api.notion.com/v1'
@@ -429,6 +431,7 @@ async function main() {
     if (cover) {
       const url = cover.type === 'external' ? cover.external.url : cover.file.url
       const { file } = await localise(url, slug)
+      await writeVariants(file)
       covers[slug] = {
         ...covers[slug],
         alt: text(props.coverAlt).trim(),

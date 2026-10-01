@@ -1,5 +1,6 @@
 import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 
+import { PostCoverImage } from '../../components/PostCoverImage'
 import { formatDate, getCover, getPost, sortedPosts } from '../../content/posts'
 import { links } from '../../content/profile'
 import { SITE_URL, seo } from '../../lib/seo'
@@ -92,11 +93,9 @@ function PostPage() {
         </header>
 
         {cover && (
-          <img
-            src={cover.src}
-            alt={cover.alt}
-            width={cover.width}
-            height={cover.height}
+          <PostCoverImage
+            cover={cover}
+            priority
             className="mt-8 aspect-video w-full rounded-xl border border-stone-200 object-cover"
           />
         )}
