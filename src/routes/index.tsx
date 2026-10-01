@@ -167,6 +167,9 @@ function Hero() {
           <div className="mt-10 flex flex-wrap items-center gap-3 motion-safe:animate-hero-rise motion-safe:[animation-delay:300ms]">
             <Link
               to="/contact"
+              data-umami-event="cta-contact"
+              data-umami-event-page="/"
+              data-umami-event-emplacement="haut-de-page"
               className="group inline-flex items-center gap-2 rounded-full bg-brand-500 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-brand-500/25 transition-all hover:-translate-y-0.5 hover:bg-brand-600 hover:shadow-xl hover:shadow-brand-500/30"
             >
               Parler de votre projet
@@ -179,6 +182,9 @@ function Hero() {
             </Link>
             <a
               href="#forfaits"
+              data-umami-event="cta-forfaits"
+              data-umami-event-page="/"
+              data-umami-event-emplacement="haut-de-page"
               className="rounded-full border border-stone-300 bg-white/60 px-6 py-3.5 text-base font-semibold text-stone-800 transition-all hover:-translate-y-0.5 hover:border-stone-400 hover:bg-white"
             >
               Voir les forfaits
@@ -1190,6 +1196,10 @@ function OfferCard({
       <Link
         to="/contact"
         search={{ forfait: offer.id }}
+        data-umami-event="cta-contact"
+        data-umami-event-page="/"
+        data-umami-event-emplacement="forfaits"
+        data-umami-event-forfait={offer.name}
         className={`mt-10 rounded-full px-6 py-3.5 text-center text-sm font-semibold transition-colors ${
           featured
             ? 'bg-white text-brand-700 hover:bg-brand-50'
@@ -1584,12 +1594,19 @@ function FinalCall() {
           <Link
             to="/contact"
             search={{ appel: 1 }}
+            data-umami-event="cta-contact"
+            data-umami-event-page="/"
+            data-umami-event-emplacement="bas-de-page"
+            data-umami-event-appel="oui"
             className="rounded-full bg-white px-6 py-3.5 text-base font-semibold text-brand-700 transition-all hover:-translate-y-0.5 hover:bg-brand-50"
           >
             Demander un appel découverte
           </Link>
           <Link
             to="/contact"
+            data-umami-event="cta-contact"
+            data-umami-event-page="/"
+            data-umami-event-emplacement="bas-de-page"
             className="rounded-full border border-white/50 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
           >
             Parler de votre projet

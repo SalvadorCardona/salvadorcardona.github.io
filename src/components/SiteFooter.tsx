@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useLocation } from '@tanstack/react-router'
 
 import { agency } from '../content/agency'
 import { Logo } from './Logo'
@@ -15,6 +15,7 @@ const social = [
 const linkClass = 'transition-colors hover:text-brand-600'
 
 export function SiteFooter() {
+  const { pathname } = useLocation()
   return (
     <footer className="mt-24 border-t border-stone-200 bg-stone-50">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 text-sm text-stone-500 sm:grid-cols-3">
@@ -29,12 +30,24 @@ export function SiteFooter() {
             </Link>
             .
           </p>
-          <a href={`mailto:${links.email}`} className={`mt-3 block ${linkClass}`}>
+          <a
+            href={`mailto:${links.email}`}
+            data-umami-event="mailto"
+            data-umami-event-page={pathname}
+            data-umami-event-emplacement="pied-de-page"
+            className={`mt-3 block ${linkClass}`}
+          >
             {links.email}
           </a>
           <ul className="mt-3 space-y-1.5">
             <li>
-              <Link to="/contact" className={linkClass}>
+              <Link
+                to="/contact"
+                data-umami-event="cta-contact"
+                data-umami-event-page={pathname}
+                data-umami-event-emplacement="pied-de-page"
+                className={linkClass}
+              >
                 Contact
               </Link>
             </li>
@@ -59,7 +72,14 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link to="/" hash="forfaits" className={linkClass}>
+              <Link
+                to="/"
+                hash="forfaits"
+                data-umami-event="cta-forfaits"
+                data-umami-event-page={pathname}
+                data-umami-event-emplacement="pied-de-page"
+                className={linkClass}
+              >
                 Forfaits mensuels de l’agence
               </Link>
             </li>
@@ -77,6 +97,10 @@ export function SiteFooter() {
                   href={item.href}
                   target="_blank"
                   rel="noreferrer me"
+                  data-umami-event="reseau-social"
+                  data-umami-event-reseau={item.label}
+                  data-umami-event-page={pathname}
+                  data-umami-event-emplacement="pied-de-page"
                   className={linkClass}
                 >
                   {item.label}

@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useLocation } from '@tanstack/react-router'
 
 import { Logo } from './Logo'
 
@@ -10,6 +10,7 @@ const nav = [
 ] as const
 
 export function SiteHeader() {
+  const { pathname } = useLocation()
   return (
     <header className="sticky top-0 z-40 border-b border-stone-200/70 bg-white/85 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 py-3">
@@ -46,6 +47,9 @@ export function SiteHeader() {
 
         <Link
           to="/contact"
+          data-umami-event="cta-contact"
+          data-umami-event-page={pathname}
+          data-umami-event-emplacement="en-tete"
           className="rounded-full bg-brand-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
           activeProps={{ className: 'ring-2 ring-brand-200' }}
         >

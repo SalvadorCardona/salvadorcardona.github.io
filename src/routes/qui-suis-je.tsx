@@ -180,6 +180,10 @@ function About() {
               href={links.linkedin}
               target="_blank"
               rel="noreferrer me"
+              data-umami-event="reseau-social"
+              data-umami-event-reseau="LinkedIn"
+              data-umami-event-page="/qui-suis-je"
+              data-umami-event-emplacement="experiences"
               className="text-brand-600 hover:underline"
             >
               Le parcours complet sur LinkedIn →
@@ -256,6 +260,10 @@ function About() {
             href={links.github}
             target="_blank"
             rel="noreferrer"
+            data-umami-event="reseau-social"
+            data-umami-event-reseau="GitHub"
+            data-umami-event-page="/qui-suis-je"
+            data-umami-event-emplacement="projets"
             className="text-brand-600 hover:underline"
           >
             Le reste des dépôts sur GitHub →
@@ -460,6 +468,9 @@ function Hero() {
           <div className="mt-8 flex flex-wrap gap-3 motion-safe:animate-hero-rise motion-safe:[animation-delay:400ms]">
             <Link
               to="/contact"
+              data-umami-event="cta-contact"
+              data-umami-event-page="/qui-suis-je"
+              data-umami-event-emplacement="haut-de-page"
               className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white transition-all hover:-translate-y-0.5 hover:bg-brand-600 hover:shadow-lg hover:shadow-brand-500/30"
             >
               Parler de votre projet
@@ -474,6 +485,10 @@ function Hero() {
               href={links.github}
               target="_blank"
               rel="noreferrer"
+              data-umami-event="reseau-social"
+              data-umami-event-reseau="GitHub"
+              data-umami-event-page="/qui-suis-je"
+              data-umami-event-emplacement="haut-de-page"
               className="rounded-lg px-5 py-2.5 text-sm font-medium text-stone-600 transition-colors hover:text-stone-900"
             >
               GitHub ↗
