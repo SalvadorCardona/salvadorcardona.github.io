@@ -3,7 +3,7 @@ import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 import { PostCoverImage } from '../../components/PostCoverImage'
 import { formatDate, getCover, getPost, sortedPosts } from '../../content/posts'
 import { links } from '../../content/profile'
-import { SITE_URL, seo } from '../../lib/seo'
+import { AUTHOR_NAME, SITE_URL, seo } from '../../lib/seo'
 
 /**
  * Un article est rendu à la requête depuis `content/posts` ; un slug inconnu
@@ -33,6 +33,7 @@ export const Route = createFileRoute('/blog/$slug')({
           type: 'article',
           publishedTime: loaderData.date,
           image: loaderData.cover,
+          signature: AUTHOR_NAME,
         })
       : {},
   component: PostPage,

@@ -6,10 +6,16 @@
  */
 
 export const SITE_URL = 'https://cardona.digital'
-export const SITE_NAME = 'Salvador Cardona'
+export const SITE_NAME = 'Agence Cardona'
+
+/** Le fondateur, qui signe `/qui-suis-je` et les articles. */
+export const AUTHOR_NAME = 'Salvador Cardona'
 
 /** Identifiant stable de l'auteur dans les données structurées. */
 export const PERSON_ID = `${SITE_URL}/#person`
+
+/** Identifiant stable de l'agence, décrite en entier sur l'accueil. */
+export const AGENCY_ID = `${SITE_URL}/#agence`
 
 type SeoInput = {
   title: string
@@ -22,6 +28,8 @@ type SeoInput = {
   image?: string
   /** Données structurées schema.org, un objet par bloc `<script>`. */
   jsonLd?: Array<Record<string, unknown>>
+  /** Qui signe le titre : l'agence, sauf les pages écrites par le fondateur. */
+  signature?: string
 }
 
 export function seo({
@@ -32,9 +40,10 @@ export function seo({
   publishedTime,
   image,
   jsonLd = [],
+  signature = SITE_NAME,
 }: SeoInput) {
   const url = `${SITE_URL}${path}`
-  const fullTitle = path === '/' ? title : `${title} — ${SITE_NAME}`
+  const fullTitle = path === '/' ? title : `${title} — ${signature}`
 
   const meta = [
     { title: fullTitle },
@@ -81,9 +90,9 @@ export function personJsonLd() {
     '@context': 'https://schema.org',
     '@type': 'Person',
     '@id': PERSON_ID,
-    name: SITE_NAME,
+    name: AUTHOR_NAME,
     url: SITE_URL,
-    jobTitle: 'Développeur web full-stack indépendant',
+    jobTitle: 'Fondateur de l’agence Cardona, Lead Dev IA',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Lyon',
@@ -114,6 +123,27 @@ export function personJsonLd() {
       'https://www.linkedin.com/in/salvador-cardona-70911113a/',
       'https://x.com/salvadevme',
     ],
+  }
+}
+
+/**
+ * L'agence, en version courte, pour les pages qui la citent sans la décrire :
+ * prestataire d'un `Service`, entreprise de `/services`.
+ */
+export function agencyJsonLd() {
+  return {
+    '@type': 'ProfessionalService',
+    '@id': AGENCY_ID,
+    name: SITE_NAME,
+    url: SITE_URL,
+    logo: `${SITE_URL}/logo.svg`,
+    founder: { '@id': PERSON_ID },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Lyon',
+      addressCountry: 'FR',
+    },
+    areaServed: 'France',
   }
 }
 

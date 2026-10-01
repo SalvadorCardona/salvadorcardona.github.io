@@ -5,8 +5,8 @@ import { ServiceCard } from '../../components/ServiceCard'
 import { ServiceIcon } from '../../components/ServiceIcon'
 import { interventions, servicePath, services } from '../../content/services'
 import {
-  PERSON_ID,
   SITE_URL,
+  agencyJsonLd,
   breadcrumbJsonLd,
   personJsonLd,
   seo,
@@ -24,7 +24,7 @@ export const Route = createFileRoute('/services/')({
         {
           '@context': 'https://schema.org',
           '@type': 'ItemList',
-          name: 'Services de Salvador Cardona',
+          name: 'Services de l’agence Cardona',
           itemListElement: services.map((service, index) => ({
             '@type': 'ListItem',
             position: index + 1,
@@ -34,17 +34,7 @@ export const Route = createFileRoute('/services/')({
         },
         {
           '@context': 'https://schema.org',
-          '@type': 'ProfessionalService',
-          '@id': `${SITE_URL}/services#business`,
-          name: 'Salvador Cardona — développement web, audit et IA',
-          url: `${SITE_URL}/services`,
-          founder: { '@id': PERSON_ID },
-          address: {
-            '@type': 'PostalAddress',
-            addressLocality: 'Lyon',
-            addressCountry: 'FR',
-          },
-          areaServed: 'France',
+          ...agencyJsonLd(),
           priceRange: 'Sur devis',
         },
         breadcrumbJsonLd([
