@@ -42,6 +42,7 @@ const REQUIRED_PAGES = [
   '/services/developpement-web',
   '/services/audit-securite-application',
   '/services/integration-ia',
+  '/services/formation-ia',
 ]
 
 /** Les anciennes adresses et les slashs finaux, renvoyés en 301 exactement là. */

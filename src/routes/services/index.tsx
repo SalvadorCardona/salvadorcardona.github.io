@@ -15,9 +15,9 @@ import {
 export const Route = createFileRoute('/services/')({
   head: () =>
     seo({
-      title: 'Services : développement web, audit de sécurité et intégration IA',
+      title: 'Services : développement web, audit de sécurité, intégration et formation IA',
       description:
-        'Lead dev freelance à Lyon : Symfony / API Platform, React et TypeScript, IA en production (RAG, OCR, Whisper, agents), DevOps Docker, audit de sécurité.',
+        'Lead dev freelance à Lyon : Symfony / API Platform, React et TypeScript, IA en production (RAG, OCR, Whisper, agents), DevOps Docker, audit de sécurité, formation IA.',
       path: '/services',
       jsonLd: [
         personJsonLd(),
@@ -87,10 +87,10 @@ function ServicesIndex() {
           Services
         </p>
         <h1 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight text-balance text-stone-900 sm:text-5xl">
-          Développement web, audit de sécurité et intégration IA
+          Développement web, audit de sécurité, intégration et formation IA
         </h1>
         <p className="mt-6 max-w-2xl text-xl leading-relaxed text-pretty text-stone-600">
-          Trois prestations, un seul interlocuteur, à Lyon ou à distance, au
+          Quatre prestations, un seul interlocuteur, à Lyon ou à distance, au
           forfait ou en régie.
         </p>
       </header>
@@ -99,7 +99,7 @@ function ServicesIndex() {
         <h2 id="prestations" className="sr-only">
           Les prestations
         </h2>
-        <div className="grid gap-5 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2">
           {services.map((service) => (
             <ServiceCard key={service.slug} service={service} />
           ))}
