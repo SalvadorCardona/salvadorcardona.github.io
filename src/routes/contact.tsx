@@ -68,6 +68,18 @@ export const Route = createFileRoute('/contact')({
   component: Contact,
 })
 
+declare global {
+  interface Window {
+    // Absent quand le script Umami est bloqué : chaque appel reste optionnel.
+    umami?: { track: (event: string, data?: Record<string, string>) => void }
+  }
+}
+
+// Seuls des choix de liste partent vers Umami : ni nom, ni e-mail, ni message.
+function track(event: string, data: Record<string, string>) {
+  window.umami?.track(event, data)
+}
+
 type Status =
   | { state: 'idle' }
   | { state: 'sending' }
@@ -112,6 +124,10 @@ function Contact() {
     const found = validateContact(input)
     setErrors(found)
     if (Object.keys(found).length > 0) {
+      track('contact-erreur', {
+        cause: 'validation',
+        champs: Object.keys(found).join(','),
+      })
       const first = Object.keys(found)[0]
       form.querySelector<HTMLElement>(`[name="${first}"]`)?.focus()
       return
@@ -124,13 +140,24 @@ function Contact() {
         form.reset()
         setCallRequested(false)
         setStatus({ state: 'sent', callRequested: input.callRequested })
+        track('contact-envoye', {
+          type: input.projectType,
+          appel: input.callRequested ? 'oui' : 'non',
+          budget: input.budget || 'non précisé',
+        })
       } else if (result.status === 'invalid') {
         setErrors(result.errors)
         setStatus({ state: 'idle' })
+        track('contact-erreur', {
+          cause: 'validation',
+          champs: Object.keys(result.errors).join(','),
+        })
       } else {
         setStatus({ state: 'error', message: result.message })
+        track('contact-erreur', { cause: 'serveur' })
       }
     } catch {
+      track('contact-erreur', { cause: 'reseau' })
       setStatus({
         state: 'error',
         message:
@@ -158,6 +185,9 @@ function Contact() {
         <div className="mt-10 space-y-3">
           <a
             href={`mailto:${links.email}`}
+            data-umami-event="mailto"
+            data-umami-event-page="/contact"
+            data-umami-event-emplacement="haut-de-page"
             className="flex flex-col gap-1 rounded-xl border border-stone-200 p-5 transition-colors hover:border-stone-300 hover:bg-stone-50"
           >
             <span className="font-semibold text-stone-900">Par e-mail</span>
@@ -187,7 +217,13 @@ function Contact() {
               >
                 Le formulaire n’est pas encore branché. En attendant, écrivez-nous
                 à{' '}
-                <a href={`mailto:${links.email}`} className="font-semibold underline">
+                <a
+                  href={`mailto:${links.email}`}
+                  data-umami-event="mailto"
+                  data-umami-event-page="/contact"
+                  data-umami-event-emplacement="formulaire-indisponible"
+                  className="font-semibold underline"
+                >
                   {links.email}
                 </a>
                 .
@@ -362,7 +398,13 @@ function Contact() {
                 className="mt-6 rounded-xl border border-red-200 bg-red-50 p-4 text-sm leading-relaxed text-red-800"
               >
                 {status.message}{' '}
-                <a href={`mailto:${links.email}`} className="font-semibold underline">
+                <a
+                  href={`mailto:${links.email}`}
+                  data-umami-event="mailto"
+                  data-umami-event-page="/contact"
+                  data-umami-event-emplacement="erreur-envoi"
+                  className="font-semibold underline"
+                >
                   {links.email}
                 </a>
               </p>

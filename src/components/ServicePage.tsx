@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useLocation } from '@tanstack/react-router'
 
 import { formatDate, getPost } from '../content/posts'
 import { profile } from '../content/profile'
@@ -100,6 +100,9 @@ export function ServicePage({ slug }: { slug: string }) {
             <Link
               to="/contact"
               search={{ type: service.projectType }}
+              data-umami-event="cta-contact"
+              data-umami-event-page={servicePath(service.slug)}
+              data-umami-event-emplacement="haut-de-page"
               className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
             >
               Parler de votre projet
@@ -372,6 +375,7 @@ function Check() {
  * une page service, le formulaire s'ouvre avec le type de projet coché.
  */
 export function CallToAction({ projectType }: { projectType?: ProjectType }) {
+  const { pathname } = useLocation()
   return (
     <section className="my-12 rounded-3xl bg-brand-500 px-8 py-12 text-white sm:px-12">
       <h2 className="text-2xl font-bold tracking-tight text-balance sm:text-3xl">
@@ -386,6 +390,9 @@ export function CallToAction({ projectType }: { projectType?: ProjectType }) {
         <Link
           to="/contact"
           search={{ type: projectType }}
+          data-umami-event="cta-contact"
+          data-umami-event-page={pathname}
+          data-umami-event-emplacement="bas-de-page"
           className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-brand-700 transition-colors hover:bg-brand-50"
         >
           Parler de votre projet
@@ -393,6 +400,10 @@ export function CallToAction({ projectType }: { projectType?: ProjectType }) {
         <Link
           to="/contact"
           search={{ appel: 1, type: projectType }}
+          data-umami-event="cta-contact"
+          data-umami-event-page={pathname}
+          data-umami-event-emplacement="bas-de-page"
+          data-umami-event-appel="oui"
           className="rounded-full border border-white/50 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-white hover:bg-white/10"
         >
           Demander un appel découverte
