@@ -1,5 +1,6 @@
 import type { ServiceIllustration as ServiceIllustrationName } from '../content/services'
 import { AiIntegrationIllustration } from './illustrations/AiIntegrationIllustration'
+import { AiTrainingIllustration } from './illustrations/AiTrainingIllustration'
 import { SecurityAuditIllustration } from './illustrations/SecurityAuditIllustration'
 import { WebDevelopmentIllustration } from './illustrations/WebDevelopmentIllustration'
 
@@ -15,6 +16,7 @@ const illustrations: Record<
   'web-development': WebDevelopmentIllustration,
   'security-audit': SecurityAuditIllustration,
   'ai-integration': AiIntegrationIllustration,
+  'ai-training': AiTrainingIllustration,
 }
 
 export function ServiceIllustration({

@@ -69,7 +69,7 @@ export function InterventionCard({
   )
 }
 
-/** La grille complète : trois prestations, trois interventions. */
+/** La grille complète : les prestations, puis les interventions. */
 export function ServicesGrid() {
   return (
     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

@@ -16,7 +16,7 @@ import { ServiceCard } from './ServiceCard'
 import { ServiceIllustration } from './ServiceIllustration'
 
 /**
- * Le gabarit commun des trois pages service. Une seule structure HTML, un
+ * Le gabarit commun des pages service. Une seule structure HTML, un
  * seul jeu de données structurées : ce qui change d'une page à l'autre vit
  * dans `content/services.ts`.
  */

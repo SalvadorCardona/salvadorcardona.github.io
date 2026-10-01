@@ -2,7 +2,7 @@
  * Les prestations proposées : une entrée par page `/services/<slug>`, plus les
  * interventions ponctuelles listées sur `/services`.
  *
- * Tout est en dur, comme le reste du contenu. Les trois pages service partagent
+ * Tout est en dur, comme le reste du contenu. Les pages service partagent
  * le même gabarit (`ServicePage`) : changer un texte ici suffit, la structure
  * HTML et les données structurées (JSON-LD) suivent.
  *
@@ -16,7 +16,11 @@ import type { ProjectType } from '../lib/contact'
 
 export type ServiceIcon = 'code' | 'shield' | 'sparkles' | 'api' | 'workflow' | 'compass'
 
-export type ServiceIllustration = 'web-development' | 'security-audit' | 'ai-integration'
+export type ServiceIllustration =
+  | 'web-development'
+  | 'security-audit'
+  | 'ai-integration'
+  | 'ai-training'
 
 export type ServiceFaq = {
   question: string
@@ -430,6 +434,134 @@ export const services: Array<Service> = [
       'suivre-sa-consommation-claude-code-sous-linux',
     ],
   },
+  {
+    slug: 'formation-ia',
+    name: 'Formation IA',
+    title: 'Formation IA à Lyon : agents, LLM et outils pour développeurs et équipes métier',
+    description:
+      'Formation IA à Lyon ou à distance : Claude Code en équipe, agents LLM et MCP, RAG, n8n, Whisper, Ollama. Intra-entreprise, d’une demi-journée à trois jours.',
+    excerpt:
+      'Former vos équipes ou vos stagiaires à l’IA appliquée : assistant de code, agents et MCP, RAG, n8n. Sur vos outils, à Lyon ou à distance.',
+    icon: 'compass',
+    illustration: 'ai-training',
+    lead:
+      'Des développeurs et des équipes métier qui repartent en sachant se servir de l’IA sur leur propre travail, pas seulement en ayant vu une démonstration.',
+    context: [
+      'Les outils d’IA sont entrés dans les équipes plus vite que la façon de s’en servir. Un assistant de code mal utilisé produit du code que personne ne relit ; un modèle de langage branché sans garde-fou sur une API fait ce qu’on ne lui a pas demandé. La formation que je propose part de ces usages concrets, pas d’une présentation générale de l’IA.',
+      'J’enseigne ce que je pratique : chez Animalink, des agents n8n branchés sur l’API Symfony, de l’analyse documentaire avec Mistral, un chatbot produit ; sur mon temps libre, des outils publics comme ticket-runner, qui fait jouer un ticket Notion par Claude Code jusqu’à la pull request, ou Whisper Desk, une dictée vocale hors ligne. Les exercices viennent de là, et de vos propres outils.',
+      'Le programme se compose à partir de modules, selon le public : des développeurs qui veulent intégrer un modèle dans leur code, ou des équipes métier qui veulent automatiser une tâche sans écrire d’application. J’interviens aussi pour le compte d’un organisme de formation, sur un module de son programme ou sur un module que nous construisons ensemble.',
+    ],
+    forWho: [
+      'Une équipe de développement qui utilise déjà un assistant de code, chacun à sa manière, et veut des pratiques communes : contexte, relecture, sécurité.',
+      'Une équipe technique qui doit brancher un modèle de langage sur son application : API, agents, outils MCP, recherche dans sa documentation.',
+      'Une équipe métier qui veut automatiser une tâche répétitive avec n8n, ou transcrire et résumer ses réunions, sans attendre les développeurs.',
+      'Un organisme de formation, dans la région lyonnaise ou à distance, qui cherche un intervenant développeur pour un module IA.',
+    ],
+    includes: [
+      {
+        title: 'Claude Code en équipe',
+        description:
+          'Utiliser un assistant de code au quotidien : lui donner le bon contexte (CLAUDE.md, conventions), découper une tâche, relire ce qu’il produit, fixer ce qu’il a le droit de faire.',
+      },
+      {
+        title: 'Brancher un LLM sur une API',
+        description:
+          'Appeler un modèle depuis son code, lui donner des outils, construire un agent qui agit par vos API avec des droits limités, exposer ses outils par un serveur MCP.',
+      },
+      {
+        title: 'RAG sur sa documentation',
+        description:
+          'Faire répondre un modèle depuis vos documents : découpage, indexation, recherche, citation des sources, et mesure de la qualité des réponses.',
+      },
+      {
+        title: 'Automatisations n8n',
+        description:
+          'Construire un flux entre vos outils (CRM, messagerie, Notion) avec une étape de modèle de langage là où elle apporte quelque chose, et une validation humaine là où il le faut.',
+      },
+      {
+        title: 'Transcription avec Whisper',
+        description:
+          'Transcrire réunions, entretiens ou dictées, en local ou par API, puis en tirer un compte rendu ou une liste d’actions.',
+      },
+      {
+        title: 'IA locale avec Ollama',
+        description:
+          'Faire tourner un modèle sur un poste ou un serveur de l’entreprise quand la donnée ne doit pas sortir : choix du modèle, matériel nécessaire, limites.',
+      },
+    ],
+    process: [
+      {
+        title: 'Un premier échange',
+        description:
+          'Une heure pour connaître le public, son niveau, ses outils et ce qu’il doit savoir faire à la fin. Gratuit et sans engagement.',
+      },
+      {
+        title: 'Un programme écrit',
+        description:
+          'Les modules retenus, les objectifs, la durée (d’une demi-journée à trois jours) et le lieu : dans vos locaux, à Lyon et dans la région, ou à distance.',
+      },
+      {
+        title: 'Des sessions pratiques',
+        description:
+          'Peu de diapositives, beaucoup d’exercices : sur vos outils et vos données quand c’est possible, sur des exemples préparés sinon.',
+      },
+      {
+        title: 'Des supports qui restent',
+        description:
+          'Les supports, les exercices et leurs corrigés restent à l’équipe, pour refaire et aller plus loin après la session.',
+      },
+    ],
+    deliverables: [
+      'Un programme écrit, adapté au public et à ses outils.',
+      'Les supports de la formation, remis aux participants.',
+      'Des exercices sur vos propres outils, avec leurs corrigés.',
+      'Les exemples de code et de flux réalisés pendant la session.',
+    ],
+    stack: [
+      'Claude Code',
+      'Claude',
+      'Mistral',
+      'OpenRouter',
+      'MCP',
+      'RAG',
+      'n8n',
+      'Whisper',
+      'Ollama',
+      'Python',
+      'TypeScript',
+    ],
+    faq: [
+      {
+        question: 'Quelle durée prévoir ?',
+        answer:
+          'D’une demi-journée pour prendre en main un outil à trois jours pour un parcours complet, du premier appel à un modèle jusqu’à un agent branché sur une API. La durée est fixée au premier échange, selon le public et les objectifs.',
+      },
+      {
+        question: 'Faut-il savoir programmer ?',
+        answer:
+          'Pas pour tous les modules. Les automatisations n8n, la transcription et l’usage d’un assistant s’adressent aussi aux équipes métier. Brancher un modèle sur une API, le RAG ou un serveur MCP demandent en revanche des bases de développement.',
+      },
+      {
+        question: 'La formation se fait-elle sur place ou à distance ?',
+        answer:
+          'Les deux. En intra-entreprise, dans vos locaux à Lyon et dans la région, ou à distance pour une équipe répartie.',
+      },
+      {
+        question: 'Intervenez-vous pour un organisme de formation ?',
+        answer:
+          'Oui, comme intervenant sur un module IA de votre programme, ou pour construire ce module avec vous. Le contenu, la durée et le format se calent au premier échange.',
+      },
+      {
+        question: 'Les exercices peuvent-ils se faire sur nos données ?',
+        answer:
+          'Oui, c’est même préférable : on travaille sur des documents ou un jeu de données de test choisis avec vous. Si rien ne doit sortir de l’entreprise, les exercices se font avec un modèle local (Ollama).',
+      },
+    ],
+    relatedPosts: [
+      'faire-jouer-ses-tickets-par-un-agent',
+      'suivre-sa-consommation-claude-code-sous-linux',
+    ],
+  },
 ]
 
 /**
@@ -468,7 +600,7 @@ export const interventions: Array<Intervention> = [
     excerpt:
       'Choix de stack, relecture d’architecture, accompagnement d’une équipe sur Symfony, React ou les agents LLM.',
     icon: 'compass',
-    service: 'developpement-web',
+    service: 'formation-ia',
   },
 ]
 

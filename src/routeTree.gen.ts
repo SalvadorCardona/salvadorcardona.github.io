@@ -23,6 +23,7 @@ import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
 import { Route as ServicesIndexRouteImport } from './routes/services/index'
 import { Route as ServicesAuditSecuriteApplicationRouteImport } from './routes/services/audit-securite-application'
 import { Route as ServicesDeveloppementWebRouteImport } from './routes/services/developpement-web'
+import { Route as ServicesFormationIaRouteImport } from './routes/services/formation-ia'
 import { Route as ServicesIntegrationIaRouteImport } from './routes/services/integration-ia'
 
 const IndexRoute = IndexRouteImport.update({
@@ -97,6 +98,11 @@ const ServicesDeveloppementWebRoute =
     path: '/services/developpement-web',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ServicesFormationIaRoute = ServicesFormationIaRouteImport.update({
+  id: '/services/formation-ia',
+  path: '/services/formation-ia',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesIntegrationIaRoute = ServicesIntegrationIaRouteImport.update({
   id: '/services/integration-ia',
   path: '/services/integration-ia',
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
   '/services/developpement-web': typeof ServicesDeveloppementWebRoute
+  '/services/formation-ia': typeof ServicesFormationIaRoute
   '/services/integration-ia': typeof ServicesIntegrationIaRoute
   '/blog/': typeof BlogIndexRoute
   '/services/': typeof ServicesIndexRoute
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/blog/$slug': typeof BlogSlugRoute
   '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
   '/services/developpement-web': typeof ServicesDeveloppementWebRoute
+  '/services/formation-ia': typeof ServicesFormationIaRoute
   '/services/integration-ia': typeof ServicesIntegrationIaRoute
   '/blog': typeof BlogIndexRoute
   '/services': typeof ServicesIndexRoute
@@ -151,6 +159,7 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
   '/services/developpement-web': typeof ServicesDeveloppementWebRoute
+  '/services/formation-ia': typeof ServicesFormationIaRoute
   '/services/integration-ia': typeof ServicesIntegrationIaRoute
   '/blog/': typeof BlogIndexRoute
   '/services/': typeof ServicesIndexRoute
@@ -170,6 +179,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/services/audit-securite-application'
     | '/services/developpement-web'
+    | '/services/formation-ia'
     | '/services/integration-ia'
     | '/blog/'
     | '/services/'
@@ -187,6 +197,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/services/audit-securite-application'
     | '/services/developpement-web'
+    | '/services/formation-ia'
     | '/services/integration-ia'
     | '/blog'
     | '/services'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/services/audit-securite-application'
     | '/services/developpement-web'
+    | '/services/formation-ia'
     | '/services/integration-ia'
     | '/blog/'
     | '/services/'
@@ -222,6 +234,7 @@ export interface RootRouteChildren {
   BlogSlugRoute: typeof BlogSlugRoute
   ServicesAuditSecuriteApplicationRoute: typeof ServicesAuditSecuriteApplicationRoute
   ServicesDeveloppementWebRoute: typeof ServicesDeveloppementWebRoute
+  ServicesFormationIaRoute: typeof ServicesFormationIaRoute
   ServicesIntegrationIaRoute: typeof ServicesIntegrationIaRoute
   BlogIndexRoute: typeof BlogIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
@@ -327,6 +340,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesDeveloppementWebRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/formation-ia': {
+      id: '/services/formation-ia'
+      path: '/services/formation-ia'
+      fullPath: '/services/formation-ia'
+      preLoaderRoute: typeof ServicesFormationIaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services/integration-ia': {
       id: '/services/integration-ia'
       path: '/services/integration-ia'
@@ -350,6 +370,7 @@ const rootRouteChildren: RootRouteChildren = {
   BlogSlugRoute: BlogSlugRoute,
   ServicesAuditSecuriteApplicationRoute: ServicesAuditSecuriteApplicationRoute,
   ServicesDeveloppementWebRoute: ServicesDeveloppementWebRoute,
+  ServicesFormationIaRoute: ServicesFormationIaRoute,
   ServicesIntegrationIaRoute: ServicesIntegrationIaRoute,
   BlogIndexRoute: BlogIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,

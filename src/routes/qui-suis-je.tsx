@@ -78,7 +78,7 @@ function About() {
       <Section
         title="Services"
         id="services"
-        intro="Trois prestations avec leur page dédiée, et des interventions plus courtes sur un sujet précis."
+        intro="Quatre prestations avec leur page dédiée, et des interventions plus courtes sur un sujet précis."
       >
         <ServicesGrid />
         <p className="mt-6 text-sm">
