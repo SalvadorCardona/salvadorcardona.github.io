@@ -112,9 +112,9 @@ docker build -t cardona-digital .   # si le Dockerfile ou les dépendances chang
 
 Le build écrit `.output/`, puis `scripts/postbuild.mjs` démarre le serveur
 construit et vérifie `/healthz`, les pages fixes (`/` — l'agence —,
-`/qui-suis-je`, `/services` et ses trois pages service, `/agence` et
-`/projets` — anciennes adresses qui renvoient ailleurs —, `/blog`,
-`/contact`, `/404`), la redirection 301 de `/rendez-vous` vers `/contact`,
+`/qui-suis-je`, `/services` et ses trois pages service, `/blog`,
+`/contact`), les redirections 301 des anciennes adresses (`/rendez-vous`,
+`/agence`, `/projets`, `/404`) et des slashs finaux (`/blog/`, `/services/`),
 chaque URL du sitemap (donc chaque
 article) et le 404 d'une adresse inconnue. Il échoue aussi si une illustration
 déclarée dans `covers.json` ou un logo déclaré dans `experiences.json` n'a pas

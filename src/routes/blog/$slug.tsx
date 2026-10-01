@@ -5,9 +5,9 @@ import { links } from '../../content/profile'
 import { SITE_URL, seo } from '../../lib/seo'
 
 /**
- * Les routes paramétrées ne sont pas découvertes automatiquement par le
- * prérendu : c'est le crawler (`crawlLinks`) qui trouve ces URL en suivant les
- * liens de `/blog`. Tout article listé sur l'index est donc prérendu.
+ * Un article est rendu à la requête depuis `content/posts` ; un slug inconnu
+ * tombe sur `NotFound` (`__root.tsx`), avec le statut 404. Le sitemap liste
+ * chaque article.
  */
 export const Route = createFileRoute('/blog/$slug')({
   loader: ({ params }) => {
