@@ -170,7 +170,7 @@ function Hero() {
               data-umami-event="cta-contact"
               data-umami-event-page="/"
               data-umami-event-emplacement="haut-de-page"
-              className="group inline-flex items-center gap-2 rounded-full bg-brand-500 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-brand-500/25 transition-all hover:-translate-y-0.5 hover:bg-brand-600 hover:shadow-xl hover:shadow-brand-500/30"
+              className="group inline-flex items-center gap-2 rounded-full bg-brand-600 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-brand-500/25 transition-all hover:-translate-y-0.5 hover:bg-brand-700 hover:shadow-xl hover:shadow-brand-500/30"
             >
               Parler de votre projet
               <span
@@ -418,7 +418,7 @@ function WorkDeck() {
         })}
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 flex h-8 items-center justify-center">
+      <div className="absolute inset-x-0 bottom-0 z-40 flex h-8 items-center justify-center gap-1">
         {works.map((work, index) => (
           <button
             key={work.image}
@@ -426,7 +426,7 @@ function WorkDeck() {
             onClick={() => show(index)}
             aria-label={`Réalisation ${index + 1} sur ${works.length} : ${work.name}, ${work.kind}`}
             aria-current={index === active ? true : undefined}
-            className="group/dot flex h-6 items-center px-1"
+            className="group/dot flex h-6 min-w-6 items-center justify-center px-1"
           >
             <span
               className={`block h-1.5 rounded-full transition-all duration-300 ${
@@ -1061,14 +1061,11 @@ function Figures() {
       <dl className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
         {figures.map((figure) => (
           <div key={figure.label}>
-            <dt className="sr-only">{figure.label}</dt>
-            <dd>
-              <span className="block font-display text-5xl font-extrabold tracking-tight text-brand-600 lg:text-6xl">
-                {figure.value}
-              </span>
-              <span className="mt-2 block text-sm leading-relaxed text-stone-600">
-                {figure.label}
-              </span>
+            <dt className="font-display text-5xl font-extrabold tracking-tight text-brand-600 lg:text-6xl">
+              {figure.value}
+            </dt>
+            <dd className="mt-2 text-sm leading-relaxed text-stone-600">
+              {figure.label}
             </dd>
           </div>
         ))}
@@ -1116,13 +1113,13 @@ function OfferCard({
   offer: AgencyOffer
   featured: boolean
 }) {
-  const muted = featured ? 'text-white/80' : 'text-stone-500'
+  const muted = featured ? 'text-white' : 'text-stone-500'
   return (
     <article
       id={offer.id}
       className={`relative flex scroll-mt-24 flex-col rounded-[2rem] p-8 sm:p-10 ${
         featured
-          ? 'bg-brand-500 text-white shadow-2xl shadow-brand-500/30'
+          ? 'bg-brand-600 text-white shadow-2xl shadow-brand-500/30'
           : 'border border-stone-200 bg-white text-stone-900'
       }`}
     >
@@ -1146,7 +1143,7 @@ function OfferCard({
         {offer.name}
       </h3>
       <p
-        className={`mt-2 leading-relaxed ${featured ? 'text-white/90' : 'text-stone-600'}`}
+        className={`mt-2 leading-relaxed ${featured ? 'text-white' : 'text-stone-600'}`}
       >
         {offer.tagline}
       </p>
@@ -1167,7 +1164,7 @@ function OfferCard({
         Pour qui
       </h4>
       <p
-        className={`mt-2 text-sm leading-relaxed ${featured ? 'text-white/90' : 'text-stone-600'}`}
+        className={`mt-2 text-sm leading-relaxed ${featured ? 'text-white' : 'text-stone-600'}`}
       >
         {offer.forWho}
       </p>
@@ -1570,7 +1567,7 @@ function Faq() {
 function FinalCall() {
   return (
     <section className="mx-auto mt-24 max-w-6xl px-6 lg:mt-32">
-      <div className="relative overflow-hidden rounded-[2.5rem] bg-brand-500 px-8 py-16 text-white sm:px-14 sm:py-20">
+      <div className="relative overflow-hidden rounded-[2.5rem] bg-brand-600 px-8 py-16 text-white sm:px-14 sm:py-20">
         <div
           aria-hidden="true"
           className="absolute -top-24 -right-24 h-80 w-80 rounded-full border-[3rem] border-white/10"
@@ -1582,7 +1579,7 @@ function FinalCall() {
         <h2 className="relative max-w-3xl text-4xl leading-[1.05] font-extrabold tracking-tight text-balance sm:text-6xl">
           Un projet ? Parlons-en autour d’un café.
         </h2>
-        <p className="relative mt-6 max-w-xl text-lg text-pretty text-white/90">
+        <p className="relative mt-6 max-w-xl text-lg text-pretty text-white">
           Une heure pour comprendre votre activité et vous dire ce qu’on ferait
           à votre place. Gratuit, sans engagement, à Lyon ou en visio.
         </p>
