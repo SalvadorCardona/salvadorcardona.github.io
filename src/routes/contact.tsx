@@ -2,9 +2,10 @@ import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 
-import { agency } from '../content/agency'
+import type { AgencyOffer } from '../content/agency'
+import { agency, offers } from '../content/agency'
 import { links } from '../content/profile'
-import type { ContactErrors, ContactInput } from '../lib/contact'
+import type { ContactErrors, ContactInput, ProjectType } from '../lib/contact'
 import {
   AVAILABILITY_MAX,
   MESSAGE_MAX,
@@ -16,11 +17,31 @@ import {
 } from '../lib/contact'
 import { seo } from '../lib/seo'
 
+type ContactSearch = {
+  appel?: 1
+  type?: ProjectType
+  forfait?: AgencyOffer['id']
+}
+
+/** Le budget coché d'avance quand on arrive depuis un forfait. */
+const SUBSCRIPTION_BUDGET: (typeof budgets)[number] =
+  'Abonnement mensuel (30 € ou 100 €)'
+
 export const Route = createFileRoute('/contact')({
-  // `?appel=1` coche d'avance la case « appel découverte » : c'est là que
-  // mènent les boutons « Réserver un appel » et l'ancienne adresse /rendez-vous.
-  validateSearch: (search: Record<string, unknown>): { appel?: 1 } =>
-    String(search.appel) === '1' ? { appel: 1 } : {},
+  // Trois paramètres préremplissent le formulaire selon la page d'origine :
+  // `?appel=1` coche la case « appel découverte » (boutons « Demander un appel
+  // découverte » et ancienne adresse /rendez-vous), `?type=` le type de projet
+  // (pages service), `?forfait=` le type et le budget (cartes de forfait). Une
+  // valeur inconnue est ignorée.
+  validateSearch: (search: Record<string, unknown>): ContactSearch => {
+    const type = projectTypes.find((item) => item.value === search.type)
+    const offer = offers.find((item) => item.id === search.forfait)
+    return {
+      ...(String(search.appel) === '1' ? { appel: 1 as const } : {}),
+      ...(type ? { type: type.value } : {}),
+      ...(offer ? { forfait: offer.id } : {}),
+    }
+  },
   // Rendue à chaque requête, jamais prérendue : la page dépend des variables
   // d'environnement du conteneur (Brevo configuré ou non, clé Turnstile).
   loader: () => getContactSettings(),
@@ -76,8 +97,10 @@ function readForm(form: HTMLFormElement): ContactInput {
 
 function Contact() {
   const settings = Route.useLoaderData()
-  const { appel } = Route.useSearch()
-  const [callRequested, setCallRequested] = useState(appel === 1)
+  const search = Route.useSearch()
+  const offer = offers.find((item) => item.id === search.forfait)
+  const initialType = search.type ?? offer?.projectType
+  const [callRequested, setCallRequested] = useState(search.appel === 1)
   const [status, setStatus] = useState<Status>({ state: 'idle' })
   const [errors, setErrors] = useState<ContactErrors>({})
 
@@ -215,7 +238,7 @@ function Contact() {
                 <select
                   id="budget"
                   name="budget"
-                  defaultValue=""
+                  defaultValue={offer ? SUBSCRIPTION_BUDGET : ''}
                   {...invalid('budget', errors.budget)}
                   className={`${fieldClass} ${borderFor(errors.budget)}`}
                 >
@@ -245,6 +268,7 @@ function Contact() {
                       type="radio"
                       name="projectType"
                       value={type.value}
+                      defaultChecked={type.value === initialType}
                       required
                       className="peer sr-only"
                     />
@@ -361,6 +385,12 @@ function Contact() {
                 'Envoyer le message'
               )}
             </button>
+
+            <p className="mt-4 text-sm leading-relaxed text-stone-600">
+              <span className="font-semibold text-stone-900">Et ensuite ?</span>{' '}
+              L’agence vous répond sous deux jours ouvrés, et le premier appel
+              est offert.
+            </p>
 
             <p className="mt-4 text-xs leading-relaxed text-stone-500">
               Vos informations servent uniquement à répondre à votre demande.

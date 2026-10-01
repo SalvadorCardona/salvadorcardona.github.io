@@ -4,6 +4,7 @@ import { formatDate, getPost } from '../content/posts'
 import { profile } from '../content/profile'
 import type { Service } from '../content/services'
 import { getService, servicePath, services } from '../content/services'
+import type { ProjectType } from '../lib/contact'
 import {
   PERSON_ID,
   SITE_URL,
@@ -98,9 +99,10 @@ export function ServicePage({ slug }: { slug: string }) {
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               to="/contact"
+              search={{ type: service.projectType }}
               className="rounded-full bg-brand-500 px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
             >
-              Discuter de votre projet
+              Parler de votre projet
             </Link>
             <a
               href="#deroulement"
@@ -263,7 +265,7 @@ export function ServicePage({ slug }: { slug: string }) {
         </Section>
       )}
 
-      <CallToAction />
+      <CallToAction projectType={service.projectType} />
 
       <section className="py-12">
         <h2 className="text-lg font-semibold tracking-tight text-stone-900">
@@ -365,8 +367,11 @@ function Check() {
   )
 }
 
-/** Le bandeau de fin de page, commun aux pages service et à `/services`. */
-export function CallToAction() {
+/**
+ * Le bandeau de fin de page, commun aux pages service et à `/services`. Sur
+ * une page service, le formulaire s'ouvre avec le type de projet coché.
+ */
+export function CallToAction({ projectType }: { projectType?: ProjectType }) {
   return (
     <section className="my-12 rounded-3xl bg-brand-500 px-8 py-12 text-white sm:px-12">
       <h2 className="text-2xl font-bold tracking-tight text-balance sm:text-3xl">
@@ -380,16 +385,17 @@ export function CallToAction() {
       <div className="mt-8 flex flex-wrap gap-3">
         <Link
           to="/contact"
+          search={{ type: projectType }}
           className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-brand-700 transition-colors hover:bg-brand-50"
         >
-          Me contacter
+          Parler de votre projet
         </Link>
         <Link
           to="/contact"
-          search={{ appel: 1 }}
+          search={{ appel: 1, type: projectType }}
           className="rounded-full border border-white/50 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-white hover:bg-white/10"
         >
-          Réserver un appel
+          Demander un appel découverte
         </Link>
       </div>
     </section>

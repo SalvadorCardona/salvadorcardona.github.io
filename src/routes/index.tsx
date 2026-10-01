@@ -169,7 +169,7 @@ function Hero() {
               to="/contact"
               className="group inline-flex items-center gap-2 rounded-full bg-brand-500 px-6 py-3.5 text-base font-semibold text-white shadow-lg shadow-brand-500/25 transition-all hover:-translate-y-0.5 hover:bg-brand-600 hover:shadow-xl hover:shadow-brand-500/30"
             >
-              Lancer mon projet
+              Parler de votre projet
               <span
                 aria-hidden="true"
                 className="transition-transform group-hover:translate-x-1"
@@ -1189,13 +1189,15 @@ function OfferCard({
 
       <Link
         to="/contact"
+        search={{ forfait: offer.id }}
         className={`mt-10 rounded-full px-6 py-3.5 text-center text-sm font-semibold transition-colors ${
           featured
             ? 'bg-white text-brand-700 hover:bg-brand-50'
             : 'bg-stone-900 text-white hover:bg-stone-700'
         }`}
       >
-        Choisir le forfait {offer.name}
+        Parler de votre projet
+        <span className="sr-only"> : forfait {offer.name}</span>
       </Link>
     </article>
   )
@@ -1584,13 +1586,13 @@ function FinalCall() {
             search={{ appel: 1 }}
             className="rounded-full bg-white px-6 py-3.5 text-base font-semibold text-brand-700 transition-all hover:-translate-y-0.5 hover:bg-brand-50"
           >
-            Prendre rendez-vous
+            Demander un appel découverte
           </Link>
           <Link
             to="/contact"
             className="rounded-full border border-white/50 px-6 py-3.5 text-base font-semibold text-white transition-colors hover:border-white hover:bg-white/10"
           >
-            Nous écrire
+            Parler de votre projet
           </Link>
         </div>
       </div>

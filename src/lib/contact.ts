@@ -26,6 +26,8 @@ export const projectTypes = [
   { value: 'autre', label: 'Autre' },
 ] as const
 
+export type ProjectType = (typeof projectTypes)[number]['value']
+
 export const budgets = [
   'Moins de 1 000 €',
   '1 000 à 5 000 €',

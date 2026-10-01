@@ -8,6 +8,7 @@
  * dupliquer les textes dans la route, éditer la donnée.
  */
 
+import type { ProjectType } from '../lib/contact'
 import type { Service, ServiceIcon } from './services'
 
 export type AgencyOffer = {
@@ -21,6 +22,8 @@ export type AgencyOffer = {
   /** Ce que le prix couvre, en une phrase courte, sous le montant. */
   priceNote: string
   icon: ServiceIcon
+  /** Le type de projet coché d'avance quand on choisit ce forfait. */
+  projectType: ProjectType
   /** À qui l'abonnement s'adresse. */
   forWho: string
   /** Ce que comprend l'abonnement, un élément par ligne. */
@@ -246,6 +249,7 @@ export const offers: Array<AgencyOffer> = [
     price: 30,
     priceNote: 'par mois, tout compris',
     icon: 'compass',
+    projectType: 'site',
     forWho:
       'Artisan, commerçant, profession libérale ou jeune entreprise qui n’a pas de site, ou qui en a un que plus personne ne met à jour.',
     includes: [
@@ -267,6 +271,7 @@ export const offers: Array<AgencyOffer> = [
     price: 100,
     priceNote: 'par mois, tout compris',
     icon: 'code',
+    projectType: 'application',
     forWho:
       'Une entreprise dont l’activité tient dans des fichiers partagés, des mails et des tableurs, et qui veut un outil qui lui ressemble sans payer un projet à cinq chiffres.',
     includes: [
