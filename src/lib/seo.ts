@@ -17,6 +17,26 @@ export const PERSON_ID = `${SITE_URL}/#person`
 /** Identifiant stable de l'agence, décrite en entier sur l'accueil. */
 export const AGENCY_ID = `${SITE_URL}/#agence`
 
+/** Image de partage : chemin absolu commençant par `/`, dimensions en pixels. */
+export type ShareImage = {
+  src: string
+  alt: string
+  width: number
+  height: number
+}
+
+/**
+ * L'image de partage par défaut, au format des aperçus LinkedIn (1,91:1) :
+ * rien n'est rogné. Les pages service ont la leur (`serviceHead`), les
+ * articles leur couverture.
+ */
+const DEFAULT_SHARE_IMAGE: ShareImage = {
+  src: '/og/cardona.png',
+  alt: 'Cardona, agence digitale à Lyon : sites vitrines, applications métier, intégration IA',
+  width: 1200,
+  height: 630,
+}
+
 type SeoInput = {
   title: string
   description: string
@@ -24,8 +44,8 @@ type SeoInput = {
   path: string
   type?: 'website' | 'article'
   publishedTime?: string
-  /** Chemin absolu de l'image de partage, ex. `/blog/mon-article.jpg`. */
-  image?: string
+  /** Image de partage propre à la page, ex. la couverture d'un article. */
+  image?: ShareImage
   /** Données structurées schema.org, un objet par bloc `<script>`. */
   jsonLd?: Array<Record<string, unknown>>
   /** Qui signe le titre : l'agence, sauf les pages écrites par le fondateur. */
@@ -61,13 +81,19 @@ export function seo({
   ]
 
   // Open Graph et Twitter exigent des URL absolues, y compris pour l'image.
-  // À défaut d'illustration propre à la page (les articles ont leur
-  // couverture), la bannière de marque évite un partage sans image. Elle vient
-  // de SalvadorCardona/brand-assets et est versionnée dans `public/`, le site
-  // ne dépendant d'aucune ressource distante.
-  const shareImage = image ?? '/banner.png'
-  meta.push({ property: 'og:image', content: `${SITE_URL}${shareImage}` })
-  meta.push({ name: 'twitter:image', content: `${SITE_URL}${shareImage}` })
+  // À défaut d'illustration propre à la page, l'image de l'agence évite un
+  // partage sans image. Les dimensions évitent à LinkedIn de deviner le
+  // cadrage avant d'avoir téléchargé le fichier.
+  const shareImage = image ?? DEFAULT_SHARE_IMAGE
+  const shareImageUrl = `${SITE_URL}${shareImage.src}`
+  meta.push(
+    { property: 'og:image', content: shareImageUrl },
+    { property: 'og:image:width', content: String(shareImage.width) },
+    { property: 'og:image:height', content: String(shareImage.height) },
+    { property: 'og:image:alt', content: shareImage.alt },
+    { name: 'twitter:image', content: shareImageUrl },
+    { name: 'twitter:image:alt', content: shareImage.alt },
+  )
 
   if (publishedTime) {
     meta.push({ property: 'article:published_time', content: publishedTime })

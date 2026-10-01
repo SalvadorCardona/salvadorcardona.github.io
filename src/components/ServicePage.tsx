@@ -32,6 +32,13 @@ export function serviceHead(slug: string) {
     title: service.title,
     description: service.description,
     path,
+    // Tirée de l'illustration de la page, au format des aperçus LinkedIn.
+    image: {
+      src: `/og/${slug}.png`,
+      alt: `${service.name} — Cardona, agence digitale à Lyon`,
+      width: 1200,
+      height: 630,
+    },
     jsonLd: [
       personJsonLd(),
       {

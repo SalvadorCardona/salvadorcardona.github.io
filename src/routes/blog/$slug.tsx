@@ -21,7 +21,7 @@ export const Route = createFileRoute('/blog/$slug')({
       excerpt: post.excerpt,
       tags: post.tags,
       readingTime: post.readingTime,
-      cover: getCover(post.slug)?.src,
+      cover: getCover(post.slug),
     }
   },
   head: ({ loaderData }) =>
@@ -54,9 +54,11 @@ function PostPage() {
       ? sortedPosts[index + 1]
       : undefined
 
-  const shareUrl = `https://x.com/intent/post?text=${encodeURIComponent(
+  const postUrl = encodeURIComponent(`${SITE_URL}/blog/${post.slug}`)
+  const shareOnX = `https://x.com/intent/post?text=${encodeURIComponent(
     post.title,
-  )}&url=${encodeURIComponent(`${SITE_URL}/blog/${post.slug}`)}`
+  )}&url=${postUrl}`
+  const shareOnLinkedIn = `https://www.linkedin.com/sharing/share-offsite/?url=${postUrl}`
 
   return (
     <div className="mx-auto max-w-3xl px-6 py-16">
@@ -108,7 +110,15 @@ function PostPage() {
 
       <div className="mt-12 flex flex-wrap gap-4 border-t border-stone-200 pt-6 text-sm">
         <a
-          href={shareUrl}
+          href={shareOnLinkedIn}
+          target="_blank"
+          rel="noreferrer"
+          className="text-brand-600 hover:underline"
+        >
+          Partager sur LinkedIn
+        </a>
+        <a
+          href={shareOnX}
           target="_blank"
           rel="noreferrer"
           className="text-brand-600 hover:underline"

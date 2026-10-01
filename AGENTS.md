@@ -49,7 +49,8 @@ conteneur Docker déployé sur Dokploy (voir `DEPLOY.md`).
 - **Une page service = une entrée dans `services.ts` + une route d'une ligne**
   dans `src/routes/services/<slug>.tsx`, qui rend le gabarit commun
   `components/ServicePage.tsx`. Ajouter le chemin à `REQUIRED_PAGES` dans
-  `scripts/postbuild.mjs` ; le sitemap la reprend de `services.ts`.
+  `scripts/postbuild.mjs` ; le sitemap la reprend de `services.ts`. Son image
+  de partage est `public/og/<slug>.png` (voir plus bas).
 - **Une nouvelle page fixe s'ajoute au sitemap à la main**, dans
   `src/routes/sitemap[.]xml.ts` : rien n'est prérendu, aucun crawl ne la
   découvre. Le contenu et la FAQ sont repris tels quels dans le
@@ -79,10 +80,14 @@ conteneur Docker déployé sur Dokploy (voir `DEPLOY.md`).
   `/ticket-runner/`, etc. sont renvoyés vers `salvadorcardona.github.io` par
   Traefik (`deploy/traefik/github-pages.yml`) : ne pas créer de route qui porte
   l'un de ces noms.
-- **`public/banner.png` est l'image de partage par défaut** (`og:image` et
-  `twitter:image`, dans `src/lib/seo.ts`), et la bannière en tête du README. Le
-  visuel vient du dépôt `SalvadorCardona/brand-assets` : le refaire là-bas, puis
-  recopier le fichier ici — le site ne charge aucune image distante.
+- **Les images de partage vivent dans `public/og/`**, en PNG de 1200 × 630
+  (le 1,91:1 des aperçus LinkedIn, qui rogne tout autre format) :
+  `cardona.png` par défaut, `<slug>.png` pour chaque page service, tirée de son
+  illustration. `seo()` (`src/lib/seo.ts`) émet `og:image` avec ses
+  dimensions et son alternative ; les articles passent leur couverture. Elles
+  sont composées avec le logo, la police et les couleurs du site, puis
+  capturées en 1200 × 630 : garder le texte loin des bords. La bannière du
+  README, elle, reste celle de `SalvadorCardona/brand-assets`.
 - **Les visuels des projets viennent du même dépôt `brand-assets`.** Chaque
   entrée de `projects` (`profile.ts`) porte un champ `brand` : le nom du dossier
   `projects/<dépôt>/` là-bas, et de `public/projects/<dépôt>/` ici. On y recopie
