@@ -1121,24 +1121,273 @@ function Method() {
         title="De l’appel à la mise en ligne, en quatre temps."
       />
       <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        {steps.map((step, index) => (
-          <li key={step.title} className="relative">
-            <span
-              aria-hidden="true"
-              className="font-display text-7xl leading-none font-extrabold text-transparent [-webkit-text-stroke:2px_var(--color-brand-400)]"
-            >
-              {index + 1}
-            </span>
-            <h3 className="mt-4 text-lg font-bold text-stone-900">
-              {step.title}
-            </h3>
-            <p className="mt-2 text-sm leading-relaxed text-stone-600">
-              {step.description}
-            </p>
-          </li>
-        ))}
+        {steps.map((step, index) => {
+          const scene = stepScenes[index]
+          return (
+            <li key={step.title}>
+              {scene && (
+                <div
+                  aria-hidden="true"
+                  className={`h-44 overflow-hidden rounded-[1.5rem] ${scene.background}`}
+                >
+                  {scene.art}
+                </div>
+              )}
+              <p className="mt-6 flex items-center gap-3">
+                <span className="font-display text-sm font-bold text-brand-600">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span aria-hidden="true" className="h-px flex-1 bg-stone-200" />
+              </p>
+              <h3 className="mt-4 text-lg font-bold text-stone-900">
+                {step.title}
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-stone-600">
+                {step.description}
+              </p>
+            </li>
+          )
+        })}
       </ol>
     </section>
+  )
+}
+
+/**
+ * Les illustrations de la méthode, une par étape et dans l'ordre de `steps`,
+ * dessinées comme les scènes des expertises et dans le même cadre.
+ */
+const stepScenes: Array<{ background: string; art: React.ReactNode }> = [
+  { background: 'bg-brand-50', art: <CallScene /> },
+  { background: 'bg-amber-100', art: <MockupScene /> },
+  { background: 'bg-brand-500', art: <LaunchScene /> },
+  { background: 'bg-stone-900', art: <FollowUpScene /> },
+]
+
+/** Un appel : le téléphone décroché, la conversation, une heure au compteur. */
+function CallScene() {
+  return (
+    <Scene>
+      <circle cx="420" cy="40" r="100" className="fill-brand-100" />
+      <circle cx="60" cy="260" r="80" className="fill-amber-100" />
+
+      {/* Le téléphone. */}
+      <circle cx="150" cy="134" r="56" className="fill-brand-500" />
+      <path
+        transform="translate(150 134) scale(3.4) translate(-25.8 -25.8)"
+        d="M19.5 18.5c.8-.8 2-.8 2.6.1l1.5 2.2c.5.8.4 1.8-.3 2.4l-.9.8a9 9 0 0 0 4 4l.8-.9c.6-.7 1.6-.8 2.4-.3l2.2 1.5c.9.6.9 1.8.1 2.6l-1 1c-1.4 1.4-6 .5-9.6-3.1s-4.5-8.2-3.1-9.6Z"
+        className="fill-white"
+      />
+
+      {/* La conversation : votre question, notre réponse. */}
+      <g transform="translate(228 64)">
+        <rect width="180" height="56" rx="28" className="fill-white" />
+        <path d="M24 50 14 66l26-12Z" className="fill-white" />
+        <rect x="26" y="18" width="110" height="8" rx="4" className="fill-stone-800" />
+        <rect x="26" y="32" width="74" height="6" rx="3" className="fill-stone-300" />
+      </g>
+      <g transform="translate(258 146)">
+        <rect width="150" height="50" rx="25" className="fill-brand-500" />
+        <path d="M126 44l12 16-24-10Z" className="fill-brand-500" />
+        <rect x="22" y="16" width="96" height="7" rx="3.5" className="fill-white" />
+        <rect x="22" y="29" width="60" height="5" rx="2.5" className="fill-brand-200" />
+      </g>
+
+      {/* L'heure de l'appel. */}
+      <g transform="translate(100 204)">
+        <rect width="100" height="34" rx="17" className="fill-stone-900" />
+        <circle cx="18" cy="17" r="9" fill="none" strokeWidth="2.5" className="stroke-white" />
+        <path d="M18 12v5l4 3" fill="none" strokeWidth="2.5" strokeLinecap="round" className="stroke-white" />
+        <rect x="36" y="14" width="48" height="6" rx="3" className="fill-white" />
+      </g>
+    </Scene>
+  )
+}
+
+/** Une maquette : la page en fil de fer, qu'on reprend au crayon. */
+function MockupScene() {
+  return (
+    <Scene>
+      <circle cx="430" cy="250" r="100" className="fill-amber-200" />
+      <circle cx="40" cy="30" r="70" className="fill-amber-50" />
+
+      {/* La page, encore en blocs. */}
+      <g transform="translate(90 50)">
+        <rect width="230" height="180" rx="16" className="fill-white" />
+        <circle cx="20" cy="18" r="6" className="fill-stone-300" />
+        <rect x="34" y="14" width="60" height="8" rx="4" className="fill-stone-300" />
+        <rect x="168" y="15" width="44" height="6" rx="3" className="fill-stone-200" />
+        <rect
+          x="16"
+          y="34"
+          width="198"
+          height="64"
+          rx="8"
+          fill="none"
+          strokeWidth="2"
+          strokeDasharray="6 6"
+          className="stroke-stone-300"
+        />
+        <path d="m16 34 198 64M214 34 16 98" strokeWidth="1.5" className="stroke-stone-200" />
+        <rect x="16" y="112" width="120" height="8" rx="4" className="fill-stone-700" />
+        <rect x="16" y="126" width="160" height="5" rx="2.5" className="fill-stone-300" />
+        <rect x="16" y="136" width="130" height="5" rx="2.5" className="fill-stone-300" />
+        <rect x="16" y="152" width="64" height="16" rx="8" className="fill-brand-500" />
+        {/* La retouche, entourée à la main. */}
+        <ellipse
+          cx="48"
+          cy="160"
+          rx="44"
+          ry="15"
+          fill="none"
+          strokeWidth="2.5"
+          className="stroke-brand-600"
+          transform="rotate(-4 48 160)"
+        />
+      </g>
+
+      {/* Le crayon. */}
+      <g transform="translate(330 70) rotate(35)">
+        <rect y="-16" width="24" height="16" rx="4" className="fill-brand-200" />
+        <rect y="-4" width="24" height="8" className="fill-stone-300" />
+        <rect y="4" width="24" height="126" className="fill-brand-500" />
+        <path d="M0 130 12 156l12-26Z" className="fill-amber-200" />
+        <path d="m8 147 4 9 4-9Z" className="fill-stone-900" />
+      </g>
+    </Scene>
+  )
+}
+
+/** La mise en ligne : le site à son adresse, sécurisé et en ligne. */
+function LaunchScene() {
+  return (
+    <Scene>
+      <circle cx="400" cy="40" r="120" className="fill-brand-400" />
+      <circle cx="70" cy="260" r="90" className="fill-brand-600" />
+      <path
+        d="M60 70c.8 5 3.2 7.4 8.2 8.2-5 .8-7.4 3.2-8.2 8.2-.8-5-3.2-7.4-8.2-8.2 5-.8 7.4-3.2 8.2-8.2Z"
+        className="fill-amber-200"
+      />
+
+      {/* Le navigateur, avec le cadenas dans la barre d'adresse. */}
+      <g transform="translate(70 56)">
+        <rect width="260" height="170" rx="16" className="fill-white" />
+        {[18, 32, 46].map((cx) => (
+          <circle key={cx} cx={cx} cy="18" r="4" className="fill-stone-200" />
+        ))}
+        <rect x="62" y="9" width="180" height="18" rx="9" className="fill-stone-100" />
+        <rect x="72" y="16" width="8" height="7" rx="1.5" className="fill-emerald-500" />
+        <path d="M73.5 16v-2a2.5 2.5 0 0 1 5 0v2" fill="none" strokeWidth="1.5" className="stroke-emerald-500" />
+        <rect x="86" y="15" width="80" height="6" rx="3" className="fill-stone-300" />
+        <rect x="16" y="40" width="228" height="56" rx="10" className="fill-brand-100" />
+        <circle cx="210" cy="62" r="12" className="fill-brand-300" />
+        <rect x="16" y="108" width="110" height="9" rx="4.5" className="fill-stone-900" />
+        <rect x="16" y="124" width="150" height="5" rx="2.5" className="fill-stone-300" />
+        <rect x="16" y="134" width="120" height="5" rx="2.5" className="fill-stone-300" />
+        <rect x="16" y="148" width="60" height="14" rx="7" className="fill-brand-500" />
+      </g>
+
+      {/* Le monde entier peut le voir. */}
+      <g transform="translate(372 76)" fill="none" strokeWidth="3" className="stroke-white">
+        <circle r="30" />
+        <ellipse rx="13" ry="30" />
+        <path d="M-30 0h60M-26-15h52M-26 15h52" />
+      </g>
+
+      {/* Le statut « en ligne ». */}
+      <g transform="translate(290 168)">
+        <rect width="130" height="46" rx="23" className="fill-white" />
+        <circle cx="23" cy="23" r="14" className="fill-emerald-100" />
+        <circle cx="23" cy="23" r="7" className="fill-emerald-500" />
+        <rect x="44" y="15" width="62" height="7" rx="3.5" className="fill-stone-900" />
+        <rect x="44" y="27" width="42" height="5" rx="2.5" className="fill-stone-300" />
+      </g>
+    </Scene>
+  )
+}
+
+/** La suite : un mois coché jour après jour, et les mises à jour qui tournent. */
+function FollowUpScene() {
+  return (
+    <Scene>
+      <circle cx="120" cy="300" r="140" className="fill-stone-800" />
+      <circle cx="440" cy="20" r="80" className="fill-brand-700" />
+
+      {/* Le calendrier du mois. */}
+      <g transform="translate(80 52)">
+        <rect width="200" height="176" rx="16" className="fill-white" />
+        <rect width="200" height="36" rx="16" className="fill-brand-500" />
+        <rect y="20" width="200" height="16" className="fill-brand-500" />
+        <rect x="16" y="14" width="60" height="8" rx="4" className="fill-white" />
+        <rect x="48" y="-8" width="8" height="20" rx="4" className="fill-stone-300" />
+        <rect x="144" y="-8" width="8" height="20" rx="4" className="fill-stone-300" />
+        {Array.from({ length: 20 }, (_, day) => {
+          const x = 16 + (day % 5) * 36
+          const y = 48 + Math.floor(day / 5) * 30
+          return (
+            <g key={day}>
+              <rect
+                x={x}
+                y={y}
+                width="26"
+                height="22"
+                rx="6"
+                className={
+                  day < 13
+                    ? 'fill-emerald-100'
+                    : day === 13
+                      ? 'fill-brand-100'
+                      : 'fill-stone-100'
+                }
+              />
+              {day < 13 && (
+                <path
+                  d={`M${x + 8} ${y + 11}l4 4 7-8`}
+                  fill="none"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="stroke-emerald-600"
+                />
+              )}
+            </g>
+          )
+        })}
+      </g>
+
+      {/* Les mises à jour, en boucle. */}
+      <g transform="translate(350 110)">
+        <circle r="44" className="fill-brand-500" />
+        {[0, 180].map((angle) => (
+          <g key={angle} transform={`rotate(${angle})`}>
+            <path
+              d="M-18.8-6.8A20 20 0 0 1 15.3-12.9"
+              fill="none"
+              strokeWidth="5"
+              strokeLinecap="round"
+              className="stroke-white"
+            />
+            <path d="m19.9-16.8-9.2 7.8 9.7 2.2Z" className="fill-white" />
+          </g>
+        ))}
+      </g>
+
+      {/* La demande du mois, traitée. */}
+      <g transform="translate(300 190)">
+        <rect width="130" height="44" rx="22" className="fill-white" />
+        <circle cx="22" cy="22" r="11" className="fill-emerald-500" />
+        <path
+          d="m17 22 4 4 7-8"
+          fill="none"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="stroke-white"
+        />
+        <rect x="42" y="14" width="66" height="7" rx="3.5" className="fill-stone-900" />
+        <rect x="42" y="26" width="44" height="5" rx="2.5" className="fill-stone-300" />
+      </g>
+    </Scene>
   )
 }
 
