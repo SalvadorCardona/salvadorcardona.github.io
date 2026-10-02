@@ -288,6 +288,26 @@ cp .env.example .env    # facultatif : Brevo, Turnstile
 docker compose up --build
 ```
 
+### Alerte en cas d'échec
+
+Les deux workflows de publication restent sur GitHub Actions, où un échec
+passe inaperçu (la synchronisation quotidienne des expériences a échoué
+quatorze jours de suite sans que personne ne le voie). Leur dernier job,
+`alerte`, appelle [`alerte-synchro.yml`](.github/workflows/alerte-synchro.yml) :
+
+- si `publish` échoue, il ouvre l'issue **« Synchro en échec — <nom du
+  workflow> »**, avec le lien du run et le nom de l'étape en échec ; si cette
+  issue est déjà ouverte, il y ajoute un commentaire au lieu d'en créer une
+  autre ;
+- au premier run vert suivant, il ferme l'issue avec le lien de ce run ;
+- un run annulé ne change rien.
+
+Chaque workflow a sa propre issue, retrouvée par son titre exact : ne pas le
+modifier tant qu'elle est ouverte. GitHub notifie ceux qui suivent le dépôt
+à chaque ouverture et à chaque commentaire. Le job utilise le
+`GITHUB_TOKEN` du run (`issues: write`, et `actions: read` pour lire les
+étapes) : aucun secret à poser.
+
 ## Supports imprimés
 
 Les supports papier de l'agence vivent dans `print/`, hors du site et de
