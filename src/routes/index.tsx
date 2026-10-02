@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import type { RefObject } from 'react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 
 import { LogoMark } from '../components/Logo'
@@ -132,20 +133,25 @@ export const Route = createFileRoute('/')({
  * `/services` vend des missions au forfait et `/qui-suis-je` présente le
  * fondateur. Le contenu vit dans `content/agency.ts`.
  *
- * Le mouvement (halos, bandeau défilant, badge qui tourne) est décoratif,
- * en CSS, et entièrement derrière `motion-safe:` ; seule la pile de cartes
- * du hero (`WorkDeck`) a un minuteur, qui ne démarre pas non plus avec
- * « réduire les animations ».
+ * Le mouvement (halos, bandeau défilant) est décoratif, en CSS, et
+ * entièrement derrière `motion-safe:` ; seule la pile de cartes du hero
+ * (`WorkDeck`) a un minuteur, qui ne démarre pas non plus avec « réduire les
+ * animations ».
+ *
+ * La vidéo est partagée entre le bouton Play du hero et `Showreel`, qui la
+ * porte : l'un la lance, l'autre l'affiche.
  */
 function Home() {
+  const video = useRef<HTMLVideoElement>(null)
+
   return (
     <>
-      <Hero />
+      <Hero video={video} />
       <Marquee />
 
       <div className="mx-auto max-w-6xl px-6">
+        <Showreel video={video} />
         <Audiences />
-        <Showreel />
         <Expertises />
         <Figures />
         <Offers />
@@ -159,7 +165,7 @@ function Home() {
   )
 }
 
-function Hero() {
+function Hero({ video }: { video: RefObject<HTMLVideoElement | null> }) {
   return (
     <section className="relative mx-auto max-w-6xl px-6 pt-12 pb-20 max-lg:overflow-x-clip sm:pt-20 lg:pb-28">
       <div
@@ -245,7 +251,7 @@ function Hero() {
           </p>
         </div>
 
-        <HeroVisual />
+        <HeroVisual video={video} />
       </div>
     </section>
   )
@@ -273,9 +279,17 @@ function Scribble() {
 
 /**
  * La composition à droite du titre : la pile de cartes des réalisations, un
- * badge circulaire qui tourne et deux étiquettes qui reprennent les promesses.
+ * bouton Play et une étiquette qui reprend les promesses.
+ *
+ * Le bouton Play est un lien vers `#video` : le navigateur fait défiler
+ * jusqu'à la section, et le clic lance la lecture dans le même geste, ce
+ * qu'exige iOS. Sans JavaScript, il reste un lien vers la vidéo.
  */
-function HeroVisual() {
+function HeroVisual({
+  video,
+}: {
+  video: RefObject<HTMLVideoElement | null>
+}) {
   return (
     <div className="relative mx-auto aspect-square w-full max-w-[21rem] motion-safe:animate-hero-rise motion-safe:[animation-delay:250ms] sm:max-w-sm lg:max-w-md">
       <div
@@ -284,57 +298,37 @@ function HeroVisual() {
       />
       <WorkDeck />
 
-      <div
-        aria-hidden="true"
-        className="absolute -top-4 -right-4 z-40 h-28 w-28 rounded-full bg-white p-1 shadow-xl shadow-stone-300/50 sm:-top-2 sm:-right-2 sm:h-36 sm:w-36"
+      <a
+        href="#video"
+        onClick={() => void video.current?.play()}
+        aria-label="Voir la vidéo de l’agence (56 s)"
+        data-umami-event="cta-video"
+        data-umami-event-page="/"
+        data-umami-event-emplacement="haut-de-page"
+        className="absolute -top-4 -right-4 z-40 flex h-20 w-20 items-center justify-center rounded-full bg-brand-500 text-white shadow-xl shadow-brand-500/30 ring-8 ring-white transition-transform hover:scale-110 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-brand-500 sm:-top-2 sm:-right-2 sm:h-24 sm:w-24"
       >
         <svg
-          viewBox="0 0 120 120"
-          className="h-full w-full motion-safe:animate-spin-slow"
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          className="ml-1 h-8 w-8 fill-current sm:h-10 sm:w-10"
         >
-          <defs>
-            <path
-              id="badge-circle"
-              d="M60 60m-44 0a44 44 0 1 1 88 0a44 44 0 1 1-88 0"
-            />
-          </defs>
-          <text className="fill-stone-900 font-display text-[10.5px] font-bold tracking-[0.2em] uppercase">
-            <textPath href="#badge-circle" textLength="272">
-              Agence digitale ✦ Made in Lyon ✦
-            </textPath>
-          </text>
+          <path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l10.6-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z" />
         </svg>
-        <span className="absolute inset-0 m-auto h-5 w-5 rounded-full bg-brand-500" />
-      </div>
+      </a>
 
       <div
         aria-hidden="true"
-        className="absolute top-[40%] -left-3 z-40 rounded-2xl bg-white px-3 py-2 shadow-xl shadow-stone-300/50 sm:-left-10 sm:px-4 sm:py-3"
+        className="absolute bottom-16 -left-3 z-40 max-w-[12rem] rounded-2xl bg-stone-900 px-4 py-3 text-white shadow-xl sm:bottom-20 sm:-left-10 sm:max-w-[14rem] sm:px-5 sm:py-4"
       >
-        <p className="flex items-center gap-2 text-xs font-semibold text-stone-900 sm:text-sm">
-          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-emerald-100 text-[10px] text-emerald-700 sm:h-6 sm:w-6 sm:text-xs">
-            ✓
-          </span>
-          Site en ligne
-        </p>
-        <p className="mt-0.5 pl-7 text-[11px] text-stone-500 sm:pl-8 sm:text-xs">
-          en deux semaines
-        </p>
-      </div>
-
-      <div
-        aria-hidden="true"
-        className="absolute -right-3 bottom-20 z-40 rounded-2xl bg-stone-900 px-3 py-2 text-white shadow-xl sm:-right-8 sm:bottom-24 sm:px-4 sm:py-3"
-      >
-        <p className="font-display text-xl leading-none font-extrabold sm:text-2xl">
+        <p className="font-display text-2xl leading-none font-extrabold sm:text-3xl">
           30 €
-          <span className="text-xs font-medium text-stone-300 sm:text-sm">
+          <span className="text-sm font-medium text-stone-300 sm:text-base">
             {' '}
             / mois
           </span>
         </p>
-        <p className="mt-1 text-[11px] text-stone-300 sm:text-xs">
-          création comprise
+        <p className="mt-1.5 text-xs leading-snug text-stone-300 sm:text-sm">
+          création comprise · en ligne en deux semaines
         </p>
       </div>
     </div>
@@ -710,8 +704,11 @@ const VIDEO = {
  * d'attente. Les sous-titres sont incrustés dans l'image : la piste WebVTT,
  * désactivée par défaut, ne sert qu'à l'accessibilité et au référencement.
  */
-function Showreel() {
-  const video = useRef<HTMLVideoElement>(null)
+function Showreel({
+  video,
+}: {
+  video: RefObject<HTMLVideoElement | null>
+}) {
   const [started, setStarted] = useState(false)
 
   return (
