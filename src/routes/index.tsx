@@ -706,8 +706,11 @@ const VIDEO = {
  * Rien n'est chargé avant le clic (`preload="none"`), hormis l'image
  * d'attente. Les sous-titres sont incrustés dans l'image : la piste WebVTT,
  * désactivée par défaut, ne sert qu'à l'accessibilité et au référencement.
- * Le bouton Play se pose dans le coin haut-droit de l'image d'attente, qui
- * est vide : au centre, il masquerait le titre et la maquette.
+ *
+ * Avant la lecture, une couverture en HTML cache l'image d'attente et les
+ * contrôles natifs, qui n'apparaissent qu'une fois la vidéo lancée. Toute la
+ * couverture est un bouton : un clic, ou le bouton Play du hero, lance la
+ * lecture, et `onPlay` la fait disparaître en fondu.
  */
 function Showreel({
   video,
@@ -715,47 +718,139 @@ function Showreel({
   video: RefObject<HTMLVideoElement | null>
 }) {
   const [started, setStarted] = useState(false)
+  const cover = useRef<HTMLButtonElement>(null)
+
+  // La couverture s'efface : le focus clavier passe à la vidéo, qui a
+  // maintenant ses contrôles, plutôt que de rester sur un bouton caché.
+  useEffect(() => {
+    if (started && document.activeElement === cover.current) {
+      video.current?.focus()
+    }
+  }, [started, video])
 
   return (
     <section id="video" className="scroll-mt-24 pt-24 lg:pt-32">
       <SectionHeading eyebrow="En vidéo" title="L’agence en une minute." />
-      <div className="relative mt-12 aspect-video overflow-hidden rounded-[2.5rem] bg-stone-900 shadow-lg shadow-stone-900/10 ring-1 ring-stone-200">
-        <video
-          ref={video}
-          controls
-          preload="none"
-          playsInline
-          poster={VIDEO.poster}
-          aria-label={`Vidéo : ${VIDEO.title}, 56 secondes, voix off et sous-titres incrustés`}
-          onPlay={() => setStarted(true)}
-          className="absolute inset-0 h-full w-full"
-        >
-          <source src={VIDEO.src} type="video/mp4" />
-          <track
-            kind="subtitles"
-            srcLang="fr"
-            label="Français"
-            src={VIDEO.subtitles}
-          />
-        </video>
-        {!started && (
+      <figure className="mt-12">
+        <div className="relative aspect-video overflow-hidden rounded-[1.75rem] bg-stone-900 shadow-lg shadow-stone-900/10 ring-1 ring-stone-200 sm:rounded-[2.5rem]">
+          <video
+            ref={video}
+            controls={started}
+            preload="none"
+            playsInline
+            poster={VIDEO.poster}
+            aria-label={`Vidéo : ${VIDEO.title}, 56 secondes, voix off et sous-titres incrustés`}
+            onPlay={() => setStarted(true)}
+            className="absolute inset-0 h-full w-full"
+          >
+            <source src={VIDEO.src} type="video/mp4" />
+            <track
+              kind="subtitles"
+              srcLang="fr"
+              label="Français"
+              src={VIDEO.subtitles}
+            />
+          </video>
           <button
+            ref={cover}
             type="button"
             onClick={() => void video.current?.play()}
-            aria-label="Lire la vidéo"
-            className="group absolute top-[28%] left-[73%] flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand-500 text-white shadow-2xl shadow-stone-900/30 ring-4 ring-white/30 transition-transform hover:scale-110 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-brand-500 sm:h-28 sm:w-28 sm:ring-8"
+            aria-label={`Lire la vidéo : ${VIDEO.title} (56 s)`}
+            aria-hidden={started || undefined}
+            tabIndex={started ? -1 : undefined}
+            data-umami-event="cta-video"
+            data-umami-event-page="/"
+            data-umami-event-emplacement="video"
+            className={`group absolute inset-0 flex cursor-pointer flex-col justify-between overflow-hidden bg-stone-950 p-4 text-left text-white focus-visible:outline-4 focus-visible:-outline-offset-4 focus-visible:outline-brand-400 motion-safe:transition-[opacity,visibility] motion-safe:duration-500 sm:p-10 lg:p-14 ${
+              started ? 'invisible opacity-0' : ''
+            }`}
           >
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 24 24"
-              className="ml-1 h-6 w-6 fill-current sm:h-11 sm:w-11"
-            >
-              <path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l10.6-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z" />
-            </svg>
+            <ShowreelBackdrop />
+
+            <span className="relative flex items-center gap-2.5 sm:gap-3">
+              <LogoMark className="h-7 w-7 sm:h-10 sm:w-10" />
+              <span className="text-[0.65rem] font-semibold tracking-[0.25em] text-brand-200 uppercase sm:text-sm">
+                Agence {agency.name}
+              </span>
+            </span>
+
+            <span className="relative font-display text-2xl leading-[1.02] font-extrabold tracking-tight text-balance sm:max-w-xl sm:text-5xl lg:max-w-2xl lg:text-6xl">
+              Une proposition{' '}
+              <span className="relative inline-block whitespace-nowrap text-brand-400">
+                toute simple
+                <Scribble />
+              </span>
+              .
+            </span>
+
+            <span className="relative flex w-full items-center gap-3 rounded-full bg-white/10 py-1.5 pr-5 pl-1.5 ring-1 ring-white/20 backdrop-blur-md transition-colors group-hover:bg-white/15 sm:w-auto sm:self-start sm:py-2 sm:pl-2">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-500 shadow-lg shadow-brand-500/40 transition-transform group-hover:scale-110 sm:h-12 sm:w-12">
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="ml-0.5 h-4 w-4 fill-current sm:h-5 sm:w-5"
+                >
+                  <path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l10.6-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z" />
+                </svg>
+              </span>
+              <span>
+                <span className="block text-sm font-semibold sm:text-base">
+                  Voir l’agence en une minute
+                </span>
+                <span className="block text-xs text-stone-300 sm:text-sm">
+                  Présentation vidéo · 0:56
+                </span>
+              </span>
+            </span>
           </button>
-        )}
-      </div>
+        </div>
+        <figcaption className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 px-2 text-sm text-stone-500">
+          <span>Présentation de l’agence {agency.name}</span>
+          <Link
+            to="/contact"
+            search={{ appel: 1 }}
+            data-umami-event="cta-contact"
+            data-umami-event-page="/"
+            data-umami-event-emplacement="video"
+            data-umami-event-appel="oui"
+            className="group font-semibold text-brand-700 hover:text-brand-800"
+          >
+            Prendre rendez-vous{' '}
+            <span
+              aria-hidden="true"
+              className="inline-block transition-transform group-hover:translate-x-1"
+            >
+              →
+            </span>
+          </Link>
+        </figcaption>
+      </figure>
     </section>
+  )
+}
+
+/**
+ * Le fond de la couverture : deux halos orange et ambre qui dérivent, une
+ * trame de points aux couleurs de la marque et un grain léger.
+ */
+function ShowreelBackdrop() {
+  return (
+    <span aria-hidden="true" className="pointer-events-none absolute inset-0">
+      <span className="absolute -top-1/3 -right-1/4 h-[130%] w-3/4 rounded-full bg-brand-600/45 blur-3xl motion-safe:animate-hero-drift" />
+      <span className="absolute -bottom-1/2 -left-1/4 h-full w-2/3 rounded-full bg-amber-500/25 blur-3xl motion-safe:animate-hero-drift-slow" />
+      <span className="absolute inset-0 bg-[radial-gradient(var(--color-brand-300)_1px,transparent_1px)] bg-[size:1.25rem_1.25rem] opacity-25 [mask-image:radial-gradient(ellipse_60%_70%_at_85%_20%,black,transparent)]" />
+      <svg className="absolute inset-0 h-full w-full opacity-[0.15] mix-blend-overlay">
+        <filter id="showreel-grain">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.9"
+            numOctaves="2"
+            stitchTiles="stitch"
+          />
+        </filter>
+        <rect width="100%" height="100%" filter="url(#showreel-grain)" />
+      </svg>
+    </span>
   )
 }
 
