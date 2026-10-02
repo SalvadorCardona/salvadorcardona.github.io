@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 
 import { LogoMark } from '../components/Logo'
-import { ServiceIcon } from '../components/ServiceIcon'
+import {
+  ApplicationIllustration,
+  VitrineIllustration,
+} from '../components/illustrations/OfferIllustration'
 import type {
   AgencyExpertise,
   AgencyOffer,
@@ -1132,6 +1135,8 @@ function OfferCard({
   featured: boolean
 }) {
   const muted = featured ? 'text-white' : 'text-stone-500'
+  const Illustration =
+    offer.id === 'application' ? ApplicationIllustration : VitrineIllustration
   return (
     <article
       id={offer.id}
@@ -1141,17 +1146,17 @@ function OfferCard({
           : 'border border-stone-200 bg-white text-stone-900'
       }`}
     >
-      <div className="flex items-start justify-between gap-4">
+      <div
+        className={`relative aspect-[32/15] overflow-hidden rounded-2xl ring-1 ${
+          featured ? 'bg-white/10 ring-white/15' : 'bg-stone-50 ring-stone-200'
+        }`}
+      >
+        <Illustration tone={featured ? 'brand' : 'light'} />
         <span
-          className={`inline-flex h-12 w-12 items-center justify-center rounded-2xl ${
-            featured ? 'bg-white/15 text-white' : 'bg-brand-50 text-brand-600'
-          }`}
-        >
-          <ServiceIcon name={offer.icon} />
-        </span>
-        <span
-          className={`rounded-full px-3 py-1 text-xs font-semibold ${
-            featured ? 'bg-white text-brand-700' : 'bg-stone-100 text-stone-700'
+          className={`absolute top-3 right-3 rounded-full px-3 py-1 text-xs font-semibold ${
+            featured
+              ? 'bg-white text-brand-700'
+              : 'bg-white text-stone-700 ring-1 ring-stone-200'
           }`}
         >
           {featured ? 'Pour démarrer' : 'Pour aller plus loin'}
@@ -1166,8 +1171,8 @@ function OfferCard({
         {offer.tagline}
       </p>
 
-      <p className="mt-8 flex items-baseline gap-2">
-        <span className="font-display text-6xl font-extrabold tracking-tight">
+      <p className="mt-8 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+        <span className="font-display text-6xl font-extrabold tracking-tight whitespace-nowrap">
           {offer.price} €
         </span>
         <span className={`text-sm ${muted}`}>{offer.priceNote}</span>
