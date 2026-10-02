@@ -50,10 +50,10 @@ export function SiteHeader() {
           data-umami-event="cta-contact"
           data-umami-event-page={pathname}
           data-umami-event-emplacement="en-tete"
-          className="rounded-full bg-brand-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
+          className="rounded-full bg-brand-600 px-4 py-2 text-sm font-semibold whitespace-nowrap text-white transition-colors hover:bg-brand-700"
           activeProps={{ className: 'ring-2 ring-brand-200' }}
         >
-          Contact
+          Nous contacter
         </Link>
       </div>
     </header>
