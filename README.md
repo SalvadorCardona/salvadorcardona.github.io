@@ -221,11 +221,15 @@ fait, à la main ou depuis le workflow planifié.
 
 2. Écrire le corps de la page : un résumé en paragraphe(s), puis des titres de
    section — `⌨️ BACKEND`, `🖥️ FRONTEND`, `📶 INFRASTRUCTURE`, `🤖 IA`,
-   `🧭 CONSEIL & MÉTHODE` — chacun suivi de ses puces. L'émoji est optionnel et
-   n'est pas repris à l'affichage ; le reste du titre l'est, ce qui permet de
-   préciser la stack entre parenthèses ou après un tiret. Un bloc non pris en
-   charge (autre que paragraphe, titre ou liste à puces) est signalé et ignoré
-   par la synchronisation, pas silencieusement perdu.
+   `🧭 CONSEIL & MÉTHODE` — chacun suivi de ses puces. Un titre s'écrit en
+   bloc Titre (1, 2 ou 3), émoji optionnel, ou en simple paragraphe : il faut
+   alors qu'il commence par un émoji suivi d'un de ces intitulés, en
+   majuscules ou non. L'émoji n'est pas repris à l'affichage ; le reste du
+   titre l'est, ce qui permet de préciser la stack entre parenthèses ou après
+   un tiret. Une puce sans titre au-dessus fait échouer la synchronisation,
+   qui liste la page et la puce au lieu de publier une expérience amputée. Un
+   bloc non pris en charge (autre que paragraphe, titre ou liste à puces) est
+   signalé et ignoré, pas silencieusement perdu.
 3. Synchroniser et publier :
 
    ```bash
