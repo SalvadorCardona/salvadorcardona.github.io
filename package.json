@@ -15,6 +15,7 @@
     "posts:sync": "node scripts/sync-posts.mjs",
     "preview": "vite preview",
     "serve": "node .output/server/index.mjs",
+    "test": "node --test 'scripts/*.test.mjs'",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

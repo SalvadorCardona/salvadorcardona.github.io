@@ -116,22 +116,39 @@ const isoDate = (prop) => prop?.date?.start ?? null
  */
 const HEADING_PREFIX = /^\p{Extended_Pictographic}️?\s*/u
 
+/**
+ * Dans Notion, un titre de section s'écrit le plus souvent en paragraphe
+ * simple, pas en bloc Titre : « 🛠 BACKEND — Symfony 6 / API Platform ». Un
+ * paragraphe n'est un titre que s'il commence par un émoji suivi d'un de ces
+ * intitulés, en majuscules ou non, seul ou suivi d'un tiret et de la stack.
+ */
+const SECTION_NAME =
+  /^(?:BACKEND|FRONTEND|INFRASTRUCTURE|IA|CONSEIL\s*&\s*MÉTHODE)(?=$|[\s—–:-])/iu
+
 function headingText(block) {
   const type = block.type
-  if (type !== 'heading_1' && type !== 'heading_2' && type !== 'heading_3') {
-    return null
+  if (type === 'heading_1' || type === 'heading_2' || type === 'heading_3') {
+    return plainText(block[type].rich_text).replace(HEADING_PREFIX, '').trim()
   }
-  return plainText(block[type].rich_text).replace(HEADING_PREFIX, '').trim()
+  if (type === 'paragraph') {
+    const paragraph = text(block.paragraph)
+    if (!HEADING_PREFIX.test(paragraph)) return null
+    const heading = paragraph.replace(HEADING_PREFIX, '').trim()
+    return SECTION_NAME.test(heading) ? heading : null
+  }
+  return null
 }
 
 /**
  * Le corps d'une page d'expérience : un résumé en paragraphes avant le
  * premier titre, puis des sections — chacune portant les puces qui la suivent
- * jusqu'au titre suivant.
+ * jusqu'au titre suivant. Une puce sans titre au-dessus est rendue à part
+ * (`orphans`) : la publier sans sa section ferait disparaître le titre du site.
  */
-function parseBody(blocks) {
+export function parseBody(blocks) {
   const summary = []
   const sections = []
+  const orphans = []
   let current = null
 
   for (const block of blocks) {
@@ -145,7 +162,7 @@ function parseBody(blocks) {
     if (block.type === 'bulleted_list_item') {
       const item = text(block.bulleted_list_item)
       if (current) current.items.push(item)
-      else console.warn('  puce hors section ignorée : pas de titre au-dessus')
+      else orphans.push(item)
       continue
     }
 
@@ -158,7 +175,7 @@ function parseBody(blocks) {
     console.warn(`  bloc « ${block.type} » ignoré : non pris en charge`)
   }
 
-  return { summary: summary.join(' '), sections }
+  return { summary: summary.join(' '), sections, orphans }
 }
 
 // --- Logos -------------------------------------------------------------------
@@ -193,6 +210,25 @@ async function downloadLogo(files, company) {
   return `/experiences/${name}`
 }
 
+// --- Écriture ---------------------------------------------------------------
+
+/**
+ * Le JSON tel qu'il est versionné : `JSON.stringify` indenté, sauf les
+ * tableaux de chaînes qui tiennent sur une ligne de 80 caractères, écrits sur
+ * une seule (le format de Prettier). Sans ça, chaque synchronisation
+ * réécrirait ces tableaux et noierait les vrais changements dans le diff.
+ */
+export function toJson(value) {
+  return JSON.stringify(value, null, 2).replace(
+    /^( *)(.*)\[\n([^[\]{}]*?)\n *\](,?)$/gm,
+    (whole, indent, before, inner, comma) => {
+      const items = inner.split('\n').map((line) => line.trim())
+      const line = `${indent}${before}[${items.join(' ')}]${comma}`
+      return line.length <= 80 ? line : whole
+    },
+  )
+}
+
 // --- Programme ---------------------------------------------------------------
 
 async function main() {
@@ -202,6 +238,7 @@ async function main() {
   console.log(`${rows.length} expérience(s) dans Notion`)
 
   const experiences = []
+  const orphans = []
 
   for (const row of rows) {
     const props = row.properties
@@ -216,7 +253,8 @@ async function main() {
 
     console.log(`- ${name}`)
     const blocks = await blocksOf(row.id)
-    const { summary, sections } = parseBody(blocks)
+    const body = parseBody(blocks)
+    for (const item of body.orphans) orphans.push({ name, item })
 
     const files = props.logo?.files
     const logo = files?.length ? await downloadLogo(files, company) : null
@@ -229,14 +267,25 @@ async function main() {
       endDate: isoDate(props['end date']),
       stack: props.technologie?.multi_select?.map((t) => t.name) ?? [],
       logo,
-      summary,
-      sections,
+      summary: body.summary,
+      sections: body.sections,
     })
+  }
+
+  // Une puce hors section ne s'afficherait pas : mieux vaut ne rien écrire,
+  // donc ne rien commiter, que publier une expérience amputée.
+  if (orphans.length > 0) {
+    for (const { name, item } of orphans) {
+      console.error(`  « ${name} » — puce hors section : ${item}`)
+    }
+    throw new Error(
+      `${orphans.length} puce(s) sans titre de section au-dessus, voir ci-dessus`,
+    )
   }
 
   experiences.sort((a, b) => b.startDate.localeCompare(a.startDate))
 
-  await writeFile(DATA_FILE, `${JSON.stringify(experiences, null, 2)}\n`)
+  await writeFile(DATA_FILE, `${toJson(experiences)}\n`)
 
   // Un logo qui n'est plus référencé par aucune expérience ne doit pas traîner.
   const known = new Set(
