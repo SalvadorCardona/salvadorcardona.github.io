@@ -16,6 +16,7 @@ import type {
 import {
   agency,
   audiences,
+  audiencesHeading,
   commitments,
   expertises,
   faq,
@@ -583,102 +584,104 @@ function Marquee() {
 }
 
 /**
- * Les deux publics de l'agence, sitôt le hero passé : un prospect technique
+ * Les deux publics de l'agence, sitôt la vidéo passée : un prospect technique
  * doit lire « IA », « React » ou « Symfony » sans descendre jusqu'aux
  * forfaits. Chaque étiquette mène à la page service qui en parle.
  */
 function Audiences() {
   const { business, tech } = audiences
   return (
-    <section
-      id="pour-qui"
-      aria-label="Pour qui"
-      className="grid scroll-mt-24 gap-5 pt-20 lg:grid-cols-[1.7fr_1fr] lg:pt-24"
-    >
-      <div className="flex flex-col rounded-[2rem] bg-stone-900 p-7 text-white sm:p-10">
-        <p className="text-sm font-semibold tracking-widest text-brand-300 uppercase">
-          {business.eyebrow}
-        </p>
-        <h2 className="mt-3 text-3xl leading-tight font-extrabold tracking-tight text-balance sm:text-4xl">
-          {business.title}
-        </h2>
-        <p className="mt-4 max-w-2xl leading-relaxed text-pretty text-stone-300">
-          {business.description}
-        </p>
-        <ul className="mt-8 grid flex-1 gap-4 sm:grid-cols-2">
-          {offers.map((offer) => (
-            <li key={offer.id} className="flex">
-              <a
-                href={`#${offer.id}`}
-                className="group flex w-full flex-col rounded-3xl bg-white/5 p-6 ring-1 ring-white/10 transition hover:bg-white/10 hover:ring-brand-400/60"
-              >
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-500/15 text-brand-300">
-                  <ServiceIcon name={offer.icon} />
-                </span>
-                <span className="mt-5 text-xl font-extrabold tracking-tight">
-                  {offer.name}
-                </span>
-                <span className="mt-2 text-sm leading-relaxed text-pretty text-stone-400">
-                  {offer.tagline}
-                </span>
-                <span className="mt-auto flex items-baseline gap-1.5 pt-6">
-                  <span className="font-display text-4xl font-extrabold tracking-tight text-white">
-                    {offer.price} €
+    <section id="pour-qui" className="scroll-mt-24 pt-24 lg:pt-32">
+      <SectionHeading
+        eyebrow={audiencesHeading.eyebrow}
+        title={audiencesHeading.title}
+      />
+      <div className="mt-12 grid gap-5 lg:grid-cols-[1.7fr_1fr]">
+        <div className="flex flex-col rounded-[2rem] bg-stone-900 p-7 text-white sm:p-10">
+          <p className="text-sm font-semibold tracking-widest text-brand-300 uppercase">
+            {business.eyebrow}
+          </p>
+          <h3 className="mt-3 text-3xl leading-tight font-extrabold tracking-tight text-balance sm:text-4xl">
+            {business.title}
+          </h3>
+          <p className="mt-4 max-w-2xl leading-relaxed text-pretty text-stone-300">
+            {business.description}
+          </p>
+          <ul className="mt-8 grid flex-1 gap-4 sm:grid-cols-2">
+            {offers.map((offer) => (
+              <li key={offer.id} className="flex">
+                <a
+                  href={`#${offer.id}`}
+                  className="group flex w-full flex-col rounded-3xl bg-white/5 p-6 ring-1 ring-white/10 transition hover:bg-white/10 hover:ring-brand-400/60"
+                >
+                  <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-500/15 text-brand-300">
+                    <ServiceIcon name={offer.icon} />
                   </span>
-                  <span className="text-sm text-stone-400">HT / mois</span>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-        <a
-          href="#forfaits"
-          className="group mt-8 inline-flex items-center gap-2 font-semibold text-brand-300 hover:text-brand-200"
-        >
-          Voir les forfaits
-          <span
-            aria-hidden="true"
-            className="transition-transform group-hover:translate-x-1"
+                  <span className="mt-5 text-xl font-extrabold tracking-tight">
+                    {offer.name}
+                  </span>
+                  <span className="mt-2 text-sm leading-relaxed text-pretty text-stone-400">
+                    {offer.tagline}
+                  </span>
+                  <span className="mt-auto flex items-baseline gap-1.5 pt-6">
+                    <span className="font-display text-4xl font-extrabold tracking-tight text-white">
+                      {offer.price} €
+                    </span>
+                    <span className="text-sm text-stone-400">HT / mois</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+          <a
+            href="#forfaits"
+            className="group mt-8 inline-flex items-center gap-2 font-semibold text-brand-300 hover:text-brand-200"
           >
-            →
-          </span>
-        </a>
-      </div>
+            Voir les forfaits
+            <span
+              aria-hidden="true"
+              className="transition-transform group-hover:translate-x-1"
+            >
+              →
+            </span>
+          </a>
+        </div>
 
-      <div className="flex flex-col rounded-[2rem] border border-stone-200 bg-white p-7 sm:p-10">
-        <p className="text-sm font-semibold tracking-widest text-brand-600 uppercase">
-          {tech.eyebrow}
-        </p>
-        <h2 className="mt-3 text-2xl leading-tight font-extrabold tracking-tight text-balance text-stone-900 sm:text-3xl">
-          {tech.title}
-        </h2>
-        <p className="mt-4 leading-relaxed text-pretty text-stone-600">
-          {tech.description}
-        </p>
-        <ul className="mt-6 flex flex-wrap gap-2.5">
-          {techSkills.map((skill) => (
-            <li key={skill.label}>
-              <Link
-                to={servicePath(skill.service)}
-                className="inline-block rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-900 ring-1 ring-stone-200 transition-colors hover:bg-brand-500 hover:text-white hover:ring-brand-500"
-              >
-                {skill.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <Link
-          to="/services"
-          className="group mt-auto inline-flex items-center gap-2 pt-8 font-semibold text-brand-600 hover:text-brand-700"
-        >
-          Voir les prestations
-          <span
-            aria-hidden="true"
-            className="transition-transform group-hover:translate-x-1"
+        <div className="flex flex-col rounded-[2rem] border border-stone-200 bg-white p-7 sm:p-10">
+          <p className="text-sm font-semibold tracking-widest text-brand-600 uppercase">
+            {tech.eyebrow}
+          </p>
+          <h3 className="mt-3 text-2xl leading-tight font-extrabold tracking-tight text-balance text-stone-900 sm:text-3xl">
+            {tech.title}
+          </h3>
+          <p className="mt-4 leading-relaxed text-pretty text-stone-600">
+            {tech.description}
+          </p>
+          <ul className="mt-6 flex flex-wrap gap-2.5">
+            {techSkills.map((skill) => (
+              <li key={skill.label}>
+                <Link
+                  to={servicePath(skill.service)}
+                  className="inline-block rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-900 ring-1 ring-stone-200 transition-colors hover:bg-brand-500 hover:text-white hover:ring-brand-500"
+                >
+                  {skill.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link
+            to="/services"
+            className="group mt-auto inline-flex items-center gap-2 pt-8 font-semibold text-brand-600 hover:text-brand-700"
           >
-            →
-          </span>
-        </Link>
+            Voir les prestations
+            <span
+              aria-hidden="true"
+              className="transition-transform group-hover:translate-x-1"
+            >
+              →
+            </span>
+          </Link>
+        </div>
       </div>
     </section>
   )
@@ -703,6 +706,8 @@ const VIDEO = {
  * Rien n'est chargé avant le clic (`preload="none"`), hormis l'image
  * d'attente. Les sous-titres sont incrustés dans l'image : la piste WebVTT,
  * désactivée par défaut, ne sert qu'à l'accessibilité et au référencement.
+ * Le bouton Play se pose dans le coin haut-droit de l'image d'attente, qui
+ * est vide : au centre, il masquerait le titre et la maquette.
  */
 function Showreel({
   video,
@@ -714,7 +719,7 @@ function Showreel({
   return (
     <section id="video" className="scroll-mt-24 pt-24 lg:pt-32">
       <SectionHeading eyebrow="En vidéo" title="L’agence en une minute." />
-      <div className="relative mt-12 aspect-video overflow-hidden rounded-[2.5rem] bg-stone-900 shadow-2xl shadow-brand-100 ring-1 ring-brand-100">
+      <div className="relative mt-12 aspect-video overflow-hidden rounded-[2.5rem] bg-stone-900 shadow-lg shadow-stone-900/10 ring-1 ring-stone-200">
         <video
           ref={video}
           controls
@@ -738,12 +743,12 @@ function Showreel({
             type="button"
             onClick={() => void video.current?.play()}
             aria-label="Lire la vidéo"
-            className="group absolute top-1/2 left-1/2 flex h-20 w-20 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand-500 text-white shadow-2xl shadow-stone-900/30 ring-8 ring-white/30 transition-transform hover:scale-110 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-brand-500 sm:h-28 sm:w-28"
+            className="group absolute top-[28%] left-[73%] flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-brand-500 text-white shadow-2xl shadow-stone-900/30 ring-4 ring-white/30 transition-transform hover:scale-110 focus-visible:outline-4 focus-visible:outline-offset-4 focus-visible:outline-brand-500 sm:h-28 sm:w-28 sm:ring-8"
           >
             <svg
               aria-hidden="true"
               viewBox="0 0 24 24"
-              className="ml-1 h-8 w-8 fill-current sm:h-11 sm:w-11"
+              className="ml-1 h-6 w-6 fill-current sm:h-11 sm:w-11"
             >
               <path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l10.6-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z" />
             </svg>
