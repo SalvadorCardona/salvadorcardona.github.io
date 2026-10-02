@@ -81,7 +81,12 @@ export type Client = {
 }
 
 export const clients: Array<Client> = [
-  { name: 'Easy Cash', logo: '/clients/easy-cash.svg', width: 95, height: 26 },
+  {
+    name: 'Cash Converters',
+    logo: '/clients/cash-converters.svg',
+    width: 135,
+    height: 17,
+  },
   { name: 'Carrefour', logo: '/clients/carrefour.svg', width: 119, height: 25 },
   { name: 'OVHcloud', logo: '/clients/ovh.svg', width: 126, height: 20 },
   { name: 'EDF', logo: '/clients/edf.svg', width: 61, height: 26 },

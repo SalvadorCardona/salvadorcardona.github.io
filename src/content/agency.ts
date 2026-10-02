@@ -167,7 +167,8 @@ export const techSkills: Array<AgencyTechSkill> = [
 
 /**
  * Une réalisation de la pile de cartes du hero : une capture d'un site ou
- * d'une application livrés, jamais une maquette. `image` est le nom de base
+ * d'une application livrés par l'agence, ou d'un site client sur lequel
+ * Salvador a travaillé en mission — `kind` le dit alors —, jamais une maquette. `image` est le nom de base
  * des fichiers de `public/realisations/`, déclinés en AVIF et WebP à deux
  * largeurs — 480 et 800 px pour une capture `desktop` (8:7), 180 et 360 px
  * pour une capture `mobile` (1:2), affichée dans un cadre de téléphone.
@@ -207,36 +208,28 @@ export const works: Array<AgencyWork> = [
     alt: 'Site vitrine de démonstration d’un éducateur canin lyonnais : titre, boutons de réservation et photo du Vieux Lyon.',
   },
   {
-    name: 'react-resource-view',
-    kind: 'Site de bibliothèque',
-    url: 'https://cardona.digital/react-resource-view/',
-    image: 'react-resource-view',
+    name: 'Wizaplace',
+    kind: 'Éditeur SaaS — mission dev',
+    url: 'https://www.wizaplace.com',
+    image: 'wizaplace',
     format: 'desktop',
-    alt: 'Page d’accueil de react-resource-view, bibliothèque React de formulaires et d’écrans d’administration.',
+    alt: 'Page d’accueil de Wizaplace, la solution de création de marketplace : titre, bouton de démonstration et logos de ses clients.',
   },
   {
-    name: 'whisper-desk',
-    kind: 'Site d’application',
-    url: 'https://cardona.digital/whisper-desk/',
-    image: 'whisper-desk',
-    format: 'mobile',
-    alt: 'Site de whisper-desk, l’outil de dictée vocale hors ligne, sur téléphone.',
+    name: 'Greenweez',
+    kind: 'Marketplace bio — mission dev',
+    url: 'https://www.greenweez.com',
+    image: 'greenweez',
+    format: 'desktop',
+    alt: 'Page d’accueil de Greenweez, l’hypermarché bio en ligne : barre de recherche, rayons et bannière de promotion.',
   },
   {
-    name: 'ticket-runner',
-    kind: 'Site d’application',
-    url: 'https://cardona.digital/ticket-runner/',
-    image: 'ticket-runner',
+    name: 'Cash Converters',
+    kind: 'E-commerce — mission dev',
+    url: 'https://www.cashconverters.fr',
+    image: 'cash-converters',
     format: 'desktop',
-    alt: 'Page d’accueil de ticket-runner avec sa mascotte et un tableau de tickets.',
-  },
-  {
-    name: 'ticket-runner',
-    kind: 'Console web',
-    url: 'https://cardona.digital/ticket-runner/#console',
-    image: 'ticket-runner-console',
-    format: 'desktop',
-    alt: 'La console web de ticket-runner : le menu, le tableau des tickets et la conversation avec l’espace de travail.',
+    alt: 'Page d’accueil de Cash Converters, l’achat et la revente de produits d’occasion : recherche, rayons et catégories en cartes colorées.',
   },
 ]
 
