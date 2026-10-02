@@ -1,0 +1,39 @@
+name: Vérifications
+
+# Rejoue sur chaque pull request les contrôles que les workflows de
+# publication font avant de commiter sur main : une erreur de types ou une
+# page qui ne rend plus s'arrête ici, pas sur main où elle bloquerait
+# publish-blog.yml et publish-experiences.yml.
+
+on:
+  pull_request:
+    branches: [main]
+
+# Un nouveau push sur la même pull request rend l'ancienne vérification
+# inutile.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    # Même image que les workflows de publication (voir publish-blog.yml).
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Vérification des types
+        run: npm run typecheck
+
+      - name: Build serveur (Nitro + contrôle de chaque page)
+        run: npm run build
