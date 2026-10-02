@@ -80,35 +80,19 @@ def subtitle(text, dark=False):
 
 boards = {}
 
-# 1 — Accroche
-boards["Main.dc.html"] = ("1 · Accroche · 0:00–0:10", page("Accroche", NIGHT, f"""
-<div style="position: absolute; left: 96px; top: 88px">{logo(44, "#fafaf9")}</div>
-<div style="position: absolute; left: 96px; top: 200px; display: flex; flex-direction: column; gap: 18px">
-<div style="display: inline-flex; align-self: flex-start; padding: 14px 26px; border: 2px dashed #57534e; border-radius: 14px; font-size: 44px; font-weight: 600; color: #a8a29e; text-decoration: line-through; text-decoration-color: {{{{accent}}}}">Vos tableurs ?</div>
-<div style="display: inline-flex; align-self: flex-start; padding: 14px 26px; border: 2px dashed #57534e; border-radius: 14px; font-size: 44px; font-weight: 600; color: #a8a29e; text-decoration: line-through; text-decoration-color: {{{{accent}}}}">Un site d'une autre époque ?</div>
-<h1 style="margin: 26px 0 0; font-size: 76px; line-height: 1.02; font-weight: 800; letter-spacing: -0.03em; color: #fafaf9">Une proposition<br><span style="color: {{{{accent}}}}">toute simple.</span></h1>
-</div>
-{subtitle("L'agence Cardona a une proposition, toute simple.", dark=True)}
-"""))
+# 1 à 3 — Les plans illustrés et animés (tableur → application, présence en ligne, services)
+# sont écrits à la main dans scenes/, tels qu'on les retouche dans le canevas Design.
+def scene(name):
+    with open(os.path.join(ROOT, "scenes", name)) as f:
+        return f.read()
 
-# 2 — Services
-services = [("code", "Applications web", "sur mesure"),
-            ("shield", "Audit de sécurité", "de l'existant"),
-            ("spark", "Intelligence artificielle", "dans vos outils")]
-cards = "".join(f"""<div style="display: flex; flex-direction: column; gap: 22px; padding: 40px 36px; background: #ffffff; border: 1px solid #e7e5e4; border-radius: 24px">
-<div style="width: 68px; height: 68px; border-radius: 18px; background: #fdf1e8; display: flex; align-items: center; justify-content: center">{icon(ICONS[i])}</div>
-<div style="display: flex; flex-direction: column; gap: 6px"><div style="font-size: 32px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1">{t}</div><div style="font-size: 24px; color: {MUTED}">{s}</div></div>
-</div>""" for i, t, s in services)
-boards["Services.dc.html"] = ("2 · Services · 0:10–0:22", page("Services", SAND, f"""
-<div style="position: absolute; left: 96px; right: 96px; top: 0; bottom: 90px; display: flex; flex-direction: column; justify-content: center; gap: 44px">
-<div style="font-size: 20px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: {{{{accent}}}}">Ce que fait l'agence</div>
-<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px">{cards}</div>
-</div>
-{subtitle("On développe · On audite · On branche l'IA là où elle vous fait gagner du temps.")}
-"""))
 
-# 3 — Deux abonnements
-boards["Abonnements.dc.html"] = ("3 · Deux abonnements · 0:22–0:29", page("Deux abonnements", SAND, f"""
+boards["Main.dc.html"] = ("1 · Du tableur à l'application · 0:00–0:05", scene("Main.dc.html"))
+boards["Presence.dc.html"] = ("2 · Présence en ligne · 0:05–0:10", scene("Presence.dc.html"))
+boards["Services.dc.html"] = ("3 · Services · 0:10–0:21", scene("Services.dc.html"))
+
+# 4 — Deux abonnements
+boards["Abonnements.dc.html"] = ("4 · Deux abonnements · 0:21–0:27", page("Deux abonnements", SAND, f"""
 <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; padding-bottom: 60px">
 <div style="font-size: 20px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: {{{{accent}}}}">Votre présence en ligne</div>
 <h2 style="margin: 0; font-size: 96px; line-height: 1; font-weight: 800; letter-spacing: -0.035em; text-align: center">Deux abonnements.<br>Deux prix affichés.</h2>
@@ -132,18 +116,18 @@ def offer(name, price, promise, items, badge):
 </div>"""
 
 
-boards["Vitrine.dc.html"] = ("4 · Vitrine 30 € · 0:29–0:39", page("Offre Vitrine", SAND, offer(
+boards["Vitrine.dc.html"] = ("5 · Vitrine 30 € · 0:27–0:36", page("Offre Vitrine", SAND, offer(
     "Vitrine", "30", "Votre site, qui vous représente et que vos clients trouvent.",
     ["Écrit pour vous", "Hébergé", "Tenu à jour", "En ligne en deux semaines"], "Site vitrine")
     + subtitle("La Vitrine : trente euros par mois. Écrit, hébergé, tenu à jour.")))
 
-boards["Application.dc.html"] = ("5 · Application 100 € · 0:39–0:48", page("Offre Application", SAND, offer(
+boards["Application.dc.html"] = ("6 · Application 100 € · 0:36–0:44", page("Offre Application", SAND, offer(
     "Application", "100", "Un outil taillé pour votre métier, qui évolue avec vous.",
     ["Tout ce que comprend la Vitrine", "Vos écrans, votre vocabulaire", "Une journée d'évolutions par mois", "Sauvegardes et supervision"], "Application métier")
     + subtitle("L'Application : cent euros par mois. Un outil qui évolue avec vous, chaque mois.")))
 
-# 6 — Garanties
-boards["Garanties.dc.html"] = ("6 · Garanties · 0:48–0:55", page("Garanties", SAND, f"""
+# 7 — Garanties
+boards["Garanties.dc.html"] = ("7 · Garanties · 0:44–0:50", page("Garanties", SAND, f"""
 <div style="position: absolute; left: 96px; right: 96px; top: 0; bottom: 90px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: center; gap: 32px">
 <div style="display: flex; flex-direction: column; gap: 14px; padding: 52px 48px; background: {INK}; border-radius: 28px">
 <div style="font-size: 150px; font-weight: 800; letter-spacing: -0.05em; line-height: 0.9; color: {{{{accent}}}}">0&#160;€</div>
@@ -157,18 +141,28 @@ boards["Garanties.dc.html"] = ("6 · Garanties · 0:48–0:55", page("Garanties"
 {subtitle("Zéro euro pour démarrer. Et votre code, vos données, restent à vous.")}
 """))
 
-# 7 — Appel à l'action
-boards["RendezVous.dc.html"] = ("7 · Prendre rendez-vous · 0:55–1:04", page("Prendre rendez-vous", NIGHT, f"""
+# QR code vers la prise de rendez-vous (https://cardona.digital/rendez-vous), généré avec
+# segno (version 3, correction M) puis figé ici pour ne pas ajouter de dépendance au rendu.
+QR = ('<svg width="168" height="168" viewBox="0 0 29 29" shape-rendering="crispEdges" aria-label="QR code vers cardona.digital/rendez-vous">'
+      '<path stroke="#1d1d1b" d="M0 0.5h7m1 0h2m1 0h3m1 0h1m1 0h4m1 0h7m-29 1h1m5 0h1m1 0h1m1 0h2m1 0h1m3 0h2m3 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m4 0h1m4 0h1m2 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h5m1 0h2m1 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m5 0h1m1 0h1m4 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m2 0h1m1 0h1m1 0h1m3 0h3m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h2m5 0h1m1 0h2m-19 1h1m1 0h2m1 0h3m1 0h5m3 0h4m1 0h1m2 0h1m1 0h2m-29 1h1m1 0h1m2 0h1m1 0h1m1 0h1m3 0h2m1 0h1m2 0h6m3 0h1m-29 1h5m1 0h1m1 0h1m3 0h2m2 0h1m4 0h3m2 0h2m-28 1h1m7 0h5m6 0h1m1 0h1m1 0h1m4 0h1m-28 1h2m2 0h4m1 0h1m3 0h4m1 0h1m5 0h2m-26 1h2m1 0h2m1 0h1m1 0h1m1 0h1m2 0h4m1 0h1m2 0h1m3 0h3m-27 1h5m2 0h1m1 0h1m1 0h1m4 0h4m2 0h1m1 0h3m-28 1h2m1 0h1m2 0h1m3 0h2m1 0h1m1 0h1m2 0h4m1 0h1m2 0h1m-27 1h1m1 0h2m1 0h1m1 0h2m1 0h1m2 0h2m2 0h1m1 0h2m2 0h2m1 0h1m-25 1h1m3 0h1m1 0h1m1 0h2m1 0h2m1 0h1m2 0h1m2 0h1m1 0h3m-28 1h1m3 0h1m1 0h1m1 0h1m3 0h4m1 0h1m2 0h2m1 0h2m1 0h1m-25 1h3m4 0h1m1 0h7m2 0h2m1 0h1m2 0h1m-26 1h1m4 0h2m4 0h3m2 0h2m1 0h7m-19 1h2m1 0h2m3 0h1m1 0h1m1 0h1m3 0h5m-29 1h7m1 0h2m1 0h2m1 0h1m1 0h5m1 0h1m1 0h2m1 0h1m-28 1h1m5 0h1m1 0h3m1 0h3m5 0h1m3 0h2m1 0h1m-28 1h1m1 0h3m1 0h1m10 0h1m2 0h5m1 0h2m-28 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m2 0h3m2 0h1m-29 1h1m1 0h3m1 0h1m1 0h3m3 0h1m1 0h1m1 0h1m4 0h1m2 0h1m1 0h1m-29 1h1m5 0h1m2 0h4m1 0h1m5 0h1m1 0h2m1 0h1m1 0h1m-28 1h7m1 0h2m2 0h1m1 0h3m1 0h3m1 0h2m3 0h1"></path></svg>')
+
+# 8 — Appel à l'action
+boards["RendezVous.dc.html"] = ("8 · Prendre rendez-vous · 0:50–0:56", page("Prendre rendez-vous", NIGHT, f"""
 <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 34px; padding-bottom: 50px">
 {logo(56, "#fafaf9")}
 <h2 style="margin: 0; font-size: 88px; line-height: 1; font-weight: 800; letter-spacing: -0.035em; color: #fafaf9; text-align: center">Alors, on en parle&#160;?</h2>
-<div style="font-size: 30px; color: #d6d3d1">Une heure d'échange, offerte, sans engagement.</div>
-<a href="https://cardona.digital/contact" style="display: flex; align-items: center; gap: 14px; padding: 22px 38px; border-radius: 999px; background: {{{{accent}}}}; color: #ffffff; font-size: 34px; font-weight: 700; text-decoration: none">{icon(ICONS["calendar"], "#ffffff", 34)}<span>cardona.digital</span></a>
+<div style="display: flex; align-items: center; gap: 40px">
+<div style="display: flex; flex-direction: row; align-items: center; gap: 22px; padding: 24px 30px 24px 24px; background: #ffffff; border-radius: 26px">
+{QR}
+<div style="font-size: 24px; line-height: 1.25; font-weight: 600; color: {INK}">Scannez pour<br>prendre rendez-vous</div>
 </div>
-{subtitle("Prenez rendez-vous sur cardona point digital.", dark=True)}
+<a href="https://cardona.digital/rendez-vous" style="display: flex; align-items: center; gap: 14px; padding: 22px 38px; border-radius: 999px; background: {{{{accent}}}}; color: #ffffff; font-size: 34px; font-weight: 700; text-decoration: none">{icon(ICONS["calendar"], "#ffffff", 34)}<span>cardona.digital</span></a>
+</div>
+</div>
+{subtitle("Alors, on en parle ? Prenez rendez-vous sur cardona point digital.", dark=True)}
 """))
 
-# Index du canvas : deux rangées (4 puis 3), 80 px entre cadres, 120 entre rangées.
+# Index du canvas : deux rangées de 4, 80 px entre cadres, 120 entre rangées.
 order = list(boards)
 layout = {}
 for n, name in enumerate(order):
@@ -178,7 +172,7 @@ canvas = {
     "v": 3, "createdOnFiles": {"v": 1, "at": "2026-09-29T20:46:49Z"},
     "title": "Vidéo agence Cardona — storyboard", "launch": {"view": "canvas"}, "pages": [],
     "boards": layout, "order": order,
-    "notes": {"titre": {"x": 0, "y": -300, "text": "Vidéo agence Cardona · 7 plans · 1 min 04", "kind": "title1", "maxW": 4*W + 3*80}},
+    "notes": {"titre": {"x": 0, "y": -300, "text": "Vidéo agence Cardona · 8 plans · 56 s", "kind": "title1", "maxW": 4*W + 3*80}},
     "designSystems": [],
 }
 os.makedirs(os.path.join(ROOT, "project"), exist_ok=True)

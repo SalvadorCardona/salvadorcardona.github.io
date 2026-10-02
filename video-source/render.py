@@ -22,7 +22,8 @@ FONT_EXT = os.path.join(FONTS, "bricolage-grotesque-latin-ext-wght-normal.woff2"
 
 # Texte dit par la voix, phrase par phrase, pour les sous-titres synchronisés.
 SPOKEN = {
-    "01": ["Votre activité tient encore dans des tableurs ?", "Votre site date d'une autre époque ?", "Bon. L'agence Cardona a une proposition, toute simple."],
+    "01": ["Vos tableurs deviennent une vraie application,", "pensée pour votre métier."],
+    "01b": ["Un site à créer, ou un site à faire évoluer :", "on s'occupe de votre présence en ligne."],
     "02": ["On développe vos applications web sur mesure."],
     "03": ["On audite la sécurité de celles que vous avez déjà."],
     "04": ["Et on branche l'intelligence artificielle dans vos outils,", "là où elle vous fait gagner du temps."],
@@ -30,7 +31,7 @@ SPOKEN = {
     "06": ["La Vitrine : trente euros par mois.", "Votre site, écrit, hébergé, tenu à jour.", "En ligne en deux semaines."],
     "07": ["L'Application : cent euros par mois.", "Un outil taillé pour votre métier,", "qui évolue avec vous, chaque mois."],
     "08": ["Zéro euro pour démarrer.", "Et votre code, vos données, restent à vous."],
-    "09": ["Alors, on en parle ?", "Une heure d'échange, offerte, sans engagement.", "Prenez rendez-vous sur cardona.digital"],
+    "09": ["Alors, on en parle ?", "Prenez rendez-vous sur cardona.digital"],
 }
 
 
@@ -69,27 +70,39 @@ def timeline():
     P = {ph["phrase"]: ph for ph in TIMING}
     L = _line
     duration = round(TIMING[-1]["end"] + 1.2, 2)
-    starts = [0.0, P["02"]["start"] - 0.45, P["05"]["start"] - 0.45, P["06"]["start"] - 0.3,
+    starts = [0.0, P["01b"]["start"] - 0.45, P["02"]["start"] - 0.45, P["05"]["start"] - 0.45, P["06"]["start"] - 0.3,
               P["07"]["start"] - 0.3, P["08"]["start"] - 0.45, P["09"]["start"] - 0.45]
-    names = ["Main.dc.html", "Services.dc.html", "Abonnements.dc.html", "Vitrine.dc.html",
+    names = ["Main.dc.html", "Presence.dc.html", "Services.dc.html", "Abonnements.dc.html", "Vitrine.dc.html",
              "Application.dc.html", "Garanties.dc.html", "RendezVous.dc.html"]
     ends = starts[1:] + [duration]
     scenes = list(zip(names, [round(s, 2) for s in starts], [round(e, 2) for e in ends]))
     # Moment absolu de chaque entrée, dans l'ordre des éléments du plan.
     abs_ = [
-        [0.1, L("01", 0), L("01", 1), L("01", 2)],                        # logo, tableurs, autre époque, proposition
-        [starts[1] + 0.2, P["02"]["start"], P["03"]["start"], P["04"]["start"]],  # sur-titre, une carte par phrase
-        [starts[2] + 0.3, L("05", 0), L("05", 1)],                        # sur-titre, titre, « hors taxes »
-        [starts[3] + 0.3, L("06", 1)],                                    # prix, puis ce qui est compris
-        [starts[4] + 0.3, L("07", 1)],
+        [0.1, 0.3, 0.55],                                                 # logo, titre, illustration (qui se monte seule)
+        [starts[1] + 0.15, starts[1] + 0.45],                             # texte, navigateur (le site se construit seul)
+        [starts[2] + 0.2, P["02"]["start"], P["03"]["start"], P["04"]["start"]],  # sur-titre, une carte par phrase
+        [starts[3] + 0.3, L("05", 0), L("05", 1)],                        # sur-titre, titre, « hors taxes »
+        [starts[4] + 0.3, L("06", 1)],                                    # prix, puis ce qui est compris
+        [starts[5] + 0.3, L("07", 1)],
         [L("08", 0), L("08", 1)],                                         # 0 €, puis code et données
-        [starts[6] + 0.2, L("09", 0), L("09", 1), L("09", 2)],            # logo, question, heure offerte, bouton
+        [starts[7] + 0.2, L("09", 0), L("09", 1)],                        # logo, question, QR code et bouton
     ]
     delays = [[round(max(a - s, 0.05), 2) for a in row] for row, s in zip(abs_, starts)]
     return scenes, delays, duration
 
 
 SCENES, DELAYS, DURATION = timeline()
+
+
+def scene_css(html):
+    """Les animations propres à un plan (keyframes et classes de son <helmet>), sans les règles
+    de page (body, liens) ni le mode « mouvement réduit », qui n'ont pas de sens dans la vidéo."""
+    m = re.search(r"<helmet>.*?<style>(.*?)</style>", html, flags=re.S)
+    if not m:
+        return ""
+    css = re.sub(r"^\s*(body|a)\{.*$", "", m.group(1), flags=re.M)
+    css = re.sub(r"@media \(prefers-reduced-motion[^\n]*", "", css)
+    return css.strip()
 
 
 def scene_body(html):
@@ -102,9 +115,10 @@ def scene_body(html):
 
 
 def player_html():
-    scenes = []
+    scenes, css = [], []
     for name, start, end in SCENES:
         html = open(os.path.join(SB, "project", name)).read()
+        css.append(scene_css(html))
         scenes.append(f'<section class="scene" data-start="{start}" data-end="{end}">{scene_body(html)}</section>')
     return f"""<!doctype html><html lang="fr"><head><meta charset="utf-8">
 <style>
@@ -115,6 +129,7 @@ html,body{{margin:0;background:#1c1917}}
 .scene{{position:absolute;inset:0;opacity:0}}
 .scene > div{{font-family:'Bricolage Grotesque',system-ui,sans-serif}}
 #cap{{position:absolute;left:0;right:0;bottom:28px;display:flex;justify-content:center;pointer-events:none}}
+{chr(10).join(css)}
 #cap span{{font-family:'Bricolage Grotesque',system-ui,sans-serif;font-size:26px;font-weight:600;line-height:1.3;color:#fff;background:rgba(28,25,23,.82);padding:8px 18px;border-radius:12px;max-width:1000px;text-align:center}}
 </style></head><body><div id="stage">{''.join(scenes)}<div id="cap"><span></span></div></div>
 <script>
@@ -138,8 +153,17 @@ const DELAYS = {json.dumps(DELAYS)};
 scenes.forEach((s, i) => s.delays = DELAYS[i] || []);
 // Les prix montent au lieu d'apparaître d'un bloc.
 const counters = [...document.querySelectorAll('span, div')].filter(n => n.children.length === 0 && /^\\d+\\u00a0€$/.test(n.textContent)).map(n => ({{n, v: parseInt(n.textContent)}}));
+// Les animations CSS des plans suivent l'horloge de la vidéo, pas celle du navigateur.
+// Celles qui montent un écran (préfixes cd-, cp-) s'arrêtent une fois l'écran monté ; les autres bouclent.
+scenes.forEach(s => s.anims = s.el.getAnimations({{subtree: true}}));
+scenes.forEach(s => s.anims.forEach(a => a.pause()));
 window.renderAt = (t) => {{
   for (const s of scenes) {{
+    const local = Math.max(t - s.start, 0) * 1000;
+    for (const a of s.anims) {{
+      const d = a.effect.getTiming().duration;
+      a.currentTime = /^(cd|cp)/.test(a.animationName || '') ? Math.min(local, d * 0.85) : local;
+    }}
     // Fondu enchaîné : le plan suivant (plus haut dans la pile) apparaît par-dessus celui-ci.
     const fadeIn = s.start === 0 ? 1 : ease((t - s.start) / 0.45);
     const on = t >= s.start - 0.01 && t < s.end + 0.5;
