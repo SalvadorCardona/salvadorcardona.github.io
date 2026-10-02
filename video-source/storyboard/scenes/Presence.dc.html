@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Votre présence en ligne</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;display=swap">
+<style>
+body{margin:0;font-family:'Bricolage Grotesque',system-ui,sans-serif;background:#faf7f2;color:#1d1d1b}
+a{color:#e46212}a:hover{color:#c2410c}
+@keyframes cpS1{0%,6%{opacity:0;transform:translateY(-10px)}14%,90%{opacity:1;transform:none}100%{opacity:0}}
+@keyframes cpS2{0%,14%{opacity:0;transform:translateX(-18px)}24%,90%{opacity:1;transform:none}100%{opacity:0}}
+@keyframes cpS3{0%,22%{opacity:0;transform:scale(.92)}32%,90%{opacity:1;transform:none}100%{opacity:0}}
+@keyframes cpS4{0%,32%{opacity:0;transform:translateY(18px)}40%,90%{opacity:1;transform:none}100%{opacity:0}}
+@keyframes cpS5{0%,38%{opacity:0;transform:translateY(18px)}46%,90%{opacity:1;transform:none}100%{opacity:0}}
+@keyframes cpS6{0%,44%{opacity:0;transform:translateY(18px)}52%,90%{opacity:1;transform:none}100%{opacity:0}}
+@keyframes cpDone{0%,58%{opacity:0;transform:scale(.6)}64%{opacity:1;transform:scale(1.08)}68%,90%{opacity:1;transform:none}100%{opacity:0;transform:scale(.6)}}
+@keyframes cpCursor{0%{transform:translate(380px,40px)}14%{transform:translate(120px,40px)}24%{transform:translate(60px,140px)}32%{transform:translate(400px,170px)}46%{transform:translate(260px,320px)}58%{transform:translate(470px,380px)}90%{transform:translate(470px,380px)}100%{transform:translate(380px,40px)}}
+.cp-s1{animation:cpS1 8s ease-out infinite}
+.cp-s2{animation:cpS2 8s ease-out infinite}
+.cp-s3{animation:cpS3 8s ease-out infinite}
+.cp-s4{animation:cpS4 8s ease-out infinite}
+.cp-s5{animation:cpS5 8s ease-out infinite}
+.cp-s6{animation:cpS6 8s ease-out infinite}
+.cp-done{animation:cpDone 8s ease-out infinite}
+.cp-cursor{animation:cpCursor 8s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.cp-s1,.cp-s2,.cp-s3,.cp-s4,.cp-s5,.cp-s6,.cp-done{animation:none}.cp-cursor{display:none}}
+</style>
+</helmet>
+<div style="width: 1280px; height: 720px; box-sizing: border-box; position: relative; overflow: hidden; background: #faf7f2; font-family: 'Bricolage Grotesque', system-ui, sans-serif">
+
+<div style="position: absolute; left: 96px; right: 96px; top: 70px; bottom: 110px; display: grid; grid-template-columns: 520px minmax(0, 1fr); gap: 48px; align-items: center">
+
+<div style="display: flex; flex-direction: column; gap: 22px">
+<div style="font-size: 20px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: {{accent}}">Votre site</div>
+<h1 style="margin: 0; font-size: 56px; line-height: 1.04; font-weight: 800; letter-spacing: -0.03em; color: #1d1d1b">Créer ou faire évoluer <span style="color: {{accent}}">votre présence en ligne.</span></h1>
+<div style="display: flex; gap: 12px; flex-wrap: wrap">
+<div style="padding: 8px 16px; border-radius: 999px; background: #ffffff; border: 1px solid #e7e5e4; font-size: 20px; color: #57534e">Nouveau site</div>
+<div style="padding: 8px 16px; border-radius: 999px; background: #ffffff; border: 1px solid #e7e5e4; font-size: 20px; color: #57534e">Refonte</div>
+</div>
+</div>
+
+<div style="position: relative; height: 470px; box-sizing: border-box; background: #ffffff; border: 1px solid #e7e5e4; border-radius: 24px; overflow: hidden; display: flex; flex-direction: column">
+<div style="height: 40px; flex-shrink: 0; background: #f5f0e9; display: flex; align-items: center; gap: 8px; padding: 0 16px; box-sizing: border-box">
+<div style="width: 11px; height: 11px; border-radius: 50%; background: #d6d3d1"></div><div style="width: 11px; height: 11px; border-radius: 50%; background: #d6d3d1"></div><div style="width: 11px; height: 11px; border-radius: 50%; background: #d6d3d1"></div>
+<div style="margin-left: 14px; flex-grow: 1; height: 22px; border-radius: 8px; background: #ffffff; display: flex; align-items: center; padding: 0 12px; font-size: 13px; color: #78716c">votre-entreprise.fr</div>
+</div>
+<div style="flex-grow: 1; padding: 20px 28px; box-sizing: border-box; display: flex; flex-direction: column; gap: 18px">
+<div class="cp-s1" style="display: flex; align-items: center; justify-content: space-between"><div style="display: flex; align-items: center; gap: 10px"><div style="width: 26px; height: 26px; border-radius: 8px; background: #e46212"></div><div style="width: 90px; height: 10px; border-radius: 5px; background: #1d1d1b"></div></div><div style="display: flex; gap: 14px"><div style="width: 44px; height: 8px; border-radius: 4px; background: #d6d3d1"></div><div style="width: 44px; height: 8px; border-radius: 4px; background: #d6d3d1"></div><div style="width: 44px; height: 8px; border-radius: 4px; background: #d6d3d1"></div></div></div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: center">
+<div class="cp-s2" style="display: flex; flex-direction: column; gap: 12px"><div style="width: 92%; height: 18px; border-radius: 6px; background: #1d1d1b"></div><div style="width: 70%; height: 18px; border-radius: 6px; background: #1d1d1b"></div><div style="width: 85%; height: 8px; border-radius: 4px; background: #d6d3d1; margin-top: 4px"></div><div style="width: 60%; height: 8px; border-radius: 4px; background: #d6d3d1"></div><div style="align-self: flex-start; margin-top: 6px; padding: 9px 18px; border-radius: 10px; background: #e46212; color: #ffffff; font-size: 14px; font-weight: 600">Prendre rendez-vous</div></div>
+<div class="cp-s3" style="height: 150px; border-radius: 16px; background: #fdf1e8; overflow: hidden; position: relative"><svg width="100%" height="100%" viewBox="0 0 240 150" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><circle cx="178" cy="44" r="18" fill="#f6b98e"></circle><path d="M0 150L70 72l44 46 34-30 92 62z" fill="#e46212" opacity="0.85"></path><path d="M60 150l60-50 50 34 70-40v56z" fill="#c2410c"></path></svg></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px">
+<div class="cp-s4" style="height: 96px; border-radius: 14px; border: 1px solid #e7e5e4; padding: 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px"><div style="width: 28px; height: 28px; border-radius: 9px; background: #fdf1e8"></div><div style="width: 70%; height: 8px; border-radius: 4px; background: #57534e"></div><div style="width: 50%; height: 6px; border-radius: 3px; background: #d6d3d1"></div></div>
+<div class="cp-s5" style="height: 96px; border-radius: 14px; border: 1px solid #e7e5e4; padding: 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px"><div style="width: 28px; height: 28px; border-radius: 9px; background: #fdf1e8"></div><div style="width: 60%; height: 8px; border-radius: 4px; background: #57534e"></div><div style="width: 45%; height: 6px; border-radius: 3px; background: #d6d3d1"></div></div>
+<div class="cp-s6" style="height: 96px; border-radius: 14px; border: 1px solid #e7e5e4; padding: 14px; box-sizing: border-box; display: flex; flex-direction: column; gap: 10px"><div style="width: 28px; height: 28px; border-radius: 9px; background: #fdf1e8"></div><div style="width: 66%; height: 8px; border-radius: 4px; background: #57534e"></div><div style="width: 40%; height: 6px; border-radius: 3px; background: #d6d3d1"></div></div>
+</div>
+</div>
+<div class="cp-done" style="position: absolute; right: 20px; bottom: 20px; display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 12px; background: #1d1d1b; color: #fafaf9; font-size: 15px; font-weight: 600"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e46212" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>En ligne</div>
+<div class="cp-cursor" style="position: absolute; left: 0; top: 0; pointer-events: none"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l14 7-6 1.8L10.5 18z" fill="#1d1d1b" stroke="#ffffff" stroke-width="1.4" stroke-linejoin="round"></path></svg></div>
+</div>
+
+</div>
+
+<p style="position: absolute; left: 0; right: 0; bottom: 36px; margin: 0; text-align: center; font-size: 22px; line-height: 1.4; color: #57534e; font-weight: 400">Un site à créer, ou un site à faire évoluer : on s'occupe de votre présence en ligne.</p>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"accent": {"editor": "color", "default": "#e46212", "options": ["#e46212", "#c2410c", "#1d1d1b"]}, "$preview": {"width": 1280, "height": 720}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return { accent: this.props.accent ?? '#e46212' };
+  }
+}
+</script>
+</body>
+</html>
