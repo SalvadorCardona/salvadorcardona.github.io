@@ -113,7 +113,7 @@ export const expertises: Array<AgencyExpertise> = [
 ]
 
 /**
- * Les deux publics, juste sous le hero : les petites entreprises, qui
+ * Les deux publics, juste sous la vidéo : les petites entreprises, qui
  * prennent un abonnement, et les équipes qui cherchent un lead dev, en
  * mission au forfait ou en régie (les pages `/services`).
  */
@@ -121,6 +121,11 @@ export type AgencyAudience = {
   eyebrow: string
   title: string
   description: string
+}
+
+export const audiencesHeading = {
+  eyebrow: 'Pour qui',
+  title: 'Deux façons de travailler avec l’agence.',
 }
 
 export const audiences: { business: AgencyAudience; tech: AgencyAudience } = {
