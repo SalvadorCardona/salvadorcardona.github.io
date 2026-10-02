@@ -607,9 +607,35 @@ function Audiences() {
         <p className="mt-4 max-w-2xl leading-relaxed text-pretty text-stone-300">
           {business.description}
         </p>
+        <ul className="mt-8 grid flex-1 gap-4 sm:grid-cols-2">
+          {offers.map((offer) => (
+            <li key={offer.id} className="flex">
+              <a
+                href={`#${offer.id}`}
+                className="group flex w-full flex-col rounded-3xl bg-white/5 p-6 ring-1 ring-white/10 transition hover:bg-white/10 hover:ring-brand-400/60"
+              >
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-brand-500/15 text-brand-300">
+                  <ServiceIcon name={offer.icon} />
+                </span>
+                <span className="mt-5 text-xl font-extrabold tracking-tight">
+                  {offer.name}
+                </span>
+                <span className="mt-2 text-sm leading-relaxed text-pretty text-stone-400">
+                  {offer.tagline}
+                </span>
+                <span className="mt-auto flex items-baseline gap-1.5 pt-6">
+                  <span className="font-display text-4xl font-extrabold tracking-tight text-white">
+                    {offer.price} €
+                  </span>
+                  <span className="text-sm text-stone-400">HT / mois</span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
         <a
           href="#forfaits"
-          className="group mt-auto inline-flex items-center gap-2 pt-8 font-semibold text-brand-300 hover:text-brand-200"
+          className="group mt-8 inline-flex items-center gap-2 font-semibold text-brand-300 hover:text-brand-200"
         >
           Voir les forfaits
           <span
@@ -621,7 +647,7 @@ function Audiences() {
         </a>
       </div>
 
-      <div className="rounded-[2rem] border border-stone-200 bg-white p-7 sm:p-10">
+      <div className="flex flex-col rounded-[2rem] border border-stone-200 bg-white p-7 sm:p-10">
         <p className="text-sm font-semibold tracking-widest text-brand-600 uppercase">
           {tech.eyebrow}
         </p>
@@ -639,19 +665,13 @@ function Audiences() {
                 className="inline-block rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-900 ring-1 ring-stone-200 transition-colors hover:bg-brand-500 hover:text-white hover:ring-brand-500"
               >
                 {skill.label}
-                {skill.detail && (
-                  <span className="font-normal opacity-70">
-                    {' '}
-                    ({skill.detail})
-                  </span>
-                )}
               </Link>
             </li>
           ))}
         </ul>
         <Link
           to="/services"
-          className="group mt-8 inline-flex items-center gap-2 font-semibold text-brand-600 hover:text-brand-700"
+          className="group mt-auto inline-flex items-center gap-2 pt-8 font-semibold text-brand-600 hover:text-brand-700"
         >
           Voir les prestations
           <span

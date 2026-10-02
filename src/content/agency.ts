@@ -127,7 +127,7 @@ export const audiences: { business: AgencyAudience; tech: AgencyAudience } = {
     eyebrow: 'Petites entreprises',
     title: 'Votre site ou votre application, au mois.',
     description:
-      'Artisans, commerçants, indépendants : abonnement Vitrine à 30 €, Application à 100 € HT par mois, création comprise.',
+      'Artisans, commerçants, indépendants : un abonnement mensuel, création comprise, sans facture de départ.',
   },
   tech: {
     eyebrow: 'Équipes tech et produits',
@@ -144,24 +144,14 @@ export const audiences: { business: AgencyAudience; tech: AgencyAudience } = {
  */
 export type AgencyTechSkill = {
   label: string
-  /** Le détail entre parenthèses, quand l'étiquette regroupe plusieurs outils. */
-  detail?: string
   service: Service['slug']
 }
 
 export const techSkills: Array<AgencyTechSkill> = [
-  {
-    label: 'IA en production',
-    detail: 'RAG, OCR, Whisper, agents, MCP',
-    service: 'integration-ia',
-  },
+  { label: 'IA en production', service: 'integration-ia' },
   { label: 'React & TypeScript', service: 'developpement-web' },
   { label: 'Symfony / API Platform', service: 'developpement-web' },
-  {
-    label: 'DevOps',
-    detail: 'Docker, CI, AWS',
-    service: 'developpement-web',
-  },
+  { label: 'DevOps', service: 'developpement-web' },
   { label: 'Formation IA', service: 'integration-ia' },
 ]
 
