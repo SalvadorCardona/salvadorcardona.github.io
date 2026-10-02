@@ -597,14 +597,38 @@ function Audiences() {
       aria-label="Pour qui"
       className="grid scroll-mt-24 gap-5 pt-20 lg:grid-cols-[1.7fr_1fr] lg:pt-24"
     >
-      <div className="rounded-[2rem] bg-stone-900 p-7 text-white sm:p-10">
+      <div className="flex flex-col rounded-[2rem] bg-stone-900 p-7 text-white sm:p-10">
         <p className="text-sm font-semibold tracking-widest text-brand-300 uppercase">
-          {tech.eyebrow}
+          {business.eyebrow}
         </p>
         <h2 className="mt-3 text-3xl leading-tight font-extrabold tracking-tight text-balance sm:text-4xl">
-          {tech.title}
+          {business.title}
         </h2>
         <p className="mt-4 max-w-2xl leading-relaxed text-pretty text-stone-300">
+          {business.description}
+        </p>
+        <a
+          href="#forfaits"
+          className="group mt-auto inline-flex items-center gap-2 pt-8 font-semibold text-brand-300 hover:text-brand-200"
+        >
+          Voir les forfaits
+          <span
+            aria-hidden="true"
+            className="transition-transform group-hover:translate-x-1"
+          >
+            →
+          </span>
+        </a>
+      </div>
+
+      <div className="rounded-[2rem] border border-stone-200 bg-white p-7 sm:p-10">
+        <p className="text-sm font-semibold tracking-widest text-brand-600 uppercase">
+          {tech.eyebrow}
+        </p>
+        <h2 className="mt-3 text-2xl leading-tight font-extrabold tracking-tight text-balance text-stone-900 sm:text-3xl">
+          {tech.title}
+        </h2>
+        <p className="mt-4 leading-relaxed text-pretty text-stone-600">
           {tech.description}
         </p>
         <ul className="mt-6 flex flex-wrap gap-2.5">
@@ -612,11 +636,11 @@ function Audiences() {
             <li key={skill.label}>
               <Link
                 to={servicePath(skill.service)}
-                className="inline-block rounded-full bg-white/10 px-4 py-2 text-sm font-semibold ring-1 ring-white/15 transition-colors hover:bg-brand-500 hover:ring-brand-500"
+                className="inline-block rounded-full bg-stone-100 px-4 py-2 text-sm font-semibold text-stone-900 ring-1 ring-stone-200 transition-colors hover:bg-brand-500 hover:text-white hover:ring-brand-500"
               >
                 {skill.label}
                 {skill.detail && (
-                  <span className="font-normal text-stone-300">
+                  <span className="font-normal opacity-70">
                     {' '}
                     ({skill.detail})
                   </span>
@@ -627,7 +651,7 @@ function Audiences() {
         </ul>
         <Link
           to="/services"
-          className="group mt-8 inline-flex items-center gap-2 font-semibold text-brand-300 hover:text-brand-200"
+          className="group mt-8 inline-flex items-center gap-2 font-semibold text-brand-600 hover:text-brand-700"
         >
           Voir les prestations
           <span
@@ -637,30 +661,6 @@ function Audiences() {
             →
           </span>
         </Link>
-      </div>
-
-      <div className="flex flex-col rounded-[2rem] border border-stone-200 bg-white p-7 sm:p-10">
-        <p className="text-sm font-semibold tracking-widest text-brand-600 uppercase">
-          {business.eyebrow}
-        </p>
-        <h2 className="mt-3 text-2xl leading-tight font-extrabold tracking-tight text-balance text-stone-900 sm:text-3xl">
-          {business.title}
-        </h2>
-        <p className="mt-4 leading-relaxed text-pretty text-stone-600">
-          {business.description}
-        </p>
-        <a
-          href="#forfaits"
-          className="group mt-auto inline-flex items-center gap-2 pt-8 font-semibold text-brand-600 hover:text-brand-700"
-        >
-          Voir les forfaits
-          <span
-            aria-hidden="true"
-            className="transition-transform group-hover:translate-x-1"
-          >
-            →
-          </span>
-        </a>
       </div>
     </section>
   )
