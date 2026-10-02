@@ -1173,7 +1173,7 @@ function OfferCard({
         <span className={`text-sm ${muted}`}>{offer.priceNote}</span>
       </p>
       <p className={`mt-1 text-xs ${muted}`}>
-        Hors taxes, engagement d’un an puis mois par mois. {offer.delivery}
+        Hors taxes, sans engagement. {offer.delivery}
       </p>
 
       <h4

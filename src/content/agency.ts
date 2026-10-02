@@ -48,11 +48,12 @@ export const agency = {
   /** Le positionnement, en deux ou trois paragraphes. */
   about: [
     'Cardona est une agence digitale lyonnaise, à taille humaine. On prend en charge la présence web d’une entreprise de bout en bout : l’image, les textes, le site, le nom de domaine, l’hébergement, les mises à jour, et l’application métier quand le besoin dépasse la vitrine. Pas de commercial, pas de chef de projet qui relaie : vous parlez directement à celui qui construit.',
-    'Le modèle est volontairement simple. Deux abonnements, deux prix affichés, aucune facture de départ : la conception est étalée dans le mensuel plutôt que réglée d’un bloc. Vous savez ce que le web vous coûte chaque mois, et vous pouvez arrêter après la première année.',
+    'Le modèle est volontairement simple. Deux abonnements, deux prix affichés, aucune facture de départ : la conception est étalée dans le mensuel plutôt que réglée d’un bloc. Vous savez ce que le web vous coûte chaque mois, et vous pouvez arrêter quand vous voulez.',
     'Les missions plus lourdes — refonte d’une application existante, audit de sécurité, intégration de l’IA — restent facturées au forfait ou en régie sur les pages service. L’abonnement couvre ce qui vit dans la durée.',
   ],
   /** Les mots qui défilent dans le bandeau orange de l'accueil. */
   keywords: [
+    'Sans engagement',
     'Sites vitrines',
     'Applications métier',
     'Intégration IA',
@@ -284,7 +285,7 @@ export const offers: Array<AgencyOffer> = [
 /** Ce qui vaut pour les deux abonnements, affiché une fois sous les forfaits. */
 export const commitments: Array<string> = [
   'Aucun frais de mise en route : la création est comprise dans le mensuel.',
-  'Un engagement d’un an, puis mois par mois — vous partez avec votre nom de domaine et votre contenu.',
+  'Sans engagement : vous arrêtez quand vous voulez, et vous partez avec votre nom de domaine et votre contenu.',
   'Un seul interlocuteur, joignable par mail, qui répond sous deux jours ouvrés.',
   'Le code et les données vous appartiennent : on vous les remet sur simple demande.',
 ]
@@ -331,7 +332,7 @@ export const faq: Array<AgencyFaq> = [
   {
     question: 'Que se passe-t-il si j’arrête ?',
     answer:
-      'Vous récupérez votre nom de domaine, vos contenus, vos données et le code source. On vous accompagne pour transférer l’hébergement où vous voulez. Rien n’est retenu.',
+      'Vous arrêtez quand vous voulez, sans durée minimale ni préavis à respecter. Vous récupérez votre nom de domaine, vos contenus, vos données et le code source. On vous accompagne pour transférer l’hébergement où vous voulez. Rien n’est retenu.',
   },
   {
     question: 'Trente euros par mois, comment est-ce possible ?',
