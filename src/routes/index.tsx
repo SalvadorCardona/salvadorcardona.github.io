@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 
 import { LogoMark } from '../components/Logo'
+import { ServiceIcon } from '../components/ServiceIcon'
 import {
   ApplicationIllustration,
   VitrineIllustration,

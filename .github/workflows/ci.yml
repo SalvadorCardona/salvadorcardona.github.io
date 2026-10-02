@@ -4,9 +4,14 @@ name: Vérifications
 # publication font avant de commiter sur main : une erreur de types ou une
 # page qui ne rend plus s'arrête ici, pas sur main où elle bloquerait
 # publish-blog.yml et publish-experiences.yml.
+# Rejoue aussi sur main après chaque fusion : deux pull requests vertes
+# chacune de leur côté peuvent casser une fois combinées (#57 utilisait
+# ServiceIcon, dont #61 venait de retirer l'import).
 
 on:
   pull_request:
+    branches: [main]
+  push:
     branches: [main]
 
 # Un nouveau push sur la même pull request rend l'ancienne vérification
