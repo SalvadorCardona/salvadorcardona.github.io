@@ -1,0 +1,71 @@
+name: Alerte synchro
+
+# Appelé en dernier job par publish-blog.yml et publish-experiences.yml, pour
+# qu'une synchronisation en échec ne passe plus inaperçue (voir « Alerte en
+# cas d'échec » dans le README). Un échec ouvre l'issue « Synchro en échec —
+# <workflow> », ou la commente si elle est déjà ouverte ; le premier run vert
+# suivant la ferme. Un run annulé ne touche à rien.
+#
+# Le `github` vu ici est celui du workflow appelant : nom, run et dépôt sont
+# les siens. Le GITHUB_TOKEN reçoit ses droits du job appelant
+# (`issues: write` pour l'issue, `actions: read` pour retrouver l'étape en
+# échec) : aucun secret à poser.
+
+on:
+  workflow_call:
+    inputs:
+      result:
+        description: Résultat du job surveillé (needs.<job>.result)
+        required: true
+        type: string
+
+jobs:
+  alerte:
+    if: inputs.result == 'failure' || inputs.result == 'success'
+    runs-on: ubuntu-24.04
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RESULT: ${{ inputs.result }}
+      TITLE: Synchro en échec — ${{ github.workflow }}
+      WORKFLOW: ${{ github.workflow }}
+      EVENT: ${{ github.event_name }}
+      RUN_ID: ${{ github.run_id }}
+      RUN_ATTEMPT: ${{ github.run_attempt }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      - name: Ouvre, commente ou ferme l'issue
+        # Le nom du workflow passe par l'environnement : interpolé dans le
+        # `run`, il serait relu par le shell.
+        run: |
+          # Titre exact plutôt que la recherche de GitHub, qui est approximative.
+          issue=$(gh issue list --state open --limit 100 --json number,title \
+            | jq -r --arg t "$TITLE" 'map(select(.title == $t)) | first | .number // empty')
+
+          if [ "$RESULT" = success ]; then
+            if [ -n "$issue" ]; then
+              gh issue close "$issue" --comment "Résolu : le run [$RUN_ID]($RUN_URL) est passé."
+            fi
+            exit 0
+          fi
+
+          step=$(gh api "repos/$GH_REPO/actions/runs/$RUN_ID/attempts/$RUN_ATTEMPT/jobs" \
+            --jq '[.jobs[].steps[] | select(.conclusion == "failure") | .name] | first // empty')
+
+          {
+            echo "Le workflow **$WORKFLOW** a échoué le $(TZ=Europe/Paris date '+%d/%m/%Y à %H:%M') (déclenchement : \`$EVENT\`)."
+            echo
+            echo "- Run : $RUN_URL"
+            echo "- Étape en échec : ${step:-inconnue, voir le run}"
+          } > body.md
+
+          if [ -n "$issue" ]; then
+            gh issue comment "$issue" --body-file body.md
+          else
+            {
+              cat body.md
+              echo
+              echo "Chaque nouvel échec commente cette issue ; le premier run vert la ferme."
+            } > issue.md
+            gh issue create --title "$TITLE" --body-file issue.md
+          fi

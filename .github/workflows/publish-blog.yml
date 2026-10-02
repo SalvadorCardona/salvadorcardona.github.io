@@ -81,3 +81,15 @@ jobs:
           git add -A
           git commit -m "$MESSAGE"
           git push origin HEAD:main
+
+  # Ouvre ou commente l'issue « Synchro en échec » si `publish` échoue, la
+  # ferme au premier run vert (voir alerte-synchro.yml).
+  alerte:
+    needs: publish
+    if: always()
+    permissions:
+      issues: write
+      actions: read
+    uses: ./.github/workflows/alerte-synchro.yml
+    with:
+      result: ${{ needs.publish.result }}
