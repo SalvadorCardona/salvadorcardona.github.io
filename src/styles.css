@@ -37,7 +37,6 @@
   --animate-hero-shine: hero-shine 6s linear infinite;
   --animate-hero-grid: hero-grid 40s linear infinite;
   --animate-marquee: marquee 38s linear infinite;
-  --animate-spin-slow: spin 24s linear infinite;
   /* La carte du dessus de la pile du hero : elle glisse sur le côté, passe
      derrière les autres (le `z-index` bascule à mi-course) et s'efface. */
   --animate-deck-out: deck-out 0.9s cubic-bezier(0.65, 0, 0.35, 1) both;
