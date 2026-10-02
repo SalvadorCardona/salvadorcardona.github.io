@@ -31,7 +31,7 @@ SPOKEN = {
     "06": ["La Vitrine : trente euros par mois.", "Votre site, écrit, hébergé, tenu à jour.", "En ligne en deux semaines."],
     "07": ["L'Application : cent euros par mois.", "Un outil taillé pour votre métier,", "qui évolue avec vous, chaque mois."],
     "08": ["Zéro euro pour démarrer.", "Et votre code, vos données, restent à vous."],
-    "09": ["Alors, on en parle ?", "Une heure d'échange, offerte, sans engagement.", "Prenez rendez-vous sur cardona.digital"],
+    "09": ["Alors, on en parle ?", "Prenez rendez-vous sur cardona.digital"],
 }
 
 
@@ -85,7 +85,7 @@ def timeline():
         [starts[4] + 0.3, L("06", 1)],                                    # prix, puis ce qui est compris
         [starts[5] + 0.3, L("07", 1)],
         [L("08", 0), L("08", 1)],                                         # 0 €, puis code et données
-        [starts[7] + 0.2, L("09", 0), L("09", 1), L("09", 2)],            # logo, question, heure offerte, bouton
+        [starts[7] + 0.2, L("09", 0), L("09", 1)],                        # logo, question, QR code et bouton
     ]
     delays = [[round(max(a - s, 0.05), 2) for a in row] for row, s in zip(abs_, starts)]
     return scenes, delays, duration

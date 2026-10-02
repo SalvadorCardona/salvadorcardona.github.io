@@ -141,15 +141,25 @@ boards["Garanties.dc.html"] = ("7 · Garanties · 0:46–0:52", page("Garanties"
 {subtitle("Zéro euro pour démarrer. Et votre code, vos données, restent à vous.")}
 """))
 
+# QR code vers la prise de rendez-vous (https://cardona.digital/rendez-vous), généré avec
+# segno (version 3, correction M) puis figé ici pour ne pas ajouter de dépendance au rendu.
+QR = ('<svg width="168" height="168" viewBox="0 0 29 29" shape-rendering="crispEdges" aria-label="QR code vers cardona.digital/rendez-vous">'
+      '<path stroke="#1d1d1b" d="M0 0.5h7m1 0h2m1 0h3m1 0h1m1 0h4m1 0h7m-29 1h1m5 0h1m1 0h1m1 0h2m1 0h1m3 0h2m3 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m4 0h1m4 0h1m2 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h5m1 0h2m1 0h2m3 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m5 0h1m1 0h1m4 0h1m2 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m2 0h1m1 0h1m1 0h1m3 0h3m2 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-21 1h2m5 0h1m1 0h2m-19 1h1m1 0h2m1 0h3m1 0h5m3 0h4m1 0h1m2 0h1m1 0h2m-29 1h1m1 0h1m2 0h1m1 0h1m1 0h1m3 0h2m1 0h1m2 0h6m3 0h1m-29 1h5m1 0h1m1 0h1m3 0h2m2 0h1m4 0h3m2 0h2m-28 1h1m7 0h5m6 0h1m1 0h1m1 0h1m4 0h1m-28 1h2m2 0h4m1 0h1m3 0h4m1 0h1m5 0h2m-26 1h2m1 0h2m1 0h1m1 0h1m1 0h1m2 0h4m1 0h1m2 0h1m3 0h3m-27 1h5m2 0h1m1 0h1m1 0h1m4 0h4m2 0h1m1 0h3m-28 1h2m1 0h1m2 0h1m3 0h2m1 0h1m1 0h1m2 0h4m1 0h1m2 0h1m-27 1h1m1 0h2m1 0h1m1 0h2m1 0h1m2 0h2m2 0h1m1 0h2m2 0h2m1 0h1m-25 1h1m3 0h1m1 0h1m1 0h2m1 0h2m1 0h1m2 0h1m2 0h1m1 0h3m-28 1h1m3 0h1m1 0h1m1 0h1m3 0h4m1 0h1m2 0h2m1 0h2m1 0h1m-25 1h3m4 0h1m1 0h7m2 0h2m1 0h1m2 0h1m-26 1h1m4 0h2m4 0h3m2 0h2m1 0h7m-19 1h2m1 0h2m3 0h1m1 0h1m1 0h1m3 0h5m-29 1h7m1 0h2m1 0h2m1 0h1m1 0h5m1 0h1m1 0h2m1 0h1m-28 1h1m5 0h1m1 0h3m1 0h3m5 0h1m3 0h2m1 0h1m-28 1h1m1 0h3m1 0h1m10 0h1m2 0h5m1 0h2m-28 1h1m1 0h3m1 0h1m1 0h1m1 0h1m1 0h1m2 0h1m1 0h1m2 0h1m2 0h3m2 0h1m-29 1h1m1 0h3m1 0h1m1 0h3m3 0h1m1 0h1m1 0h1m4 0h1m2 0h1m1 0h1m-29 1h1m5 0h1m2 0h4m1 0h1m5 0h1m1 0h2m1 0h1m1 0h1m-28 1h7m1 0h2m2 0h1m1 0h3m1 0h3m1 0h2m3 0h1"></path></svg>')
+
 # 8 — Appel à l'action
-boards["RendezVous.dc.html"] = ("8 · Prendre rendez-vous · 0:52–0:59", page("Prendre rendez-vous", NIGHT, f"""
+boards["RendezVous.dc.html"] = ("8 · Prendre rendez-vous · 0:50–0:56", page("Prendre rendez-vous", NIGHT, f"""
 <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 34px; padding-bottom: 50px">
 {logo(56, "#fafaf9")}
 <h2 style="margin: 0; font-size: 88px; line-height: 1; font-weight: 800; letter-spacing: -0.035em; color: #fafaf9; text-align: center">Alors, on en parle&#160;?</h2>
-<div style="font-size: 30px; color: #d6d3d1">Une heure d'échange, offerte, sans engagement.</div>
-<a href="https://cardona.digital/contact" style="display: flex; align-items: center; gap: 14px; padding: 22px 38px; border-radius: 999px; background: {{{{accent}}}}; color: #ffffff; font-size: 34px; font-weight: 700; text-decoration: none">{icon(ICONS["calendar"], "#ffffff", 34)}<span>cardona.digital</span></a>
+<div style="display: flex; align-items: center; gap: 40px">
+<div style="display: flex; flex-direction: row; align-items: center; gap: 22px; padding: 24px 30px 24px 24px; background: #ffffff; border-radius: 26px">
+{QR}
+<div style="font-size: 24px; line-height: 1.25; font-weight: 600; color: {INK}">Scannez pour<br>prendre rendez-vous</div>
 </div>
-{subtitle("Prenez rendez-vous sur cardona point digital.", dark=True)}
+<a href="https://cardona.digital/rendez-vous" style="display: flex; align-items: center; gap: 14px; padding: 22px 38px; border-radius: 999px; background: {{{{accent}}}}; color: #ffffff; font-size: 34px; font-weight: 700; text-decoration: none">{icon(ICONS["calendar"], "#ffffff", 34)}<span>cardona.digital</span></a>
+</div>
+</div>
+{subtitle("Alors, on en parle ? Prenez rendez-vous sur cardona point digital.", dark=True)}
 """))
 
 # Index du canvas : deux rangées de 4, 80 px entre cadres, 120 entre rangées.
@@ -162,7 +172,7 @@ canvas = {
     "v": 3, "createdOnFiles": {"v": 1, "at": "2026-09-29T20:46:49Z"},
     "title": "Vidéo agence Cardona — storyboard", "launch": {"view": "canvas"}, "pages": [],
     "boards": layout, "order": order,
-    "notes": {"titre": {"x": 0, "y": -300, "text": "Vidéo agence Cardona · 8 plans · 59 s", "kind": "title1", "maxW": 4*W + 3*80}},
+    "notes": {"titre": {"x": 0, "y": -300, "text": "Vidéo agence Cardona · 8 plans · 56 s", "kind": "title1", "maxW": 4*W + 3*80}},
     "designSystems": [],
 }
 os.makedirs(os.path.join(ROOT, "project"), exist_ok=True)

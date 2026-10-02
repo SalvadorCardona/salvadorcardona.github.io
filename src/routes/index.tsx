@@ -106,7 +106,7 @@ export const Route = createFileRoute('/')({
           thumbnailUrl: `${SITE_URL}${VIDEO.thumbnail}`,
           contentUrl: `${SITE_URL}${VIDEO.src}`,
           uploadDate: '2026-10-02',
-          duration: 'PT59S',
+          duration: 'PT56S',
           inLanguage: 'fr',
         },
         {
@@ -700,7 +700,7 @@ function Showreel() {
           preload="none"
           playsInline
           poster={VIDEO.poster}
-          aria-label={`Vidéo : ${VIDEO.title}, 59 secondes, voix off et sous-titres incrustés`}
+          aria-label={`Vidéo : ${VIDEO.title}, 56 secondes, voix off et sous-titres incrustés`}
           onPlay={() => setStarted(true)}
           className="absolute inset-0 h-full w-full"
         >
