@@ -89,10 +89,10 @@ def scene(name):
 
 boards["Main.dc.html"] = ("1 · Du tableur à l'application · 0:00–0:05", scene("Main.dc.html"))
 boards["Presence.dc.html"] = ("2 · Présence en ligne · 0:05–0:10", scene("Presence.dc.html"))
-boards["Services.dc.html"] = ("3 · Services · 0:10–0:20", scene("Services.dc.html"))
+boards["Services.dc.html"] = ("3 · Services · 0:10–0:21", scene("Services.dc.html"))
 
 # 4 — Deux abonnements
-boards["Abonnements.dc.html"] = ("4 · Deux abonnements · 0:20–0:27", page("Deux abonnements", SAND, f"""
+boards["Abonnements.dc.html"] = ("4 · Deux abonnements · 0:21–0:27", page("Deux abonnements", SAND, f"""
 <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 30px; padding-bottom: 60px">
 <div style="font-size: 20px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: {{{{accent}}}}">Votre présence en ligne</div>
 <h2 style="margin: 0; font-size: 96px; line-height: 1; font-weight: 800; letter-spacing: -0.035em; text-align: center">Deux abonnements.<br>Deux prix affichés.</h2>
@@ -116,18 +116,18 @@ def offer(name, price, promise, items, badge):
 </div>"""
 
 
-boards["Vitrine.dc.html"] = ("5 · Vitrine 30 € · 0:27–0:37", page("Offre Vitrine", SAND, offer(
+boards["Vitrine.dc.html"] = ("5 · Vitrine 30 € · 0:27–0:36", page("Offre Vitrine", SAND, offer(
     "Vitrine", "30", "Votre site, qui vous représente et que vos clients trouvent.",
     ["Écrit pour vous", "Hébergé", "Tenu à jour", "En ligne en deux semaines"], "Site vitrine")
     + subtitle("La Vitrine : trente euros par mois. Écrit, hébergé, tenu à jour.")))
 
-boards["Application.dc.html"] = ("6 · Application 100 € · 0:37–0:46", page("Offre Application", SAND, offer(
+boards["Application.dc.html"] = ("6 · Application 100 € · 0:36–0:44", page("Offre Application", SAND, offer(
     "Application", "100", "Un outil taillé pour votre métier, qui évolue avec vous.",
     ["Tout ce que comprend la Vitrine", "Vos écrans, votre vocabulaire", "Une journée d'évolutions par mois", "Sauvegardes et supervision"], "Application métier")
     + subtitle("L'Application : cent euros par mois. Un outil qui évolue avec vous, chaque mois.")))
 
 # 7 — Garanties
-boards["Garanties.dc.html"] = ("7 · Garanties · 0:46–0:52", page("Garanties", SAND, f"""
+boards["Garanties.dc.html"] = ("7 · Garanties · 0:44–0:50", page("Garanties", SAND, f"""
 <div style="position: absolute; left: 96px; right: 96px; top: 0; bottom: 90px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: center; gap: 32px">
 <div style="display: flex; flex-direction: column; gap: 14px; padding: 52px 48px; background: {INK}; border-radius: 28px">
 <div style="font-size: 150px; font-weight: 800; letter-spacing: -0.05em; line-height: 0.9; color: {{{{accent}}}}">0&#160;€</div>
