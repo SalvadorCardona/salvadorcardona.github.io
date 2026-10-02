@@ -281,6 +281,11 @@ commiter. Les réglages Dokploy, les variables d'environnement, le domaine et
 le proxy des sous-sites GitHub Pages (`/whisper-desk/`, `/ticket-runner/`…)
 sont décrits pas à pas dans [`DEPLOY.md`](DEPLOY.md).
 
+Chaque pull request vers `main` passe par [`ci.yml`](.github/workflows/ci.yml)
+(typecheck puis build) : pour qu'un échec bloque la fusion, le contrôle
+`verify` doit être requis dans la protection de la branche
+`main` (Settings → Branches).
+
 En local, avec Docker :
 
 ```bash

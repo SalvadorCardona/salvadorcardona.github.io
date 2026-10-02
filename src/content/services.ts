@@ -444,6 +444,7 @@ export const services: Array<Service> = [
       'Former vos équipes ou vos stagiaires à l’IA appliquée : assistant de code, agents et MCP, RAG, n8n. Sur vos outils, à Lyon ou à distance.',
     icon: 'compass',
     illustration: 'ai-training',
+    projectType: 'formation',
     lead:
       'Des développeurs et des équipes métier qui repartent en sachant se servir de l’IA sur leur propre travail, pas seulement en ayant vu une démonstration.',
     context: [
