@@ -179,10 +179,10 @@ Pages actif, chacun en 200 sur `cardona.digital` à cette date) :
 | `/des-3d/`               | `des-3d`              |
 | `/gnome-claude-usage/`   | `gnome-claude-usage`  |
 | `/mobile-factory/`       | `mobile-factory`      |
+| `/ponos/`                | `ponos`               |
 | `/react-data-form/`      | `react-data-form`     |
 | `/react-game/`           | `react-game`          |
 | `/react-resource-view/`  | `react-resource-view` |
-| `/ticket-runner/`        | `ticket-runner`       |
 | `/trigo-js/`             | `trigo-js`            |
 | `/whisper-desk/`         | `whisper-desk`        |
 
@@ -203,6 +203,12 @@ Ce que fait le fichier :
 - `github-pages-slash` : `/<projet>` sans slash final est redirigé en 301 vers
   `/<projet>/` sur `cardona.digital`, sinon GitHub redirigerait vers sa propre
   adresse.
+- `ticket-runner-to-ponos` : le dépôt `ticket-runner` est devenu `ponos` le
+  2026-10-02, et GitHub ne redirige pas l'ancienne adresse Pages.
+  `/ticket-runner` et tout `/ticket-runner/…` sont renvoyés en 301 vers la même
+  page sous `/ponos/`, requête comprise. Un dépôt renommé change de
+  sous-chemin : renommer aussi son entrée dans les deux règles, sinon le
+  nouveau chemin tombe sur la page 404 du site.
 - Les routeurs visent l'entrée `websecure` avec le résolveur `letsencrypt`,
   les noms utilisés par Dokploy ; la redirection HTTP → HTTPS de l'entrée
   `web` est celle de Dokploy.
@@ -278,7 +284,7 @@ curl -sI https://cardona.digital/n-existe-pas | head -1     # HTTP/2 404
 curl -sI https://cardona.digital/whisper-desk/ | head -1    # HTTP/2 200, servi par GitHub
 curl -sI https://cardona.digital/whisper-desk | grep -i location   # …/whisper-desk/
 for p in adam-eve CoookingPubSub des-3d gnome-claude-usage mobile-factory \
-  react-data-form react-game react-resource-view ticket-runner trigo-js whisper-desk; do
+  react-data-form react-game react-resource-view ponos trigo-js whisper-desk; do
   printf '%-22s %s\n' "$p" "$(curl -s -o /dev/null -w '%{http_code}' https://cardona.digital/$p/)"
 done                                                        # 200 partout
 curl -sI https://cardona.digital/ | grep -iE 'strict-transport|content-security|x-content-type|x-frame|referrer-policy|permissions-policy'   # six lignes

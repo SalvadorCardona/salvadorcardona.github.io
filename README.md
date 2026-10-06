@@ -282,7 +282,7 @@ une coquille vide et lui fait perdre son HTML.
 Le site tourne sur Dokploy, construit depuis le `Dockerfile` à chaque push sur
 `main` ; `publish-blog.yml` et `publish-experiences.yml` n'ont donc qu'à
 commiter. Les réglages Dokploy, les variables d'environnement, le domaine et
-le proxy des sous-sites GitHub Pages (`/whisper-desk/`, `/ticket-runner/`…)
+le proxy des sous-sites GitHub Pages (`/whisper-desk/`, `/ponos/`…)
 sont décrits pas à pas dans [`DEPLOY.md`](DEPLOY.md).
 
 Chaque pull request vers `main` passe par [`ci.yml`](.github/workflows/ci.yml)
