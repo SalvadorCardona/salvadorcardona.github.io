@@ -51,18 +51,6 @@ export const agency = {
     'Le modèle est volontairement simple. Deux abonnements, deux prix affichés, aucune facture de départ : la conception est étalée dans le mensuel plutôt que réglée d’un bloc. Vous savez ce que le web vous coûte chaque mois, et vous pouvez arrêter quand vous voulez.',
     'Les missions plus lourdes — refonte d’une application existante, audit de sécurité, intégration de l’IA — restent facturées au forfait ou en régie sur les pages service. L’abonnement couvre ce qui vit dans la durée.',
   ],
-  /** Les mots qui défilent dans le bandeau orange de l'accueil. */
-  keywords: [
-    'Sans engagement',
-    'Sites vitrines',
-    'Applications métier',
-    'Intégration IA',
-    'Identité web',
-    'Rédaction',
-    'Référencement',
-    'Hébergement',
-    'Maintenance',
-  ],
 } as const
 
 /** Un chiffre clé de l'accueil : la valeur en gros, sa légende dessous. */

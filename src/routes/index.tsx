@@ -134,8 +134,8 @@ export const Route = createFileRoute('/')({
  * `/services` vend des missions au forfait et `/qui-suis-je` présente le
  * fondateur. Le contenu vit dans `content/agency.ts`.
  *
- * Le mouvement (halos, bandeau défilant) est décoratif, en CSS, et
- * entièrement derrière `motion-safe:` ; seule la pile de cartes du hero
+ * Le mouvement (halos) est décoratif, en CSS, et entièrement derrière
+ * `motion-safe:` ; seule la pile de cartes du hero
  * (`WorkDeck`) a un minuteur, qui ne démarre pas non plus avec « réduire les
  * animations ».
  *
@@ -148,10 +148,9 @@ function Home() {
   return (
     <>
       <Hero video={video} />
-      <Marquee />
+      <Showreel video={video} />
 
       <div className="mx-auto max-w-6xl px-6">
-        <Showreel video={video} />
         <Audiences />
         <Expertises />
         <Figures />
@@ -548,41 +547,6 @@ function WorkImage({
   )
 }
 
-/** Le bandeau orange qui fait défiler les métiers de l'agence. */
-function Marquee() {
-  const words = agency.keywords
-  return (
-    <section
-      aria-label="Nos métiers"
-      className="-rotate-1 overflow-hidden border-y-4 border-stone-900 bg-brand-500 py-4"
-    >
-      <div className="flex w-max motion-safe:animate-marquee">
-        {/* La liste est doublée pour boucler sans à-coup ; le double est
-            masqué aux lecteurs d'écran. */}
-        {[0, 1].map((copy) => (
-          <ul
-            key={copy}
-            aria-hidden={copy === 1 ? true : undefined}
-            className="flex shrink-0 items-center"
-          >
-            {words.map((word) => (
-              <li
-                key={word}
-                className="flex items-center font-display text-2xl font-bold whitespace-nowrap text-white sm:text-3xl"
-              >
-                <span className="px-6">{word}</span>
-                <span aria-hidden="true" className="text-stone-900">
-                  ✦
-                </span>
-              </li>
-            ))}
-          </ul>
-        ))}
-      </div>
-    </section>
-  )
-}
-
 /**
  * Les deux publics de l'agence, sitôt la vidéo passée : un prospect technique
  * doit lire « IA », « React » ou « Symfony » sans descendre jusqu'aux
@@ -703,6 +667,11 @@ const VIDEO = {
 }
 
 /**
+ * Le temps fort de l'accueil : une section sombre, bord à bord, entre le hero
+ * et les publics. Le fond reprend l'ambiance de la couverture — noir chaud
+ * vers brun orangé, halo et trame de points — et le contenu reste sur la
+ * grille du site.
+ *
  * Rien n'est chargé avant le clic (`preload="none"`), hormis l'image
  * d'attente. Les sous-titres sont incrustés dans l'image : la piste WebVTT,
  * désactivée par défaut, ne sert qu'à l'accessibilité et au référencement.
@@ -710,7 +679,10 @@ const VIDEO = {
  * Avant la lecture, une couverture en HTML cache l'image d'attente et les
  * contrôles natifs, qui n'apparaissent qu'une fois la vidéo lancée. Toute la
  * couverture est un bouton : un clic, ou le bouton Play du hero, lance la
- * lecture, et `onPlay` la fait disparaître en fondu.
+ * lecture sur place, et `onPlay` la fait disparaître en fondu.
+ *
+ * L'ancre `#video` est posée sur le lecteur plutôt que sur la section : le
+ * bouton Play du hero amène la vidéo entière à l'écran, sous l'en-tête.
  */
 function Showreel({
   video,
@@ -729,102 +701,142 @@ function Showreel({
   }, [started, video])
 
   return (
-    <section id="video" className="scroll-mt-24 pt-24 lg:pt-32">
-      <SectionHeading eyebrow="En vidéo" title="L’agence en une minute." />
-      <figure className="mt-12">
-        <div className="relative aspect-video overflow-hidden rounded-[1.75rem] bg-stone-900 shadow-lg shadow-stone-900/10 ring-1 ring-stone-200 sm:rounded-[2.5rem]">
-          <video
-            ref={video}
-            controls={started}
-            preload="none"
-            playsInline
-            poster={VIDEO.poster}
-            aria-label={`Vidéo : ${VIDEO.title}, 56 secondes, voix off et sous-titres incrustés`}
-            onPlay={() => setStarted(true)}
-            className="absolute inset-0 h-full w-full"
-          >
-            <source src={VIDEO.src} type="video/mp4" />
-            <track
-              kind="subtitles"
-              srcLang="fr"
-              label="Français"
-              src={VIDEO.subtitles}
-            />
-          </video>
-          <button
-            ref={cover}
-            type="button"
-            onClick={() => void video.current?.play()}
-            aria-label={`Lire la vidéo : ${VIDEO.title} (56 s)`}
-            aria-hidden={started || undefined}
-            tabIndex={started ? -1 : undefined}
-            data-umami-event="cta-video"
-            data-umami-event-page="/"
-            data-umami-event-emplacement="video"
-            className={`group absolute inset-0 flex cursor-pointer flex-col justify-between overflow-hidden bg-stone-950 p-4 text-left text-white focus-visible:outline-4 focus-visible:-outline-offset-4 focus-visible:outline-brand-400 motion-safe:transition-[opacity,visibility] motion-safe:duration-500 sm:p-10 lg:p-14 ${
-              started ? 'invisible opacity-0' : ''
-            }`}
-          >
-            <ShowreelBackdrop />
+    <section
+      aria-labelledby="video-titre"
+      className="relative isolate overflow-hidden bg-[linear-gradient(160deg,var(--color-stone-950)_35%,var(--color-brand-950))] py-24 text-white lg:py-32"
+    >
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10"
+      >
+        <div className="absolute -top-40 -right-40 h-[36rem] w-[36rem] rounded-full bg-brand-700/40 blur-3xl motion-safe:animate-hero-drift" />
+        <div className="absolute -bottom-48 -left-32 h-[28rem] w-[28rem] rounded-full bg-amber-700/20 blur-3xl motion-safe:animate-hero-drift-slow" />
+        <div className="absolute inset-0 bg-[radial-gradient(var(--color-brand-300)_1px,transparent_1px)] bg-[size:1.5rem_1.5rem] opacity-20 [mask-image:radial-gradient(ellipse_70%_60%_at_80%_10%,black,transparent)]" />
+      </div>
 
-            <span className="relative flex items-center gap-2.5 sm:gap-3">
-              <LogoMark className="h-7 w-7 sm:h-10 sm:w-10" />
-              <span className="text-[0.65rem] font-semibold tracking-[0.25em] text-brand-200 uppercase sm:text-sm">
-                Agence {agency.name}
-              </span>
-            </span>
-
-            <span className="relative font-display text-2xl leading-[1.02] font-extrabold tracking-tight text-balance sm:max-w-xl sm:text-5xl lg:max-w-2xl lg:text-6xl">
-              Une proposition{' '}
-              <span className="relative inline-block whitespace-nowrap text-brand-400">
-                toute simple
-                <Scribble />
-              </span>
-              .
-            </span>
-
-            <span className="relative flex w-full items-center gap-3 rounded-full bg-white/10 py-1.5 pr-5 pl-1.5 ring-1 ring-white/20 backdrop-blur-md transition-colors group-hover:bg-white/15 sm:w-auto sm:self-start sm:py-2 sm:pl-2">
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-500 shadow-lg shadow-brand-500/40 transition-transform group-hover:scale-110 sm:h-12 sm:w-12">
-                <svg
-                  aria-hidden="true"
-                  viewBox="0 0 24 24"
-                  className="ml-0.5 h-4 w-4 fill-current sm:h-5 sm:w-5"
-                >
-                  <path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l10.6-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z" />
-                </svg>
-              </span>
-              <span>
-                <span className="block text-sm font-semibold sm:text-base">
-                  Voir l’agence en une minute
-                </span>
-                <span className="block text-xs text-stone-300 sm:text-sm">
-                  Présentation vidéo · 0:56
-                </span>
-              </span>
-            </span>
-          </button>
-        </div>
-        <figcaption className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 px-2 text-sm text-stone-500">
-          <span>Présentation de l’agence {agency.name}</span>
-          <Link
-            to="/contact"
-            search={{ appel: 1 }}
-            data-umami-event="cta-contact"
-            data-umami-event-page="/"
-            data-umami-event-emplacement="video"
-            data-umami-event-appel="oui"
-            className="group font-semibold text-brand-700 hover:text-brand-800"
-          >
-            Prendre rendez-vous{' '}
-            <span
-              aria-hidden="true"
-              className="inline-block transition-transform group-hover:translate-x-1"
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="grid gap-6 lg:grid-cols-[1.3fr_1fr] lg:items-end lg:gap-16">
+          <div>
+            <p className="flex items-center gap-3 text-sm font-semibold tracking-widest text-brand-300 uppercase">
+              <span aria-hidden="true" className="h-px w-8 bg-brand-400" />
+              En vidéo
+            </p>
+            <h2
+              id="video-titre"
+              className="mt-4 text-4xl leading-[1.05] font-extrabold tracking-tight text-balance sm:text-5xl lg:text-6xl"
             >
-              →
-            </span>
-          </Link>
-        </figcaption>
-      </figure>
+              L’agence en une minute.
+            </h2>
+          </div>
+          <p className="max-w-md text-lg leading-relaxed text-pretty text-stone-300 lg:pb-1">
+            Ce qu’on fait, ce que coûtent les deux abonnements et comment
+            démarrer : tout tient en moins d’une minute.
+          </p>
+        </div>
+
+        <figure
+          id="video"
+          className="mt-12 scroll-mt-28 md:scroll-mt-24 lg:mt-16"
+        >
+          <div className="relative aspect-video overflow-hidden rounded-[1.25rem] bg-stone-900 shadow-2xl shadow-black/50 ring-1 ring-white/10 sm:rounded-[2rem] lg:rounded-[2.5rem]">
+            <video
+              ref={video}
+              controls={started}
+              preload="none"
+              playsInline
+              poster={VIDEO.poster}
+              aria-label={`Vidéo : ${VIDEO.title}, 56 secondes, voix off et sous-titres incrustés`}
+              onPlay={() => setStarted(true)}
+              className="absolute inset-0 h-full w-full"
+            >
+              <source src={VIDEO.src} type="video/mp4" />
+              <track
+                kind="subtitles"
+                srcLang="fr"
+                label="Français"
+                src={VIDEO.subtitles}
+              />
+            </video>
+            <button
+              ref={cover}
+              type="button"
+              onClick={() => void video.current?.play()}
+              aria-label="Lancer la vidéo de l’agence"
+              aria-hidden={started || undefined}
+              tabIndex={started ? -1 : undefined}
+              data-umami-event="cta-video"
+              data-umami-event-page="/"
+              data-umami-event-emplacement="video"
+              className={`group absolute inset-0 flex cursor-pointer flex-col justify-between overflow-hidden bg-stone-950 p-4 text-left text-white focus-visible:outline-4 focus-visible:-outline-offset-4 focus-visible:outline-brand-400 motion-safe:transition-[opacity,visibility] motion-safe:duration-500 sm:p-10 lg:p-14 ${
+                started ? 'invisible opacity-0' : ''
+              }`}
+            >
+              <ShowreelBackdrop />
+
+              <span className="relative flex items-center justify-between gap-3">
+                <span className="flex items-center gap-2.5 sm:gap-3">
+                  <LogoMark className="h-7 w-7 sm:h-10 sm:w-10" />
+                  <span className="text-[0.65rem] font-semibold tracking-[0.25em] text-brand-200 uppercase sm:text-sm">
+                    Agence {agency.name}
+                  </span>
+                </span>
+                <span className="rounded-full bg-black/40 px-2.5 py-1 text-xs font-semibold ring-1 ring-white/20 backdrop-blur-md sm:px-3.5 sm:py-1.5 sm:text-sm">
+                  1 min
+                </span>
+              </span>
+
+              <span className="relative font-display text-xl leading-[1.02] font-extrabold tracking-tight text-balance sm:max-w-xl sm:text-5xl lg:max-w-2xl lg:text-6xl">
+                Une proposition{' '}
+                <span className="relative inline-block whitespace-nowrap text-brand-400">
+                  toute simple
+                  <Scribble />
+                </span>
+                .
+              </span>
+
+              <span className="relative flex items-center gap-3 sm:gap-5">
+                <span className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand-500 shadow-xl shadow-brand-500/40 ring-4 ring-white/15 transition-transform group-hover:scale-110 sm:h-20 sm:w-20 sm:ring-8 lg:h-24 lg:w-24">
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    className="ml-1 h-5 w-5 fill-current sm:h-8 sm:w-8 lg:h-10 lg:w-10"
+                  >
+                    <path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l10.6-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14Z" />
+                  </svg>
+                </span>
+                <span>
+                  <span className="block text-sm font-semibold sm:text-lg">
+                    Lancer la vidéo
+                  </span>
+                  <span className="block text-xs text-stone-300 sm:text-sm">
+                    Présentation de l’agence · 0:56
+                  </span>
+                </span>
+              </span>
+            </button>
+          </div>
+          <figcaption className="mt-5 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 px-2 text-sm text-stone-400">
+            <span>Voix off et sous-titres en français</span>
+            <Link
+              to="/contact"
+              search={{ appel: 1 }}
+              data-umami-event="cta-contact"
+              data-umami-event-page="/"
+              data-umami-event-emplacement="video"
+              data-umami-event-appel="oui"
+              className="group font-semibold text-brand-300 hover:text-brand-200"
+            >
+              Prendre rendez-vous{' '}
+              <span
+                aria-hidden="true"
+                className="inline-block transition-transform group-hover:translate-x-1"
+              >
+                →
+              </span>
+            </Link>
+          </figcaption>
+        </figure>
+      </div>
     </section>
   )
 }
