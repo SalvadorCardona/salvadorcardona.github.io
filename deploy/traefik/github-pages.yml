@@ -21,7 +21,6 @@
 #   - /des-3d/
 #   - /gnome-claude-usage/
 #   - /mobile-factory/
-#   - /ponos/ (ticket-runner, renommé le 2026-10-02 : voir ticket-runner-to-ponos)
 #   - /react-data-form/
 #   - /react-game/
 #   - /react-resource-view/
@@ -43,7 +42,6 @@ http:
         PathPrefix(`/des-3d/`) ||
         PathPrefix(`/gnome-claude-usage/`) ||
         PathPrefix(`/mobile-factory/`) ||
-        PathPrefix(`/ponos/`) ||
         PathPrefix(`/react-data-form/`) ||
         PathPrefix(`/react-game/`) ||
         PathPrefix(`/react-resource-view/`) ||
@@ -66,7 +64,6 @@ http:
         Path(`/des-3d`) ||
         Path(`/gnome-claude-usage`) ||
         Path(`/mobile-factory`) ||
-        Path(`/ponos`) ||
         Path(`/react-data-form`) ||
         Path(`/react-game`) ||
         Path(`/react-resource-view`) ||
@@ -79,28 +76,31 @@ http:
       tls:
         certResolver: letsencrypt
 
-    # Un dépôt renommé change d'adresse sur Pages, et GitHub ne redirige pas
-    # l'ancienne : /ticket-runner/… répondrait 404. Les anciens liens sont
-    # renvoyés en 301 vers la même page sous le nouveau nom.
-    ticket-runner-to-ponos:
+    # Ponos a quitté cardona.digital pour son propre domaine (the-ponos.app,
+    # GitHub Pages avec domaine personnalisé, le 2026-10-08). /ponos/… et
+    # l'ancien /ticket-runner/… (le dépôt avant son renommage du 2026-10-02)
+    # sont renvoyés en 301 vers la même page là-bas.
+    ponos-to-the-ponos-app:
       entryPoints:
         - websecure
       rule: >-
         Host(`cardona.digital`) && (
+        Path(`/ponos`) ||
+        PathPrefix(`/ponos/`) ||
         Path(`/ticket-runner`) ||
         PathPrefix(`/ticket-runner/`))
       priority: 1000
       middlewares:
-        - ticket-runner-to-ponos
+        - ponos-to-the-ponos-app
       service: github-pages
       tls:
         certResolver: letsencrypt
 
   middlewares:
-    ticket-runner-to-ponos:
+    ponos-to-the-ponos-app:
       redirectRegex:
-        regex: ^(https?://[^/]+)/ticket-runner/?(.*)$
-        replacement: ${1}/ponos/${2}
+        regex: ^https?://[^/]+/(?:ponos|ticket-runner)/?(.*)$
+        replacement: https://the-ponos.app/${1}
         permanent: true
 
     github-pages-slash:
