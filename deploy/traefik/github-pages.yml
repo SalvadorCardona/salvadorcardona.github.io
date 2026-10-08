@@ -21,10 +21,10 @@
 #   - /des-3d/
 #   - /gnome-claude-usage/
 #   - /mobile-factory/
+#   - /ponos/ (ticket-runner, renommé le 2026-10-02 : voir ticket-runner-to-ponos)
 #   - /react-data-form/
 #   - /react-game/
 #   - /react-resource-view/
-#   - /ticket-runner/
 #   - /trigo-js/
 #   - /whisper-desk/
 # Un nouveau dépôt publié sur Pages s'ajoute aux deux règles ci-dessous.
@@ -43,10 +43,10 @@ http:
         PathPrefix(`/des-3d/`) ||
         PathPrefix(`/gnome-claude-usage/`) ||
         PathPrefix(`/mobile-factory/`) ||
+        PathPrefix(`/ponos/`) ||
         PathPrefix(`/react-data-form/`) ||
         PathPrefix(`/react-game/`) ||
         PathPrefix(`/react-resource-view/`) ||
-        PathPrefix(`/ticket-runner/`) ||
         PathPrefix(`/trigo-js/`) ||
         PathPrefix(`/whisper-desk/`))
       priority: 1000
@@ -66,10 +66,10 @@ http:
         Path(`/des-3d`) ||
         Path(`/gnome-claude-usage`) ||
         Path(`/mobile-factory`) ||
+        Path(`/ponos`) ||
         Path(`/react-data-form`) ||
         Path(`/react-game`) ||
         Path(`/react-resource-view`) ||
-        Path(`/ticket-runner`) ||
         Path(`/trigo-js`) ||
         Path(`/whisper-desk`))
       priority: 1000
@@ -79,7 +79,30 @@ http:
       tls:
         certResolver: letsencrypt
 
+    # Un dépôt renommé change d'adresse sur Pages, et GitHub ne redirige pas
+    # l'ancienne : /ticket-runner/… répondrait 404. Les anciens liens sont
+    # renvoyés en 301 vers la même page sous le nouveau nom.
+    ticket-runner-to-ponos:
+      entryPoints:
+        - websecure
+      rule: >-
+        Host(`cardona.digital`) && (
+        Path(`/ticket-runner`) ||
+        PathPrefix(`/ticket-runner/`))
+      priority: 1000
+      middlewares:
+        - ticket-runner-to-ponos
+      service: github-pages
+      tls:
+        certResolver: letsencrypt
+
   middlewares:
+    ticket-runner-to-ponos:
+      redirectRegex:
+        regex: ^(https?://[^/]+)/ticket-runner/?(.*)$
+        replacement: ${1}/ponos/${2}
+        permanent: true
+
     github-pages-slash:
       redirectRegex:
         regex: ^(https?://[^/]+/[^/?]+)(\?.*)?$

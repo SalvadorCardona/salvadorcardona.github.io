@@ -204,12 +204,12 @@ export type Project = {
 
 export const projects: Array<Project> = [
   {
-    name: 'ticket-runner',
+    name: 'Ponos',
     description:
       'Vos tickets Notion, joués par Claude Code : une session par ticket, une pull request à l’arrivée.',
     brand: 'ticket-runner',
-    url: 'https://github.com/SalvadorCardona/ticket-runner',
-    docs: 'https://cardona.digital/ticket-runner/',
+    url: 'https://github.com/SalvadorCardona/ponos',
+    docs: 'https://cardona.digital/ponos/',
     tags: ['Python', 'Agents LLM', 'Notion API'],
   },
   {

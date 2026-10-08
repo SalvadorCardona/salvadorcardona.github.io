@@ -77,7 +77,7 @@ conteneur Docker déployé sur Dokploy (voir `DEPLOY.md`).
   d'accueil par une coquille vide. Une URL inconnue reçoit la page 404 de
   `__root.tsx`, avec le statut 404.
 - **Les sous-chemins GitHub Pages ne sont pas des routes.** `/whisper-desk/`,
-  `/ticket-runner/`, etc. sont renvoyés vers `salvadorcardona.github.io` par
+  `/ponos/`, etc. sont renvoyés vers `salvadorcardona.github.io` par
   Traefik (`deploy/traefik/github-pages.yml`) : ne pas créer de route qui porte
   l'un de ces noms.
 - **Les images de partage vivent dans `public/og/`**, en PNG de 1200 × 630
