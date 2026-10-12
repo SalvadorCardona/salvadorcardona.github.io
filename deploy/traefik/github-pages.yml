@@ -76,6 +76,23 @@ http:
       tls:
         certResolver: letsencrypt
 
+    # Idem pour une page sous un sous-site (/react-resource-view/docs/form) : sans
+    # slash final, Pages répond par un 301 vers salvadorcardona.github.io et le
+    # visiteur quitte cardona.digital. Seuls /react-resource-view/ et ses pages
+    # sont concernés ; un fichier (dernier segment avec un point) est servi tel quel.
+    react-resource-view-page-slash:
+      entryPoints:
+        - websecure
+      rule: >-
+        Host(`cardona.digital`) &&
+        PathRegexp(`^/react-resource-view/([^/]+/)*[^/.]+$`)
+      priority: 1000
+      middlewares:
+        - react-resource-view-page-slash
+      service: github-pages
+      tls:
+        certResolver: letsencrypt
+
     # Ponos a quitté cardona.digital pour son propre domaine (the-ponos.app,
     # GitHub Pages avec domaine personnalisé, le 2026-10-08). /ponos/… et
     # l'ancien /ticket-runner/… (le dépôt avant son renommage du 2026-10-02)
@@ -106,6 +123,12 @@ http:
     github-pages-slash:
       redirectRegex:
         regex: ^(https?://[^/]+/[^/?]+)(\?.*)?$
+        replacement: ${1}/${2}
+        permanent: true
+
+    react-resource-view-page-slash:
+      redirectRegex:
+        regex: ^(https?://[^/]+/react-resource-view/[^?]*[^/?])(\?.*)?$
         replacement: ${1}/${2}
         permanent: true
 
