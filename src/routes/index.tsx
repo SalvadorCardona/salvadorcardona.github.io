@@ -680,8 +680,10 @@ const VIDEO = {
  * vers brun orangé, halo et trame de points — et le contenu reste sur la
  * grille du site.
  *
- * Rien n'est chargé avant le clic (`preload="none"`), hormis l'image
- * d'attente. Les sous-titres sont incrustés dans l'image : la piste WebVTT,
+ * Rien n'est chargé avant le clic (`preload="none"`), pas même l'image
+ * d'attente : la couverture la cache jusque-là, et elle pesait 33 Ko sur
+ * mobile pour rien. Elle n'est posée qu'au lancement, le temps que la vidéo
+ * arrive. Les sous-titres sont incrustés dans l'image : la piste WebVTT,
  * désactivée par défaut, ne sert qu'à l'accessibilité et au référencement.
  *
  * Avant la lecture, une couverture en HTML cache l'image d'attente et les
@@ -752,7 +754,7 @@ function Showreel({
               controls={started}
               preload="none"
               playsInline
-              poster={VIDEO.poster}
+              poster={started ? VIDEO.poster : undefined}
               aria-label={`Vidéo : ${VIDEO.title}, 56 secondes, voix off et sous-titres incrustés`}
               onPlay={() => setStarted(true)}
               className="absolute inset-0 h-full w-full"

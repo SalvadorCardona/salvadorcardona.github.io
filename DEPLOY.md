@@ -111,7 +111,10 @@ compresse en brotli ou gzip les pages rendues à la requête ; les fichiers
 statiques arrivent déjà compressés de Nitro. Sans lui, le HTML part brut
 (92 Ko pour l'accueil). Déposer ce fichier dans
 `/etc/dokploy/traefik/dynamic/` avant de l'ajouter au domaine, comme
-`www-redirect.yml` ci-dessous.
+`www-redirect.yml` ci-dessous. Sur le serveur actuel, sa définition a été
+ajoutée telle quelle à la fin de `dynamic/middlewares.yml`, depuis
+**Traefik File System** : l'éditeur de Dokploy modifie un fichier mais n'en
+crée pas.
 
 Ajouter aussi `www.cardona.digital` (mêmes réglages), avec dans
 **Middlewares** `www-to-apex@file` : ce middleware, défini dans
