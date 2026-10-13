@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as AgenceRouteImport } from './routes/agence'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CreationSiteVitrineLyonRouteImport } from './routes/creation-site-vitrine-lyon'
 import { Route as HealthzRouteImport } from './routes/healthz'
 import { Route as ProjetsRouteImport } from './routes/projets'
 import { Route as QuiSuisJeRouteImport } from './routes/qui-suis-je'
@@ -45,6 +46,11 @@ const AgenceRoute = AgenceRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CreationSiteVitrineLyonRoute = CreationSiteVitrineLyonRouteImport.update({
+  id: '/creation-site-vitrine-lyon',
+  path: '/creation-site-vitrine-lyon',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HealthzRoute = HealthzRouteImport.update({
@@ -121,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/404': typeof R404Route
   '/agence': typeof AgenceRoute
   '/contact': typeof ContactRoute
+  '/creation-site-vitrine-lyon': typeof CreationSiteVitrineLyonRoute
   '/healthz': typeof HealthzRoute
   '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
@@ -140,6 +147,7 @@ export interface FileRoutesByTo {
   '/404': typeof R404Route
   '/agence': typeof AgenceRoute
   '/contact': typeof ContactRoute
+  '/creation-site-vitrine-lyon': typeof CreationSiteVitrineLyonRoute
   '/healthz': typeof HealthzRoute
   '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
@@ -160,6 +168,7 @@ export interface FileRoutesById {
   '/404': typeof R404Route
   '/agence': typeof AgenceRoute
   '/contact': typeof ContactRoute
+  '/creation-site-vitrine-lyon': typeof CreationSiteVitrineLyonRoute
   '/healthz': typeof HealthzRoute
   '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
@@ -181,6 +190,7 @@ export interface FileRouteTypes {
     | '/404'
     | '/agence'
     | '/contact'
+    | '/creation-site-vitrine-lyon'
     | '/healthz'
     | '/projets'
     | '/qui-suis-je'
@@ -200,6 +210,7 @@ export interface FileRouteTypes {
     | '/404'
     | '/agence'
     | '/contact'
+    | '/creation-site-vitrine-lyon'
     | '/healthz'
     | '/projets'
     | '/qui-suis-je'
@@ -219,6 +230,7 @@ export interface FileRouteTypes {
     | '/404'
     | '/agence'
     | '/contact'
+    | '/creation-site-vitrine-lyon'
     | '/healthz'
     | '/projets'
     | '/qui-suis-je'
@@ -239,6 +251,7 @@ export interface RootRouteChildren {
   R404Route: typeof R404Route
   AgenceRoute: typeof AgenceRoute
   ContactRoute: typeof ContactRoute
+  CreationSiteVitrineLyonRoute: typeof CreationSiteVitrineLyonRoute
   HealthzRoute: typeof HealthzRoute
   ProjetsRoute: typeof ProjetsRoute
   QuiSuisJeRoute: typeof QuiSuisJeRoute
@@ -282,6 +295,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/creation-site-vitrine-lyon': {
+      id: '/creation-site-vitrine-lyon'
+      path: '/creation-site-vitrine-lyon'
+      fullPath: '/creation-site-vitrine-lyon'
+      preLoaderRoute: typeof CreationSiteVitrineLyonRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/healthz': {
@@ -383,6 +403,7 @@ const rootRouteChildren: RootRouteChildren = {
   R404Route: R404Route,
   AgenceRoute: AgenceRoute,
   ContactRoute: ContactRoute,
+  CreationSiteVitrineLyonRoute: CreationSiteVitrineLyonRoute,
   HealthzRoute: HealthzRoute,
   ProjetsRoute: ProjetsRoute,
   QuiSuisJeRoute: QuiSuisJeRoute,

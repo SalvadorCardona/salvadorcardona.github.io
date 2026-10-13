@@ -44,6 +44,7 @@ const REQUIRED_PAGES = [
   '/services/audit-securite-application',
   '/services/integration-ia',
   '/services/formation-ia',
+  '/creation-site-vitrine-lyon',
 ]
 
 /** Les anciennes adresses et les slashs finaux, renvoyés en 301 exactement là. */
