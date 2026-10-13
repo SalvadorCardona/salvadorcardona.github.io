@@ -17,6 +17,7 @@ import { Route as HealthzRouteImport } from './routes/healthz'
 import { Route as ProjetsRouteImport } from './routes/projets'
 import { Route as QuiSuisJeRouteImport } from './routes/qui-suis-je'
 import { Route as RendezVousRouteImport } from './routes/rendez-vous'
+import { Route as SiteInternetAbonnementMensuelRouteImport } from './routes/site-internet-abonnement-mensuel'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as BlogIndexRouteImport } from './routes/blog/index'
 import { Route as BlogSlugRouteImport } from './routes/blog/$slug'
@@ -66,6 +67,12 @@ const RendezVousRoute = RendezVousRouteImport.update({
   path: '/rendez-vous',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SiteInternetAbonnementMensuelRoute =
+  SiteInternetAbonnementMensuelRouteImport.update({
+    id: '/site-internet-abonnement-mensuel',
+    path: '/site-internet-abonnement-mensuel',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -118,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
   '/rendez-vous': typeof RendezVousRoute
+  '/site-internet-abonnement-mensuel': typeof SiteInternetAbonnementMensuelRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
@@ -136,6 +144,7 @@ export interface FileRoutesByTo {
   '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
   '/rendez-vous': typeof RendezVousRoute
+  '/site-internet-abonnement-mensuel': typeof SiteInternetAbonnementMensuelRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
@@ -155,6 +164,7 @@ export interface FileRoutesById {
   '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
   '/rendez-vous': typeof RendezVousRoute
+  '/site-internet-abonnement-mensuel': typeof SiteInternetAbonnementMensuelRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/services/audit-securite-application': typeof ServicesAuditSecuriteApplicationRoute
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/projets'
     | '/qui-suis-je'
     | '/rendez-vous'
+    | '/site-internet-abonnement-mensuel'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/services/audit-securite-application'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/projets'
     | '/qui-suis-je'
     | '/rendez-vous'
+    | '/site-internet-abonnement-mensuel'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/services/audit-securite-application'
@@ -211,6 +223,7 @@ export interface FileRouteTypes {
     | '/projets'
     | '/qui-suis-je'
     | '/rendez-vous'
+    | '/site-internet-abonnement-mensuel'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/services/audit-securite-application'
@@ -230,6 +243,7 @@ export interface RootRouteChildren {
   ProjetsRoute: typeof ProjetsRoute
   QuiSuisJeRoute: typeof QuiSuisJeRoute
   RendezVousRoute: typeof RendezVousRoute
+  SiteInternetAbonnementMensuelRoute: typeof SiteInternetAbonnementMensuelRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
   ServicesAuditSecuriteApplicationRoute: typeof ServicesAuditSecuriteApplicationRoute
@@ -296,6 +310,13 @@ declare module '@tanstack/react-router' {
       path: '/rendez-vous'
       fullPath: '/rendez-vous'
       preLoaderRoute: typeof RendezVousRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/site-internet-abonnement-mensuel': {
+      id: '/site-internet-abonnement-mensuel'
+      path: '/site-internet-abonnement-mensuel'
+      fullPath: '/site-internet-abonnement-mensuel'
+      preLoaderRoute: typeof SiteInternetAbonnementMensuelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -366,6 +387,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProjetsRoute: ProjetsRoute,
   QuiSuisJeRoute: QuiSuisJeRoute,
   RendezVousRoute: RendezVousRoute,
+  SiteInternetAbonnementMensuelRoute: SiteInternetAbonnementMensuelRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,
   ServicesAuditSecuriteApplicationRoute: ServicesAuditSecuriteApplicationRoute,

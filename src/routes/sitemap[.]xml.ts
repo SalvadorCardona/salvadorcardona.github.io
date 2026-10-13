@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
+import { SUBSCRIPTION_PATH } from '../content/agency'
 import { sortedPosts } from '../content/posts'
 import { servicePath, services } from '../content/services'
 import { SITE_URL } from '../lib/seo'
@@ -23,6 +24,7 @@ const pages = [
   '/',
   '/services',
   ...services.map((service) => servicePath(service.slug)),
+  SUBSCRIPTION_PATH,
   '/qui-suis-je',
   '/contact',
 ]

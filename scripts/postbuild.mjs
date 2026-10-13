@@ -38,6 +38,7 @@ const REQUIRED_PAGES = [
   '/qui-suis-je',
   '/blog',
   '/contact',
+  '/site-internet-abonnement-mensuel',
   '/services',
   '/services/developpement-web',
   '/services/audit-securite-application',

@@ -333,3 +333,65 @@ export const faq: Array<AgencyFaq> = [
       'On en parle et on vous fait une proposition classique, au forfait ou en régie : reprise d’une application existante, audit de sécurité, intégration de l’IA. Les pages service décrivent ces prestations.',
   },
 ]
+
+/**
+ * La page `/site-internet-abonnement-mensuel` : le modèle de l'abonnement
+ * expliqué en détail. Les prix viennent de `offers`, jamais recopiés ici ;
+ * la FAQ est reprise telle quelle dans le JSON-LD de la page.
+ */
+export const SUBSCRIPTION_PATH = '/site-internet-abonnement-mensuel'
+
+/** Durée de la comparaison avec un devis classique, en mois. */
+export const COMPARISON_MONTHS = 36
+
+/**
+ * L'hypothèse d'un devis classique pour un site vitrine : un ordre de grandeur
+ * courant, pas un tarif de concurrent. Le coût de départ est réglé d'un bloc,
+ * l'entretien (hébergement, mises à jour, modifications) se paie en plus.
+ */
+export const quote = {
+  creation: 1500,
+  monthlyUpkeep: 25,
+}
+
+export const subscription = {
+  title: 'Site internet en abonnement mensuel : vitrine dès 30 € HT / mois',
+  description:
+    'Un site internet en abonnement mensuel, sans facture de départ : création, hébergement et mises à jour compris dès 30 € HT par mois, application métier à 100 € HT. Sans engagement, domaine et code à vous.',
+  lead: 'Pas de devis à plusieurs milliers d’euros : la création de votre site est étalée dans un abonnement mensuel. Vous payez un prix affiché chaque mois, vous ne versez rien au départ, et vous pouvez arrêter quand vous voulez.',
+  model: [
+    'Dans le modèle classique, une agence facture la création d’un bloc, puis l’hébergement et la maintenance en plus, ou pas du tout. Dans l’abonnement, la conception, la rédaction, le nom de domaine, l’hébergement, les sauvegardes et les modifications sont réunis dans un seul montant mensuel.',
+    'Il n’y a donc aucune facture de départ : le premier paiement a lieu une fois le site en ligne, et il est le même que le dernier. Les deux prix s’entendent hors taxes.',
+  ],
+  ownership: [
+    'Le nom de domaine peut être acheté à votre nom dès le départ, ou transféré quand vous le demandez.',
+    'Le code source et les contenus vous appartiennent : ils vous sont remis sur simple demande, que vous restiez abonné ou non.',
+    'Vous arrêtez sans durée minimale ni préavis. On vous aide à transférer l’hébergement ailleurs, et rien n’est retenu.',
+  ],
+  faq: [
+    {
+      question: 'Combien coûte un site internet en abonnement mensuel ?',
+      answer:
+        'Le site vitrine coûte 30 € HT par mois et l’application métier 100 € HT par mois. Il n’y a aucun frais de mise en route : la création, l’hébergement, les mises à jour et les modifications de contenu sont compris.',
+    },
+    {
+      question: 'Y a-t-il des frais de création ou de mise en route ?',
+      answer:
+        'Non. La conception du site est étalée dans le mensuel : vous ne payez rien avant la mise en ligne, puis le même montant chaque mois.',
+    },
+    {
+      question: 'Est-ce plus cher qu’un site classique sur trois ans ?',
+      answer: `Sur trois ans, la Vitrine revient à ${offers[0].price * COMPARISON_MONTHS} € HT, création, hébergement et mises à jour comprises. Dans l’exemple d’un devis classique (${quote.creation} € de création payés d’avance, puis ${quote.monthlyUpkeep} € par mois d’entretien), on arrive à ${quote.creation + quote.monthlyUpkeep * COMPARISON_MONTHS} € HT sur la même durée.`,
+    },
+    {
+      question: 'Puis-je résilier à tout moment ?',
+      answer:
+        'Oui, sans durée minimale ni préavis. Vous repartez avec votre nom de domaine, vos contenus, vos données et le code source.',
+    },
+    {
+      question: 'Le nom de domaine et le code m’appartiennent-ils ?',
+      answer:
+        'Oui. Le domaine est à votre nom ou transféré sur demande, et le code et les données vous sont remis quand vous le souhaitez.',
+    },
+  ] satisfies Array<AgencyFaq>,
+}
