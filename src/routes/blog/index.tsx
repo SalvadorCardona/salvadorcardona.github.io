@@ -8,9 +8,9 @@ import { seo } from '../../lib/seo'
 export const Route = createFileRoute('/blog/')({
   head: () =>
     seo({
-      title: 'Blog',
+      title: 'Blog : développement web, API Platform et IA appliquée',
       description:
-        'Notes de développement web : TanStack Start, JSON-LD, React, agents LLM et outillage.',
+        'Le blog de l’agence Cardona, à Lyon : Symfony et API Platform, JSON-LD, React et TanStack Start, agents LLM et Claude Code, retours de projets réels.',
       path: '/blog',
     }),
   component: BlogIndex,

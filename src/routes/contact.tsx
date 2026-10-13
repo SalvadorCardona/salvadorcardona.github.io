@@ -47,7 +47,7 @@ export const Route = createFileRoute('/contact')({
   loader: () => getContactSettings(),
   head: ({ loaderData }) => {
     const head = seo({
-      title: 'Contact',
+      title: 'Contact : votre projet web ou IA à Lyon',
       description: `Parlez-nous de votre projet : site, application métier, intégration IA ou formation. L’agence ${agency.name}, à Lyon, répond sous deux jours ouvrés.`,
       path: '/contact',
       jsonLd: [

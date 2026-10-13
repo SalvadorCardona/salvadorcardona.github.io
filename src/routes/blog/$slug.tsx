@@ -4,11 +4,13 @@ import { PostCoverImage } from '../../components/PostCoverImage'
 import { agency } from '../../content/agency'
 import { formatDate, getCover, getPost, sortedPosts } from '../../content/posts'
 import { links } from '../../content/profile'
+import { servicePath, services } from '../../content/services'
 import {
   AGENCY_ID,
   AUTHOR_NAME,
   PERSON_ID,
   SITE_URL,
+  breadcrumbJsonLd,
   seo,
 } from '../../lib/seo'
 
@@ -48,7 +50,9 @@ export const Route = createFileRoute('/blog/$slug')({
               headline: loaderData.title,
               description: loaderData.excerpt,
               image: `${SITE_URL}${loaderData.cover?.src ?? '/og/cardona.png'}`,
-              datePublished: loaderData.date,
+              // Google veut une heure et un fuseau : minuit UTC, le jour reste
+              // le même à Paris.
+              datePublished: `${loaderData.date}T00:00:00Z`,
               inLanguage: 'fr-FR',
               keywords: loaderData.tags,
               mainEntityOfPage: `${SITE_URL}/blog/${loaderData.slug}`,
@@ -68,6 +72,11 @@ export const Route = createFileRoute('/blog/$slug')({
                 logo: `${SITE_URL}/logo.png`,
               },
             },
+            breadcrumbJsonLd([
+              { name: 'Accueil', path: '/' },
+              { name: 'Blog', path: '/blog' },
+              { name: loaderData.title, path: `/blog/${loaderData.slug}` },
+            ]),
           ],
         })
       : {},
@@ -81,6 +90,11 @@ function PostPage() {
   if (!post) return null
 
   const cover = getCover(slug)
+  // Les pages service qui citent l'article : le lien retour, de l'article
+  // vers la prestation dont il parle.
+  const relatedServices = services.filter((service) =>
+    service.relatedPosts.includes(slug),
+  )
 
   const index = sortedPosts.findIndex((item) => item.slug === slug)
   const newer = index > 0 ? sortedPosts[index - 1] : undefined
@@ -142,6 +156,27 @@ function PostPage() {
           {post.body}
         </div>
       </article>
+
+      {relatedServices.length > 0 && (
+        <aside className="mt-12 rounded-xl border border-stone-200 bg-stone-50 p-6">
+          <h2 className="text-sm font-semibold text-stone-900">
+            L’agence {agency.name} peut vous accompagner
+          </h2>
+          <ul className="mt-3 space-y-2 text-sm">
+            {relatedServices.map((service) => (
+              <li key={service.slug}>
+                <Link
+                  to={servicePath(service.slug)}
+                  className="font-medium text-brand-600 hover:underline"
+                >
+                  {service.name} →
+                </Link>
+                <span className="text-stone-600"> {service.excerpt}</span>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      )}
 
       <div className="mt-12 flex flex-wrap gap-4 border-t border-stone-200 pt-6 text-sm">
         <a

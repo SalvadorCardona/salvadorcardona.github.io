@@ -52,6 +52,7 @@ export function serviceHead(slug: string) {
         provider: agencyJsonLd(),
         areaServed: [
           { '@type': 'City', name: 'Lyon' },
+          { '@type': 'AdministrativeArea', name: 'Métropole de Lyon' },
           { '@type': 'Country', name: 'France' },
         ],
         availableChannel: {

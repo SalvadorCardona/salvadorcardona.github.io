@@ -146,7 +146,7 @@ export const techSkills: Array<AgencyTechSkill> = [
   { label: 'React & TypeScript', service: 'developpement-web' },
   { label: 'Symfony / API Platform', service: 'developpement-web' },
   { label: 'DevOps', service: 'developpement-web' },
-  { label: 'Formation IA', service: 'integration-ia' },
+  { label: 'Formation IA', service: 'formation-ia' },
 ]
 
 /**

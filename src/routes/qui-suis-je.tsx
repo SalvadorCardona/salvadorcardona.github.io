@@ -25,7 +25,7 @@ import { AUTHOR_NAME, breadcrumbJsonLd, personJsonLd, seo } from '../lib/seo'
 export const Route = createFileRoute('/qui-suis-je')({
   head: () =>
     seo({
-      title: `Qui suis-je — ${profile.role} à Lyon`,
+      title: 'Qui suis-je : lead dev IA freelance à Lyon, Symfony et React',
       description: profile.pitch,
       path: '/qui-suis-je',
       signature: AUTHOR_NAME,
