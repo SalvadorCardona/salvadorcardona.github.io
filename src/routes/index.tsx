@@ -1359,6 +1359,14 @@ function OfferCard({
         Parler de votre projet
         <span className="sr-only"> : forfait {offer.name}</span>
       </Link>
+      {offer.id === 'vitrine' && (
+        <Link
+          to="/creation-site-vitrine-lyon"
+          className="mt-4 text-center text-sm font-medium text-white underline underline-offset-4 transition-colors hover:text-brand-100"
+        >
+          Création de site vitrine à Lyon
+        </Link>
+      )}
     </article>
   )
 }
