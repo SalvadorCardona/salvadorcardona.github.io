@@ -26,7 +26,13 @@ import {
   techSkills,
   works,
 } from '../content/agency'
-import { clients, links, profile } from '../content/profile'
+import {
+  clients,
+  links,
+  profile,
+  projectIcon,
+  projects,
+} from '../content/profile'
 import { servicePath } from '../content/services'
 import {
   AGENCY_ID,
@@ -39,7 +45,8 @@ import {
 export const Route = createFileRoute('/')({
   head: () =>
     seo({
-      title: `${agency.name} — ${agency.tagline}`,
+      // La requête locale en tête, le prix d'appel ensuite.
+      title: `Agence ${agency.name} : agence digitale à Lyon, site vitrine dès 30 € / mois`,
       description: agency.pitch,
       path: '/',
       jsonLd: [
@@ -66,7 +73,7 @@ export const Route = createFileRoute('/')({
           // tiré de `public/logo.svg`.
           logo: `${SITE_URL}/logo.png`,
           image: `${SITE_URL}/og/cardona.png`,
-          sameAs: [links.linkedin, links.github],
+          sameAs: [links.github, links.linkedin, links.x, links.instagram],
           founder: { '@id': PERSON_ID },
           address: {
             '@type': 'PostalAddress',
@@ -88,7 +95,7 @@ export const Route = createFileRoute('/')({
             description: offer.tagline,
             url: `${SITE_URL}/#${offer.id}`,
             availability: 'https://schema.org/InStock',
-            seller: { '@id': PERSON_ID },
+            seller: { '@id': AGENCY_ID },
             priceSpecification: {
               '@type': 'UnitPriceSpecification',
               price: offer.price,
@@ -157,6 +164,7 @@ function Home() {
         <Offers />
         <Method />
         <About />
+        <OpenSource />
         <Faq />
       </div>
 
@@ -1686,6 +1694,56 @@ function About() {
           Qui suis-je ?
         </Link>
       </aside>
+    </section>
+  )
+}
+
+/**
+ * Les librairies publiées par l'agence, chacune vers sa documentation : celles
+ * de `projects` qui en ont une. La liste complète est sur `/qui-suis-je`.
+ */
+function OpenSource() {
+  const documented = projects.filter((project) => project.docs)
+  return (
+    <section id="open-source" className="scroll-mt-24 pt-24 lg:pt-32">
+      <SectionHeading
+        eyebrow="Open source"
+        title="Les outils qu’on publie, et qu’on utilise chez nos clients."
+      />
+      <ul className="mt-10 grid gap-4 sm:grid-cols-2">
+        {documented.map((project) => (
+          <li key={project.name}>
+            <a
+              href={project.docs}
+              data-umami-event="open-source"
+              data-umami-event-page="/"
+              data-umami-event-projet={project.name}
+              className="flex h-full gap-4 rounded-3xl border border-stone-200 bg-white p-6 transition-colors hover:border-brand-300 hover:bg-brand-50/40"
+            >
+              {/* Le nom suit juste à côté : l'icône est décorative. */}
+              <img
+                src={projectIcon(project)}
+                alt=""
+                width={128}
+                height={128}
+                loading="lazy"
+                className="h-12 w-12 shrink-0 rounded-xl ring-1 ring-stone-200"
+              />
+              <span>
+                <span className="block text-lg font-semibold text-stone-900">
+                  {project.name}
+                </span>
+                <span className="mt-1 block text-sm leading-relaxed text-pretty text-stone-600">
+                  {project.description}
+                </span>
+                <span className="mt-3 block text-sm font-semibold text-brand-600">
+                  La documentation →
+                </span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </section>
   )
 }

@@ -62,6 +62,9 @@ const securityHeaders = {
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
   base: '/',
+  // Le jour du build, `lastmod` des pages fixes du sitemap : leur contenu est
+  // dans le code, il change avec l'image (voir `routes/sitemap[.]xml.ts`).
+  define: { __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)) },
   plugins: [
     tailwindcss(),
     tanstackStart(),

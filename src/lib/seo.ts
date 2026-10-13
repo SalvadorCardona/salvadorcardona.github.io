@@ -148,6 +148,7 @@ export function personJsonLd() {
       'https://github.com/SalvadorCardona',
       'https://www.linkedin.com/in/salvador-cardona-70911113a/',
       'https://x.com/salvadevme',
+      'https://www.instagram.com/salvadorcardona81/',
     ],
   }
 }
@@ -162,14 +163,20 @@ export function agencyJsonLd() {
     '@id': AGENCY_ID,
     name: SITE_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/logo.svg`,
+    logo: `${SITE_URL}/logo.png`,
+    email: 'contact@cardona.digital',
     founder: { '@id': PERSON_ID },
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Lyon',
       addressCountry: 'FR',
     },
-    areaServed: 'France',
+    // La même zone que sur l'accueil : Lyon et sa métropole d'abord.
+    areaServed: [
+      { '@type': 'City', name: 'Lyon' },
+      { '@type': 'AdministrativeArea', name: 'Métropole de Lyon' },
+      { '@type': 'Country', name: 'France' },
+    ],
   }
 }
 
