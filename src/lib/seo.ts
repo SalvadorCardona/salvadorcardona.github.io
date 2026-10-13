@@ -1,3 +1,5 @@
+import type { AgencyOffer } from '../content/agency'
+
 /**
  * Construction des balises <meta> pour `head()` des routes.
  *
@@ -191,5 +193,33 @@ export function breadcrumbJsonLd(items: Array<{ name: string; path: string }>) {
       name: item.name,
       item: `${SITE_URL}${item.path}`,
     })),
+  }
+}
+
+/**
+ * Un abonnement de l'agence en `Offer`, au mois et hors taxes. Partagé par
+ * l'accueil et par `/site-internet-abonnement-mensuel`.
+ */
+export function offerJsonLd(offer: AgencyOffer) {
+  return {
+    '@type': 'Offer',
+    name: `${offer.name} — agence Cardona`,
+    description: offer.tagline,
+    url: `${SITE_URL}/#${offer.id}`,
+    availability: 'https://schema.org/InStock',
+    seller: { '@id': AGENCY_ID },
+    priceSpecification: {
+      '@type': 'UnitPriceSpecification',
+      price: offer.price,
+      priceCurrency: 'EUR',
+      valueAddedTaxIncluded: false,
+      // Un prix au mois : sans `referenceQuantity`, Google lirait 30 €
+      // une bonne fois pour toutes.
+      referenceQuantity: {
+        '@type': 'QuantitativeValue',
+        value: 1,
+        unitCode: 'MON',
+      },
+    },
   }
 }

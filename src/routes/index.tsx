@@ -22,6 +22,7 @@ import {
   faq,
   figures,
   offers,
+  SUBSCRIPTION_PATH,
   steps,
   techSkills,
   works,
@@ -38,6 +39,7 @@ import {
   AGENCY_ID,
   PERSON_ID,
   SITE_URL,
+  offerJsonLd,
   personJsonLd,
   seo,
 } from '../lib/seo'
@@ -89,27 +91,7 @@ export const Route = createFileRoute('/')({
             { '@type': 'Country', name: 'France' },
           ],
           priceRange: '30 € – 100 € / mois',
-          makesOffer: offers.map((offer) => ({
-            '@type': 'Offer',
-            name: `${offer.name} — agence ${agency.name}`,
-            description: offer.tagline,
-            url: `${SITE_URL}/#${offer.id}`,
-            availability: 'https://schema.org/InStock',
-            seller: { '@id': AGENCY_ID },
-            priceSpecification: {
-              '@type': 'UnitPriceSpecification',
-              price: offer.price,
-              priceCurrency: 'EUR',
-              valueAddedTaxIncluded: false,
-              // Un prix au mois : sans `referenceQuantity`, Google lirait 30 €
-              // une bonne fois pour toutes.
-              referenceQuantity: {
-                '@type': 'QuantitativeValue',
-                value: 1,
-                unitCode: 'MON',
-              },
-            },
-          })),
+          makesOffer: offers.map(offerJsonLd),
         },
         {
           '@context': 'https://schema.org',
@@ -1259,6 +1241,18 @@ function Offers() {
           </li>
         ))}
       </ul>
+      <p className="mt-8 text-sm text-stone-600">
+        Comment fonctionne le modèle, et ce qu’il coûte face à un devis sur
+        trois ans :{' '}
+        <Link
+          to={SUBSCRIPTION_PATH}
+          data-umami-event="lien-abonnement"
+          className="font-semibold text-brand-700 underline underline-offset-2 hover:text-brand-600"
+        >
+          le site internet en abonnement mensuel
+        </Link>
+        .
+      </p>
     </section>
   )
 }
