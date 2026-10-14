@@ -177,11 +177,11 @@ Pages actif, chacun en 200 sur `cardona.digital` à cette date) :
 
 | Sous-chemin              | Dépôt                 |
 | ------------------------ | --------------------- |
+| `/adam/`                 | `adam`                |
 | `/adam-eve/`             | `adam-eve`            |
 | `/CoookingPubSub/`       | `CoookingPubSub`      |
 | `/des-3d/`               | `des-3d`              |
 | `/gnome-claude-usage/`   | `gnome-claude-usage`  |
-| `/mobile-factory/`       | `mobile-factory`      |
 | `/ponos/`                | `ponos`               |
 | `/react-data-form/`      | `react-data-form`     |
 | `/react-game/`           | `react-game`          |
@@ -212,6 +212,11 @@ Ce que fait le fichier :
   page sous `/ponos/`, requête comprise. Un dépôt renommé change de
   sous-chemin : renommer aussi son entrée dans les deux règles, sinon le
   nouveau chemin tombe sur la page 404 du site.
+- `mobile-factory-to-adam` : le dépôt `mobile-factory` est devenu `adam` le
+  2026-10-14. `/mobile-factory`, `/mobile-factory/…` et leur requête sont
+  renvoyés en 301 vers `/adam/…` (le navigateur garde le fragment, d'où les
+  sauvegardes du jeu, même origine). L'ancien chemin a quitté les deux règles
+  ci-dessus.
 - Les routeurs visent l'entrée `websecure` avec le résolveur `letsencrypt`,
   les noms utilisés par Dokploy ; la redirection HTTP → HTTPS de l'entrée
   `web` est celle de Dokploy.
@@ -286,7 +291,7 @@ curl -sI https://cardona.digital/rendez-vous | grep -i location # /contact?appel
 curl -sI https://cardona.digital/n-existe-pas | head -1     # HTTP/2 404
 curl -sI https://cardona.digital/whisper-desk/ | head -1    # HTTP/2 200, servi par GitHub
 curl -sI https://cardona.digital/whisper-desk | grep -i location   # …/whisper-desk/
-for p in adam-eve CoookingPubSub des-3d gnome-claude-usage mobile-factory \
+for p in adam adam-eve CoookingPubSub des-3d gnome-claude-usage \
   react-data-form react-game react-resource-view ponos trigo-js whisper-desk; do
   printf '%-22s %s\n' "$p" "$(curl -s -o /dev/null -w '%{http_code}' https://cardona.digital/$p/)"
 done                                                        # 200 partout

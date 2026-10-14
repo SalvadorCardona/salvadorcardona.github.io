@@ -16,11 +16,11 @@
 #
 # Sous-chemins recensés le 2026-09-30 (dépôts SalvadorCardona avec Pages
 # actif, tous en 200 sur cardona.digital) :
+#   - /adam/ (ex-/mobile-factory/, dépôt renommé le 2026-10-14)
 #   - /adam-eve/
 #   - /CoookingPubSub/
 #   - /des-3d/
 #   - /gnome-claude-usage/
-#   - /mobile-factory/
 #   - /react-data-form/
 #   - /react-game/
 #   - /react-resource-view/
@@ -37,11 +37,11 @@ http:
         - websecure
       rule: >-
         Host(`cardona.digital`) && (
+        PathPrefix(`/adam/`) ||
         PathPrefix(`/adam-eve/`) ||
         PathPrefix(`/CoookingPubSub/`) ||
         PathPrefix(`/des-3d/`) ||
         PathPrefix(`/gnome-claude-usage/`) ||
-        PathPrefix(`/mobile-factory/`) ||
         PathPrefix(`/react-data-form/`) ||
         PathPrefix(`/react-game/`) ||
         PathPrefix(`/react-resource-view/`) ||
@@ -59,11 +59,11 @@ http:
         - websecure
       rule: >-
         Host(`cardona.digital`) && (
+        Path(`/adam`) ||
         Path(`/adam-eve`) ||
         Path(`/CoookingPubSub`) ||
         Path(`/des-3d`) ||
         Path(`/gnome-claude-usage`) ||
-        Path(`/mobile-factory`) ||
         Path(`/react-data-form`) ||
         Path(`/react-game`) ||
         Path(`/react-resource-view`) ||
@@ -113,7 +113,30 @@ http:
       tls:
         certResolver: letsencrypt
 
+    # Le jeu s'appelait Mobile Factory (renommé Adam le 2026-10-14) : l'ancien
+    # chemin est renvoyé en 301 vers /adam/…, chemin et requête gardés (le
+    # navigateur garde le fragment). Même origine : les clés du jeu sont déjà là.
+    mobile-factory-to-adam:
+      entryPoints:
+        - websecure
+      rule: >-
+        Host(`cardona.digital`) && (
+        Path(`/mobile-factory`) ||
+        PathPrefix(`/mobile-factory/`))
+      priority: 1000
+      middlewares:
+        - mobile-factory-to-adam
+      service: github-pages
+      tls:
+        certResolver: letsencrypt
+
   middlewares:
+    mobile-factory-to-adam:
+      redirectRegex:
+        regex: ^https?://[^/]+/mobile-factory/?([^?]*)(\?.*)?$
+        replacement: https://cardona.digital/adam/${1}${2}
+        permanent: true
+
     ponos-to-the-ponos-app:
       redirectRegex:
         regex: ^https?://[^/]+/(?:ponos|ticket-runner)/?(.*)$
