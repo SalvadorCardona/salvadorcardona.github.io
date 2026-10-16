@@ -160,7 +160,7 @@ function VitrineLyonPage() {
 
       <Section id="delai" title="Le délai">
         <p className="text-lg leading-relaxed text-pretty text-stone-600">
-          {offer.delivery} Un appel d’une heure pour comprendre votre activité,
+          {offer.delivery} Un premier échange pour comprendre votre activité,
           une maquette validée avant d’écrire la moindre ligne, puis la mise en
           ligne : domaine, hébergement et référencement sont pris en charge.
         </p>
@@ -237,7 +237,7 @@ function VitrineLyonPage() {
           Un site vitrine pour votre activité à Lyon ?
         </h2>
         <p className="mt-4 max-w-2xl text-pretty text-white">
-          Un premier échange d’une heure, gratuit et sans engagement, pour
+          Un premier échange, sans engagement, pour
           comprendre votre activité et vous dire ce que l’agence peut faire.
           À Lyon ou à distance.
         </p>

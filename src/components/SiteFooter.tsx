@@ -108,11 +108,29 @@ export function SiteFooter() {
                 Blog
               </Link>
             </li>
+            <li>
+              <Link to="/references" className={linkClass}>
+                Références
+              </Link>
+            </li>
+            <li>
+              <Link to="/notre-equipe" className={linkClass}>
+                À propos de l’agence
+              </Link>
+            </li>
           </ul>
         </nav>
       </div>
       <div className="mx-auto max-w-6xl px-6 pb-8 text-xs text-stone-500">
         © {new Date().getFullYear()} Agence {agency.name} · A {agency.name} product
+        {' · '}
+        <Link to="/mentions-legales" className={linkClass}>
+          Mentions légales
+        </Link>
+        {' · '}
+        <Link to="/confidentialite" className={linkClass}>
+          Confidentialité
+        </Link>
       </div>
     </footer>
   )

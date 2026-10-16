@@ -18,7 +18,7 @@ export const Route = createFileRoute('/services/')({
     seo({
       title: 'Services : développement web, audit de sécurité, intégration et formation IA',
       description:
-        'Lead dev freelance à Lyon : Symfony / API Platform, React et TypeScript, IA en production (RAG, OCR, Whisper, agents), DevOps Docker, audit de sécurité, formation IA.',
+        'Agence de développement à Lyon : Symfony / API Platform, React, IA en production (RAG, OCR, agents), DevOps Docker, facturation électronique, formation IA.',
       path: '/services',
       jsonLd: [
         personJsonLd(),
@@ -66,7 +66,7 @@ const method = [
   {
     title: 'Transmettre',
     description:
-      'Une mission se termine quand l’équipe peut continuer sans moi : documentation, passation, formation si besoin.',
+      'Une mission se termine quand l’équipe peut continuer sans nous : documentation, passation, formation si besoin.',
   },
 ]
 
@@ -142,7 +142,7 @@ function ServicesIndex() {
 
       <section className="border-t border-stone-200 py-12 lg:grid lg:grid-cols-[14rem_1fr] lg:gap-10">
         <h2 className="text-lg font-semibold tracking-tight text-stone-900">
-          Comment je travaille
+          Comment nous travaillons
         </h2>
         <ol className="mt-6 grid gap-6 sm:grid-cols-2 lg:mt-0">
           {method.map((step, index) => (

@@ -239,7 +239,7 @@ function SubscriptionPage() {
             Parlons de votre site
           </h2>
           <p className="mt-3 max-w-xl leading-relaxed text-stone-300">
-            Un appel gratuit d’une heure pour comprendre votre activité, puis une
+            Un premier échange pour comprendre votre activité, puis une
             maquette avant d’écrire la moindre ligne.
           </p>
           <div className="mt-6 flex flex-wrap gap-3">

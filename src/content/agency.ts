@@ -125,7 +125,7 @@ export const audiences: { business: AgencyAudience; tech: AgencyAudience } = {
   },
   tech: {
     eyebrow: 'Équipes tech et produits',
-    title: 'Un lead dev IA freelance, au forfait ou en régie.',
+    title: 'Du développement web et de l’IA, au forfait ou en régie.',
     description:
       'Treize ans de développement web, de l’API au déploiement, et des modèles de langage mis en production dans de vraies applications.',
   },
@@ -282,7 +282,7 @@ export const steps: Array<AgencyStep> = [
   {
     title: 'Un appel',
     description:
-      'Une heure pour comprendre votre activité, ce que vos clients cherchent et ce qui vous fait perdre du temps. Gratuit, sans engagement.',
+      'Un premier échange pour comprendre votre activité, ce que vos clients cherchent et ce qui vous fait perdre du temps. Sans engagement.',
   },
   {
     title: 'Une maquette',
@@ -357,7 +357,7 @@ export const quote = {
 export const subscription = {
   title: 'Site internet en abonnement mensuel : vitrine dès 30 € HT / mois',
   description:
-    'Un site internet en abonnement mensuel, sans facture de départ : création, hébergement et mises à jour compris dès 30 € HT par mois, application métier à 100 € HT. Sans engagement, domaine et code à vous.',
+    'Site internet en abonnement mensuel, sans facture de départ : création, hébergement et mises à jour compris dès 30 € HT par mois. Sans engagement.',
   lead: 'Pas de devis à plusieurs milliers d’euros : la création de votre site est étalée dans un abonnement mensuel. Vous payez un prix affiché chaque mois, vous ne versez rien au départ, et vous pouvez arrêter quand vous voulez.',
   model: [
     'Dans le modèle classique, une agence facture la création d’un bloc, puis l’hébergement et la maintenance en plus, ou pas du tout. Dans l’abonnement, la conception, la rédaction, le nom de domaine, l’hébergement, les sauvegardes et les modifications sont réunis dans un seul montant mensuel.',

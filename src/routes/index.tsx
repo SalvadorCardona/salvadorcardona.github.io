@@ -3,6 +3,7 @@ import type { RefObject } from 'react'
 import { Link, createFileRoute } from '@tanstack/react-router'
 
 import { LogoMark } from '../components/Logo'
+import { ReferenceCard } from '../components/ReferenceCard'
 import { ServiceIcon } from '../components/ServiceIcon'
 import {
   ApplicationIllustration,
@@ -30,11 +31,12 @@ import {
 import {
   clients,
   links,
-  profile,
   projectIcon,
   projects,
 } from '../content/profile'
+import { references } from '../content/references'
 import { servicePath } from '../content/services'
+import { team } from '../content/team'
 import {
   AGENCY_ID,
   PERSON_ID,
@@ -143,6 +145,7 @@ function Home() {
         <Audiences />
         <Expertises />
         <Figures />
+        <References />
         <Offers />
         <Method />
         <About />
@@ -211,7 +214,7 @@ function Hero({ video }: { video: RefObject<HTMLVideoElement | null> }) {
 
           <div className="mt-10 motion-safe:animate-hero-rise motion-safe:[animation-delay:350ms]">
             <p className="text-sm font-semibold text-stone-500">
-              Ils m’ont fait confiance
+              Notre équipe a travaillé pour
             </p>
             <ul className="mt-3 flex flex-wrap items-center gap-x-7 gap-y-4">
               {clients.map((client) => (
@@ -229,7 +232,7 @@ function Hero({ video }: { video: RefObject<HTMLVideoElement | null> }) {
           </div>
 
           <p className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-stone-500 motion-safe:animate-hero-rise motion-safe:[animation-delay:400ms]">
-            <span>Premier appel offert</span>
+            <span>Devis écrit, sans engagement</span>
             <span aria-hidden="true" className="text-brand-400">
               ✦
             </span>
@@ -1422,7 +1425,7 @@ const stepScenes: Array<{ background: string; art: React.ReactNode }> = [
   { background: 'bg-stone-900', art: <FollowUpScene /> },
 ]
 
-/** Un appel : le téléphone décroché, la conversation, une heure au compteur. */
+/** Un appel : le téléphone décroché, la conversation, le rendez-vous fixé. */
 function CallScene() {
   return (
     <Scene>
@@ -1649,7 +1652,39 @@ function FollowUpScene() {
   )
 }
 
+/**
+ * Trois études de cas en version courte ; les autres, et le détail de
+ * chacune, sur `/references`.
+ */
+function References() {
+  return (
+    <section id="references" className="scroll-mt-24 pt-24 lg:pt-32">
+      <SectionHeading
+        eyebrow="Références"
+        title="Des applications en production, pour des marques exigeantes."
+        intro="Le problème posé, ce que nous avons construit, ce qui a changé."
+      />
+      <ul className="mt-12 grid gap-5 lg:grid-cols-3">
+        {references.slice(0, 3).map((reference) => (
+          <li key={reference.id} className="flex">
+            <ReferenceCard reference={reference} compact />
+          </li>
+        ))}
+      </ul>
+      <p className="mt-8 text-sm">
+        <Link
+          to="/references"
+          className="font-semibold text-brand-600 hover:underline"
+        >
+          Toutes nos références →
+        </Link>
+      </p>
+    </section>
+  )
+}
+
 function About() {
+  const [lead] = team
   return (
     <section
       id="agence"
@@ -1680,16 +1715,15 @@ function About() {
         <p className="mt-6 text-xs font-semibold tracking-widest text-brand-300 uppercase">
           Derrière l’agence
         </p>
-        <p className="mt-2 font-display text-2xl font-bold">{profile.name}</p>
+        <p className="mt-2 font-display text-2xl font-bold">{lead.firstName}</p>
         <p className="mt-1 text-sm text-stone-300">
-          Lead Dev IA · 13 ans de projets web
+          {lead.role} · 13 ans de projets web
         </p>
         <p className="mt-5 text-sm leading-relaxed text-stone-300">
-          Treize ans aux côtés de grandes marques comme TF1, M6 ou OVH m’ont
-          appris ce qui fait qu’un visiteur devient un client. Aujourd’hui, je
-          mets ce savoir-faire au service des entreprises lyonnaises, sans
-          intermédiaire : vous parlez directement à celui qui conçoit, écrit et
-          construit.
+          Treize ans de projets web pour de grandes marques comme TF1, M6 ou
+          OVH. L’agence met ce savoir-faire au service des entreprises
+          lyonnaises, sans intermédiaire : vous parlez directement à celui qui
+          conçoit et construit.
         </p>
         <Link
           to="/notre-equipe"
@@ -1795,8 +1829,8 @@ function FinalCall() {
           Un projet ? Parlons-en autour d’un café.
         </h2>
         <p className="relative mt-6 max-w-xl text-lg text-pretty text-white">
-          Une heure pour comprendre votre activité et vous dire ce qu’on ferait
-          à votre place. Gratuit, sans engagement, à Lyon ou en visio.
+          Un premier échange pour comprendre votre activité et vous dire ce
+          qu’on ferait à votre place. Sans engagement, à Lyon ou en visio.
         </p>
         <div className="relative mt-10 flex flex-wrap gap-3">
           <Link

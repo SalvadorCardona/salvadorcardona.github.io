@@ -45,7 +45,10 @@ conteneur Docker déployé sur Dokploy (voir `DEPLOY.md`).
   est écrit à la main.
 - **Le reste du contenu est en dur** dans `src/content/` : `profile.ts` pour le
   CV (hors expériences), `services.ts` pour les prestations, `agency.ts` pour
-  les abonnements de l'agence Hermez, `team.ts` pour les membres de l'équipe (`/notre-equipe`), `covers.json` pour les illustrations. Pas d'autre CMS, pas de chargement de fichiers Markdown.
+  les abonnements de l'agence Hermez, `team.ts` pour les membres de l'équipe (`/notre-equipe`, la page « À propos »),
+  `references.ts` pour les études de cas (`/references`, écrites à la main
+  depuis les expériences Notion : aucun fait qui n'y figure), `legal.ts` pour
+  les mentions légales et la politique de confidentialité, `covers.json` pour les illustrations. Pas d'autre CMS, pas de chargement de fichiers Markdown.
 - **Une page service = une entrée dans `services.ts` + une route d'une ligne**
   dans `src/routes/services/<slug>.tsx`, qui rend le gabarit commun
   `components/ServicePage.tsx`. Ajouter le chemin à `REQUIRED_PAGES` dans
@@ -124,8 +127,8 @@ docker build -t cardona-digital .   # si le Dockerfile ou les dépendances chang
 
 Le build écrit `.output/`, puis `scripts/postbuild.mjs` démarre le serveur
 construit et vérifie `/healthz`, les pages fixes (`/` — l'agence —,
-`/notre-equipe`, `/services` et ses quatre pages service, `/blog`,
-`/contact`), les redirections 301 des anciennes adresses (`/rendez-vous`,
+`/notre-equipe`, `/references`, `/services` et ses quatre pages service, `/blog`,
+`/contact`, `/mentions-legales`, `/confidentialite`), les redirections 301 des anciennes adresses (`/rendez-vous`,
 `/agence`, `/projets`, `/qui-suis-je`, `/404`) et des slashs finaux (`/blog/`, `/services/`),
 chaque URL du sitemap (donc chaque
 article) et le 404 d'une adresse inconnue. Il échoue aussi si une illustration

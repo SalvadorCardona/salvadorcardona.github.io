@@ -42,7 +42,6 @@ export const Route = createFileRoute('/blog/$slug')({
           type: 'article',
           publishedTime: loaderData.date,
           image: loaderData.cover,
-          signature: AUTHOR_NAME,
           jsonLd: [
             {
               '@context': 'https://schema.org',

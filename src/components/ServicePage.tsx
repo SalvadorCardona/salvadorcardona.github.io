@@ -1,5 +1,6 @@
 import { Link, useLocation } from '@tanstack/react-router'
 
+import { agency } from '../content/agency'
 import { formatDate, getPost } from '../content/posts'
 import { profile } from '../content/profile'
 import type { Service } from '../content/services'
@@ -129,7 +130,7 @@ export function ServicePage({ slug }: { slug: string }) {
           <aside className="rounded-2xl border border-stone-200 bg-stone-50 p-6 text-sm">
             <dl className="space-y-3">
               <Fact label="Par">
-                {profile.name}, {profile.role.toLowerCase()}
+                L’agence {agency.name}, à Lyon
               </Fact>
               <Fact label="Expérience">
                 {profile.yearsOfExperience} ans d’applications web
@@ -390,9 +391,8 @@ export function CallToAction({ projectType }: { projectType?: ProjectType }) {
         Parlons de votre projet
       </h2>
       <p className="mt-4 max-w-2xl text-pretty text-white">
-        Un premier échange d’une heure, gratuit et sans engagement, pour
-        comprendre votre besoin et vous dire si je suis la bonne personne. À
-        Lyon ou à distance.
+        Un premier échange, sans engagement, pour comprendre votre besoin et
+        vous dire si nous sommes la bonne équipe. À Lyon ou à distance.
       </p>
       <div className="mt-8 flex flex-wrap gap-3">
         <Link
