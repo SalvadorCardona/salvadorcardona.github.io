@@ -85,7 +85,7 @@ conteneur Docker déployé sur Dokploy (voir `DEPLOY.md`).
   l'un de ces noms.
 - **Les images de partage vivent dans `public/og/`**, en PNG de 1200 × 630
   (le 1,91:1 des aperçus LinkedIn, qui rogne tout autre format) :
-  `cardona.png` par défaut, `<slug>.png` pour chaque page service, tirée de son
+  `hermez.png` par défaut, `<slug>.png` pour chaque page service, tirée de son
   illustration. `seo()` (`src/lib/seo.ts`) émet `og:image` avec ses
   dimensions et son alternative ; les articles passent leur couverture. Elles
   sont composées avec le logo, la police et les couleurs du site, puis
@@ -99,11 +99,14 @@ conteneur Docker déployé sur Dokploy (voir `DEPLOY.md`).
   image cassée.
 - **Un seul thème, clair.** Pas de variante `dark:` : le mode sombre a été
   retiré. La couleur de marque est `brand-*` (`styles.css`), l'orange
-  d'Animalink en 500 ; les gris sont `stone-*`. Le logo de l'agence existe en
-  trois exemplaires à garder synchrones : `components/Logo.tsx`,
-  `public/favicon.svg` et `public/logo.svg` (mot vectorisé), plus les PNG de
-  favicon qui en sont tirés et `public/logo.png` (le logo du JSON-LD, Google
-  n'acceptant pas de SVG).
+  d'Animalink en 500 ; les gris sont `stone-*`. Le logo de l'agence (variante 4D
+  « contour ») vient de `SalvadorCardona/brand-assets` (`site/public/hermez/`),
+  recopié sans retouche : `public/logo.svg` (logo complet, fond clair),
+  `public/logo-symbol-dark.svg` (symbole sur fond foncé), `public/favicon.svg`,
+  `favicon.ico`, `favicon-16x16.png`, `favicon-32x32.png`,
+  `apple-touch-icon.png`, `public/logo.png` (symbole 512 px, le logo du JSON-LD,
+  Google n'acceptant pas de SVG) et `public/og/hermez.png`. Pour le changer,
+  le refaire dans Brand Assets puis recopier les fichiers ici.
 - **La pile de cartes du hero ne montre que de vraies réalisations.** Chaque
   entrée de `works` (`agency.ts`) pointe vers des captures de
   `public/realisations/`, en AVIF et WebP à deux largeurs (voir le type
