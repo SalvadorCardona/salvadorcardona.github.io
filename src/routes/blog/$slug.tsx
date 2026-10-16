@@ -48,7 +48,7 @@ export const Route = createFileRoute('/blog/$slug')({
               '@type': 'BlogPosting',
               headline: loaderData.title,
               description: loaderData.excerpt,
-              image: `${SITE_URL}${loaderData.cover?.src ?? '/og/cardona.png'}`,
+              image: `${SITE_URL}${loaderData.cover?.src ?? '/og/hermez.png'}`,
               // Google veut une heure et un fuseau : minuit UTC, le jour reste
               // le même à Paris.
               datePublished: `${loaderData.date}T00:00:00Z`,

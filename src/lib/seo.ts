@@ -33,7 +33,7 @@ export type ShareImage = {
  * articles leur couverture.
  */
 const DEFAULT_SHARE_IMAGE: ShareImage = {
-  src: '/og/cardona.png',
+  src: '/og/hermez.png',
   alt: 'Hermez, agence digitale à Lyon : sites vitrines, applications métier, intégration IA',
   width: 1200,
   height: 630,

@@ -74,9 +74,9 @@ export const Route = createFileRoute('/')({
           url: SITE_URL,
           email: links.email,
           // Google n'accepte qu'un logo raster d'au moins 112 px : le PNG est
-          // tiré de `public/logo.svg`.
+          // le symbole de Brand Assets.
           logo: `${SITE_URL}/logo.png`,
-          image: `${SITE_URL}/og/cardona.png`,
+          image: `${SITE_URL}/og/hermez.png`,
           sameAs: [links.github, links.linkedin, links.x, links.instagram],
           founder: { '@id': PERSON_ID },
           address: {
