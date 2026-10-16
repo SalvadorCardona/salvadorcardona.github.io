@@ -24,7 +24,7 @@ export const Route = createFileRoute('/services/')({
         {
           '@context': 'https://schema.org',
           '@type': 'ItemList',
-          name: 'Services de l’agence Cardona',
+          name: 'Services de l’agence Hermez',
           itemListElement: services.map((service, index) => ({
             '@type': 'ListItem',
             position: index + 1,

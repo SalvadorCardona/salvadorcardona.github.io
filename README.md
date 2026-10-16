@@ -50,7 +50,7 @@ reste vit dans `src/content/`.
   `src/components/ServicePage.tsx` en fait la page et les données structurées.
   Pour en ajouter une : une entrée ici, une route d'une ligne dans
   `src/routes/services/`, et son chemin dans `scripts/postbuild.mjs`.
-- **`agency.ts`** — l'agence Cardona, qui fait l'accueil (`/`) : la
+- **`agency.ts`** — l'agence Hermez, qui fait l'accueil (`/`) : la
   signature, les métiers, les chiffres clés, les deux abonnements mensuels, ce
   qu'ils comprennent, les engagements et la FAQ. Les prix y sont
   écrits une seule fois et alimentent aussi le JSON-LD de la page.

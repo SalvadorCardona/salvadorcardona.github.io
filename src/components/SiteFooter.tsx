@@ -2,7 +2,7 @@ import { Link, useLocation } from '@tanstack/react-router'
 
 import { agency } from '../content/agency'
 import { Logo } from './Logo'
-import { links, profile } from '../content/profile'
+import { links } from '../content/profile'
 import { servicePath, services } from '../content/services'
 
 const social = [
@@ -20,15 +20,11 @@ export function SiteFooter() {
     <footer className="mt-24 border-t border-stone-200 bg-stone-50">
       <div className="mx-auto grid max-w-6xl gap-10 px-6 py-12 text-sm text-stone-500 sm:grid-cols-3">
         <div>
-          <Link to="/" aria-label="Agence Cardona, accueil">
+          <Link to="/" aria-label="Agence Hermez, accueil">
             <Logo />
           </Link>
           <p className="mt-4 leading-relaxed">
-            {agency.tagline}. Fondée par{' '}
-            <Link to="/qui-suis-je" className={`underline ${linkClass}`}>
-              {profile.name}
-            </Link>
-            .
+            {agency.tagline}.
           </p>
           <a
             href={`mailto:${links.email}`}
@@ -116,7 +112,7 @@ export function SiteFooter() {
         </nav>
       </div>
       <div className="mx-auto max-w-6xl px-6 pb-8 text-xs text-stone-500">
-        © {new Date().getFullYear()} Agence {agency.name} · {profile.name}
+        © {new Date().getFullYear()} Agence {agency.name} · A {agency.name} product
       </div>
     </footer>
   )

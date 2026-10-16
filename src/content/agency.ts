@@ -1,5 +1,5 @@
 /**
- * L'agence Cardona : la même personne que le reste du site, mais vendue
+ * L'agence Hermez : la même personne que le reste du site, mais vendue
  * autrement. Là où `services.ts` décrit des missions facturées au forfait ou
  * en régie, on trouve ici deux abonnements mensuels à prix affiché.
  *
@@ -33,7 +33,7 @@ export type AgencyOffer = {
 }
 
 export const agency = {
-  name: 'Cardona',
+  name: 'Hermez',
   /** La signature, sous le logo et en tête de l'accueil. */
   tagline: 'Agence digitale à Lyon',
   /** Ce qu'on vend, en une ligne : sert d'accroche et de description SEO. */
@@ -42,12 +42,12 @@ export const agency = {
     'applications métier et visibilité en ligne, au forfait mensuel dès 30 €.',
   /** Le renvoi vers l'accueil depuis les autres pages : les deux prix, en une ligne. */
   teaser:
-    'L’agence Cardona : site vitrine à 30 € par mois, application métier à 100 € par mois',
+    'L’agence Hermez : site vitrine à 30 € par mois, application métier à 100 € par mois',
   lead:
     'On conçoit, on écrit, on code et on fait vivre votre présence en ligne. Un abonnement mensuel, zéro facture de départ, et un interlocuteur qui construit lui-même ce qu’il vous propose.',
   /** Le positionnement, en deux ou trois paragraphes. */
   about: [
-    'Cardona est une agence digitale lyonnaise, à taille humaine. On prend en charge la présence web d’une entreprise de bout en bout : l’image, les textes, le site, le nom de domaine, l’hébergement, les mises à jour, et l’application métier quand le besoin dépasse la vitrine. Pas de commercial, pas de chef de projet qui relaie : vous parlez directement à celui qui construit.',
+    'Hermez est une agence digitale lyonnaise, à taille humaine. On prend en charge la présence web d’une entreprise de bout en bout : l’image, les textes, le site, le nom de domaine, l’hébergement, les mises à jour, et l’application métier quand le besoin dépasse la vitrine. Pas de commercial, pas de chef de projet qui relaie : vous parlez directement à celui qui construit.',
     'Le modèle est volontairement simple. Deux abonnements, deux prix affichés, aucune facture de départ : la conception est étalée dans le mensuel plutôt que réglée d’un bloc. Vous savez ce que le web vous coûte chaque mois, et vous pouvez arrêter quand vous voulez.',
     'Les missions plus lourdes — refonte d’une application existante, audit de sécurité, intégration de l’IA — restent facturées au forfait ou en régie sur les pages service. L’abonnement couvre ce qui vit dans la durée.',
   ],

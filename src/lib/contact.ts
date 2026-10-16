@@ -119,7 +119,7 @@ function brevoConfig() {
   return {
     apiKey,
     to,
-    sender: { email: from, name: process.env.CONTACT_FROM_NAME || 'Agence Cardona' },
+    sender: { email: from, name: process.env.CONTACT_FROM_NAME || 'Agence Hermez' },
     listId: Number(process.env.BREVO_LIST_ID) || null,
     // Seulement pour pointer vers un serveur factice en local (DEPLOY.md).
     baseUrl: process.env.BREVO_API_URL || 'https://api.brevo.com/v3',
@@ -271,21 +271,21 @@ function confirmation(config: BrevoConfig, data: ContactInput) {
   const name = data.name.trim()
   const next = data.callRequested
     ? 'Vous souhaitez un appel découverte : nous revenons vers vous sous deux jours ouvrés pour fixer l’appel, en visio.'
-    : 'Merci pour votre message : l’agence Cardona vous répond sous deux jours ouvrés.'
+    : 'Merci pour votre message : l’agence Hermez vous répond sous deux jours ouvrés.'
   return {
     sender: config.sender,
     to: [{ email: data.email.trim(), name }],
     replyTo: { email: config.to },
-    subject: 'Votre demande à l’agence Cardona',
+    subject: 'Votre demande à l’agence Hermez',
     htmlContent: `<div style="font-family:sans-serif;color:#292524">
 <p>Bonjour ${escapeHtml(name)},</p>
 <p>${next}</p>
 <p>Pour mémoire, votre demande :</p>
 ${callHtml(data)}
 ${answersHtml(data)}
-<p>À très vite,<br>L’agence Cardona</p>
+<p>À très vite,<br>L’agence Hermez</p>
 </div>`,
-    textContent: `Bonjour ${name},\n\n${next}\n\nPour mémoire, votre demande :\n\n${callText(data)}${answersText(data)}\n\nÀ très vite,\nL’agence Cardona`,
+    textContent: `Bonjour ${name},\n\n${next}\n\nPour mémoire, votre demande :\n\n${callText(data)}${answersText(data)}\n\nÀ très vite,\nL’agence Hermez`,
   }
 }
 
