@@ -26,7 +26,7 @@ const pages = [
   ...services.map((service) => servicePath(service.slug)),
   SUBSCRIPTION_PATH,
   '/creation-site-vitrine-lyon',
-  '/qui-suis-je',
+  '/notre-equipe',
   '/contact',
 ]
 

@@ -120,8 +120,8 @@ export const Route = createFileRoute('/')({
 
 /**
  * L'accueil, c'est l'agence : deux abonnements à prix affiché, là où
- * `/services` vend des missions au forfait et `/qui-suis-je` présente le
- * fondateur. Le contenu vit dans `content/agency.ts`.
+ * `/services` vend des missions au forfait et `/notre-equipe` présente
+ * l'équipe. Le contenu vit dans `content/agency.ts`.
  *
  * Le mouvement (halos) est décoratif, en CSS, et entièrement derrière
  * `motion-safe:` ; seule la pile de cartes du hero
@@ -1682,7 +1682,7 @@ function About() {
         </p>
         <p className="mt-2 font-display text-2xl font-bold">{profile.name}</p>
         <p className="mt-1 text-sm text-stone-300">
-          Fondateur · 13 ans de projets web
+          Lead Dev IA · 13 ans de projets web
         </p>
         <p className="mt-5 text-sm leading-relaxed text-stone-300">
           Treize ans aux côtés de grandes marques comme TF1, M6 ou OVH m’ont
@@ -1692,10 +1692,10 @@ function About() {
           construit.
         </p>
         <Link
-          to="/qui-suis-je"
+          to="/notre-equipe"
           className="mt-6 inline-flex rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-stone-900 transition-colors hover:bg-brand-50"
         >
-          Qui suis-je ?
+          Notre équipe
         </Link>
       </aside>
     </section>
@@ -1704,7 +1704,7 @@ function About() {
 
 /**
  * Les librairies publiées par l'agence, chacune vers sa documentation : celles
- * de `projects` qui en ont une. La liste complète est sur `/qui-suis-je`.
+ * de `projects` qui en ont une. 
  */
 function OpenSource() {
   const documented = projects.filter((project) => project.docs)

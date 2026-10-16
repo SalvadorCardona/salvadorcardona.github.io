@@ -35,7 +35,7 @@ const SITE_URL = 'https://hermez.dev'
 /** Les pages fixes ; les articles viennent du sitemap. */
 const REQUIRED_PAGES = [
   '/',
-  '/qui-suis-je',
+  '/notre-equipe',
   '/blog',
   '/contact',
   '/site-internet-abonnement-mensuel',
@@ -51,7 +51,8 @@ const REQUIRED_PAGES = [
 const REDIRECTS = {
   '/rendez-vous': '/contact?appel=1',
   '/agence': '/',
-  '/projets': '/qui-suis-je#projets',
+  '/projets': '/#open-source',
+  '/qui-suis-je': '/notre-equipe',
   '/404': '/',
   '/blog/': '/blog',
   '/services/': '/services',
