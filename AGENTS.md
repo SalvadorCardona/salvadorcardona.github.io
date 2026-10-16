@@ -46,7 +46,7 @@ conteneur Docker déployé sur Dokploy (voir `DEPLOY.md`).
 - **Le reste du contenu est en dur** dans `src/content/` : `profile.ts` pour le
   CV (hors expériences), `services.ts` pour les prestations, `agency.ts` pour
   les abonnements de l'agence Hermez, `team.ts` pour les membres de l'équipe (`/notre-equipe`, la page « À propos »),
-  `references.ts` pour les études de cas (`/references`, écrites à la main
+  `flagships.ts` pour les trois projets phares de l'accueil (versions et dates relevées sur GitHub, à remettre à jour après une release ; rien d'inventé), `references.ts` pour les études de cas (`/references`, écrites à la main
   depuis les expériences Notion : aucun fait qui n'y figure), `legal.ts` pour
   les mentions légales et la politique de confidentialité, `covers.json` pour les illustrations. Pas d'autre CMS, pas de chargement de fichiers Markdown.
 - **Une page service = une entrée dans `services.ts` + une route d'une ligne**

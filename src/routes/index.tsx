@@ -28,6 +28,7 @@ import {
   techSkills,
   works,
 } from '../content/agency'
+import { FLAGSHIPS_CHECKED_AT, flagships } from '../content/flagships'
 import {
   clients,
   links,
@@ -145,6 +146,7 @@ function Home() {
         <Audiences />
         <Expertises />
         <Figures />
+        <Flagships />
         <References />
         <Offers />
         <Method />
@@ -1649,6 +1651,158 @@ function FollowUpScene() {
         <rect x="42" y="26" width="44" height="5" rx="2.5" className="fill-stone-300" />
       </g>
     </Scene>
+  )
+}
+
+/**
+ * Les trois projets phares de l'agence, une carte chacun : ce qu'ils font, ce
+ * qui les distingue, leur pile, leurs liens et leur activité réelle de
+ * publication. Le contenu vit dans `content/flagships.ts`.
+ */
+function Flagships() {
+  return (
+    <section id="projets-phares" className="scroll-mt-24 pt-24 lg:pt-32">
+      <SectionHeading
+        eyebrow="Nos projets phares"
+        title="Trois produits que l’agence a créés, et qu’elle maintient."
+        intro="Ponos, React Resource View et Leadz sont conçus et maintenus par l’agence. Ils sont la preuve de notre savoir-faire."
+      />
+      <ul className="mt-12 space-y-8">
+        {flagships.map((project) => (
+          <li key={project.id}>
+            <article
+              id={project.id}
+              aria-labelledby={`${project.id}-titre`}
+              className="scroll-mt-24 overflow-hidden rounded-[2rem] border border-stone-200 bg-white lg:grid lg:grid-cols-[2fr_3fr]"
+            >
+              <img
+                src={`/projects/${project.brand}/banner.jpg`}
+                alt=""
+                width={1200}
+                height={525}
+                loading="lazy"
+                className="aspect-[21/9] w-full bg-stone-900 object-cover lg:aspect-auto lg:h-full"
+              />
+              <div className="p-6 sm:p-8">
+                <div className="flex items-center gap-4">
+                  <img
+                    src={`/projects/${project.brand}/icon.png`}
+                    alt=""
+                    width={128}
+                    height={128}
+                    loading="lazy"
+                    className="h-14 w-14 shrink-0 rounded-2xl ring-1 ring-stone-200"
+                  />
+                  <div>
+                    <h3
+                      id={`${project.id}-titre`}
+                      className="font-display text-2xl font-bold text-stone-900"
+                    >
+                      {project.name}
+                    </h3>
+                    <p className="text-sm text-stone-600">{project.tagline}</p>
+                  </div>
+                </div>
+                <p className="mt-5 leading-relaxed text-pretty text-stone-600">
+                  {project.summary}
+                </p>
+                <p className="mt-5 text-xs font-semibold tracking-widest text-brand-600 uppercase">
+                  Ce qui le distingue
+                </p>
+                <ul className="mt-2 space-y-2 text-sm leading-relaxed text-stone-600">
+                  {project.highlights.map((highlight) => (
+                    <li key={highlight} className="flex gap-3">
+                      <span
+                        aria-hidden="true"
+                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-500"
+                      />
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+                <ul
+                  aria-label={`Technologies de ${project.name}`}
+                  className="mt-5 flex flex-wrap gap-2"
+                >
+                  {project.stack.map((tech) => (
+                    <li
+                      key={tech}
+                      className="rounded-full bg-stone-100 px-3 py-1 text-xs font-medium text-stone-700"
+                    >
+                      {tech}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-6 border-t border-stone-200 pt-5">
+                  <p className="text-xs font-semibold tracking-widest text-stone-500 uppercase">
+                    Maintenance
+                  </p>
+                  {project.repos.length > 0 ? (
+                    <ul className="mt-2 space-y-1 text-sm text-stone-600">
+                      {project.repos.map((repo) => (
+                        <li key={repo.url}>
+                          <span className="font-semibold text-stone-900">
+                            {repo.label}
+                          </span>{' '}
+                          : {repo.version}, publiée le {repo.releasedAt} ·{' '}
+                          {repo.releases}{' '}
+                          {repo.releases > 1
+                            ? 'releases publiées'
+                            : 'release publiée'}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : null}
+                  {project.privateNote ? (
+                    <p className="mt-2 text-sm text-stone-600">
+                      {project.privateNote}
+                    </p>
+                  ) : null}
+                  {project.repos.length > 0 ? (
+                    <p className="mt-1 text-xs text-stone-500">
+                      Relevé sur GitHub le {FLAGSHIPS_CHECKED_AT}.
+                    </p>
+                  ) : null}
+                </div>
+
+                <div className="mt-6 flex flex-wrap gap-3 text-sm font-semibold">
+                  <a
+                    href={project.site.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-umami-event="projet-phare"
+                    data-umami-event-projet={project.name}
+                    data-umami-event-lien="site"
+                    className="rounded-full bg-brand-600 px-5 py-2.5 text-white transition-colors hover:bg-brand-700"
+                  >
+                    {project.site.label}
+                    <span className="sr-only"> (nouvel onglet)</span>
+                    <span aria-hidden="true"> ↗</span>
+                  </a>
+                  {project.repos.map((repo) => (
+                    <a
+                      key={repo.url}
+                      href={repo.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      data-umami-event="projet-phare"
+                      data-umami-event-projet={project.name}
+                      data-umami-event-lien="github"
+                      className="rounded-full border border-stone-300 px-5 py-2.5 text-stone-900 transition-colors hover:border-brand-300 hover:bg-brand-50"
+                    >
+                      {repo.label}
+                      <span className="sr-only"> sur GitHub (nouvel onglet)</span>
+                      <span aria-hidden="true"> ↗</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </article>
+          </li>
+        ))}
+      </ul>
+    </section>
   )
 }
 
