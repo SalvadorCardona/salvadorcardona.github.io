@@ -182,7 +182,7 @@ export const education: Array<Education> = [
 /**
  * Un projet : son dépôt, et — quand ils existent — le site en ligne et la
  * documentation publiée. Les trois liens alimentent la section projets de
- * `/qui-suis-je`, qui sert de point d'entrée vers tous les dépôts.
+ * l'accueil.
  */
 export type Project = {
   name: string

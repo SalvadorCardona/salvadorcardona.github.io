@@ -15,6 +15,7 @@ import { Route as AgenceRouteImport } from './routes/agence'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CreationSiteVitrineLyonRouteImport } from './routes/creation-site-vitrine-lyon'
 import { Route as HealthzRouteImport } from './routes/healthz'
+import { Route as NotreEquipeRouteImport } from './routes/notre-equipe'
 import { Route as ProjetsRouteImport } from './routes/projets'
 import { Route as QuiSuisJeRouteImport } from './routes/qui-suis-je'
 import { Route as RendezVousRouteImport } from './routes/rendez-vous'
@@ -56,6 +57,11 @@ const CreationSiteVitrineLyonRoute = CreationSiteVitrineLyonRouteImport.update({
 const HealthzRoute = HealthzRouteImport.update({
   id: '/healthz',
   path: '/healthz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotreEquipeRoute = NotreEquipeRouteImport.update({
+  id: '/notre-equipe',
+  path: '/notre-equipe',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjetsRoute = ProjetsRouteImport.update({
@@ -129,6 +135,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/creation-site-vitrine-lyon': typeof CreationSiteVitrineLyonRoute
   '/healthz': typeof HealthzRoute
+  '/notre-equipe': typeof NotreEquipeRoute
   '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
   '/rendez-vous': typeof RendezVousRoute
@@ -149,6 +156,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/creation-site-vitrine-lyon': typeof CreationSiteVitrineLyonRoute
   '/healthz': typeof HealthzRoute
+  '/notre-equipe': typeof NotreEquipeRoute
   '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
   '/rendez-vous': typeof RendezVousRoute
@@ -170,6 +178,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/creation-site-vitrine-lyon': typeof CreationSiteVitrineLyonRoute
   '/healthz': typeof HealthzRoute
+  '/notre-equipe': typeof NotreEquipeRoute
   '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
   '/rendez-vous': typeof RendezVousRoute
@@ -192,6 +201,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/creation-site-vitrine-lyon'
     | '/healthz'
+    | '/notre-equipe'
     | '/projets'
     | '/qui-suis-je'
     | '/rendez-vous'
@@ -212,6 +222,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/creation-site-vitrine-lyon'
     | '/healthz'
+    | '/notre-equipe'
     | '/projets'
     | '/qui-suis-je'
     | '/rendez-vous'
@@ -232,6 +243,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/creation-site-vitrine-lyon'
     | '/healthz'
+    | '/notre-equipe'
     | '/projets'
     | '/qui-suis-je'
     | '/rendez-vous'
@@ -253,6 +265,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   CreationSiteVitrineLyonRoute: typeof CreationSiteVitrineLyonRoute
   HealthzRoute: typeof HealthzRoute
+  NotreEquipeRoute: typeof NotreEquipeRoute
   ProjetsRoute: typeof ProjetsRoute
   QuiSuisJeRoute: typeof QuiSuisJeRoute
   RendezVousRoute: typeof RendezVousRoute
@@ -309,6 +322,13 @@ declare module '@tanstack/react-router' {
       path: '/healthz'
       fullPath: '/healthz'
       preLoaderRoute: typeof HealthzRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notre-equipe': {
+      id: '/notre-equipe'
+      path: '/notre-equipe'
+      fullPath: '/notre-equipe'
+      preLoaderRoute: typeof NotreEquipeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projets': {
@@ -405,6 +425,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   CreationSiteVitrineLyonRoute: CreationSiteVitrineLyonRoute,
   HealthzRoute: HealthzRoute,
+  NotreEquipeRoute: NotreEquipeRoute,
   ProjetsRoute: ProjetsRoute,
   QuiSuisJeRoute: QuiSuisJeRoute,
   RendezVousRoute: RendezVousRoute,

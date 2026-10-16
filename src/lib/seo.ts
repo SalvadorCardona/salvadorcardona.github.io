@@ -10,7 +10,7 @@ import type { AgencyOffer } from '../content/agency'
 export const SITE_URL = 'https://hermez.dev'
 export const SITE_NAME = 'Agence Hermez'
 
-/** Le fondateur, qui signe `/qui-suis-je` et les articles. */
+/** L'auteur des articles du blog. */
 export const AUTHOR_NAME = 'Salvador Cardona'
 
 /** Identifiant stable de l'auteur dans les données structurées. */
@@ -50,7 +50,7 @@ type SeoInput = {
   image?: ShareImage
   /** Données structurées schema.org, un objet par bloc `<script>`. */
   jsonLd?: Array<Record<string, unknown>>
-  /** Qui signe le titre : l'agence, sauf les pages écrites par le fondateur. */
+  /** Qui signe le titre : l'agence, sauf les pages d'un auteur précis. */
   signature?: string
 }
 
@@ -120,7 +120,7 @@ export function personJsonLd() {
     '@id': PERSON_ID,
     name: AUTHOR_NAME,
     url: SITE_URL,
-    jobTitle: 'Fondateur de l’agence Hermez, Lead Dev IA',
+    jobTitle: 'Lead Dev IA, agence Hermez',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Lyon',

@@ -3,6 +3,7 @@ import { Link, createFileRoute } from '@tanstack/react-router'
 import { CallToAction } from '../../components/ServicePage'
 import { ServiceCard } from '../../components/ServiceCard'
 import { ServiceIcon } from '../../components/ServiceIcon'
+import { agency } from '../../content/agency'
 import { interventions, servicePath, services } from '../../content/services'
 import {
   SITE_URL,
@@ -95,6 +96,12 @@ function ServicesIndex() {
           ))}
         </div>
       </section>
+
+      <p className="mt-6 text-sm">
+        <Link to="/" hash="forfaits" className="font-medium text-brand-600 hover:underline">
+          {agency.teaser} →
+        </Link>
+      </p>
 
       <section
         id="interventions"
