@@ -52,7 +52,7 @@ export const vitrineLyon = {
     {
       question: 'Vous déplacez-vous ?',
       answer:
-        'Le premier échange, d’une heure et gratuit, peut se tenir à Lyon ou dans la métropole si vous préférez nous rencontrer, ou par visioconférence. Le reste du projet se déroule à distance : maquette, mise en ligne et modifications se font par mail, sans que vous ayez à vous déplacer.',
+        'Le premier échange peut se tenir à Lyon ou dans la métropole si vous préférez nous rencontrer, ou par visioconférence. Le reste du projet se déroule à distance : maquette, mise en ligne et modifications se font par mail, sans que vous ayez à vous déplacer.',
     },
     {
       question: 'Et si je suis à Villeurbanne, à Caluire ou ailleurs dans la métropole ?',

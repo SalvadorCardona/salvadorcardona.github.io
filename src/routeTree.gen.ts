@@ -12,12 +12,15 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as R404RouteImport } from './routes/404'
 import { Route as AgenceRouteImport } from './routes/agence'
+import { Route as ConfidentialiteRouteImport } from './routes/confidentialite'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CreationSiteVitrineLyonRouteImport } from './routes/creation-site-vitrine-lyon'
 import { Route as HealthzRouteImport } from './routes/healthz'
+import { Route as MentionsLegalesRouteImport } from './routes/mentions-legales'
 import { Route as NotreEquipeRouteImport } from './routes/notre-equipe'
 import { Route as ProjetsRouteImport } from './routes/projets'
 import { Route as QuiSuisJeRouteImport } from './routes/qui-suis-je'
+import { Route as ReferencesRouteImport } from './routes/references'
 import { Route as RendezVousRouteImport } from './routes/rendez-vous'
 import { Route as SiteInternetAbonnementMensuelRouteImport } from './routes/site-internet-abonnement-mensuel'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -44,6 +47,11 @@ const AgenceRoute = AgenceRouteImport.update({
   path: '/agence',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ConfidentialiteRoute = ConfidentialiteRouteImport.update({
+  id: '/confidentialite',
+  path: '/confidentialite',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -59,6 +67,11 @@ const HealthzRoute = HealthzRouteImport.update({
   path: '/healthz',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MentionsLegalesRoute = MentionsLegalesRouteImport.update({
+  id: '/mentions-legales',
+  path: '/mentions-legales',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NotreEquipeRoute = NotreEquipeRouteImport.update({
   id: '/notre-equipe',
   path: '/notre-equipe',
@@ -72,6 +85,11 @@ const ProjetsRoute = ProjetsRouteImport.update({
 const QuiSuisJeRoute = QuiSuisJeRouteImport.update({
   id: '/qui-suis-je',
   path: '/qui-suis-je',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReferencesRoute = ReferencesRouteImport.update({
+  id: '/references',
+  path: '/references',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RendezVousRoute = RendezVousRouteImport.update({
@@ -132,12 +150,15 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/agence': typeof AgenceRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/creation-site-vitrine-lyon': typeof CreationSiteVitrineLyonRoute
   '/healthz': typeof HealthzRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/notre-equipe': typeof NotreEquipeRoute
   '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
+  '/references': typeof ReferencesRoute
   '/rendez-vous': typeof RendezVousRoute
   '/site-internet-abonnement-mensuel': typeof SiteInternetAbonnementMensuelRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -153,12 +174,15 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/agence': typeof AgenceRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/creation-site-vitrine-lyon': typeof CreationSiteVitrineLyonRoute
   '/healthz': typeof HealthzRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/notre-equipe': typeof NotreEquipeRoute
   '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
+  '/references': typeof ReferencesRoute
   '/rendez-vous': typeof RendezVousRoute
   '/site-internet-abonnement-mensuel': typeof SiteInternetAbonnementMensuelRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -175,12 +199,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/404': typeof R404Route
   '/agence': typeof AgenceRoute
+  '/confidentialite': typeof ConfidentialiteRoute
   '/contact': typeof ContactRoute
   '/creation-site-vitrine-lyon': typeof CreationSiteVitrineLyonRoute
   '/healthz': typeof HealthzRoute
+  '/mentions-legales': typeof MentionsLegalesRoute
   '/notre-equipe': typeof NotreEquipeRoute
   '/projets': typeof ProjetsRoute
   '/qui-suis-je': typeof QuiSuisJeRoute
+  '/references': typeof ReferencesRoute
   '/rendez-vous': typeof RendezVousRoute
   '/site-internet-abonnement-mensuel': typeof SiteInternetAbonnementMensuelRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -198,12 +225,15 @@ export interface FileRouteTypes {
     | '/'
     | '/404'
     | '/agence'
+    | '/confidentialite'
     | '/contact'
     | '/creation-site-vitrine-lyon'
     | '/healthz'
+    | '/mentions-legales'
     | '/notre-equipe'
     | '/projets'
     | '/qui-suis-je'
+    | '/references'
     | '/rendez-vous'
     | '/site-internet-abonnement-mensuel'
     | '/sitemap.xml'
@@ -219,12 +249,15 @@ export interface FileRouteTypes {
     | '/'
     | '/404'
     | '/agence'
+    | '/confidentialite'
     | '/contact'
     | '/creation-site-vitrine-lyon'
     | '/healthz'
+    | '/mentions-legales'
     | '/notre-equipe'
     | '/projets'
     | '/qui-suis-je'
+    | '/references'
     | '/rendez-vous'
     | '/site-internet-abonnement-mensuel'
     | '/sitemap.xml'
@@ -240,12 +273,15 @@ export interface FileRouteTypes {
     | '/'
     | '/404'
     | '/agence'
+    | '/confidentialite'
     | '/contact'
     | '/creation-site-vitrine-lyon'
     | '/healthz'
+    | '/mentions-legales'
     | '/notre-equipe'
     | '/projets'
     | '/qui-suis-je'
+    | '/references'
     | '/rendez-vous'
     | '/site-internet-abonnement-mensuel'
     | '/sitemap.xml'
@@ -262,12 +298,15 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   R404Route: typeof R404Route
   AgenceRoute: typeof AgenceRoute
+  ConfidentialiteRoute: typeof ConfidentialiteRoute
   ContactRoute: typeof ContactRoute
   CreationSiteVitrineLyonRoute: typeof CreationSiteVitrineLyonRoute
   HealthzRoute: typeof HealthzRoute
+  MentionsLegalesRoute: typeof MentionsLegalesRoute
   NotreEquipeRoute: typeof NotreEquipeRoute
   ProjetsRoute: typeof ProjetsRoute
   QuiSuisJeRoute: typeof QuiSuisJeRoute
+  ReferencesRoute: typeof ReferencesRoute
   RendezVousRoute: typeof RendezVousRoute
   SiteInternetAbonnementMensuelRoute: typeof SiteInternetAbonnementMensuelRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -303,6 +342,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AgenceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/confidentialite': {
+      id: '/confidentialite'
+      path: '/confidentialite'
+      fullPath: '/confidentialite'
+      preLoaderRoute: typeof ConfidentialiteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -324,6 +370,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HealthzRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mentions-legales': {
+      id: '/mentions-legales'
+      path: '/mentions-legales'
+      fullPath: '/mentions-legales'
+      preLoaderRoute: typeof MentionsLegalesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/notre-equipe': {
       id: '/notre-equipe'
       path: '/notre-equipe'
@@ -343,6 +396,13 @@ declare module '@tanstack/react-router' {
       path: '/qui-suis-je'
       fullPath: '/qui-suis-je'
       preLoaderRoute: typeof QuiSuisJeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/references': {
+      id: '/references'
+      path: '/references'
+      fullPath: '/references'
+      preLoaderRoute: typeof ReferencesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/rendez-vous': {
@@ -422,12 +482,15 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   R404Route: R404Route,
   AgenceRoute: AgenceRoute,
+  ConfidentialiteRoute: ConfidentialiteRoute,
   ContactRoute: ContactRoute,
   CreationSiteVitrineLyonRoute: CreationSiteVitrineLyonRoute,
   HealthzRoute: HealthzRoute,
+  MentionsLegalesRoute: MentionsLegalesRoute,
   NotreEquipeRoute: NotreEquipeRoute,
   ProjetsRoute: ProjetsRoute,
   QuiSuisJeRoute: QuiSuisJeRoute,
+  ReferencesRoute: ReferencesRoute,
   RendezVousRoute: RendezVousRoute,
   SiteInternetAbonnementMensuelRoute: SiteInternetAbonnementMensuelRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,

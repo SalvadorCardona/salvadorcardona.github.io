@@ -223,13 +223,13 @@ function answers(data: ContactInput) {
 function callHtml(data: ContactInput) {
   if (!data.callRequested) return ''
   const availability = data.availability.trim() || 'Non précisées'
-  return `<p style="margin:16px 0;padding:12px 16px;background:#fff7ed;border:1px solid #fdba74;border-radius:8px"><strong>Appel découverte demandé</strong> (visio, gratuit)<br>Disponibilités : ${escapeHtml(availability)}</p>`
+  return `<p style="margin:16px 0;padding:12px 16px;background:#fff7ed;border:1px solid #fdba74;border-radius:8px"><strong>Appel découverte demandé</strong> (visio)<br>Disponibilités : ${escapeHtml(availability)}</p>`
 }
 
 function callText(data: ContactInput) {
   if (!data.callRequested) return ''
   const availability = data.availability.trim() || 'Non précisées'
-  return `APPEL DÉCOUVERTE DEMANDÉ (visio, gratuit)\nDisponibilités : ${availability}\n\n`
+  return `APPEL DÉCOUVERTE DEMANDÉ (visio)\nDisponibilités : ${availability}\n\n`
 }
 
 function answersHtml(data: ContactInput) {

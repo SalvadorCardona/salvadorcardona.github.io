@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute } from '@tanstack/react-router'
 
 import type { AgencyOffer } from '../content/agency'
 import { agency, offers } from '../content/agency'
@@ -367,7 +367,7 @@ function Contact() {
                   className="mt-0.5 h-5 w-5 shrink-0 accent-brand-500"
                 />
                 <span className="text-sm font-semibold text-stone-900">
-                  Je souhaite un appel découverte (visio, gratuit)
+                  Je souhaite un appel découverte (visio)
                 </span>
               </label>
               {callRequested && (
@@ -451,8 +451,8 @@ function Contact() {
 
             <p className="mt-4 text-sm leading-relaxed text-stone-600">
               <span className="font-semibold text-stone-900">Et ensuite ?</span>{' '}
-              L’agence vous répond sous deux jours ouvrés, et le premier appel
-              est offert.
+              L’agence vous répond sous deux jours ouvrés, avec une
+              proposition d’appel si votre projet s’y prête.
             </p>
 
             <p className="mt-4 text-xs leading-relaxed text-stone-500">
@@ -464,6 +464,10 @@ function Contact() {
               <a href={`mailto:${links.email}`} className="underline">
                 {links.email}
               </a>
+              . Le détail est dans la{' '}
+              <Link to="/confidentialite" className="underline">
+                politique de confidentialité
+              </Link>
               .
             </p>
           </form>

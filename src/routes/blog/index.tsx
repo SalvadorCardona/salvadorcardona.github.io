@@ -26,7 +26,7 @@ function BlogIndex() {
         Blog
       </h1>
       <p className="mt-4 text-lg text-stone-600">
-        Ce que j’apprends en construisant : architecture front, contrats d’API,
+        Ce que nous apprenons en construisant : architecture front, contrats d’API,
         agents et outillage. {sortedPosts.length} article
         {sortedPosts.length > 1 ? 's' : ''}.
       </p>

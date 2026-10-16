@@ -50,8 +50,6 @@ type SeoInput = {
   image?: ShareImage
   /** Données structurées schema.org, un objet par bloc `<script>`. */
   jsonLd?: Array<Record<string, unknown>>
-  /** Qui signe le titre : l'agence, sauf les pages d'un auteur précis. */
-  signature?: string
 }
 
 export function seo({
@@ -62,10 +60,9 @@ export function seo({
   publishedTime,
   image,
   jsonLd = [],
-  signature = SITE_NAME,
 }: SeoInput) {
   const url = `${SITE_URL}${path}`
-  const fullTitle = path === '/' ? title : `${title} — ${signature}`
+  const fullTitle = path === '/' ? title : `${title} — ${SITE_NAME}`
 
   const meta = [
     { title: fullTitle },

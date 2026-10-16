@@ -27,7 +27,10 @@ const pages = [
   SUBSCRIPTION_PATH,
   '/creation-site-vitrine-lyon',
   '/notre-equipe',
+  '/references',
   '/contact',
+  '/mentions-legales',
+  '/confidentialite',
 ]
 
 function entry(path: string, lastmod: string) {

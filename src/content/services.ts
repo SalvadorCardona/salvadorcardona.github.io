@@ -73,18 +73,18 @@ export const services: Array<Service> = [
     name: 'Développement web',
     title: 'Développement web sur mesure : Symfony, React et TypeScript',
     description:
-      'Développeur web freelance à Lyon : applications sur mesure, API REST Symfony / API Platform, interfaces React et TypeScript. Treize ans d’expérience.',
+      'Agence de développement web à Lyon : applications sur mesure, API REST Symfony / API Platform, interfaces React et TypeScript. Treize ans d’expérience.',
     excerpt:
       'Des applications web de bout en bout : API Symfony structurées, interfaces React typées, et l’outillage qui va avec.',
     icon: 'code',
     illustration: 'web-development',
     projectType: 'application',
     lead:
-      'Une application web sur mesure, du contrat d’API à l’interface, que votre équipe pourra reprendre et faire évoluer sans moi.',
+      'Une application web sur mesure, du contrat d’API à l’interface, que votre équipe pourra reprendre et faire évoluer sans nous.',
     context: [
       'Treize ans à construire des applications pour des gens qui vendent quelque chose de compliqué : des marketplaces B2B et B2C, une plateforme de streaming grand public, une application de soin animalier. À chaque fois le même travail de fond : une API qui décrit clairement la donnée, une interface qui la consomme simplement, et des tests qui permettent de modifier le code en confiance.',
       'Symfony et API Platform côté serveur, React et TypeScript côté navigateur, JSON-LD entre les deux. Le front génère ses types, ses formulaires et ses vues depuis le contrat d’API : moins de code écrit à la main, et les deux côtés ne divergent pas.',
-      'Je prends aussi bien un projet à zéro qu’une application existante à faire évoluer : reprise de code, montée de version Symfony ou React, refonte d’une API, ajout d’un module.',
+      'Nous prenons aussi bien un projet à zéro qu’une application existante à faire évoluer : reprise de code, montée de version Symfony ou React, refonte d’une API, ajout d’un module.',
     ],
     forWho: [
       'Une start-up ou une PME qui lance un produit web et veut un socle technique propre dès le départ.',
@@ -96,7 +96,7 @@ export const services: Array<Service> = [
       {
         title: 'Cadrage et architecture',
         description:
-          'On part du métier : entités, règles, parcours. J’en tire un modèle de données et un découpage clair (Clean Architecture, CQRS quand ça se justifie).',
+          'On part du métier : entités, règles, parcours. Nous en tirons un modèle de données et un découpage clair (Clean Architecture, CQRS quand ça se justifie).',
       },
       {
         title: 'API REST sous Symfony et API Platform',
@@ -106,7 +106,7 @@ export const services: Array<Service> = [
       {
         title: 'Interfaces React et TypeScript',
         description:
-          'Des SPA typées de bout en bout, générées depuis le schéma de l’API : TanStack Router et Query, Tailwind, shadcn/ui. Ou Vue et Angular si c’est déjà votre stack.',
+          'Des SPA typées de bout en bout, générées depuis le schéma de l’API : TanStack Router et Query, Tailwind, shadcn/ui.',
       },
       {
         title: 'Tests, CI et déploiement',
@@ -123,7 +123,7 @@ export const services: Array<Service> = [
       {
         title: 'Un premier échange',
         description:
-          'Une heure pour comprendre le besoin, l’existant et les contraintes. Gratuit et sans engagement.',
+          'Un échange pour comprendre le besoin, l’existant et les contraintes, sans engagement.',
       },
       {
         title: 'Une proposition écrite',
@@ -167,7 +167,7 @@ export const services: Array<Service> = [
       {
         question: 'Travaillez-vous seulement en Symfony et React ?',
         answer:
-          'C’est la stack que je maîtrise le mieux et que je recommande pour un projet neuf. J’ai aussi livré des applications en Vue, Nuxt, Angular, Next.js et Sylius, et j’interviens volontiers sur un existant dans ces technologies.',
+          'Symfony et API Platform sont notre expertise principale, avec React et TypeScript côté interface : c’est la stack que nous recommandons pour un projet neuf. Nous intervenons aussi sur un existant Sylius ou Next.js ; pour une autre technologie, nous disons au premier échange si nous sommes les bons interlocuteurs.',
       },
       {
         question: 'Comment facturez-vous ?',
@@ -177,12 +177,12 @@ export const services: Array<Service> = [
       {
         question: 'Pouvez-vous reprendre une application existante ?',
         answer:
-          'Oui. Je commence en général par un audit court pour mesurer l’état du code, des tests et des dépendances, puis on décide ensemble de ce qu’on corrige, de ce qu’on refait et de ce qu’on laisse.',
+          'Oui. Nous commençons en général par un audit court pour mesurer l’état du code, des tests et des dépendances, puis on décide ensemble de ce qu’on corrige, de ce qu’on refait et de ce qu’on laisse.',
       },
       {
         question: 'Intervenez-vous à distance ?',
         answer:
-          'Oui, la plupart de mes missions se font à distance, avec des points réguliers. Je suis à Lyon et je me déplace pour les phases de cadrage ou les ateliers.',
+          'Oui, la plupart de nos missions se font à distance, avec des points réguliers. L’agence est à Lyon et se déplace pour les phases de cadrage ou les ateliers.',
       },
     ],
     relatedPosts: [
@@ -204,9 +204,9 @@ export const services: Array<Service> = [
     lead:
       'Savoir où en est votre application avant qu’un incident, un client ou un investisseur ne pose la question.',
     context: [
-      'La plupart des applications web que j’ai reprises en treize ans avaient les mêmes faiblesses : une authentification bricolée, des droits vérifiés côté interface mais pas côté API, des dépendances jamais mises à jour, des secrets dans le dépôt, un Docker de production qui tourne en root. Rien d’exotique, mais rien que l’équipe n’avait le temps de regarder.',
-      'L’audit que je propose est celui d’un développeur qui construit et exploite ce type d’application au quotidien : je lis le code, j’exécute l’application, je teste l’API comme le ferait quelqu’un de mal intentionné, et je restitue ce que j’ai trouvé par ordre d’urgence, avec la correction à faire pour chaque point.',
-      'Pour un test d’intrusion certifié ou une mise en conformité réglementaire, je vous oriente vers un prestataire qualifié. Mon audit est le regard technique complet qui précède, et qui souvent suffit.',
+      'La plupart des applications web que nous avons reprises en treize ans avaient les mêmes faiblesses : une authentification bricolée, des droits vérifiés côté interface mais pas côté API, des dépendances jamais mises à jour, des secrets dans le dépôt, un Docker de production qui tourne en root. Rien d’exotique, mais rien que l’équipe n’avait le temps de regarder.',
+      'L’audit que nous proposons est celui de développeurs qui construisent et exploitent ce type d’application au quotidien : nous lisons le code, exécutons l’application, testons l’API comme le ferait quelqu’un de mal intentionné, et restituons ce que nous avons trouvé par ordre d’urgence, avec la correction à faire pour chaque point.',
+      'Pour un test d’intrusion certifié ou une mise en conformité réglementaire, nous vous orientons vers un prestataire qualifié. Notre audit est le regard technique complet qui précède, et qui souvent suffit.',
     ],
     forWho: [
       'Une application en production qui n’a jamais été relue par quelqu’un d’extérieur à l’équipe.',
@@ -260,7 +260,7 @@ export const services: Array<Service> = [
       {
         title: 'Correction, si vous le souhaitez',
         description:
-          'Je peux corriger moi-même les points critiques ou accompagner l’équipe qui le fait, puis vérifier le résultat.',
+          'Nous pouvons corriger nous-mêmes les points critiques ou accompagner l’équipe qui le fait, puis vérifier le résultat.',
       },
     ],
     deliverables: [
@@ -287,7 +287,7 @@ export const services: Array<Service> = [
       {
         question: 'Est-ce un test d’intrusion (pentest) ?',
         answer:
-          'Non. Un pentest est mené en boîte noire par un prestataire spécialisé, souvent qualifié. Mon audit se fait avec accès au code et à l’application, il est plus large (qualité, dette, infrastructure) et il précède utilement un pentest, dont il réduit le nombre de constats.',
+          'Non. Un pentest est mené en boîte noire par un prestataire spécialisé, souvent qualifié. Notre audit se fait avec accès au code et à l’application, il est plus large (qualité, dette, infrastructure) et il précède utilement un pentest, dont il réduit le nombre de constats.',
       },
       {
         question: 'Combien de temps dure un audit ?',
@@ -297,12 +297,12 @@ export const services: Array<Service> = [
       {
         question: 'Que se passe-t-il avec les informations que je vous confie ?',
         answer:
-          'Un accord de confidentialité est signé avant tout accès. Je travaille sur un environnement de test, jamais sur vos données de production, et je supprime les accès à la fin de la mission.',
+          'Un accord de confidentialité est signé avant tout accès. Nous travaillons sur un environnement de test, jamais sur vos données de production, et nous supprimons les accès à la fin de la mission.',
       },
       {
         question: 'Pouvez-vous auditer une application que vous n’avez pas écrite, dans une autre stack ?',
         answer:
-          'Oui pour PHP (Symfony, Laravel, WordPress), Node.js et les fronts JavaScript. Pour une autre stack, je le dis au cadrage si ce n’est pas raisonnable.',
+          'Oui pour PHP (Symfony, Laravel, WordPress), Node.js et les fronts JavaScript. Pour une autre stack, nous le disons au cadrage si ce n’est pas raisonnable.',
       },
     ],
     relatedPosts: ['json-ld-le-contrat-que-le-front-attendait'],
@@ -321,9 +321,9 @@ export const services: Array<Service> = [
     lead:
       'Faire entrer un modèle de langage dans un outil existant sans casser ce qui marche pour les humains.',
     context: [
-      'Une API bien conçue est déjà une API pilotable par un agent. C’est ce que m’ont appris deux ans à brancher des modèles de langage sur de vraies applications : chez Animalink, des agents n8n qui passent par l’API Symfony avec les mêmes droits qu’un utilisateur, de l’analyse documentaire avec Mistral, un chatbot produit. Sur mon temps libre, des outils publics comme ticket-runner, qui joue un ticket Notion dans une session d’agent et en sort une pull request.',
-      'Le travail intéressant n’est pas dans le prompt. Il est dans ce qui l’entoure : quelles données le modèle voit, ce qu’il a le droit de faire, comment on vérifie sa sortie, ce qui se passe quand il se trompe, et combien ça coûte par appel. C’est du travail de développeur, et c’est ce que je fais.',
-      'Je choisis le modèle en fonction du besoin et de vos contraintes : API hébergée (Claude, Mistral, OpenRouter) quand la qualité prime, modèle local avec Ollama quand la donnée ne doit pas sortir.',
+      'Une API bien conçue est déjà une API pilotable par un agent. C’est ce que nous ont appris deux ans à brancher des modèles de langage sur de vraies applications : chez Animalink, des agents n8n qui passent par l’API Symfony avec les mêmes droits qu’un utilisateur, de l’analyse documentaire avec Mistral, un chatbot produit. En open source, des outils publics comme Ponos, qui joue un ticket Notion dans une session d’agent et en sort une pull request.',
+      'Le travail intéressant n’est pas dans le prompt. Il est dans ce qui l’entoure : quelles données le modèle voit, ce qu’il a le droit de faire, comment on vérifie sa sortie, ce qui se passe quand il se trompe, et combien ça coûte par appel. C’est du travail de développeur, et c’est notre métier.',
+      'Nous choisissons le modèle en fonction du besoin et de vos contraintes : API hébergée (Claude, Mistral, OpenRouter) quand la qualité prime, modèle local avec Ollama quand la donnée ne doit pas sortir.',
     ],
     forWho: [
       'Une équipe qui répète chaque jour une tâche de lecture, de tri ou de rédaction que l’IA peut faire à sa place, sous contrôle.',
@@ -382,7 +382,7 @@ export const services: Array<Service> = [
       {
         title: 'Transmission et formation',
         description:
-          'Une formation à la mesure de l’équipe : elle sait relire les prompts, surveiller les coûts et faire évoluer le flux sans moi.',
+          'Une formation à la mesure de l’équipe : elle sait relire les prompts, surveiller les coûts et faire évoluer le flux sans nous.',
       },
     ],
     deliverables: [
@@ -448,9 +448,9 @@ export const services: Array<Service> = [
     lead:
       'Des développeurs et des équipes métier qui repartent en sachant se servir de l’IA sur leur propre travail, pas seulement en ayant vu une démonstration.',
     context: [
-      'Les outils d’IA sont entrés dans les équipes plus vite que la façon de s’en servir. Un assistant de code mal utilisé produit du code que personne ne relit ; un modèle de langage branché sans garde-fou sur une API fait ce qu’on ne lui a pas demandé. La formation que je propose part de ces usages concrets, pas d’une présentation générale de l’IA.',
-      'J’enseigne ce que je pratique : chez Animalink, des agents n8n branchés sur l’API Symfony, de l’analyse documentaire avec Mistral, un chatbot produit ; sur mon temps libre, des outils publics comme ticket-runner, qui fait jouer un ticket Notion par Claude Code jusqu’à la pull request, ou Whisper Desk, une dictée vocale hors ligne. Les exercices viennent de là, et de vos propres outils.',
-      'Le programme se compose à partir de modules, selon le public : des développeurs qui veulent intégrer un modèle dans leur code, ou des équipes métier qui veulent automatiser une tâche sans écrire d’application. J’interviens aussi pour le compte d’un organisme de formation, sur un module de son programme ou sur un module que nous construisons ensemble.',
+      'Les outils d’IA sont entrés dans les équipes plus vite que la façon de s’en servir. Un assistant de code mal utilisé produit du code que personne ne relit ; un modèle de langage branché sans garde-fou sur une API fait ce qu’on ne lui a pas demandé. La formation que nous proposons part de ces usages concrets, pas d’une présentation générale de l’IA.',
+      'Nous enseignons ce que nous pratiquons : chez Animalink, des agents n8n branchés sur l’API Symfony, de l’analyse documentaire avec Mistral, un chatbot produit ; en open source, des outils publics comme Ponos, qui fait jouer un ticket Notion par Claude Code jusqu’à la pull request, ou Whisper Desk, une dictée vocale hors ligne. Les exercices viennent de là, et de vos propres outils.',
+      'Le programme se compose à partir de modules, selon le public : des développeurs qui veulent intégrer un modèle dans leur code, ou des équipes métier qui veulent automatiser une tâche sans écrire d’application. Nous intervenons aussi pour le compte d’un organisme de formation, sur un module de son programme ou sur un module que nous construisons ensemble.',
     ],
     forWho: [
       'Une équipe de développement qui utilise déjà un assistant de code, chacun à sa manière, et veut des pratiques communes : contexte, relecture, sécurité.',
@@ -494,7 +494,7 @@ export const services: Array<Service> = [
       {
         title: 'Un premier échange',
         description:
-          'Une heure pour connaître le public, son niveau, ses outils et ce qu’il doit savoir faire à la fin. Gratuit et sans engagement.',
+          'Un échange pour connaître le public, son niveau, ses outils et ce qu’il doit savoir faire à la fin, sans engagement.',
       },
       {
         title: 'Un programme écrit',
@@ -594,6 +594,22 @@ export const interventions: Array<Intervention> = [
       'Relier vos outils avec n8n, ajouter un agent là où une tâche répétitive coûte du temps, exposer vos API à des modèles via MCP.',
     icon: 'workflow',
     service: 'integration-ia',
+  },
+  {
+    id: 'devops',
+    name: 'DevOps et Docker',
+    excerpt:
+      'Environnements Docker reproductibles, intégration continue GitHub Actions, déploiement et infrastructure décrite en Terraform.',
+    icon: 'workflow',
+    service: 'developpement-web',
+  },
+  {
+    id: 'facturation-electronique',
+    name: 'Facturation électronique',
+    excerpt:
+      'Préparer votre application à la facturation électronique obligatoire : factures Factur-X, raccordement par API à la plateforme agréée de votre choix, suivi des statuts.',
+    icon: 'api',
+    service: 'developpement-web',
   },
   {
     id: 'conseil',
