@@ -143,7 +143,7 @@ async function main() {
 
   // Le run réussit aussi quand Notion n'avait rien de neuf : son journal, plus
   // haut, dit lequel des deux s'est produit.
-  console.log('[posts:publish] Terminé. Le site : https://cardona.digital')
+  console.log('[posts:publish] Terminé. Le site : https://hermez.dev')
 }
 
 main().catch((error) => {

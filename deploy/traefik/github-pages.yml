@@ -1,9 +1,11 @@
-# Sous-sites GitHub Pages servis sous cardona.digital/<projet>/.
+# Sous-sites GitHub Pages servis sous hermez.dev/<projet>/.
 #
 # Une fois le domaine sur Dokploy, Traefik renvoie ces chemins vers
 # salvadorcardona.github.io/<projet>/, en conservant le chemin complet :
 # /whisper-desk/assets/app.js → https://salvadorcardona.github.io/whisper-desk/assets/app.js.
-# Le reste de cardona.digital va à l'application Dokploy du site.
+# Le reste de hermez.dev va à l'application Dokploy du site. Sur
+# cardona.digital, ces chemins suivent la redirection 301 de tout le domaine
+# vers hermez.dev (cardona-redirect.yml), puis arrivent ici.
 #
 # À déposer dans le dossier de configuration dynamique de Traefik sur le
 # serveur Dokploy (/etc/dokploy/traefik/dynamic/github-pages.yml), à la main ou
@@ -12,7 +14,7 @@
 # PRÉREQUIS : retirer le domaine personnalisé du dépôt
 # salvadorcardona.github.io (Settings → Pages → Custom domain). Tant qu'il y
 # est, GitHub répond à salvadorcardona.github.io/<projet>/ par un 301 vers
-# cardona.digital/<projet>/, qui repasse par ce proxy : boucle de redirection.
+# hermez.dev/<projet>/, qui repasse par ce proxy : boucle de redirection.
 #
 # Sous-chemins recensés le 2026-09-30 (dépôts SalvadorCardona avec Pages
 # actif, tous en 200 sur cardona.digital) :
@@ -36,7 +38,7 @@ http:
       entryPoints:
         - websecure
       rule: >-
-        Host(`cardona.digital`) && (
+        Host(`hermez.dev`) && (
         PathPrefix(`/adam/`) ||
         PathPrefix(`/adam-eve/`) ||
         PathPrefix(`/CoookingPubSub/`) ||
@@ -53,12 +55,12 @@ http:
         certResolver: letsencrypt
 
     # Sans slash final, Pages répondrait par un 301 vers sa propre adresse
-    # (salvadorcardona.github.io) : on ajoute le slash ici, sur cardona.digital.
+    # (salvadorcardona.github.io) : on ajoute le slash ici, sur hermez.dev.
     github-pages-slash:
       entryPoints:
         - websecure
       rule: >-
-        Host(`cardona.digital`) && (
+        Host(`hermez.dev`) && (
         Path(`/adam`) ||
         Path(`/adam-eve`) ||
         Path(`/CoookingPubSub`) ||
@@ -78,13 +80,13 @@ http:
 
     # Idem pour une page sous un sous-site (/react-resource-view/docs/form) : sans
     # slash final, Pages répond par un 301 vers salvadorcardona.github.io et le
-    # visiteur quitte cardona.digital. Seuls /react-resource-view/ et ses pages
+    # visiteur quitte hermez.dev. Seuls /react-resource-view/ et ses pages
     # sont concernés ; un fichier (dernier segment avec un point) est servi tel quel.
     react-resource-view-page-slash:
       entryPoints:
         - websecure
       rule: >-
-        Host(`cardona.digital`) &&
+        Host(`hermez.dev`) &&
         PathRegexp(`^/react-resource-view/([^/]+/)*[^/.]+$`)
       priority: 1000
       middlewares:
@@ -101,7 +103,7 @@ http:
       entryPoints:
         - websecure
       rule: >-
-        Host(`cardona.digital`) && (
+        Host(`hermez.dev`) && (
         Path(`/ponos`) ||
         PathPrefix(`/ponos/`) ||
         Path(`/ticket-runner`) ||
@@ -120,7 +122,7 @@ http:
       entryPoints:
         - websecure
       rule: >-
-        Host(`cardona.digital`) && (
+        Host(`hermez.dev`) && (
         Path(`/mobile-factory`) ||
         PathPrefix(`/mobile-factory/`))
       priority: 1000
@@ -134,7 +136,7 @@ http:
     mobile-factory-to-adam:
       redirectRegex:
         regex: ^https?://[^/]+/mobile-factory/?([^?]*)(\?.*)?$
-        replacement: https://cardona.digital/adam/${1}${2}
+        replacement: https://hermez.dev/adam/${1}${2}
         permanent: true
 
     ponos-to-the-ponos-app:
@@ -159,7 +161,7 @@ http:
     github-pages:
       loadBalancer:
         # GitHub sert le site d'après l'en-tête Host : il doit recevoir
-        # salvadorcardona.github.io, pas cardona.digital.
+        # salvadorcardona.github.io, pas hermez.dev.
         passHostHeader: false
         servers:
           - url: https://salvadorcardona.github.io

@@ -29,8 +29,11 @@ const API = 'https://api.notion.com/v1'
 const POSTS_DIR = 'src/content/posts'
 const COVERS_FILE = 'src/content/covers.json'
 const BLOG_DIR = 'public/blog'
-/** Les images déjà servies par le site : à référencer, pas à retélécharger. */
-const SITE_ORIGIN = 'https://cardona.digital'
+/**
+ * Les images déjà servies par le site : à référencer, pas à retélécharger.
+ * L'ancien domaine reste reconnu : une couverture Notion peut encore y pointer.
+ */
+const SITE_ORIGINS = ['https://hermez.dev', 'https://cardona.digital']
 
 const HEADER = `/**
  * Généré par \`npm run posts:sync\` depuis la database Notion « Blog Salvador Cardona ».
@@ -302,7 +305,7 @@ export function imageInfo(buf) {
  * casserait le site quelques heures plus tard.
  */
 async function localise(url, name) {
-  if (url.startsWith(`${SITE_ORIGIN}/blog/`)) {
+  if (SITE_ORIGINS.some((origin) => url.startsWith(`${origin}/blog/`))) {
     const file = basename(new URL(url).pathname)
     return { file, src: `/blog/${file}`, buffer: await readFile(join(BLOG_DIR, file)) }
   }

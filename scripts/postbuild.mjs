@@ -30,7 +30,7 @@ const SERVER_ENTRY = join(OUTPUT_DIR, 'server/index.mjs')
 const COVERS_FILE = 'src/content/covers.json'
 const EXPERIENCES_FILE = 'src/content/experiences.json'
 
-const SITE_URL = 'https://cardona.digital'
+const SITE_URL = 'https://hermez.dev'
 
 /** Les pages fixes ; les articles viennent du sitemap. */
 const REQUIRED_PAGES = [

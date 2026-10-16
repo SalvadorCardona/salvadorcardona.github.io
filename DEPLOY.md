@@ -1,12 +1,15 @@
-# Déployer cardona.digital sur Dokploy
+# Déployer hermez.dev sur Dokploy
 
 La feuille de route de la mise en ligne : du dépôt fusionné sur `main` à
-`cardona.digital` servi par Dokploy, sous-sites GitHub Pages compris. Tout ce
+`hermez.dev` servi par Dokploy, sous-sites GitHub Pages compris. Le site a été
+mis en ligne sur `cardona.digital` le 2026-09-30, puis a déménagé sur
+`hermez.dev` le 2026-10-16 : l'ancien domaine ne fait plus que rediriger (voir
+l'étape 10). Tout ce
 qui suit se fait dans les interfaces (Dokploy, Hostinger, GitHub, Brevo) ; le
 code est déjà prêt.
 
 - Dokploy : <https://dokploy.cardona.digital>, VPS `148.230.109.72`.
-- DNS : zone `cardona.digital` chez Hostinger.
+- DNS : zones `hermez.dev` et `cardona.digital` chez Hostinger.
 - Image : le `Dockerfile` à la racine, qui écoute sur le port `3000` et répond
   `ok` sur `/healthz`.
 
@@ -99,7 +102,7 @@ http://localhost:3000/`.
 
 | Réglage          | Valeur            |
 | ---------------- | ----------------- |
-| Host             | `cardona.digital` |
+| Host             | `hermez.dev`      |
 | Path             | `/`               |
 | Container Port   | `3000`            |
 | HTTPS            | activé            |
@@ -116,10 +119,10 @@ ajoutée telle quelle à la fin de `dynamic/middlewares.yml`, depuis
 **Traefik File System** : l'éditeur de Dokploy modifie un fichier mais n'en
 crée pas.
 
-Ajouter aussi `www.cardona.digital` (mêmes réglages), avec dans
+Ajouter aussi `www.hermez.dev` (mêmes réglages), avec dans
 **Middlewares** `www-to-apex@file` : ce middleware, défini dans
 `deploy/traefik/www-redirect.yml`, répond par un 301 vers
-`https://cardona.digital` en conservant le chemin et la query string. Déposer
+`https://hermez.dev` en conservant le chemin et la query string. Déposer
 ce fichier dans `/etc/dokploy/traefik/dynamic/` (comme celui de l'étape 6)
 avant de créer le domaine, sinon Traefik ignore le routeur `www` faute de
 middleware.
@@ -165,7 +168,7 @@ deux minutes après que le DNS pointe sur le VPS).
 ## 6. Proxy des sous-sites GitHub Pages
 
 Les dépôts publiés sur GitHub Pages restent servis par GitHub ; Traefik les
-relaie sous `cardona.digital/<projet>/` en conservant le chemin. La
+relaie sous `hermez.dev/<projet>/` en conservant le chemin. La
 configuration est versionnée dans `deploy/traefik/github-pages.yml`.
 
 **Dokploy → Web Server → Traefik → File System** (ou en SSH sur le VPS) :
@@ -199,12 +202,12 @@ gh api --paginate 'user/repos?per_page=100&affiliation=owner' \
 
 Ce que fait le fichier :
 
-- `github-pages` : `Host(cardona.digital)` et `PathPrefix(/<projet>/)` →
+- `github-pages` : `Host(hermez.dev)` et `PathPrefix(/<projet>/)` →
   `https://salvadorcardona.github.io`, avec `passHostHeader: false` (GitHub
   choisit le site d'après l'en-tête `Host`) et une priorité de 1000, au-dessus
   du routeur de l'application.
 - `github-pages-slash` : `/<projet>` sans slash final est redirigé en 301 vers
-  `/<projet>/` sur `cardona.digital`, sinon GitHub redirigerait vers sa propre
+  `/<projet>/` sur `hermez.dev`, sinon GitHub redirigerait vers sa propre
   adresse.
 - `ticket-runner-to-ponos` : le dépôt `ticket-runner` est devenu `ponos` le
   2026-10-02, et GitHub ne redirige pas l'ancienne adresse Pages.
@@ -270,7 +273,7 @@ L'IP est lue dans `X-Forwarded-For`, posé par Traefik.
 ## 8. Facultatif : Cloudflare Turnstile
 
 Sur le tableau de bord Cloudflare, **Turnstile → Add widget**, domaine
-`cardona.digital`, mode *Managed*. Copier la clé de site dans
+`hermez.dev`, mode *Managed*. Copier la clé de site dans
 `TURNSTILE_SITE_KEY` et la clé secrète dans `TURNSTILE_SECRET`. Il faut les
 deux : avec une seule, Turnstile reste désactivé. Une fois actif, le widget
 apparaît sous le message et chaque envoi est vérifié côté serveur auprès de
@@ -280,22 +283,22 @@ son iframe (voir l'étape 9).
 ## 9. Vérifications
 
 ```bash
-curl -s https://cardona.digital/healthz                     # ok
-curl -sI https://cardona.digital/ | head -1                 # HTTP/2 200
+curl -s https://hermez.dev/healthz                     # ok
+curl -sI https://hermez.dev/ | head -1                 # HTTP/2 200
 curl -s -o /dev/null -w '%header{content-encoding}\n' \
-  -H 'Accept-Encoding: br, gzip' https://cardona.digital/    # br (compress@file)
-curl -sI https://cardona.digital/video/agence-cardona-poster.jpg | grep -i cache-control
+  -H 'Accept-Encoding: br, gzip' https://hermez.dev/    # br (compress@file)
+curl -sI https://hermez.dev/video/agence-cardona-poster.jpg | grep -i cache-control
                                                             # public, max-age=2592000
-curl -s https://cardona.digital/sitemap.xml | grep -c '<loc>'   # 8 pages + un par article
-curl -sI https://cardona.digital/rendez-vous | grep -i location # /contact?appel=1 (301)
-curl -sI https://cardona.digital/n-existe-pas | head -1     # HTTP/2 404
-curl -sI https://cardona.digital/whisper-desk/ | head -1    # HTTP/2 200, servi par GitHub
-curl -sI https://cardona.digital/whisper-desk | grep -i location   # …/whisper-desk/
+curl -s https://hermez.dev/sitemap.xml | grep -c '<loc>'   # 8 pages + un par article
+curl -sI https://hermez.dev/rendez-vous | grep -i location # /contact?appel=1 (301)
+curl -sI https://hermez.dev/n-existe-pas | head -1     # HTTP/2 404
+curl -sI https://hermez.dev/whisper-desk/ | head -1    # HTTP/2 200, servi par GitHub
+curl -sI https://hermez.dev/whisper-desk | grep -i location   # …/whisper-desk/
 for p in adam adam-eve CoookingPubSub des-3d gnome-claude-usage \
   react-data-form react-game react-resource-view ponos trigo-js whisper-desk; do
-  printf '%-22s %s\n' "$p" "$(curl -s -o /dev/null -w '%{http_code}' https://cardona.digital/$p/)"
+  printf '%-22s %s\n' "$p" "$(curl -s -o /dev/null -w '%{http_code}' https://hermez.dev/$p/)"
 done                                                        # 200 partout
-curl -sI https://cardona.digital/ | grep -iE 'strict-transport|content-security|x-content-type|x-frame|referrer-policy|permissions-policy'   # six lignes
+curl -sI https://hermez.dev/ | grep -iE 'strict-transport|content-security|x-content-type|x-frame|referrer-policy|permissions-policy'   # six lignes
 ```
 
 Les en-têtes de sécurité sont posés par l'application, sans réglage dans
@@ -308,7 +311,7 @@ origines externes qu'Umami (`umami.cardona.digital`) et Cloudflare Turnstile
 (`challenges.cloudflare.com`) : un nouveau script ou service tiers s'ajoute
 là, sinon le navigateur le bloque. Les sous-sites GitHub Pages passent par le
 routeur Traefik de l'étape 6 et n'en héritent pas. Contrôle externe :
-<https://securityheaders.com/?q=cardona.digital&followRedirects=on>, note A
+<https://securityheaders.com/?q=hermez.dev&followRedirects=on>, note A
 attendue.
 
 Puis, dans un navigateur : envoyer un message de test depuis `/contact` avec
@@ -316,7 +319,30 @@ sa propre adresse et la case « appel découverte » cochée, et recevoir les de
 e-mails (notification et accusé de réception ; **Brevo → Transactional →
 Logs** en cas de doute).
 Enfin, dans Google Search Console, soumettre de nouveau
-`https://cardona.digital/sitemap.xml`.
+`https://hermez.dev/sitemap.xml` (propriété de domaine `hermez.dev`).
+
+## 10. L'ancien domaine cardona.digital
+
+Depuis le 2026-10-16, `cardona.digital` et `www.cardona.digital` restent
+déclarés sur l'application dans Dokploy, mais avec le seul middleware
+`cardona-to-hermez@file` (défini dans `deploy/traefik/cardona-redirect.yml`, à
+déposer dans `/etc/dokploy/traefik/dynamic/`) : chaque adresse répond par un
+301 vers la même page sur `hermez.dev`, chemin et query string gardés. Les
+sous-sites GitHub Pages suivent le même chemin, puis sont relayés par
+l'étape 6.
+
+```bash
+curl -sI https://cardona.digital/blog | grep -i location            # https://hermez.dev/blog (301)
+curl -sI https://www.cardona.digital/contact?x=1 | grep -i location # https://hermez.dev/contact?x=1
+curl -sI https://cardona.digital/whisper-desk/ | grep -i location   # https://hermez.dev/whisper-desk/
+```
+
+Ce qui reste sur `cardona.digital`, à ne pas toucher dans sa zone DNS : les
+sous-domaines d'infrastructure (`dokploy`, `umami`, `n8n`, `trader`, `next`
+sur `148.230.109.72`, `preprod` sur `82.29.173.67`) et les e-mails
+(`contact@cardona.digital`, Hostinger Mail en réception, Brevo en envoi). Le
+domaine doit rester renouvelé tant que des liens et des correspondants
+l'utilisent : au moins jusqu'en octobre 2027.
 
 ## Revenir en arrière
 

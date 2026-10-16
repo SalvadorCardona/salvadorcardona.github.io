@@ -68,7 +68,7 @@ conteneur Docker déployé sur Dokploy (voir `DEPLOY.md`).
   Notion ; sinon la carte affiche les initiales de l'entreprise
   (`companyInitials` dans `experiences.ts`). Les URL de fichiers Notion
   expirent en environ une heure : ne jamais les garder telles quelles.
-- **`base` reste `/`.** Le site est servi à la racine de `cardona.digital`. Ne
+- **`base` reste `/`.** Le site est servi à la racine de `hermez.dev`. Ne
   pas ajouter de `basepath`.
 - **Ne pas réactiver le prérendu** dans `vite.config.ts` : Nitro fige la liste
   des fichiers qu'il sert avant que Start n'écrive les pages prérendues, qui
@@ -105,8 +105,12 @@ conteneur Docker déployé sur Dokploy (voir `DEPLOY.md`).
   entrée de `works` (`agency.ts`) pointe vers des captures de
   `public/realisations/`, en AVIF et WebP à deux largeurs (voir le type
   `AgencyWork`). Une maquette générée n'y entre pas sous un nom de client.
-- **`SITE_URL` (`src/lib/seo.ts`) reste `https://cardona.digital`**, le domaine
+- **`SITE_URL` (`src/lib/seo.ts`) reste `https://hermez.dev`**, le domaine
   réglé dans Dokploy : il sert aux URL canoniques, à Open Graph et au sitemap.
+  L'ancien domaine `cardona.digital` ne sert plus de pages : Traefik le
+  redirige en 301 vers la même adresse sur `hermez.dev`
+  (`deploy/traefik/cardona-redirect.yml`). Les sous-domaines d'infra
+  (`umami`, `dokploy`…) restent, eux, sur `cardona.digital`.
 
 ## Vérification avant de conclure
 

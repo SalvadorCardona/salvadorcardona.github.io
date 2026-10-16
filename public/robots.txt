@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://cardona.digital/sitemap.xml
-Sitemap: https://cardona.digital/react-resource-view/sitemap.xml
+Sitemap: https://hermez.dev/sitemap.xml
+Sitemap: https://hermez.dev/react-resource-view/sitemap.xml
