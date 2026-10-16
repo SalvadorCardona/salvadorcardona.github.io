@@ -8,7 +8,7 @@ import type { AgencyOffer } from '../content/agency'
  */
 
 export const SITE_URL = 'https://cardona.digital'
-export const SITE_NAME = 'Agence Cardona'
+export const SITE_NAME = 'Agence Hermez'
 
 /** Le fondateur, qui signe `/qui-suis-je` et les articles. */
 export const AUTHOR_NAME = 'Salvador Cardona'
@@ -34,7 +34,7 @@ export type ShareImage = {
  */
 const DEFAULT_SHARE_IMAGE: ShareImage = {
   src: '/og/cardona.png',
-  alt: 'Cardona, agence digitale à Lyon : sites vitrines, applications métier, intégration IA',
+  alt: 'Hermez, agence digitale à Lyon : sites vitrines, applications métier, intégration IA',
   width: 1200,
   height: 630,
 }
@@ -120,7 +120,7 @@ export function personJsonLd() {
     '@id': PERSON_ID,
     name: AUTHOR_NAME,
     url: SITE_URL,
-    jobTitle: 'Fondateur de l’agence Cardona, Lead Dev IA',
+    jobTitle: 'Fondateur de l’agence Hermez, Lead Dev IA',
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Lyon',
@@ -203,7 +203,7 @@ export function breadcrumbJsonLd(items: Array<{ name: string; path: string }>) {
 export function offerJsonLd(offer: AgencyOffer) {
   return {
     '@type': 'Offer',
-    name: `${offer.name} — agence Cardona`,
+    name: `${offer.name} — agence Hermez`,
     description: offer.tagline,
     url: `${SITE_URL}/#${offer.id}`,
     availability: 'https://schema.org/InStock',

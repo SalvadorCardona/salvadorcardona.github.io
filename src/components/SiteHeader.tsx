@@ -14,7 +14,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-stone-200/70 bg-white/85 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 py-3">
-        <Link to="/" aria-label="Agence Cardona, accueil" className="py-1">
+        <Link to="/" aria-label="Agence Hermez, accueil" className="py-1">
           <Logo />
         </Link>
 

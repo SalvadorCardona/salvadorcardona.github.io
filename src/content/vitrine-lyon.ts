@@ -15,7 +15,7 @@ export const vitrineLyon = {
   description:
     'Création de site vitrine à Lyon et dans la métropole : conception, hébergement et mises à jour compris, 30 € HT par mois, en ligne sous deux semaines.',
   lead:
-    'Artisans, commerçants, indépendants : l’agence Cardona crée votre site vitrine à Lyon et dans la métropole, le met en ligne et le tient à jour. Un abonnement de 30 € HT par mois, sans frais de départ ni engagement.',
+    'Artisans, commerçants, indépendants : l’agence Hermez crée votre site vitrine à Lyon et dans la métropole, le met en ligne et le tient à jour. Un abonnement de 30 € HT par mois, sans frais de départ ni engagement.',
   /** Les métiers et les situations, un élément par ligne. */
   forWho: [
     'Artisans lyonnais — plombier, électricien, coiffeur, photographe — que leurs clients cherchent sur Google avant d’appeler.',

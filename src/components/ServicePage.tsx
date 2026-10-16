@@ -35,7 +35,7 @@ export function serviceHead(slug: string) {
     // Tirée de l'illustration de la page, au format des aperçus LinkedIn.
     image: {
       src: `/og/${slug}.png`,
-      alt: `${service.name} — Cardona, agence digitale à Lyon`,
+      alt: `${service.name} — Hermez, agence digitale à Lyon`,
       width: 1200,
       height: 630,
     },

@@ -653,7 +653,7 @@ const VIDEO = {
   subtitles: '/video/agence-cardona.fr.vtt',
   title: `L’agence ${agency.name} en une minute`,
   description:
-    'Ce que fait l’agence Cardona, ses deux abonnements — Vitrine à 30 € et Application à 100 € HT par mois — et comment prendre rendez-vous.',
+    'Ce que fait l’agence Hermez, ses deux abonnements — Vitrine à 30 € et Application à 100 € HT par mois — et comment prendre rendez-vous.',
 }
 
 /**

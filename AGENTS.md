@@ -1,6 +1,6 @@
 # Notes pour agents
 
-Site de l'agence Cardona : TanStack Start rendu côté serveur par Nitro, dans un
+Site de l'agence Hermez : TanStack Start rendu côté serveur par Nitro, dans un
 conteneur Docker déployé sur Dokploy (voir `DEPLOY.md`).
 
 ## Règles du projet
@@ -45,7 +45,7 @@ conteneur Docker déployé sur Dokploy (voir `DEPLOY.md`).
   est écrit à la main.
 - **Le reste du contenu est en dur** dans `src/content/` : `profile.ts` pour le
   CV (hors expériences), `services.ts` pour les prestations, `agency.ts` pour
-  les abonnements de l'agence Cardona, `covers.json` pour les illustrations. Pas d'autre CMS, pas de chargement de fichiers Markdown.
+  les abonnements de l'agence Hermez, `covers.json` pour les illustrations. Pas d'autre CMS, pas de chargement de fichiers Markdown.
 - **Une page service = une entrée dans `services.ts` + une route d'une ligne**
   dans `src/routes/services/<slug>.tsx`, qui rend le gabarit commun
   `components/ServicePage.tsx`. Ajouter le chemin à `REQUIRED_PAGES` dans

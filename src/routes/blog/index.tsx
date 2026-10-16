@@ -10,7 +10,7 @@ export const Route = createFileRoute('/blog/')({
     seo({
       title: 'Blog : développement web, API Platform et IA appliquée',
       description:
-        'Le blog de l’agence Cardona, à Lyon : Symfony et API Platform, JSON-LD, React et TanStack Start, agents LLM et Claude Code, retours de projets réels.',
+        'Le blog de l’agence Hermez, à Lyon : Symfony et API Platform, JSON-LD, React et TanStack Start, agents LLM et Claude Code, retours de projets réels.',
       path: '/blog',
     }),
   component: BlogIndex,
