@@ -61,8 +61,8 @@ façon).
 ```env
 PORT=3000
 BREVO_API_KEY=xkeysib-…                        # étape 7
-CONTACT_TO_EMAIL=contact@cardona.digital
-CONTACT_FROM_EMAIL=contact@cardona.digital
+CONTACT_TO_EMAIL=contact@hermez.dev
+CONTACT_FROM_EMAIL=contact@hermez.dev
 CONTACT_FROM_NAME=Agence Hermez
 BREVO_LIST_ID=                                 # facultatif, étape 7
 TURNSTILE_SITE_KEY=    # facultatif, étape 8
@@ -235,15 +235,16 @@ Le formulaire appelle directement l'API transactionnelle Brevo
 SDK. Tout se fait dans l'organisation Brevo **Cardona** (pas `animalink` :
 se déconnecter puis se reconnecter au bon compte, il n'y a pas de sélecteur).
 
-1. **Expéditeur** : `contact@cardona.digital` est déjà vérifié et le domaine
-   authentifié (DKIM, DMARC au vert depuis le 01/09/2026). Le reprendre dans
+1. **Expéditeur** : `contact@hermez.dev` est vérifié et le domaine
+   authentifié (DKIM, DMARC au vert depuis le 16/10/2026). Le reprendre dans
    `CONTACT_FROM_EMAIL`. Une adresse d'un domaine non authentifié serait
    refusée par Brevo.
 2. **Clé d'API** : **SMTP & API → API Keys → Generate a new API key**, nom
    `cardona.digital (Dokploy)`, dans `BREVO_API_KEY`. Si Brevo restreint les
    IP autorisées (**Security → Authorised IPs**), y ajouter `148.230.109.72`.
 3. **Destinataire** : `CONTACT_TO_EMAIL`, la boîte qui reçoit les demandes :
-   `contact@cardona.digital`, boîte Hostinger Mail (webmail Hostinger).
+   `contact@hermez.dev`, boîte Hostinger Mail (webmail Hostinger), qui
+   transfère aussi chaque message vers le Gmail de Salvador.
 4. **Facultatif, fichier de leads** : **Contacts → Lists → Create a list**
    (« Prospects cardona.digital »), puis reporter son identifiant numérique
    dans `BREVO_LIST_ID`. Seule l'adresse e-mail est enregistrée.
@@ -339,8 +340,9 @@ curl -sI https://cardona.digital/whisper-desk/ | grep -i location   # https://he
 
 Ce qui reste sur `cardona.digital`, à ne pas toucher dans sa zone DNS : les
 sous-domaines d'infrastructure (`dokploy`, `umami`, `n8n`, `trader`, `next`
-sur `148.230.109.72`, `preprod` sur `82.29.173.67`) et les e-mails
-(`contact@cardona.digital`, Hostinger Mail en réception, Brevo en envoi). Le
+sur `148.230.109.72`, `preprod` sur `82.29.173.67`) et l'ancienne boîte
+`contact@cardona.digital` (Hostinger Mail, transférée vers le même Gmail),
+gardée active pour les échanges déjà en cours. Le
 domaine doit rester renouvelé tant que des liens et des correspondants
 l'utilisent : au moins jusqu'en octobre 2027.
 

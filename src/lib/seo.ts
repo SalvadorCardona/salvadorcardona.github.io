@@ -166,7 +166,7 @@ export function agencyJsonLd() {
     name: SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
-    email: 'contact@cardona.digital',
+    email: 'contact@hermez.dev',
     founder: { '@id': PERSON_ID },
     address: {
       '@type': 'PostalAddress',
