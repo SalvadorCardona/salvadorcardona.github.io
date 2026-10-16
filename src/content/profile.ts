@@ -57,7 +57,7 @@ export const profile = {
 } as const
 
 export const links = {
-  email: 'contact@cardona.digital',
+  email: 'contact@hermez.dev',
   github: 'https://github.com/SalvadorCardona',
   linkedin: 'https://www.linkedin.com/in/salvador-cardona-70911113a/',
   x: 'https://x.com/salvadevme',
@@ -218,7 +218,7 @@ export const projects: Array<Project> = [
       'Vues CRUD pour API JSON-LD / Hydra : on déclare une ressource et le package génère liste, détail, création, édition et suppression, câblés à l’API et à l’URL.',
     brand: 'react-resource-view',
     url: 'https://github.com/SalvadorCardona/react-resource-view',
-    docs: 'https://cardona.digital/react-resource-view/',
+    docs: 'https://hermez.dev/react-resource-view/',
     tags: ['React', 'TypeScript', 'JSON-LD'],
   },
   {
@@ -227,7 +227,7 @@ export const projects: Array<Project> = [
       'Dictée vocale hors ligne pour Linux, WSL et macOS : un raccourci clavier, un overlay, et le texte est dans le presse-papiers.',
     brand: 'whisper-desk',
     url: 'https://github.com/SalvadorCardona/whisper-desk',
-    docs: 'https://cardona.digital/whisper-desk/',
+    docs: 'https://hermez.dev/whisper-desk/',
     tags: ['Python', 'Whisper', 'Linux', 'macOS'],
   },
   {
@@ -253,7 +253,7 @@ export const projects: Array<Project> = [
       'Formulaires React pilotés par la donnée : on décrit le formulaire comme un objet, la librairie rend les champs, tient l’état, valide et remonte les erreurs de l’API.',
     brand: 'react-data-form',
     url: 'https://github.com/SalvadorCardona/react-data-form',
-    docs: 'https://cardona.digital/react-data-form/',
+    docs: 'https://hermez.dev/react-data-form/',
     tags: ['React', 'TypeScript', 'Formulaires'],
   },
   {

@@ -23,7 +23,7 @@ import { nitro } from 'nitro/vite'
  * Le mode SPA reste désactivé : activé, il remplace la page d'accueil par une
  * coquille vide (`_shell.html`).
  *
- * Le `base` reste `/` : le site est servi à la racine de `cardona.digital`.
+ * Le `base` reste `/` : le site est servi à la racine de `hermez.dev`.
  *
  * Compression : Nitro écrit une version `.br` et `.gz` de chaque fichier
  * statique compressible (JS, CSS, SVG…) et la sert selon `Accept-Encoding`.
@@ -39,7 +39,7 @@ import { nitro } from 'nitro/vite'
  * Les en-têtes de sécurité valent pour toutes les réponses, fichiers statiques
  * compris. La Content-Security-Policy, qui porte un nonce par requête, est
  * posée à part par le middleware de `src/start.ts`. HSTS sans
- * `includeSubDomains` : tous les sous-domaines de `cardona.digital` ne sont pas
+ * `includeSubDomains` : tous les sous-domaines de `hermez.dev` ne sont pas
  * servis par ce conteneur.
  */
 const ONE_DAY = 60 * 60 * 24

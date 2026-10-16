@@ -7,7 +7,8 @@ d'environnement). Le lire d'abord : ce document ne les répète pas.
 ## Le projet
 
 Site de l'agence Hermez (portfolio et blog de Salvador Cardona), publié sur
-`cardona.digital` par Dokploy, dans un conteneur Docker. Les pages sont rendues
+`hermez.dev` par Dokploy, dans un conteneur Docker (l'ancien domaine
+`cardona.digital` redirige en 301, page par page). Les pages sont rendues
 côté serveur par Nitro ; le serveur envoie aussi les e-mails du formulaire de
 contact par l'API transactionnelle Brevo. Réglages de production : [`DEPLOY.md`](DEPLOY.md).
 

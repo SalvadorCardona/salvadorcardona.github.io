@@ -7,7 +7,7 @@ import type { AgencyOffer } from '../content/agency'
  * aux cartes Open Graph, qui exigent des adresses absolues.
  */
 
-export const SITE_URL = 'https://cardona.digital'
+export const SITE_URL = 'https://hermez.dev'
 export const SITE_NAME = 'Agence Hermez'
 
 /** Le fondateur, qui signe `/qui-suis-je` et les articles. */
@@ -166,7 +166,7 @@ export function agencyJsonLd() {
     name: SITE_NAME,
     url: SITE_URL,
     logo: `${SITE_URL}/logo.png`,
-    email: 'contact@cardona.digital',
+    email: 'contact@hermez.dev',
     founder: { '@id': PERSON_ID },
     address: {
       '@type': 'PostalAddress',

@@ -35,7 +35,7 @@ export const Route = createRootRoute({
         src: 'https://umami.cardona.digital/nx.js',
         defer: true,
         'data-website-id': '7c871d6e-78eb-4be4-99c6-634d4336cb8a',
-        'data-domains': 'cardona.digital',
+        'data-domains': 'hermez.dev',
       },
     ],
   }),

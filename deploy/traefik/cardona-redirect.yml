@@ -1,0 +1,24 @@
+# Redirection de l'ancien domaine : (www.)cardona.digital → hermez.dev.
+#
+# Le site a quitté cardona.digital pour hermez.dev le 2026-10-16. Les domaines
+# cardona.digital et www.cardona.digital restent déclarés dans Dokploy sur
+# l'application du site, avec le middleware `cardona-to-hermez@file` à la
+# place de `compress@file` et `www-to-apex@file` : Traefik répond par un 301
+# vers la même page sur hermez.dev, chemin et query string gardés. Les
+# sous-sites GitHub Pages (/whisper-desk/…) suivent le même chemin, puis sont
+# relayés par github-pages.yml sur hermez.dev.
+#
+# Seuls l'apex et www sont concernés : les sous-domaines d'infra (dokploy,
+# umami, n8n, trader…) restent sur cardona.digital.
+#
+# À déposer dans le dossier de configuration dynamique de Traefik sur le
+# serveur Dokploy (/etc/dokploy/traefik/dynamic/cardona-redirect.yml) : voir
+# DEPLOY.md, étape 4.
+
+http:
+  middlewares:
+    cardona-to-hermez:
+      redirectRegex:
+        regex: ^https?://(?:www\.)?cardona\.digital/(.*)
+        replacement: https://hermez.dev/${1}
+        permanent: true

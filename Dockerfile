@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-# Image du site cardona.digital pour Dokploy : TanStack Start rendu côté
+# Image du site hermez.dev pour Dokploy : TanStack Start rendu côté
 # serveur par Nitro (preset node-server). Seul `.output/` part dans l'image
 # finale ; aucune valeur de configuration n'y est figée, tout passe par les
 # variables d'environnement du conteneur (voir .env.example et DEPLOY.md).

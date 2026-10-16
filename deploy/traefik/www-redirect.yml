@@ -1,6 +1,6 @@
-# Redirection www.cardona.digital → cardona.digital.
+# Redirection www.hermez.dev → hermez.dev.
 #
-# Le domaine www.cardona.digital est déclaré dans Dokploy sur l'application du
+# Le domaine www.hermez.dev est déclaré dans Dokploy sur l'application du
 # site, avec le middleware `www-to-apex@file` : Traefik répond par un 301 vers
 # l'apex en conservant le chemin et la query string.
 #
@@ -12,6 +12,6 @@ http:
   middlewares:
     www-to-apex:
       redirectRegex:
-        regex: ^https?://www\.cardona\.digital/(.*)
-        replacement: https://cardona.digital/${1}
+        regex: ^https?://www\.hermez\.dev/(.*)
+        replacement: https://hermez.dev/${1}
         permanent: true

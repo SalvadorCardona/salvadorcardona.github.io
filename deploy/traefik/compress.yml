@@ -1,11 +1,11 @@
-# Compression gzip / brotli des réponses de cardona.digital.
+# Compression gzip / brotli des réponses de hermez.dev.
 #
 # Nitro sert déjà une version pré-compressée des fichiers statiques (JS, CSS,
 # SVG : voir `compressPublicAssets` dans vite.config.ts) ; ce middleware
 # compresse le reste, à commencer par les pages rendues à la requête. Traefik
 # laisse telle quelle une réponse qui porte déjà un Content-Encoding.
 #
-# Le domaine cardona.digital est déclaré dans Dokploy sur l'application du
+# Le domaine hermez.dev est déclaré dans Dokploy sur l'application du
 # site, avec le middleware `compress@file`.
 #
 # À déposer dans le dossier de configuration dynamique de Traefik sur le
